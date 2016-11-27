@@ -1,2 +1,2 @@
 # hex-abc-music
-Music Notation eEditor
+Music Notation Editor
