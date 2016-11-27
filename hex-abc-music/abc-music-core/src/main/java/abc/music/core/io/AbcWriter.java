@@ -13,7 +13,6 @@ import java.util.List;
 public class AbcWriter {
 
     private final List<Tune> tunes;
-    private int tuneIndex = 0;
     private int voiceIndex = 0;
 
     public AbcWriter(Tune tune) {
@@ -25,11 +24,9 @@ public class AbcWriter {
     }
 
     public String write() {
-        StringBuilder result = new StringBuilder();
+        StringBuilder result = new StringBuilder("%%abc-charset utf-8").append('\n');
         tunes.forEach((tune) -> {
-            if (tuneIndex++ > 0) {
-                result.append('\n');
-            }
+            result.append('\n');
             result.append(createHead(tune));
             result.append(createBody(tune));
         });
