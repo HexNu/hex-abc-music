@@ -101,4 +101,8 @@ public class AbcWriter implements Writer<String> {
         return result.toString();
     }
     private static final String COMMENT = "%";
+    
+    public static void main(String[] args) {
+        System.out.println(Writer.ABC_CREATOR);
+    }
 }

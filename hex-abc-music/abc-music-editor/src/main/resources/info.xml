@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<program-info>
+    <name>${pom.name}</name>
+    <vendor>${vendor}</vendor>
+    <version>${pom.version}</version>
+    <last-build>${timestamp}</last-build>
+</program-info>

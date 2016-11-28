@@ -1,18 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>nu.hex</groupId>
-    <artifactId>hex-abc-music</artifactId>
-    <version>1.0</version>
+    <parent>
+        <groupId>nu.hex</groupId>
+        <artifactId>hex-abc-music</artifactId>
+        <version>1.0</version>
+    </parent>
+    <artifactId>abc-music-editor</artifactId>
+    <packaging>jar</packaging>
     <organization>
         <name>HexNu</name>
     </organization>
-    <packaging>pom</packaging>
-    <modules>
-        <module>abc-music-core</module>
-        <module>abc-music-service</module>
-        <module>abc-music-editor</module>
-    </modules>
     <build>
         <resources>
             <resource>
@@ -25,6 +23,8 @@
         <vendor>${organization.name}</vendor>
         <timestamp>${maven.build.timestamp}</timestamp>
         <maven.build.timestamp.format>yyyy-MM-dd'T'HH:mm:ss</maven.build.timestamp.format>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
+    <version>1.0</version>
 </project>

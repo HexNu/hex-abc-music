@@ -4,8 +4,11 @@
     <parent>
         <groupId>nu.hex</groupId>
         <artifactId>hex-abc-music</artifactId>
-        <version>1.0-SNAPSHOT</version>
+        <version>1.0</version>
     </parent>
+    <organization>
+        <name>HexNu</name>
+    </organization>
     <artifactId>abc-music-service</artifactId>
     <packaging>jar</packaging>
     <dependencies>
@@ -14,9 +17,26 @@
             <artifactId>abc-music-core</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>se.digitman</groupId>
+            <artifactId>lightXML</artifactId>
+            <version>1.1</version>
+        </dependency>
     </dependencies>
+    <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>    
+    </build>
     <properties>
+        <vendor>${organization.name}</vendor>
+        <timestamp>${maven.build.timestamp}</timestamp>
+        <maven.build.timestamp.format>yyyy-MM-dd'T'HH:mm:ss.SSS</maven.build.timestamp.format>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
+    <version>1.0</version>
 </project>
