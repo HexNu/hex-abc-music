@@ -17,6 +17,7 @@ public class Tune {
     private final List<Comment> comments = new ArrayList<>();
     private final List<History> history = new ArrayList<>();
     private String rythm;
+    private String copyright;
     private Tempo tempo;
     private Meter meter;
     private Unit unitNoteLength;
@@ -131,6 +132,18 @@ public class Tune {
         this.rythm = rythm;
     }
 
+    public String getCopyright() {
+        return copyright;
+    }
+
+    public String getCopyRightField() {
+        return "%%abc-copyright © " + copyright;
+    }
+
+    public void setCopyright(String copyright) {
+        this.copyright = copyright;
+    }
+
     public Tempo getTempo() {
         return tempo;
     }
@@ -174,7 +187,7 @@ public class Tune {
     public Key getKey() {
         return key;
     }
-    
+
     public boolean hasKey() {
         return key != null && !key.isEmpty();
     }

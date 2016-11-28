@@ -1,5 +1,7 @@
-package abc.music.core;
+package nu.hex.abc.music.service;
 
+import nu.hex.abc.music.service.io.AbcWriter;
+import nu.hex.abc.music.service.io.Writer;
 import abc.music.core.domain.Comment;
 import abc.music.core.domain.History;
 import abc.music.core.domain.Key;
@@ -11,9 +13,8 @@ import abc.music.core.domain.PersonRole;
 import abc.music.core.domain.Tempo;
 import abc.music.core.domain.Tune;
 import abc.music.core.domain.Voice;
-import abc.music.core.io.AbcWriter;
-import java.util.ArrayList;
-import java.util.List;
+import java.io.File;
+import nu.hex.abc.music.service.io.AbcFileWriter;
 
 /**
  * Created 2016-nov-27
@@ -46,6 +47,7 @@ public class Main {
         tune.addCreator(author);
         tune.addCreator(transcriber);
         tune.setRythm("Dalska");
+        tune.setCopyright("Håkan Lidén 2016");
 
         Origin origin = new Origin();
         origin.setFieldContent("Flokadal");
@@ -116,13 +118,18 @@ public class Main {
         tune.addVoice(voice1);
         tune.addVoice(voice3);
         tune.addVoice(voice2);
-        List<Tune> tunes = new ArrayList<>();
-        tunes.add(tune);
-        tune.setId(2);
-        tunes.add(tune);
-        String result = new AbcWriter(tunes).write();
-        System.out.println("***");
-        System.out.println(result);
-        System.out.println("***");
+        Writer writer = new AbcWriter(tune);
+        System.out.println(writer.write());
+        
+        File resultFile = new File("/home/hl/Skrivbord/result.abc");
+        new AbcFileWriter(tune, resultFile).write();
+//        List<Tune> tunes = new ArrayList<>();
+//        tunes.add(tune);
+//        tune.setId(2);
+//        tunes.add(tune);
+//        String result = new AbcWriter(tunes).write();
+//        System.out.println("***");
+//        System.out.println(result);
+//        System.out.println("***");
     }
 }

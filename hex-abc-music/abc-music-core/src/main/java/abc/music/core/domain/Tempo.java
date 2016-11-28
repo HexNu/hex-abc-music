@@ -99,7 +99,7 @@ public class Tempo extends Field {
     public String get() {
         String result = getCode() + ":";
         if (label != null && !label.isEmpty()) {
-            result += " " + label;
+            result += " \"" + label +  "  \"";
         }
         if (unit != null && !unit.isEmpty() && unitsPerMinute != null) {
             result += " " + unit + "=" + unitsPerMinute;
