@@ -1,6 +1,7 @@
 package nu.hex.abc.music.editor.components;
 
 import abc.music.core.domain.Key;
+import abc.music.core.domain.Modifier;
 import abc.music.core.domain.Person;
 import abc.music.core.domain.PersonRole;
 import abc.music.core.domain.Project;
@@ -56,6 +57,14 @@ public class TuneHeadersPanel extends AmePanel {
         modeComboBox.setModel(new DefaultComboBoxModel(Key.Mode.values()));
         modeComboBox.setSize(keyFieldsDimension);
         modeComboBox.setPreferredSize(keyFieldsDimension);
+        clefComboBox.setModel(new DefaultComboBoxModel(Modifier.Clef.values()));
+        clefComboBox.setSize(keyFieldsDimension);
+        clefComboBox.setPreferredSize(keyFieldsDimension);
+        octaveComboBox.setModel(new DefaultComboBoxModel(Modifier.OctaveClef.values()));
+        octaveComboBox.setSize(keyFieldsDimension);
+        octaveComboBox.setPreferredSize(keyFieldsDimension);
+        transposeSpinner.setSize(keyFieldsDimension);
+        transposeSpinner.setPreferredSize(keyFieldsDimension);
         setFields();
 
     }
@@ -92,6 +101,9 @@ public class TuneHeadersPanel extends AmePanel {
             pitchComboBox.setSelectedItem(tune.getKey().getPitch());
             signatureComboBox.setSelectedItem(tune.getKey().getSignature());
             modeComboBox.setSelectedItem(tune.getKey().getMode());
+            clefComboBox.setSelectedItem(tune.getKey().getModifier().getClef());
+            transposeSpinner.setValue(tune.getKey().getModifier().getTranspose());
+            octaveComboBox.setSelectedItem(tune.getKey().getModifier().getOctave());
         } else {
             tune = new Tune();
             tempoUnitComboBox.setSelectedItem(Tempo.Unit.ONE_QUARTER);
@@ -105,6 +117,9 @@ public class TuneHeadersPanel extends AmePanel {
             pitchComboBox.setSelectedItem(Key.Pitch.DEFAULT_PITCH);
             signatureComboBox.setSelectedItem(Key.Signature.DEFAULT_SIGNATURE);
             modeComboBox.setSelectedItem(Key.Mode.DEFAULT_MODE);
+            clefComboBox.setSelectedItem(Modifier.Clef.DEFAULT_CLEF);
+            transposeSpinner.setValue(0);
+            octaveComboBox.setSelectedItem(Modifier.OctaveClef.DEFAULT_OCTAVE);
             Person hl = new Person();
             hl.setFirstName("Håkan");
             hl.setLastName("Lidén");
@@ -179,6 +194,8 @@ public class TuneHeadersPanel extends AmePanel {
         clefComboBox = new javax.swing.JComboBox<>();
         jLabel23 = new javax.swing.JLabel();
         transposeSpinner = new javax.swing.JSpinner();
+        jLabel24 = new javax.swing.JLabel();
+        octaveComboBox = new javax.swing.JComboBox<>();
 
         setOpaque(false);
 
@@ -187,15 +204,19 @@ public class TuneHeadersPanel extends AmePanel {
         titlesTextArea.setColumns(18);
         titlesTextArea.setRows(2);
         titlesTextArea.setTabSize(4);
+        titlesTextArea.setNextFocusableComponent(rythmTextField);
         jScrollPane1.setViewportView(titlesTextArea);
 
         jLabel2.setText("Rythm:");
+
+        rythmTextField.setNextFocusableComponent(tempoLabelComboBox);
 
         jLabel3.setText("Tempo:");
 
         tempoLabelComboBox.setEditable(true);
         tempoLabelComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         tempoLabelComboBox.setToolTipText("<html>Tempo name.<br>\nCan be left empty.<br>\nEditable."); // NOI18N
+        tempoLabelComboBox.setNextFocusableComponent(tempoUnitComboBox);
         tempoLabelComboBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tempoLabelComboBoxActionPerformed(evt);
@@ -205,18 +226,23 @@ public class TuneHeadersPanel extends AmePanel {
         tempoUnitComboBox.setEditable(true);
         tempoUnitComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         tempoUnitComboBox.setToolTipText("<html>Tempo Unit<br>\nEditable, but has to be of the format n/m where<br>\nn = positive number (preferably between 1 and 15)<br>\nm = 1 or the power of 2\n"); // NOI18N
+        tempoUnitComboBox.setNextFocusableComponent(unitsPerMinuteComboBox);
+        tempoUnitComboBox.setRequestFocusEnabled(true);
 
         jLabel4.setText("=");
 
         unitsPerMinuteComboBox.setEditable(true);
         unitsPerMinuteComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         unitsPerMinuteComboBox.setToolTipText("<html>Number of beats per minute<br>\nEditable");
+        unitsPerMinuteComboBox.setNextFocusableComponent(meterNumeratorSpinner);
+        unitsPerMinuteComboBox.setRequestFocusEnabled(true);
 
         jLabel5.setText("MM");
 
         jLabel7.setText("Meter:");
 
         meterNumeratorSpinner.setModel(new javax.swing.SpinnerNumberModel(3, 1, 15, 1));
+        meterNumeratorSpinner.setNextFocusableComponent(meterDenominatorSpinner);
         meterNumeratorSpinner.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 meterNumeratorSpinnerStateChanged(evt);
@@ -225,6 +251,7 @@ public class TuneHeadersPanel extends AmePanel {
 
         jLabel8.setText("/");
 
+        meterDenominatorSpinner.setNextFocusableComponent(useLetterCheckBox);
         meterDenominatorSpinner.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 meterDenominatorSpinnerStateChanged(evt);
@@ -232,56 +259,67 @@ public class TuneHeadersPanel extends AmePanel {
         });
 
         useLetterCheckBox.setEnabled(false);
+        useLetterCheckBox.setNextFocusableComponent(defaultTimeValueComboBox);
 
         jLabel6.setText("Time value:");
 
         defaultTimeValueComboBox.setToolTipText("<html>The default time value or note length used in the tune.\n"); // NOI18N
+        defaultTimeValueComboBox.setNextFocusableComponent(pitchComboBox);
 
         jLabel9.setText("Composers:");
 
         composerList.setModel(new DefaultListModel());
+        composerList.setNextFocusableComponent(authorList);
         jScrollPane5.setViewportView(composerList);
 
         jLabel10.setText("Authors:");
 
         authorList.setModel(new DefaultListModel());
+        authorList.setNextFocusableComponent(traditionalList);
         jScrollPane6.setViewportView(authorList);
 
         jLabel11.setText("Traditional:");
 
         traditionalList.setModel(new DefaultListModel());
+        traditionalList.setNextFocusableComponent(transcriberList);
         jScrollPane7.setViewportView(traditionalList);
 
         jLabel12.setText("Transcriber:");
 
         transcriberList.setModel(new DefaultListModel());
+        transcriberList.setNextFocusableComponent(historyTextArea);
         jScrollPane8.setViewportView(transcriberList);
 
         jLabel13.setText("History:");
 
         historyTextArea.setColumns(12);
         historyTextArea.setRows(3);
+        historyTextArea.setNextFocusableComponent(originTextArea);
         jScrollPane2.setViewportView(historyTextArea);
 
         jLabel16.setText("Origin:");
 
         originTextArea.setColumns(12);
         originTextArea.setRows(2);
+        originTextArea.setNextFocusableComponent(notesTextArea);
         jScrollPane3.setViewportView(originTextArea);
 
         jLabel17.setText("Comments:");
 
         notesTextArea.setColumns(12);
         notesTextArea.setRows(2);
+        notesTextArea.setNextFocusableComponent(copyrightTextArea);
         jScrollPane4.setViewportView(notesTextArea);
 
         copyrightTextArea.setColumns(12);
         copyrightTextArea.setRows(2);
+        copyrightTextArea.setNextFocusableComponent(addVoiceButton);
         jScrollPane9.setViewportView(copyrightTextArea);
 
         jLabel14.setText("Copyright:");
 
         addVoiceButton.setText("Add Voice");
+        addVoiceButton.setNextFocusableComponent(openScoreLayoutButton);
         addVoiceButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 addVoiceButtonActionPerformed(evt);
@@ -289,6 +327,7 @@ public class TuneHeadersPanel extends AmePanel {
         });
 
         openScoreLayoutButton.setText("Score Layout");
+        openScoreLayoutButton.setNextFocusableComponent(titlesTextArea);
         openScoreLayoutButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 openScoreLayoutButtonActionPerformed(evt);
@@ -299,16 +338,19 @@ public class TuneHeadersPanel extends AmePanel {
         jLabel15.setText("Key:");
 
         pitchComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        pitchComboBox.setNextFocusableComponent(signatureComboBox);
 
         jLabel18.setText("Pitch:");
 
         signatureComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        signatureComboBox.setNextFocusableComponent(modeComboBox);
 
         jLabel19.setText("Signature:");
 
         jLabel20.setText("Modus:");
 
         modeComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        modeComboBox.setNextFocusableComponent(clefComboBox);
 
         jLabel21.setFont(new java.awt.Font("Ubuntu", 2, 15)); // NOI18N
         jLabel21.setText("Modifiers:");
@@ -316,10 +358,18 @@ public class TuneHeadersPanel extends AmePanel {
         jLabel22.setText("Clef:");
 
         clefComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        clefComboBox.setToolTipText("<html>Select clef.<br>\nThe number on some choices indecates which line the clef is drawn on.<br>\nThe defaults are:\n<dl>\n<dt>G = 2 (Treble Clef)</dt>\n<dt>F = 4 (Bass Clef)</dt>\n<dt>C = 3 (Alto Clef)</dt>\n</dl>\nThe others are:\n<dl>\n<dt>G1 = French Violin Clef</dt>\n<dt>F3 = Baritone Clef</dt>\n<dt>C4 = Tenor Clef</dt>\n<dt>C2 = Mezzosoprano Clef</dt>\n<dt>C1 = Soprano Clef</dt>\n</dl>");
+        clefComboBox.setNextFocusableComponent(transposeSpinner);
 
         jLabel23.setText("Transpose:");
 
-        transposeSpinner.setModel(new javax.swing.SpinnerNumberModel(0, -11, 11, 1));
+        transposeSpinner.setModel(new javax.swing.SpinnerNumberModel(0, -24, 24, 1));
+        transposeSpinner.setNextFocusableComponent(octaveComboBox);
+
+        jLabel24.setText("Octave:");
+
+        octaveComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        octaveComboBox.setNextFocusableComponent(composerList);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -341,9 +391,7 @@ public class TuneHeadersPanel extends AmePanel {
                         .addComponent(rythmTextField)
                         .addComponent(tempoLabelComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createSequentialGroup()
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(defaultTimeValueComboBox, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(tempoUnitComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(tempoUnitComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(jLabel4)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -351,9 +399,12 @@ public class TuneHeadersPanel extends AmePanel {
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(jLabel5))
                         .addGroup(layout.createSequentialGroup()
-                            .addComponent(meterNumeratorSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jLabel8)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(defaultTimeValueComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(meterNumeratorSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(jLabel8)))
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(meterDenominatorSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -372,14 +423,16 @@ public class TuneHeadersPanel extends AmePanel {
                                     .addComponent(jLabel19, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(jLabel21, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(jLabel22, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jLabel23, javax.swing.GroupLayout.DEFAULT_SIZE, 89, Short.MAX_VALUE))))
+                                    .addComponent(jLabel23, javax.swing.GroupLayout.DEFAULT_SIZE, 87, Short.MAX_VALUE)
+                                    .addComponent(jLabel24, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(modeComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(signatureComboBox, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(pitchComboBox, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(clefComboBox, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(transposeSpinner, javax.swing.GroupLayout.Alignment.LEADING)))
+                            .addComponent(transposeSpinner, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(octaveComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addComponent(jLabel15, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
@@ -407,9 +460,9 @@ public class TuneHeadersPanel extends AmePanel {
                     .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)
-                    .addComponent(jScrollPane9, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE)
+                    .addComponent(jScrollPane9, javax.swing.GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE)
                     .addComponent(jScrollPane2))
                 .addGap(64, 64, 64))
         );
@@ -483,23 +536,25 @@ public class TuneHeadersPanel extends AmePanel {
                                             .addComponent(jLabel22)
                                             .addComponent(clefComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addComponent(useLetterCheckBox, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                         .addComponent(jLabel6)
                                         .addComponent(defaultTimeValueComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jLabel12))
+                                        .addComponent(jLabel12)
+                                        .addComponent(transposeSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(layout.createSequentialGroup()
-                                        .addGap(3, 3, 3)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                            .addComponent(jLabel23)
-                                            .addComponent(transposeSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                        .addGap(8, 8, 8)
+                                        .addComponent(jLabel23)))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(addVoiceButton)
-                                    .addComponent(openScoreLayoutButton))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(addVoiceButton)
+                                        .addComponent(openScoreLayoutButton)
+                                        .addComponent(jLabel24))
+                                    .addComponent(octaveComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(0, 1, Short.MAX_VALUE))
                             .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                         .addContainerGap())
@@ -564,6 +619,7 @@ public class TuneHeadersPanel extends AmePanel {
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
+    private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -584,6 +640,7 @@ public class TuneHeadersPanel extends AmePanel {
     private javax.swing.JSpinner meterNumeratorSpinner;
     private javax.swing.JComboBox<String> modeComboBox;
     private javax.swing.JTextArea notesTextArea;
+    private javax.swing.JComboBox<String> octaveComboBox;
     private javax.swing.JButton openScoreLayoutButton;
     private javax.swing.JTextArea originTextArea;
     private javax.swing.JComboBox<String> pitchComboBox;

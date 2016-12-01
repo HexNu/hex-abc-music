@@ -155,20 +155,25 @@ public class Modifier {
         @Override
         public String toString() {
             switch (this) {
+                case FRENCH_VIOLIN:
                 case BARITONE:
+                case TENOR:
                 case MEZZOSOPRANO:
                 case SOPRANO:
                     return getSpecifier() + getLineNumber();
                 default:
-                    return getSpecifier();
+                    return getSpecifier(); 
             }
         }
     }
 
     public enum OctaveClef {
+        
+        NORMAL(""),
         UP("+8"),
         DOWN("-8"),
-        NORMAL("");
+        TWICE_UP("+15"),
+        TWICE_DOWN("-15");
         private final String value;
         public static final OctaveClef DEFAULT_OCTAVE = NORMAL;
 
