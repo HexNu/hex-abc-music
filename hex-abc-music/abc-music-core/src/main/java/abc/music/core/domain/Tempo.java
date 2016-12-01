@@ -1,6 +1,7 @@
 package abc.music.core.domain;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -10,53 +11,13 @@ import java.util.List;
  */
 public class Tempo extends Field {
 
-    public static final String LARGHISSIMO = "Larghissimo";
-    public static final String GRAVE = "Grave";
-    public static final String LARGO = "Largo";
-    public static final String LENTO = "Lento";
-    public static final String LARGHETTO = "Larghetto";
-    public static final String ADAGIO = "Adagio";
-    public static final String ADAGIETTO = "Adagietto";
-    public static final String ANDANTE = "Andante";
-    public static final String ANDANTINO = "Andantino";
-    public static final String MARCIA_MODERATO = "Marcia moderato";
-    public static final String ANDANTE_MODERATO = "Andante moderato";
-    public static final String MODERATO = "Moderato";
-    public static final String ALLEGRETTO = "Allegretto";
-    public static final String ALLEGRO_MODERATO = "Allegro moderato";
-    public static final String ALLEGRO = "Allegro";
-    public static final String VIVACE = "Vivace";
-    public static final String VIVACISSIMO = "Vivacissimo";
-    public static final String ALLEGRO_VIVACE = "Allegro vivace";
-    public static final String PRESTO = "Presto";
-    public static final String PRESTISSIMO = "Prestissimo";
-    private static final List<String> TEMPI = new ArrayList<>();
+    private static final Integer[] mms = {40, 42, 44, 46, 48, 50, 52, 54, 56,
+        58, 60, 63, 66, 69, 72, 76, 80, 84, 88, 92, 96, 100, 104, 108, 112, 116,
+        120, 126, 132, 138, 144, 152, 160, 168, 176, 184, 192, 200, 208};
+    private static final List<Integer> MM = Arrays.asList(mms);
     private String label;
-    private String unit;
+    private Unit unit;
     private Integer unitsPerMinute;
-
-    static {
-        TEMPI.add(LARGHISSIMO);
-        TEMPI.add(GRAVE);
-        TEMPI.add(LARGO);
-        TEMPI.add(LENTO);
-        TEMPI.add(LARGHETTO);
-        TEMPI.add(ADAGIO);
-        TEMPI.add(ADAGIETTO);
-        TEMPI.add(ANDANTE);
-        TEMPI.add(ANDANTINO);
-        TEMPI.add(MARCIA_MODERATO);
-        TEMPI.add(ANDANTE_MODERATO);
-        TEMPI.add(MODERATO);
-        TEMPI.add(ALLEGRETTO);
-        TEMPI.add(ALLEGRO_MODERATO);
-        TEMPI.add(ALLEGRO);
-        TEMPI.add(VIVACE);
-        TEMPI.add(VIVACISSIMO);
-        TEMPI.add(ALLEGRO_VIVACE);
-        TEMPI.add(PRESTO);
-        TEMPI.add(PRESTISSIMO);
-    }
 
     public Tempo() {
         super('Q');
@@ -66,15 +27,19 @@ public class Tempo extends Field {
         return label;
     }
 
+    public void setLabel(Marking marking) {
+        setLabel(marking.getLabel());
+    }
+
     public void setLabel(String label) {
         this.label = label;
     }
 
-    public String getUnit() {
+    public Unit getUnit() {
         return unit;
     }
 
-    public void setUnit(String unit) {
+    public void setUnit(Unit unit) {
         this.unit = unit;
     }
 
@@ -82,26 +47,30 @@ public class Tempo extends Field {
         return unitsPerMinute;
     }
 
+    public static List<Integer> getMM() {
+        return MM;
+    }
+
     public void setUnitsPerMinute(Integer unitsPerMinute) {
         this.unitsPerMinute = unitsPerMinute;
     }
 
-    public static List<String> getTempi() {
-        return TEMPI;
+    public static List<Marking> getTempi() {
+        return new ArrayList<>(Arrays.asList(Marking.values()));
     }
 
     @Override
     public boolean isEmpty() {
-        return label == null && (unit == null || unit.isEmpty() || unitsPerMinute == null);
+        return label == null && (unit == null || unitsPerMinute == null);
     }
 
     @Override
     public String get() {
         String result = getCode() + ":";
         if (label != null && !label.isEmpty()) {
-            result += " \"" + label +  "  \"";
+            result += " \"" + label + "  \"";
         }
-        if (unit != null && !unit.isEmpty() && unitsPerMinute != null) {
+        if (unit != null && unitsPerMinute != null) {
             result += " " + unit + "=" + unitsPerMinute;
         }
         return result;
@@ -109,9 +78,86 @@ public class Tempo extends Field {
 
     @Override
     public String toString() {
-        if (unit != null && !unit.isEmpty() && unitsPerMinute != null) {
+        if (unit != null && unitsPerMinute != null) {
             return super.toString() + " " + unit + "=" + unitsPerMinute;
         }
         return super.toString();
+    }
+
+    public enum Marking {
+
+        LARGHISSIMO(24, 0, 24),
+        GRAVE(30, 25, 45),
+        LARGO(40, 40, 60),
+        LENTO(50, 45, 60),
+        LARGHETTO(60, 60, 66),
+        ADAGIO(66, 66, 76),
+        ADAGIETTO(72, 72, 76),
+        MARCIA_MODERATO(84, 83, 85),
+        ANDANTE(88, 76, 108),
+        ANDANTINO(92, 80, 108),
+        ANDANTE_MODERATO(96, 92, 112),
+        MODERATO(108, 108, 120),
+        ALLEGRETTO(112, 112, 120),
+        ALLEGRO_MODERATO(116, 116, 120),
+        ALLEGRO(126, 120, 168),
+        ALLEGRO_MOLTO(144, 132, 168),
+        VIVACE(168, 168, 176),
+        ALLEGRO_VIVACE(176, 172, 176),
+        VIVACISSIMO(176, 172, 176),
+        ALLEGRISSIMO(176, 172, 176),
+        PRESTO(192, 168, 200),
+        PRESTISSIMO(208, 200, Integer.MAX_VALUE);
+        private final int suggested;
+        private final int min;
+        private final int max;
+
+        private Marking(int suggested, int min, int max) {
+            this.suggested = suggested;
+            this.min = min;
+            this.max = max;
+        }
+
+        public int getSuggested() {
+            return suggested;
+        }
+
+        public String getLabel() {
+            return name().substring(0, 1) + name().substring(1).toLowerCase().replaceAll("_", " ");
+        }
+
+        @Override
+        public String toString() {
+            if (max == Integer.MAX_VALUE) {
+                return getLabel() + " (≈ " + min + " + )";
+            }
+            return getLabel() + " (≈ " + min + " - " + max + ")";
+        }
+    }
+
+    public enum Unit {
+        ONE_QUARTER("1/4"),
+        ONE_EIGHTH("1/8"),
+        THREE_EIGHTH("3/8"),
+        TWO_QUARTERS("2/4"),
+        THREE_QUARTERS("3/4"),
+        ONE_SIXTENTH("1/16"),
+        THREE_SIXTENTH("3/16"),
+        ONE_HALF("1/2");
+        private final String unit;
+
+        private Unit(String unit) {
+            this.unit = unit;
+
+        }
+
+        public String getUnit() {
+            return unit;
+        }
+
+        @Override
+        public String toString() {
+            return getUnit();
+        }
     }
 }

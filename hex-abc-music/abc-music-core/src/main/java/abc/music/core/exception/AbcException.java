@@ -1,4 +1,4 @@
-package abc.music.core;
+package abc.music.core.exception;
 
 /**
  * Created 2016-nov-28

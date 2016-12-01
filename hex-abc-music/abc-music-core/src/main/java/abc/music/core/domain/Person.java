@@ -26,7 +26,7 @@ public class Person {
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
-    
+
     public String getName() {
         return getFirstName() + " " + getLastName();
     }
@@ -39,8 +39,23 @@ public class Person {
         this.email = email;
     }
 
+    @Override
+    public String toString() {
+        String result = "";
+        if (getFirstName() != null) {
+            result += getFirstName();
+            if (getLastName() != null) {
+                result += " ";
+            }
+        }
+        if (getLastName() != null) {
+            result += getLastName();
+        }
+        return result.isEmpty() ? null : result;
+    }
+
     public enum Role {
-        
+
         COMPOSER('C'),
         AUTHOR('A'),
         TRAD('C'),
@@ -65,6 +80,11 @@ public class Person {
                 }
             }
             return DEFAULT_ROLE;
+        }
+
+        @Override
+        public String toString() {
+            return name().substring(0, 1) + name().toLowerCase().substring(1);
         }
     }
 }

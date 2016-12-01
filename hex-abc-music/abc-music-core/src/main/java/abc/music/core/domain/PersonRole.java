@@ -38,4 +38,9 @@ public class PersonRole extends Field {
         }
         return getCode() + ": " + getPerson().getName();
     }
+
+    @Override
+    public String toString() {
+        return getPerson().toString();
+    }
 }

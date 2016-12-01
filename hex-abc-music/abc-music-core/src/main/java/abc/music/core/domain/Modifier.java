@@ -10,7 +10,7 @@ import java.util.Objects;
 public class Modifier {
 
     private Clef clef;
-    private Octave octave;
+    private OctaveClef octave;
     private Integer transpose;
 
     public Modifier() {
@@ -18,10 +18,10 @@ public class Modifier {
     }
 
     public Modifier(Integer transpose) {
-        this(Clef.DEFAULT_CLEF, Octave.DEFAULT_OCTAVE, transpose);
+        this(Clef.DEFAULT_CLEF, OctaveClef.DEFAULT_OCTAVE, transpose);
     }
 
-    public Modifier(Clef clef, Octave octave, Integer transpose) {
+    public Modifier(Clef clef, OctaveClef octave, Integer transpose) {
         this.clef = clef;
         this.octave = octave;
         this.transpose = transpose;
@@ -35,11 +35,11 @@ public class Modifier {
         this.clef = clef;
     }
 
-    public Octave getOctave() {
+    public OctaveClef getOctave() {
         return octave;
     }
 
-    public void setOctave(Octave octave) {
+    public void setOctave(OctaveClef octave) {
         this.octave = octave;
     }
 
@@ -59,14 +59,14 @@ public class Modifier {
         String result = "";
         if (getClef() != null) {
             if (getClef().equals(Clef.DEFAULT_CLEF)) {
-                if (getOctave() != null && !getOctave().equals(Octave.DEFAULT_OCTAVE)) {
+                if (getOctave() != null && !getOctave().equals(OctaveClef.DEFAULT_OCTAVE)) {
                     result += " clef=" + getClef();
                 }
             } else {
                 result += " clef=" + getClef();
             }
         }
-        if (getOctave() != null && !getOctave().equals(Octave.DEFAULT_OCTAVE)) {
+        if (getOctave() != null && !getOctave().equals(OctaveClef.DEFAULT_OCTAVE)) {
             result += getOctave();
         }
         if (transpose != null && transpose != 0) {
@@ -109,13 +109,14 @@ public class Modifier {
     }
 
     public enum Clef {
-        TREBLE("treble", 2),
-        BASS("bass", 4),
-        BARITONE("bass", 3),
-        TENOR("tenor", 4),
-        ALTO("alto", 3),
-        MEZZOSOPRANO("alto", 2),
-        SOPRANO("alto", 1);
+        TREBLE("G", 2),
+        FRENCH_VIOLIN("G", 1),
+        BASS("F", 4),
+        BARITONE("F", 3),
+        TENOR("C", 4),
+        ALTO("C", 3),
+        MEZZOSOPRANO("C", 2),
+        SOPRANO("C", 1);
         private final String specifier;
         public static final Clef DEFAULT_CLEF = TREBLE;
         private final int lineNumber;
@@ -134,7 +135,7 @@ public class Modifier {
         }
 
         public String getName() {
-            return name().substring(0, 1) + name().substring(1).toLowerCase();
+            return name().substring(0, 1) + name().substring(1).replaceAll("_", " ").toLowerCase();
         }
 
         public static Clef find(String text) {
@@ -164,18 +165,18 @@ public class Modifier {
         }
     }
 
-    public enum Octave {
+    public enum OctaveClef {
         UP("+8"),
         DOWN("-8"),
         NORMAL("");
         private final String value;
-        public static final Octave DEFAULT_OCTAVE = NORMAL;
+        public static final OctaveClef DEFAULT_OCTAVE = NORMAL;
 
         public String getName() {
             return name().substring(0, 1) + name().substring(1).toLowerCase();
         }
 
-        private Octave(String value) {
+        private OctaveClef(String value) {
             this.value = value;
         }
 
@@ -183,12 +184,12 @@ public class Modifier {
             return value;
         }
 
-        public static Octave find(String text) {
+        public static OctaveClef find(String text) {
             if (text != null) {
                 if (text.isEmpty()) {
                     return NORMAL;
                 }
-                for (Octave octave : values()) {
+                for (OctaveClef octave : values()) {
                     if (text.equalsIgnoreCase(octave.name()) || text.equalsIgnoreCase(octave.getValue())) {
                         return octave;
                     }

@@ -22,7 +22,7 @@
         </resources>    
     </build>
     <properties>
-        <vendor>${organization.name}</vendor>
+        <vendor>${project.organization.name}</vendor>
         <timestamp>${maven.build.timestamp}</timestamp>
         <maven.build.timestamp.format>yyyy-MM-dd'T'HH:mm:ss</maven.build.timestamp.format>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

@@ -11,6 +11,7 @@ import java.util.List;
 public class Tune {
 
     private Integer id;
+    private Project project;
     private final List<String> titles = new ArrayList<>();
     private final List<PersonRole> creators = new ArrayList<>();
     private final List<Origin> origin = new ArrayList<>();
@@ -20,15 +21,26 @@ public class Tune {
     private String copyright;
     private Tempo tempo;
     private Meter meter;
-    private Unit unitNoteLength;
+    private TimeValue timeValue;
     private Key key;
     private final List<Voice> voices = new ArrayList<>();
 
     public Tune() {
+        this.project = null;
+        this.id = 1;
     }
 
-    public Tune(Integer id) {
-        this.id = id;
+    public Tune(Project project) {
+        this.project = project;
+        this.id = project.getNextId();
+    }
+
+    public Project getProject() {
+        return project;
+    }
+
+    public void setProject(Project project) {
+        this.project = project;
     }
 
     public Integer getId() {
@@ -168,20 +180,20 @@ public class Tune {
         this.meter = meter;
     }
 
-    public Unit getUnitNoteLength() {
-        return unitNoteLength;
+    public TimeValue getTimeValue() {
+        return timeValue;
     }
 
     public String getUnitField() {
-        return "L: 1/" + unitNoteLength.getFraction();
+        return "L: 1/" + timeValue.getFraction();
     }
 
     public boolean hasUnit() {
-        return unitNoteLength != null;
+        return timeValue != null;
     }
 
-    public void setUnitNoteLength(Unit unitNoteLength) {
-        this.unitNoteLength = unitNoteLength;
+    public void setTimeValue(TimeValue timeValue) {
+        this.timeValue = timeValue;
     }
 
     public Key getKey() {
@@ -210,16 +222,18 @@ public class Tune {
         this.voices.add(voice);
     }
 
-    public enum Unit {
+    public enum TimeValue {
+
         HALF("2"),
         QUARTER("4"),
         EIGHTH("8"),
         SIXTEENTH("16"),
-        THIRTY_SECOND("32");
-        public static Unit DEFAULT_UNIT = EIGHTH;
+        THIRTY_SECOND("32"),
+        SIXTY_FORTH("64");
+        public static TimeValue DEFAULT_TIME_VALUE = EIGHTH;
         private final String fraction;
 
-        private Unit(String fraction) {
+        private TimeValue(String fraction) {
             this.fraction = fraction;
         }
 
@@ -232,19 +246,15 @@ public class Tune {
             return "1/" + getFraction();
         }
 
-        public static Unit find(String text) {
+        public static TimeValue find(String text) {
             if (text != null && text.isEmpty()) {
-                for (Unit unit : values()) {
+                for (TimeValue unit : values()) {
                     if (text.toUpperCase().equals(unit.name()) || text.toUpperCase().equals(unit.toString())) {
                         return unit;
                     }
                 }
             }
-            return DEFAULT_UNIT;
+            return DEFAULT_TIME_VALUE;
         }
-    }
-
-    public static void main(String[] args) {
-        Tune tune = new Tune();
     }
 }

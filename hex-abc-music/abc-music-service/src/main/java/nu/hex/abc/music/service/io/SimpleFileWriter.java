@@ -1,6 +1,6 @@
 package nu.hex.abc.music.service.io;
 
-import abc.music.core.AbcException;
+import abc.music.core.exception.AbcException;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;

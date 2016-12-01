@@ -22,6 +22,12 @@
             <artifactId>lightXML</artifactId>
             <version>1.1</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.ghost4j/ghost4j -->
+        <dependency>
+            <groupId>org.ghost4j</groupId>
+            <artifactId>ghost4j</artifactId>
+            <version>1.0.0</version>
+        </dependency>    
     </dependencies>
     <build>
         <resources>
@@ -32,7 +38,7 @@
         </resources>    
     </build>
     <properties>
-        <vendor>${organization.name}</vendor>
+        <vendor>${project.organization.name}</vendor>
         <timestamp>${maven.build.timestamp}</timestamp>
         <maven.build.timestamp.format>yyyy-MM-dd'T'HH:mm:ss.SSS</maven.build.timestamp.format>
         <maven.compiler.source>1.8</maven.compiler.source>
