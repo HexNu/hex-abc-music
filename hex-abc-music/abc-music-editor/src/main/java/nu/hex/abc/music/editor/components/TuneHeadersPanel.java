@@ -16,6 +16,7 @@ import javax.swing.SpinnerListModel;
 import nu.hex.abc.music.editor.AbcMusicEditor;
 import nu.hex.abc.music.editor.Constants;
 import nu.hex.abc.music.editor.action.AddVoiceActon;
+import nu.hex.abc.music.editor.action.OpenScoreLayoutAction;
 import nu.hex.abc.music.editor.support.PersonRoleListMouseListener;
 
 /**
@@ -730,5 +731,8 @@ public class TuneHeadersPanel extends AmePanel {
     }
 
     private void openScoreLayout() {
+//        if (tune != null) {
+            new OpenScoreLayoutAction(parent, tune).actionPerformed(null);
+//        }
     }
 }

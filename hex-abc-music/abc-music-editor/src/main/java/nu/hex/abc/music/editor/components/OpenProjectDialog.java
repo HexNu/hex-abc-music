@@ -1,6 +1,7 @@
 package nu.hex.abc.music.editor.components;
 
 import abc.music.core.domain.Project;
+import java.awt.Insets;
 import nu.hex.abc.music.editor.AbcMusicEditor;
 import nu.hex.abc.music.editor.Constants;
 
@@ -12,6 +13,10 @@ public class OpenProjectDialog extends AmeDialog<Project> {
 
     public OpenProjectDialog(AbcMusicEditor parent) {
         super(parent, "Open Project");
+    }
+
+    @Override
+    protected void init() {
         initComponents();
     }
 

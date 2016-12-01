@@ -24,6 +24,7 @@ public class Tune {
     private TimeValue timeValue;
     private Key key;
     private final List<Voice> voices = new ArrayList<>();
+    private String scoreLayout;
 
     public Tune() {
         this.project = null;
@@ -220,6 +221,14 @@ public class Tune {
     public void addVoice(Voice voice) {
         voice.setTune(this);
         this.voices.add(voice);
+    }
+
+    public String getScoreLayout() {
+        return scoreLayout;
+    }
+
+    public void setScoreLayout(String scoreLayout) {
+        this.scoreLayout = scoreLayout;
     }
 
     public enum TimeValue {

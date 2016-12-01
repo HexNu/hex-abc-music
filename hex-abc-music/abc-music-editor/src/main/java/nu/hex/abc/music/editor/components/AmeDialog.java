@@ -10,7 +10,6 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import nu.hex.abc.music.editor.AbcMusicEditor;
-import nu.hex.abc.music.editor.Main;
 
 /**
  * Created 2016-dec-01
@@ -27,7 +26,11 @@ public abstract class AmeDialog<T> extends JDialog {
     public AmeDialog(AbcMusicEditor parent, String title) {
         super(parent, title, true);
         this.parent = parent;
+        init();
+        super.setLocationRelativeTo(parent);
     }
+    
+    protected abstract void init();
 
     @Override
     protected JRootPane createRootPane() {
