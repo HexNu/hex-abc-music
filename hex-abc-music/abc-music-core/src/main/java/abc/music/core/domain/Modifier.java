@@ -9,12 +9,13 @@ import java.util.Objects;
  */
 public class Modifier {
 
-    private Clef clef;
-    private OctaveClef octave;
+    public static final Integer DEFAULT_TRANSPOSE = 0;
+    private Clef clef = Clef.DEFAULT_CLEF;
+    private OctaveClef octave = OctaveClef.DEFAULT_OCTAVE;
     private Integer transpose;
 
     public Modifier() {
-        this(null);
+        this(DEFAULT_TRANSPOSE);
     }
 
     public Modifier(Integer transpose) {
@@ -162,13 +163,13 @@ public class Modifier {
                 case SOPRANO:
                     return getSpecifier() + getLineNumber();
                 default:
-                    return getSpecifier(); 
+                    return getSpecifier();
             }
         }
     }
 
     public enum OctaveClef {
-        
+
         NORMAL(""),
         UP("+8"),
         DOWN("-8"),

@@ -7,7 +7,6 @@ import abc.music.core.domain.PersonRole;
 import abc.music.core.domain.Project;
 import abc.music.core.domain.Tempo;
 import abc.music.core.domain.Tune;
-import abc.music.core.domain.Voice;
 import java.awt.Dimension;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
@@ -15,9 +14,11 @@ import javax.swing.DefaultListModel;
 import javax.swing.SpinnerListModel;
 import nu.hex.abc.music.editor.AbcMusicEditor;
 import nu.hex.abc.music.editor.Constants;
-import nu.hex.abc.music.editor.action.AddVoiceActon;
+import nu.hex.abc.music.editor.action.CreateVoiceActon;
+import nu.hex.abc.music.editor.action.CreateTuneAction;
 import nu.hex.abc.music.editor.action.OpenScoreLayoutAction;
 import nu.hex.abc.music.editor.support.PersonRoleListMouseListener;
+import nu.hex.abc.music.editor.util.TuneHelper;
 
 /**
  *
@@ -25,7 +26,6 @@ import nu.hex.abc.music.editor.support.PersonRoleListMouseListener;
  */
 public class TuneHeadersPanel extends AmePanel {
 
-    private final AbcMusicEditor parent;
     private Tune tune;
 
     public TuneHeadersPanel(AbcMusicEditor parent, Project project) {
@@ -33,8 +33,7 @@ public class TuneHeadersPanel extends AmePanel {
     }
 
     public TuneHeadersPanel(AbcMusicEditor parent, Tune tune, Project project) {
-        super(project, "Tune Headers", Constants.SMALL_TITLE_FONT);
-        this.parent = parent;
+        super(parent, project, "Tune Headers", Constants.SMALL_TITLE_FONT);
         this.tune = tune;
     }
 
@@ -72,62 +71,83 @@ public class TuneHeadersPanel extends AmePanel {
 
     private void setFields() {
         if (tune != null) {
-            tempoUnitComboBox.setSelectedItem(tune.getTempo().getUnit());
-            unitsPerMinuteComboBox.setSelectedItem(tune.getTempo().getUnitsPerMinute());
-            defaultTimeValueComboBox.setSelectedItem(tune.getTimeValue());
-            meterNumeratorSpinner.setValue(tune.getMeter().getNumerator());
-            meterDenominatorSpinner.setValue(tune.getMeter().getDenominator());
-            DefaultListModel composerListModel = (DefaultListModel) composerList.getModel();
-            DefaultListModel authorListModel = (DefaultListModel) authorList.getModel();
-            DefaultListModel tradListModel = (DefaultListModel) traditionalList.getModel();
-            DefaultListModel transcriberListModel = (DefaultListModel) traditionalList.getModel();
-            tune.getCreators().stream().forEach((personRole) -> {
-                switch (personRole.getRole()) {
-                    case COMPOSER:
-                        composerListModel.addElement(personRole);
-                        break;
-                    case AUTHOR:
-                        authorListModel.addElement(personRole);
-                        break;
-                    case TRAD:
-                        tradListModel.addElement(personRole);
-                        break;
-                    case TRANSCRIBER:
-                        transcriberListModel.addElement(personRole);
-                        break;
-                    default:
-                        break;
-                }
-            });
-            pitchComboBox.setSelectedItem(tune.getKey().getPitch());
-            signatureComboBox.setSelectedItem(tune.getKey().getSignature());
-            modeComboBox.setSelectedItem(tune.getKey().getMode());
-            clefComboBox.setSelectedItem(tune.getKey().getModifier().getClef());
-            transposeSpinner.setValue(tune.getKey().getModifier().getTranspose());
-            octaveComboBox.setSelectedItem(tune.getKey().getModifier().getOctave());
+            populateFields();
         } else {
-            tune = new Tune();
-            tempoUnitComboBox.setSelectedItem(Tempo.Unit.ONE_QUARTER);
-            unitsPerMinuteComboBox.setSelectedItem(96);
-            defaultTimeValueComboBox.setSelectedIndex(2);
-            meterDenominatorSpinner.setValue(4);
-            composerList.addMouseListener(new PersonRoleListMouseListener(parent, composerList, Person.Role.COMPOSER, tune));
-            authorList.addMouseListener(new PersonRoleListMouseListener(parent, authorList, Person.Role.AUTHOR, tune));
-            traditionalList.addMouseListener(new PersonRoleListMouseListener(parent, authorList, Person.Role.TRAD, tune));
-            transcriberList.addMouseListener(new PersonRoleListMouseListener(parent, authorList, Person.Role.TRANSCRIBER, tune));
-            pitchComboBox.setSelectedItem(Key.Pitch.DEFAULT_PITCH);
-            signatureComboBox.setSelectedItem(Key.Signature.DEFAULT_SIGNATURE);
-            modeComboBox.setSelectedItem(Key.Mode.DEFAULT_MODE);
-            clefComboBox.setSelectedItem(Modifier.Clef.DEFAULT_CLEF);
-            transposeSpinner.setValue(0);
-            octaveComboBox.setSelectedItem(Modifier.OctaveClef.DEFAULT_OCTAVE);
-            Person hl = new Person();
-            hl.setFirstName("Håkan");
-            hl.setLastName("Lidén");
-            PersonRole role = new PersonRole(Person.Role.COMPOSER);
-            role.setPerson(hl);
-            ((DefaultListModel) composerList.getModel()).add(0, role);
+            resetFields();
+//            Person hl = new Person();
+//            hl.setFirstName("Håkan");
+//            hl.setLastName("Lidén");
+//            PersonRole role = new PersonRole(Person.Role.COMPOSER);
+//            role.setPerson(hl);
+//            ((DefaultListModel) composerList.getModel()).add(0, role);
         }
+    }
+
+    private void populateFields() {
+        TuneHelper tuneHelper = new TuneHelper(tune);
+        titlesTextArea.setText(tuneHelper.getTitlesAsString());
+        rythmTextField.setText(tune.getRythm());
+        historyTextArea.setText(tuneHelper.getHistoryAsString());
+        originTextArea.setText(tuneHelper.getOriginAsString());
+        commentsTextArea.setText(tuneHelper.getCommentsAsString());
+        copyrightTextArea.setText(tuneHelper.getCopyrightAsString());
+        tempoUnitComboBox.setSelectedItem(tune.getTempo().getUnit());
+        unitsPerMinuteComboBox.setSelectedItem(tune.getTempo().getUnitsPerMinute());
+        defaultTimeValueComboBox.setSelectedItem(tune.getTimeValue());
+        meterNumeratorSpinner.setValue(tune.getMeter().getNumerator());
+        meterDenominatorSpinner.setValue(tune.getMeter().getDenominator());
+        DefaultListModel composerListModel = (DefaultListModel) composerList.getModel();
+        DefaultListModel authorListModel = (DefaultListModel) authorList.getModel();
+        DefaultListModel tradListModel = (DefaultListModel) traditionalList.getModel();
+        DefaultListModel transcriberListModel = (DefaultListModel) traditionalList.getModel();
+        tune.getCreators().stream().forEach((personRole) -> {
+            switch (personRole.getRole()) {
+                case COMPOSER:
+                    composerListModel.addElement(personRole);
+                    break;
+                case AUTHOR:
+                    authorListModel.addElement(personRole);
+                    break;
+                case TRAD:
+                    tradListModel.addElement(personRole);
+                    break;
+                case TRANSCRIBER:
+                    transcriberListModel.addElement(personRole);
+                    break;
+                default:
+                    break;
+            }
+        });
+        pitchComboBox.setSelectedItem(tune.getKey().getPitch());
+        signatureComboBox.setSelectedItem(tune.getKey().getSignature());
+        modeComboBox.setSelectedItem(tune.getKey().getMode());
+        clefComboBox.setSelectedItem(tune.getKey().getModifier().getClef());
+        transposeSpinner.setValue(tune.getKey().getModifier().getTranspose());
+        octaveComboBox.setSelectedItem(tune.getKey().getModifier().getOctave());
+        parent.getVoicesPanel().setVoices(tune.getVoices());
+    }
+
+    private void resetFields() {
+        titlesTextArea.setText("");
+        rythmTextField.setText("");
+        historyTextArea.setText("");
+        originTextArea.setText("");
+        commentsTextArea.setText("");
+        copyrightTextArea.setText("");
+        tempoUnitComboBox.setSelectedItem(Tempo.Unit.ONE_QUARTER);
+        unitsPerMinuteComboBox.setSelectedItem(96);
+        defaultTimeValueComboBox.setSelectedIndex(2);
+        meterDenominatorSpinner.setValue(4);
+        composerList.addMouseListener(new PersonRoleListMouseListener(parent, composerList, Person.Role.COMPOSER, tune));
+        authorList.addMouseListener(new PersonRoleListMouseListener(parent, authorList, Person.Role.AUTHOR, tune));
+        traditionalList.addMouseListener(new PersonRoleListMouseListener(parent, authorList, Person.Role.TRAD, tune));
+        transcriberList.addMouseListener(new PersonRoleListMouseListener(parent, authorList, Person.Role.TRANSCRIBER, tune));
+        pitchComboBox.setSelectedItem(Key.Pitch.DEFAULT_PITCH);
+        signatureComboBox.setSelectedItem(Key.Signature.DEFAULT_SIGNATURE);
+        modeComboBox.setSelectedItem(Key.Mode.DEFAULT_MODE);
+        clefComboBox.setSelectedItem(Modifier.Clef.DEFAULT_CLEF);
+        transposeSpinner.setValue(0);
+        octaveComboBox.setSelectedItem(Modifier.OctaveClef.DEFAULT_OCTAVE);
     }
 
     /**
@@ -177,7 +197,7 @@ public class TuneHeadersPanel extends AmePanel {
         originTextArea = new javax.swing.JTextArea();
         jLabel17 = new javax.swing.JLabel();
         jScrollPane4 = new javax.swing.JScrollPane();
-        notesTextArea = new javax.swing.JTextArea();
+        commentsTextArea = new javax.swing.JTextArea();
         jScrollPane9 = new javax.swing.JScrollPane();
         copyrightTextArea = new javax.swing.JTextArea();
         jLabel14 = new javax.swing.JLabel();
@@ -197,6 +217,7 @@ public class TuneHeadersPanel extends AmePanel {
         transposeSpinner = new javax.swing.JSpinner();
         jLabel24 = new javax.swing.JLabel();
         octaveComboBox = new javax.swing.JComboBox<>();
+        newTuneButton = new javax.swing.JButton();
 
         setOpaque(false);
 
@@ -302,15 +323,15 @@ public class TuneHeadersPanel extends AmePanel {
 
         originTextArea.setColumns(12);
         originTextArea.setRows(2);
-        originTextArea.setNextFocusableComponent(notesTextArea);
+        originTextArea.setNextFocusableComponent(commentsTextArea);
         jScrollPane3.setViewportView(originTextArea);
 
         jLabel17.setText("Comments:");
 
-        notesTextArea.setColumns(12);
-        notesTextArea.setRows(2);
-        notesTextArea.setNextFocusableComponent(copyrightTextArea);
-        jScrollPane4.setViewportView(notesTextArea);
+        commentsTextArea.setColumns(12);
+        commentsTextArea.setRows(2);
+        commentsTextArea.setNextFocusableComponent(copyrightTextArea);
+        jScrollPane4.setViewportView(commentsTextArea);
 
         copyrightTextArea.setColumns(12);
         copyrightTextArea.setRows(2);
@@ -372,6 +393,13 @@ public class TuneHeadersPanel extends AmePanel {
         octaveComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         octaveComboBox.setNextFocusableComponent(composerList);
 
+        newTuneButton.setText("New Tune");
+        newTuneButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                newTuneButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -386,31 +414,33 @@ public class TuneHeadersPanel extends AmePanel {
                     .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(addVoiceButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jScrollPane1)
-                        .addComponent(rythmTextField)
-                        .addComponent(tempoLabelComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(tempoUnitComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jLabel4)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(unitsPerMinuteComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jLabel5))
-                        .addGroup(layout.createSequentialGroup()
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(defaultTimeValueComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(meterNumeratorSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(jLabel8)))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(meterDenominatorSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(useLetterCheckBox, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(openScoreLayoutButton, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane1)
+                    .addComponent(rythmTextField)
+                    .addComponent(tempoLabelComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(tempoUnitComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(unitsPerMinuteComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel5))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(defaultTimeValueComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(meterNumeratorSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel8)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(meterDenominatorSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(useLetterCheckBox, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(openScoreLayoutButton, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(newTuneButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -554,7 +584,8 @@ public class TuneHeadersPanel extends AmePanel {
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                         .addComponent(addVoiceButton)
                                         .addComponent(openScoreLayoutButton)
-                                        .addComponent(jLabel24))
+                                        .addComponent(jLabel24)
+                                        .addComponent(newTuneButton))
                                     .addComponent(octaveComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(0, 1, Short.MAX_VALUE))
                             .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
@@ -588,18 +619,23 @@ public class TuneHeadersPanel extends AmePanel {
     }//GEN-LAST:event_meterDenominatorSpinnerStateChanged
 
     private void addVoiceButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addVoiceButtonActionPerformed
-        addVoice();
+        createNewVoice();
     }//GEN-LAST:event_addVoiceButtonActionPerformed
 
     private void openScoreLayoutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openScoreLayoutButtonActionPerformed
         openScoreLayout();
     }//GEN-LAST:event_openScoreLayoutButtonActionPerformed
 
+    private void newTuneButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newTuneButtonActionPerformed
+        createTune();
+    }//GEN-LAST:event_newTuneButtonActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addVoiceButton;
     private javax.swing.JList<String> authorList;
     private javax.swing.JComboBox<String> clefComboBox;
+    private javax.swing.JTextArea commentsTextArea;
     private javax.swing.JList<String> composerList;
     private javax.swing.JTextArea copyrightTextArea;
     private javax.swing.JComboBox<String> defaultTimeValueComboBox;
@@ -640,7 +676,7 @@ public class TuneHeadersPanel extends AmePanel {
     private javax.swing.JSpinner meterDenominatorSpinner;
     private javax.swing.JSpinner meterNumeratorSpinner;
     private javax.swing.JComboBox<String> modeComboBox;
-    private javax.swing.JTextArea notesTextArea;
+    private javax.swing.JButton newTuneButton;
     private javax.swing.JComboBox<String> octaveComboBox;
     private javax.swing.JButton openScoreLayoutButton;
     private javax.swing.JTextArea originTextArea;
@@ -724,15 +760,27 @@ public class TuneHeadersPanel extends AmePanel {
         }
     }
 
-    private void addVoice() {
-        AddVoiceActon action = new AddVoiceActon(parent);
+    private void createNewVoice() {
+        CreateVoiceActon action = new CreateVoiceActon(parent, tune);
         action.actionPerformed(null);
-        Voice voiceToAdd = action.get();
+        parent.getVoicesPanel().addVoice(action.get());
     }
 
     private void openScoreLayout() {
 //        if (tune != null) {
-            new OpenScoreLayoutAction(parent, tune).actionPerformed(null);
+        new OpenScoreLayoutAction(parent, tune).actionPerformed(null);
 //        }
+    }
+
+    private void createTune() {
+        CreateTuneAction action = new CreateTuneAction(parent);
+        action.actionPerformed(null);
+        setTune(action.get());
+    }
+    
+
+    private void setTune(Tune tune) {
+        this.tune = tune;
+        setFields();
     }
 }

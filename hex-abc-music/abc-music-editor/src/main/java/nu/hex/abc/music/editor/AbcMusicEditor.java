@@ -26,8 +26,8 @@ import javax.swing.WindowConstants;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
-import nu.hex.abc.music.editor.action.OpenProjectAction;
 import nu.hex.abc.music.editor.components.TuneHeadersPanel;
+import nu.hex.abc.music.editor.components.VoicesPanel;
 
 /**
  * Created 2016-nov-30
@@ -48,6 +48,8 @@ public class AbcMusicEditor extends JFrame {
     private final JPanel rightPanel = new JPanel();
     private final JPanel searchPanel = new JPanel();
     private final JPanel topPanel = new JPanel();
+    private TuneHeadersPanel headersPanel;
+    private VoicesPanel voicesPanel;
     private AmeMenuBar menuBar;
     private Project project;
 
@@ -56,9 +58,6 @@ public class AbcMusicEditor extends JFrame {
     }
 
     private void init() {
-        if (project == null) {
-            new OpenProjectAction(this).actionPerformed(null);
-        }
         Dimension dimension = new Dimension(1800, 1000);
         setContentPane(new BackgroundImagePanel("Background.png"));
         setIconImages(new LogoImages().get());
@@ -116,7 +115,10 @@ public class AbcMusicEditor extends JFrame {
         editorPanel.add(editorLabel, BorderLayout.NORTH);
         JPanel editorContentPanel = new JPanel(new BorderLayout(0, 12));
         editorContentPanel.setOpaque(false);
-        editorContentPanel.add(new TuneHeadersPanel(this, project), BorderLayout.NORTH);
+        headersPanel = new TuneHeadersPanel(this, project);
+        editorContentPanel.add(headersPanel, BorderLayout.NORTH);
+        voicesPanel = new VoicesPanel(this, project);
+        editorContentPanel.add(voicesPanel, BorderLayout.CENTER);
         editorPanel.add(editorContentPanel, BorderLayout.CENTER);
 
         bottomPanel.setOpaque(false);
@@ -137,12 +139,21 @@ public class AbcMusicEditor extends JFrame {
         setJMenuBar(menuBar);
     }
 
+    public TuneHeadersPanel getHeadersPanel() {
+        return headersPanel;
+    }
+
+    public VoicesPanel getVoicesPanel() {
+        return voicesPanel;
+    }
+
     public Project getProject() {
         return project;
     }
 
     public void setProject(Project project) {
         this.project = project;
+        setTitle(APP_TITLE + " - " + project.getName());
     }
 
     public Border getTitleBorder(String title) {

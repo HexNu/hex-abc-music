@@ -1,29 +1,33 @@
 package nu.hex.abc.music.service;
 
 import abc.music.core.domain.Project;
-import nu.hex.abc.music.service.io.Writer;
-import se.digitman.lightxml.NodeFactory;
-import se.digitman.lightxml.XmlDocument;
+import java.time.format.DateTimeFormatter;
+import nu.hex.abc.music.service.xml.write.PersonWriter;
+import nu.hex.abc.music.service.xml.write.TuneWriter;
+import nu.hex.abc.music.service.xml.write.XmlWriter;
 import se.digitman.lightxml.XmlNode;
 
 /**
- * Created 2016-nov-30
+ * Created 2016-dec-01
  *
  * @author hl
  */
-public class ProjectWriter implements Writer<XmlDocument> {
-
-    private final Project project;
+class ProjectWriter extends XmlWriter<Project> {
 
     public ProjectWriter(Project project) {
-        this.project = project;
+        super(project);
     }
 
     @Override
-    public XmlDocument write() {
-        XmlNode projectNode = NodeFactory.createNode("abc-project");
-        XmlDocument result = new XmlDocument(projectNode);
-        result.getHead().addAttribute("encoding", "UTF-8");
+    public XmlNode write() {
+        result.addAttribute("name", entity.getName());
+        result.addAttribute("last-updated", entity.getLastUpdated().format(DateTimeFormatter.ISO_DATE_TIME));
+        entity.getTunes().stream().forEach((tune) -> {
+            result.addChild(new TuneWriter(tune).write());
+        });
+        entity.getPersons().stream().forEach((person) -> {
+            result.addChild(new PersonWriter(person).write());
+        });
         return result;
     }
 

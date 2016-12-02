@@ -30,36 +30,38 @@
                   <Component id="addVoiceButton" max="32767" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="103" alignment="0" groupAlignment="0" max="-2" attributes="0">
-                      <Component id="jScrollPane1" max="32767" attributes="0"/>
-                      <Component id="rythmTextField" max="32767" attributes="0"/>
-                      <Component id="tempoLabelComboBox" alignment="0" max="32767" attributes="0"/>
-                      <Group type="102" alignment="0" attributes="0">
-                          <Component id="tempoUnitComboBox" min="-2" pref="90" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="unitsPerMinuteComboBox" min="-2" pref="90" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="102" alignment="0" attributes="0">
-                          <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                              <Component id="defaultTimeValueComboBox" max="32767" attributes="0"/>
-                              <Group type="102" attributes="0">
-                                  <Component id="meterNumeratorSpinner" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                          </Group>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="meterDenominatorSpinner" min="-2" pref="51" max="-2" attributes="0"/>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="useLetterCheckBox" min="-2" pref="100" max="-2" attributes="0"/>
-                      </Group>
+              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                  <Component id="jScrollPane1" max="32767" attributes="0"/>
+                  <Component id="rythmTextField" max="32767" attributes="0"/>
+                  <Component id="tempoLabelComboBox" alignment="0" max="32767" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="tempoUnitComboBox" min="-2" pref="90" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="unitsPerMinuteComboBox" min="-2" pref="90" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <Component id="openScoreLayoutButton" alignment="0" min="-2" pref="116" max="-2" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                          <Component id="defaultTimeValueComboBox" max="32767" attributes="0"/>
+                          <Group type="102" attributes="0">
+                              <Component id="meterNumeratorSpinner" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="meterDenominatorSpinner" min="-2" pref="51" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="useLetterCheckBox" min="-2" pref="100" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="openScoreLayoutButton" min="-2" pref="116" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="newTuneButton" max="32767" attributes="0"/>
+                  </Group>
               </Group>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
@@ -246,6 +248,7 @@
                                       <Component id="addVoiceButton" alignment="3" min="-2" max="-2" attributes="0"/>
                                       <Component id="openScoreLayoutButton" alignment="3" min="-2" max="-2" attributes="0"/>
                                       <Component id="jLabel24" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="newTuneButton" alignment="3" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <Component id="octaveComboBox" alignment="0" min="-2" max="-2" attributes="0"/>
                               </Group>
@@ -600,7 +603,7 @@
             <Property name="columns" type="int" value="12"/>
             <Property name="rows" type="int" value="2"/>
             <Property name="nextFocusableComponent" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
-              <ComponentRef name="notesTextArea"/>
+              <ComponentRef name="commentsTextArea"/>
             </Property>
           </Properties>
         </Component>
@@ -618,7 +621,7 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
       <SubComponents>
-        <Component class="javax.swing.JTextArea" name="notesTextArea">
+        <Component class="javax.swing.JTextArea" name="commentsTextArea">
           <Properties>
             <Property name="columns" type="int" value="12"/>
             <Property name="rows" type="int" value="2"/>
@@ -820,6 +823,14 @@
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
       </AuxValues>
+    </Component>
+    <Component class="javax.swing.JButton" name="newTuneButton">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="New Tune"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="newTuneButtonActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

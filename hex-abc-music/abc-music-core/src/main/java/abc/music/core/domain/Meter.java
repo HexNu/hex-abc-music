@@ -9,8 +9,10 @@ import abc.music.core.exception.AbcException;
  */
 public class Meter extends Field {
 
-    private Integer numerator;
-    private Integer denominator;
+    public static final Integer DEFAULT_NUMERATOR = 3;
+    public static final Integer DEFAULT_DENOMINATOR = 4;
+    private Integer numerator = DEFAULT_NUMERATOR;
+    private Integer denominator = DEFAULT_DENOMINATOR;
     private Boolean useSymbol;
 
     public Meter() {
@@ -40,7 +42,11 @@ public class Meter extends Field {
     }
 
     public Boolean useSymbol() {
+        if (useSymbol == null) {
+            return false;
+        }
         return useSymbol && denominator == 4 && (numerator == 2 || numerator == 4);
+
     }
 
     public void setUseSymbol(Boolean useSymbol) {

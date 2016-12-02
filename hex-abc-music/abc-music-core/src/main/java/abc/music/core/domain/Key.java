@@ -175,6 +175,10 @@ public class Key extends Field {
         AEOLIAN;
         public static final Mode DEFAULT_MODE = MAJOR;
 
+        public String getName() {
+            return name().substring(0, 1) + name().substring(1).toLowerCase();
+        }
+
         public static Mode find(String text) {
             if (text != null) {
                 if (text.isEmpty()) {
@@ -190,10 +194,6 @@ public class Key extends Field {
                 }
             }
             return DEFAULT_MODE;
-        }
-
-        public String getName() {
-            return name().substring(0, 1) + name().substring(1).toLowerCase();
         }
 
         @Override

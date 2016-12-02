@@ -29,7 +29,7 @@ public abstract class AmeDialog<T> extends JDialog {
         init();
         super.setLocationRelativeTo(parent);
     }
-    
+
     protected abstract void init();
 
     @Override
@@ -67,7 +67,8 @@ public abstract class AmeDialog<T> extends JDialog {
 
     protected abstract void accept();
 
-    protected abstract void abort();
+    protected void abort() {
+    }
 
     public void ok() {
         accept();

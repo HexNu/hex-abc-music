@@ -1,5 +1,7 @@
 package abc.music.core.domain;
 
+import java.util.Objects;
+
 /**
  * Created 2016-nov-27
  *
@@ -28,7 +30,17 @@ public class Person {
     }
 
     public String getName() {
-        return getFirstName() + " " + getLastName();
+        String result = "";
+        if (getFirstName() != null) {
+            result += getFirstName();
+            if (getLastName() != null) {
+                result += " ";
+            }
+        }
+        if (getLastName() != null) {
+            result += getLastName();
+        }
+        return result.isEmpty() ? null : result;
     }
 
     public String getEmail() {
@@ -41,17 +53,36 @@ public class Person {
 
     @Override
     public String toString() {
-        String result = "";
-        if (getFirstName() != null) {
-            result += getFirstName();
-            if (getLastName() != null) {
-                result += " ";
-            }
+        return getName();
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 17 * hash + Objects.hashCode(this.firstName);
+        hash = 17 * hash + Objects.hashCode(this.lastName);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
         }
-        if (getLastName() != null) {
-            result += getLastName();
+        if (obj == null) {
+            return false;
         }
-        return result.isEmpty() ? null : result;
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Person other = (Person) obj;
+        if (!Objects.equals(this.firstName, other.firstName)) {
+            return false;
+        }
+        if (!Objects.equals(this.lastName, other.lastName)) {
+            return false;
+        }
+        return true;
     }
 
     public enum Role {
@@ -84,7 +115,7 @@ public class Person {
 
         @Override
         public String toString() {
-            return name().substring(0, 1) + name().toLowerCase().substring(1);
+            return name().substring(0, 1) + name().replaceAll("_", " ").toLowerCase().substring(1);
         }
     }
 }

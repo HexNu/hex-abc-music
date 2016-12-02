@@ -2,8 +2,11 @@ package nu.hex.abc.music.editor.action;
 
 import abc.music.core.domain.Project;
 import java.awt.event.ActionEvent;
+import java.io.File;
+import javax.swing.JFileChooser;
 import nu.hex.abc.music.editor.AbcMusicEditor;
-import nu.hex.abc.music.editor.components.OpenProjectDialog;
+import nu.hex.abc.music.editor.components.ProjectFileChooser;
+import nu.hex.abc.music.service.Service;
 
 /**
  * Created 2016-dec-01
@@ -18,8 +21,14 @@ public class OpenProjectAction extends AmeAction<Project> {
 
     @Override
     protected void performAction(ActionEvent event) {
-        OpenProjectDialog dialog = new OpenProjectDialog(parent);
-        dialog.setVisible(true);
+        ProjectFileChooser fileChooser = new ProjectFileChooser();
+        int status = fileChooser.showOpenDialog(parent);
+        if (status == JFileChooser.APPROVE_OPTION) {
+            File file = fileChooser.getSelectedFile();
+            if (file != null) {
+                setResult(Service.openProject(file));
+            }
+        }
     }
 
 }

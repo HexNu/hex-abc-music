@@ -1,5 +1,6 @@
 package nu.hex.abc.music.editor;
 
+import nu.hex.abc.music.editor.action.SaveProjectAction;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -11,7 +12,9 @@ import javax.swing.Icon;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import nu.hex.abc.music.editor.action.CreateProjectAction;
 import nu.hex.abc.music.editor.action.ExitAction;
+import nu.hex.abc.music.editor.action.OpenProjectAction;
 
 /**
  * Created 2016-dec-01
@@ -27,12 +30,13 @@ public class AmeMenuBar extends JMenuBar {
     private AmeMenu editMenu = new AmeMenu();
     private AmeMenu helpMenu = new AmeMenu();
     private AmeMenuItem openMenuItem = new AmeMenuItem();
+    private AmeMenuItem newProjectMenuItem = new AmeMenuItem();
     private AmeMenuItem saveMenuItem = new AmeMenuItem();
     private AmeMenuItem saveAsMenuItem = new AmeMenuItem();
     private AmeMenuItem exitMenuItem = new AmeMenuItem();
     private AmeMenuItem contentsMenuItem = new AmeMenuItem();
     private AmeMenuItem aboutMenuItem = new AmeMenuItem();
-    
+
     private final AbcMusicEditor parent;
 
     public AmeMenuBar(AbcMusicEditor parent) {
@@ -58,11 +62,32 @@ public class AmeMenuBar extends JMenuBar {
         openMenuItem.setMnemonic('o');
         openMenuItem.setText("open");
         openMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(KeyEvent.VK_O, InputEvent.CTRL_MASK));
+        openMenuItem.addActionListener((ActionEvent e) -> {
+            OpenProjectAction action = new OpenProjectAction(parent);
+            action.actionPerformed(e);
+            if (action.get() != null) {
+                parent.setProject(action.get());
+            }
+        });
         fileMenu.add(openMenuItem);
+
+        newProjectMenuItem.setMnemonic('e');
+        newProjectMenuItem.setText("Create Project");
+        newProjectMenuItem.addActionListener((ActionEvent e) -> {
+            CreateProjectAction action = new CreateProjectAction(parent);
+            action.actionPerformed(e);
+            if (action.get() != null) {
+                parent.setProject(action.get());
+            }
+        });
+        fileMenu.add(newProjectMenuItem);
 
         saveMenuItem.setMnemonic('s');
         saveMenuItem.setText("save");
         saveMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_MASK));
+        saveMenuItem.addActionListener((ActionEvent e) -> {
+            new SaveProjectAction(parent).actionPerformed(e);
+        });
         fileMenu.add(saveMenuItem);
 
         saveAsMenuItem.setMnemonic('a');

@@ -11,13 +11,14 @@ import java.util.List;
  */
 public class Tempo extends Field {
 
+    public static final Integer DEFAULT_UNITS_PER_MINUTE = 96;
     private static final Integer[] mms = {40, 42, 44, 46, 48, 50, 52, 54, 56,
         58, 60, 63, 66, 69, 72, 76, 80, 84, 88, 92, 96, 100, 104, 108, 112, 116,
         120, 126, 132, 138, 144, 152, 160, 168, 176, 184, 192, 200, 208};
     private static final List<Integer> MM = Arrays.asList(mms);
     private String label;
-    private Unit unit;
-    private Integer unitsPerMinute;
+    private Unit unit = Unit.DEFAULT__UNIT;
+    private Integer unitsPerMinute = DEFAULT_UNITS_PER_MINUTE;
 
     public Tempo() {
         super('Q');
@@ -144,15 +145,24 @@ public class Tempo extends Field {
         ONE_SIXTENTH("1/16"),
         THREE_SIXTENTH("3/16"),
         ONE_HALF("1/2");
+        public static final Unit DEFAULT__UNIT = ONE_QUARTER;
         private final String unit;
 
         private Unit(String unit) {
             this.unit = unit;
-
         }
 
         public String getUnit() {
             return unit;
+        }
+
+        public static Unit find(String text) {
+            for (Unit u : values()) {
+                if (u.name().equals(text) || u.getUnit().equals(text)) {
+                    return u;
+                }
+            }
+            return null;
         }
 
         @Override

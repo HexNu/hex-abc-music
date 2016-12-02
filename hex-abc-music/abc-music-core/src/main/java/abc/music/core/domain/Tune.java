@@ -1,7 +1,9 @@
 package abc.music.core.domain;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created 2016-nov-27
@@ -17,13 +19,13 @@ public class Tune {
     private final List<Origin> origin = new ArrayList<>();
     private final List<Comment> comments = new ArrayList<>();
     private final List<History> history = new ArrayList<>();
+    private final List<Copyright> copyright = new ArrayList<>();
     private String rythm;
-    private String copyright;
-    private Tempo tempo;
-    private Meter meter;
-    private TimeValue timeValue;
-    private Key key;
-    private final List<Voice> voices = new ArrayList<>();
+    private Tempo tempo = new Tempo();
+    private Meter meter = new Meter();
+    private TimeValue timeValue = TimeValue.DEFAULT_TIME_VALUE;
+    private Key key = new Key();
+    private final Map<String, Voice> voices = new HashMap<>();
     private String scoreLayout;
 
     public Tune() {
@@ -93,7 +95,7 @@ public class Tune {
     public List<Origin> getOrigin() {
         return origin;
     }
-
+    
     public void setOrigin(List<Origin> origin) {
         this.origin.clear();
         this.origin.addAll(origin);
@@ -145,16 +147,13 @@ public class Tune {
         this.rythm = rythm;
     }
 
-    public String getCopyright() {
+    public List<Copyright> getCopyright() {
         return copyright;
     }
 
-    public String getCopyRightField() {
-        return "%%abc-copyright © " + copyright;
-    }
-
-    public void setCopyright(String copyright) {
-        this.copyright = copyright;
+    public void setCopyright(List<Copyright> copyright) {
+        this.copyright.clear();
+        this.copyright.addAll(copyright);
     }
 
     public Tempo getTempo() {
@@ -210,7 +209,11 @@ public class Tune {
     }
 
     public List<Voice> getVoices() {
-        return voices;
+        return new ArrayList<>(voices.values());
+    }
+
+    public boolean hasVoiceWithId(String id) {
+        return voices.containsKey(id);
     }
 
     public void setVoices(List<Voice> voices) {
@@ -220,7 +223,7 @@ public class Tune {
 
     public void addVoice(Voice voice) {
         voice.setTune(this);
-        this.voices.add(voice);
+        this.voices.put(voice.getVoiceId(), voice);
     }
 
     public String getScoreLayout() {
@@ -258,7 +261,7 @@ public class Tune {
         public static TimeValue find(String text) {
             if (text != null && text.isEmpty()) {
                 for (TimeValue unit : values()) {
-                    if (text.toUpperCase().equals(unit.name()) || text.toUpperCase().equals(unit.toString())) {
+                    if (text.equalsIgnoreCase(unit.name()) || text.equals(unit.toString())) {
                         return unit;
                     }
                 }

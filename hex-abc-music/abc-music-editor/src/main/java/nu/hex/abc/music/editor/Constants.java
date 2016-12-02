@@ -15,5 +15,6 @@ public interface Constants {
     static final Font BIG_TITLE_FONT = new Font("Ringbearer", 0, 36);
     static final Font MEDIUM_TITLE_FONT = new Font("Ringbearer", 0, 18);
     static final Font SMALL_TITLE_FONT = new Font("Ringbearer", 0, 15);
+    static final Font TAB_LABEL_FONT = new Font("Ringbearer", 0, 12);
 
 }

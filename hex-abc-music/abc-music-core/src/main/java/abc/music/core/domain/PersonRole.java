@@ -1,5 +1,7 @@
 package abc.music.core.domain;
 
+import abc.music.core.exception.AbcException;
+
 /**
  * Created 2016-nov-27
  *
@@ -42,5 +44,23 @@ public class PersonRole extends Field {
     @Override
     public String toString() {
         return getPerson().toString();
+    }
+
+    public static Person fromString(String text) {
+        Person result = new Person();
+        if (text == null || text.isEmpty()) {
+            throw new AbcException("Input can not be empty or null");
+        } else if (text.contains(" ")) {
+            String[] split = text.split(" ");
+            result.setFirstName(split[0].trim());
+            result.setLastName(split[1].trim());
+        } else if (text.contains(",")) {
+            String[] split = text.split(",");
+            result.setFirstName(split[1].trim());
+            result.setLastName(split[0].trim());
+        } else {
+            result.setFirstName(text);
+        }
+        return result;
     }
 }

@@ -12,7 +12,7 @@ public class Voice extends Field {
     private String name;
     private String shortName;
     private Stem stem = Stem.DEFAULT_STEM;
-    private Key key;
+    private Key key = new Key();
     private String notes;
 
     public Voice(Tune tune, String voiceId) {
@@ -22,10 +22,15 @@ public class Voice extends Field {
         }
         this.tune = tune;
         this.voiceId = voiceId.replaceAll("\\s", "");
+        name = "Voice " + this.voiceId;
     }
 
     public void setTune(Tune tune) {
         this.tune = tune;
+    }
+
+    public Tune getTune() {
+        return tune;
     }
 
     public String getVoiceId() {
@@ -113,10 +118,14 @@ public class Voice extends Field {
             }
             return DEFAULT_STEM;
         }
+        
+        public String getName() {
+            return this.equals(NORMAL) ? "" : name().toLowerCase();
+        }
 
         @Override
         public String toString() {
-            return this.equals(NORMAL) ? "" : name().toLowerCase();
+            return getName();
         }
     }
 }
