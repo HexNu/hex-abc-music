@@ -16,6 +16,7 @@ public class PersonWriter extends XmlWriter<Person> {
 
     @Override
     public XmlNode write() {
+        result.addAttribute("id", entity.getId());
         result.addAttribute("first-name", entity.getFirstName());
         result.addAttribute("last-name", entity.getLastName());
         result.addAttribute("email", entity.getEmail());

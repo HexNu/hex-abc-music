@@ -12,6 +12,7 @@ import javax.swing.JPopupMenu;
 import nu.hex.abc.music.editor.AbcMusicEditor;
 import nu.hex.abc.music.editor.action.AddPersonRoleAction;
 import nu.hex.abc.music.editor.action.RemovePersonRoleAction;
+import nu.hex.abc.music.editor.components.TuneHeadersPanel;
 
 /**
  * Created 2016-dec-01
@@ -20,26 +21,31 @@ import nu.hex.abc.music.editor.action.RemovePersonRoleAction;
  */
 public class PersonRoleListMouseListener implements MouseListener {
 
-    private final AbcMusicEditor parent;
+    private final TuneHeadersPanel parent;
     private final JList list;
     private final JPopupMenu menu;
     private final Person.Role role;
     private int selectedIndex;
 
-    public PersonRoleListMouseListener(AbcMusicEditor parent, JList list, Person.Role role, Tune tune) {
+    public PersonRoleListMouseListener(TuneHeadersPanel parent, JList list, Person.Role role, Tune tune) {
         this.parent = parent;
         this.list = list;
         this.role = role;
         this.menu = new JPopupMenu();
 
-        JMenuItem add = new JMenuItem("Select " + role.toString() + " to Add");
+        JMenuItem add = new JMenuItem("Select Person and Role(s) to add");
         add.addActionListener((ActionEvent e) -> {
-            new AddPersonRoleAction(parent, role).actionPerformed(e);
+            AddPersonRoleAction action = new AddPersonRoleAction(parent.getApplication(), role);
+                    action.actionPerformed(e);
+                    action.get().forEach((pr) -> {
+                        tune.addCreator(pr);
+                    });
+                    parent.updateLists();
         });
 
         JMenuItem remove = new JMenuItem("Remove " + role.toString());
         remove.addActionListener((ActionEvent e) -> {
-            new RemovePersonRoleAction(parent, (PersonRole) list.getModel().getElementAt(selectedIndex)).actionPerformed(e);
+            new RemovePersonRoleAction(parent.getApplication(), (PersonRole) list.getModel().getElementAt(selectedIndex)).actionPerformed(e);
             list.requestFocus();
         });
         menu.add(add);
@@ -50,7 +56,6 @@ public class PersonRoleListMouseListener implements MouseListener {
     public void mouseClicked(MouseEvent e) {
         list.setSelectedIndex(list.locationToIndex(e.getPoint()));
         selectedIndex = list.locationToIndex(e.getPoint());
-        System.out.println(selectedIndex);
         menu.show(e.getComponent(), e.getX(), e.getY());
     }
 

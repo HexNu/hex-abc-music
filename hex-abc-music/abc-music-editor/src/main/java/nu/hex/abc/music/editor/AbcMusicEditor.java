@@ -26,6 +26,7 @@ import javax.swing.WindowConstants;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
+import nu.hex.abc.music.editor.action.SetEditingEnabledAction;
 import nu.hex.abc.music.editor.components.TuneHeadersPanel;
 import nu.hex.abc.music.editor.components.VoicesPanel;
 
@@ -68,6 +69,7 @@ public class AbcMusicEditor extends JFrame {
         setLayout(new BorderLayout());
         setComponents();
         createMenu();
+        new SetEditingEnabledAction(this, false).actionPerformed(null);
         pack();
     }
 
@@ -139,7 +141,7 @@ public class AbcMusicEditor extends JFrame {
         setJMenuBar(menuBar);
     }
 
-    public TuneHeadersPanel getHeadersPanel() {
+    public TuneHeadersPanel getTuneEditor() {
         return headersPanel;
     }
 
@@ -151,9 +153,23 @@ public class AbcMusicEditor extends JFrame {
         return project;
     }
 
+    public void updateMenuBar() {
+        menuBar.updateMenu();
+    }
+
+    public void clearProject() {
+        this.project = null;
+        setTitle(APP_TITLE);
+        updateMenuBar();
+        new SetEditingEnabledAction(this, false).actionPerformed(null);
+    }
+
     public void setProject(Project project) {
         this.project = project;
         setTitle(APP_TITLE + " - " + project.getName());
+        updateMenuBar();
+        new SetEditingEnabledAction(this, false).actionPerformed(null);
+        getTuneEditor().refresh();
     }
 
     public Border getTitleBorder(String title) {

@@ -22,7 +22,7 @@ import se.digitman.lightxml.XmlNode;
  */
 public class Service {
 
-    public static final String SUFFIX = "hmx";
+    public static final String SUFFIX = "amx";
     private static final String PROJECT_PATH = AbcMusicProperties.getInstance().getProperty(AbcMusicProperties.PROJECT_FOLDER);
     private static final String BACKUP_PATH = AbcMusicProperties.getInstance().getProperty(AbcMusicProperties.BACKUP_FOLDER);
     private static final String ABC_PATH = AbcMusicProperties.getInstance().getProperty(AbcMusicProperties.ABC_FOLDER);

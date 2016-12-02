@@ -17,7 +17,7 @@ class TempoWriter extends XmlWriter<Tempo> {
     @Override
     public XmlNode write() {
         result.addAttribute("label", entity.getLabel());
-        result.addAttribute("", entity.getUnit().getUnit());
+        result.addAttribute("default-unit", entity.getUnit().getUnit());
         result.addAttribute("units-per-minute", entity.getUnitsPerMinute());
         return result;
     }

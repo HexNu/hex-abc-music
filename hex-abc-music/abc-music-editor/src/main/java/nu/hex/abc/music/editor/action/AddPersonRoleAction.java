@@ -2,15 +2,18 @@ package nu.hex.abc.music.editor.action;
 
 import abc.music.core.domain.Person;
 import abc.music.core.domain.PersonRole;
+import abc.music.core.domain.Tune;
 import java.awt.event.ActionEvent;
+import java.util.List;
 import nu.hex.abc.music.editor.AbcMusicEditor;
+import nu.hex.abc.music.editor.components.CreatePersonRolesDialog;
 
 /**
  * Created 2016-dec-01
  *
  * @author hl
  */
-public class AddPersonRoleAction extends AmeAction<PersonRole> {
+public class AddPersonRoleAction extends AmeAction<List<PersonRole>> {
 
     private final Person.Role role;
 
@@ -21,7 +24,9 @@ public class AddPersonRoleAction extends AmeAction<PersonRole> {
 
     @Override
     protected void performAction(ActionEvent event) {
-
+        CreatePersonRolesDialog dialog = new CreatePersonRolesDialog(parent, role);
+        dialog.setVisible(true);
+        setResult(dialog.get());
     }
 
 }

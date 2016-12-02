@@ -35,7 +35,7 @@ public class Tune {
 
     public Tune(Project project) {
         this.project = project;
-        this.id = project.getNextId();
+        this.id = project.getNextTuneId();
     }
 
     public Project getProject() {

@@ -17,6 +17,7 @@ public class PersonReader extends NodeReader<Person> {
     @Override
     public Person read() {
         Person result = new Person();
+        result.setId(Integer.valueOf(node.getAttribute("id")));
         if (node.hasAttribute("first-name")) {
             result.setFirstName(node.getAttribute("first-name"));
         }

@@ -3,7 +3,6 @@ package nu.hex.abc.music.editor.components;
 import abc.music.core.domain.Key;
 import abc.music.core.domain.Modifier;
 import abc.music.core.domain.Person;
-import abc.music.core.domain.PersonRole;
 import abc.music.core.domain.Project;
 import abc.music.core.domain.Tempo;
 import abc.music.core.domain.Tune;
@@ -66,24 +65,22 @@ public class TuneHeadersPanel extends AmePanel {
         transposeSpinner.setSize(keyFieldsDimension);
         transposeSpinner.setPreferredSize(keyFieldsDimension);
         setFields();
+    }
 
+    public void refresh() {
+        setFields();
     }
 
     private void setFields() {
+        resetFields();
         if (tune != null) {
             populateFields();
-        } else {
-            resetFields();
-//            Person hl = new Person();
-//            hl.setFirstName("Håkan");
-//            hl.setLastName("Lidén");
-//            PersonRole role = new PersonRole(Person.Role.COMPOSER);
-//            role.setPerson(hl);
-//            ((DefaultListModel) composerList.getModel()).add(0, role);
         }
     }
 
     private void populateFields() {
+        openScoreLayoutButton.setEnabled(true);
+        addVoiceButton.setEnabled(true);
         TuneHelper tuneHelper = new TuneHelper(tune);
         titlesTextArea.setText(tuneHelper.getTitlesAsString());
         rythmTextField.setText(tune.getRythm());
@@ -96,10 +93,78 @@ public class TuneHeadersPanel extends AmePanel {
         defaultTimeValueComboBox.setSelectedItem(tune.getTimeValue());
         meterNumeratorSpinner.setValue(tune.getMeter().getNumerator());
         meterDenominatorSpinner.setValue(tune.getMeter().getDenominator());
+        updateLists();
+        pitchComboBox.setSelectedItem(tune.getKey().getPitch());
+        signatureComboBox.setSelectedItem(tune.getKey().getSignature());
+        modeComboBox.setSelectedItem(tune.getKey().getMode());
+        clefComboBox.setSelectedItem(tune.getKey().getModifier().getClef());
+        transposeSpinner.setValue(tune.getKey().getModifier().getTranspose());
+        octaveComboBox.setSelectedItem(tune.getKey().getModifier().getOctave());
+        parent.getVoicesPanel().setVoices(tune.getVoices());
+    }
+
+    private void resetFields() {
+        newTuneButton.setEnabled(parent.getProject() != null);
+        openScoreLayoutButton.setEnabled(false);
+        addVoiceButton.setEnabled(false);
+        titlesTextArea.setText("");
+        rythmTextField.setText("");
+        historyTextArea.setText("");
+        originTextArea.setText("");
+        commentsTextArea.setText("");
+        copyrightTextArea.setText("");
+        tempoUnitComboBox.setSelectedItem(Tempo.Unit.ONE_QUARTER);
+        unitsPerMinuteComboBox.setSelectedItem(96);
+        defaultTimeValueComboBox.setSelectedIndex(2);
+        meterDenominatorSpinner.setValue(4);
+        composerList.addMouseListener(new PersonRoleListMouseListener(this, composerList, Person.Role.COMPOSER, tune));
+        authorList.addMouseListener(new PersonRoleListMouseListener(this, authorList, Person.Role.AUTHOR, tune));
+        traditionalList.addMouseListener(new PersonRoleListMouseListener(this, authorList, Person.Role.TRAD, tune));
+        transcriberList.addMouseListener(new PersonRoleListMouseListener(this, authorList, Person.Role.TRANSCRIBER, tune));
+        pitchComboBox.setSelectedItem(Key.Pitch.DEFAULT_PITCH);
+        signatureComboBox.setSelectedItem(Key.Signature.DEFAULT_SIGNATURE);
+        modeComboBox.setSelectedItem(Key.Mode.DEFAULT_MODE);
+        clefComboBox.setSelectedItem(Modifier.Clef.DEFAULT_CLEF);
+        transposeSpinner.setValue(0);
+        octaveComboBox.setSelectedItem(Modifier.OctaveClef.DEFAULT_OCTAVE);
+    }
+
+    public void setEditingEnabled(boolean enabled) {
+        openScoreLayoutButton.setEnabled(enabled);
+        addVoiceButton.setEnabled(enabled);
+        titlesTextArea.setEnabled(enabled);
+        rythmTextField.setEnabled(enabled);
+        historyTextArea.setEnabled(enabled);
+        originTextArea.setEnabled(enabled);
+        commentsTextArea.setEnabled(enabled);
+        copyrightTextArea.setEnabled(enabled);
+        tempoLabelComboBox.setEnabled(enabled);
+        tempoUnitComboBox.setEnabled(enabled);
+        unitsPerMinuteComboBox.setEnabled(enabled);
+        defaultTimeValueComboBox.setEnabled(enabled);
+        meterDenominatorSpinner.setEnabled(enabled);
+        meterNumeratorSpinner.setEnabled(enabled);
+        composerList.setEnabled(enabled);
+        authorList.setEnabled(enabled);
+        traditionalList.setEnabled(enabled);
+        transcriberList.setEnabled(enabled);
+        pitchComboBox.setEnabled(enabled);
+        signatureComboBox.setEnabled(enabled);
+        modeComboBox.setEnabled(enabled);
+        clefComboBox.setEnabled(enabled);
+        transposeSpinner.setEnabled(enabled);
+        octaveComboBox.setEnabled(enabled);
+    }
+
+    public void updateLists() {
         DefaultListModel composerListModel = (DefaultListModel) composerList.getModel();
         DefaultListModel authorListModel = (DefaultListModel) authorList.getModel();
         DefaultListModel tradListModel = (DefaultListModel) traditionalList.getModel();
-        DefaultListModel transcriberListModel = (DefaultListModel) traditionalList.getModel();
+        DefaultListModel transcriberListModel = (DefaultListModel) transcriberList.getModel();
+        composerListModel.clear();
+        authorListModel.clear();
+        tradListModel.clear();
+        transcriberListModel.clear();
         tune.getCreators().stream().forEach((personRole) -> {
             switch (personRole.getRole()) {
                 case COMPOSER:
@@ -118,36 +183,6 @@ public class TuneHeadersPanel extends AmePanel {
                     break;
             }
         });
-        pitchComboBox.setSelectedItem(tune.getKey().getPitch());
-        signatureComboBox.setSelectedItem(tune.getKey().getSignature());
-        modeComboBox.setSelectedItem(tune.getKey().getMode());
-        clefComboBox.setSelectedItem(tune.getKey().getModifier().getClef());
-        transposeSpinner.setValue(tune.getKey().getModifier().getTranspose());
-        octaveComboBox.setSelectedItem(tune.getKey().getModifier().getOctave());
-        parent.getVoicesPanel().setVoices(tune.getVoices());
-    }
-
-    private void resetFields() {
-        titlesTextArea.setText("");
-        rythmTextField.setText("");
-        historyTextArea.setText("");
-        originTextArea.setText("");
-        commentsTextArea.setText("");
-        copyrightTextArea.setText("");
-        tempoUnitComboBox.setSelectedItem(Tempo.Unit.ONE_QUARTER);
-        unitsPerMinuteComboBox.setSelectedItem(96);
-        defaultTimeValueComboBox.setSelectedIndex(2);
-        meterDenominatorSpinner.setValue(4);
-        composerList.addMouseListener(new PersonRoleListMouseListener(parent, composerList, Person.Role.COMPOSER, tune));
-        authorList.addMouseListener(new PersonRoleListMouseListener(parent, authorList, Person.Role.AUTHOR, tune));
-        traditionalList.addMouseListener(new PersonRoleListMouseListener(parent, authorList, Person.Role.TRAD, tune));
-        transcriberList.addMouseListener(new PersonRoleListMouseListener(parent, authorList, Person.Role.TRANSCRIBER, tune));
-        pitchComboBox.setSelectedItem(Key.Pitch.DEFAULT_PITCH);
-        signatureComboBox.setSelectedItem(Key.Signature.DEFAULT_SIGNATURE);
-        modeComboBox.setSelectedItem(Key.Mode.DEFAULT_MODE);
-        clefComboBox.setSelectedItem(Modifier.Clef.DEFAULT_CLEF);
-        transposeSpinner.setValue(0);
-        octaveComboBox.setSelectedItem(Modifier.OctaveClef.DEFAULT_OCTAVE);
     }
 
     /**
@@ -767,9 +802,9 @@ public class TuneHeadersPanel extends AmePanel {
     }
 
     private void openScoreLayout() {
-//        if (tune != null) {
-        new OpenScoreLayoutAction(parent, tune).actionPerformed(null);
-//        }
+        if (tune != null) {
+            new OpenScoreLayoutAction(parent, tune).actionPerformed(null);
+        }
     }
 
     private void createTune() {
@@ -777,10 +812,11 @@ public class TuneHeadersPanel extends AmePanel {
         action.actionPerformed(null);
         setTune(action.get());
     }
-    
 
     private void setTune(Tune tune) {
         this.tune = tune;
-        setFields();
+        setEditingEnabled(tune != null);
+        refresh();
+        titlesTextArea.requestFocus();
     }
 }

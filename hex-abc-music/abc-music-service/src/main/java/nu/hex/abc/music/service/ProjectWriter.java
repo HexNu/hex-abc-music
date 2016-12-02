@@ -5,6 +5,7 @@ import java.time.format.DateTimeFormatter;
 import nu.hex.abc.music.service.xml.write.PersonWriter;
 import nu.hex.abc.music.service.xml.write.TuneWriter;
 import nu.hex.abc.music.service.xml.write.XmlWriter;
+import se.digitman.lightxml.NodeFactory;
 import se.digitman.lightxml.XmlNode;
 
 /**
@@ -22,11 +23,15 @@ class ProjectWriter extends XmlWriter<Project> {
     public XmlNode write() {
         result.addAttribute("name", entity.getName());
         result.addAttribute("last-updated", entity.getLastUpdated().format(DateTimeFormatter.ISO_DATE_TIME));
+        XmlNode tunesNode = NodeFactory.createNode("tunes");
+        result.addChild(tunesNode);
+        XmlNode personsNode = NodeFactory.createNode("persons");
+        result.addChild(personsNode);
         entity.getTunes().stream().forEach((tune) -> {
-            result.addChild(new TuneWriter(tune).write());
+            tunesNode.addChild(new TuneWriter(tune).write());
         });
         entity.getPersons().stream().forEach((person) -> {
-            result.addChild(new PersonWriter(person).write());
+            personsNode.addChild(new PersonWriter(person).write());
         });
         return result;
     }

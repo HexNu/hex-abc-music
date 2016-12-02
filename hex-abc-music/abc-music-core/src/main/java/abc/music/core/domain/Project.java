@@ -2,6 +2,7 @@ package abc.music.core.domain;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -15,7 +16,7 @@ import java.util.Map;
 public class Project {
 
     private final Map<Integer, Tune> tunes = new HashMap<>();
-    private final List<Person> persons = new ArrayList<>();
+    private final Map<Integer, Person> persons = new HashMap<>();
     private final String name;
     private LocalDateTime lastUpdated;
 
@@ -57,7 +58,7 @@ public class Project {
         this.tunes.put(tune.getId(), tune);
     }
 
-    public Integer getNextId() {
+    public Integer getNextTuneId() {
         List<Integer> ids = new ArrayList<>();
         tunes.values().stream().forEach((tune) -> {
             ids.add(tune.getId());
@@ -70,7 +71,7 @@ public class Project {
     }
 
     public List<Person> getPersons() {
-        return persons;
+        return new ArrayList<>(persons.values());
     }
 
     public void setPersons(List<Person> persons) {
@@ -78,11 +79,15 @@ public class Project {
         persons.stream().forEach(this::addPerson);
     }
 
+    public Person getPerson(Integer id) {
+        return persons.get(id);
+    }
+
     public Person getPerson(String firstName, String lastName) {
         Person tempPers = new Person();
         tempPers.setFirstName(firstName);
         tempPers.setLastName(lastName);
-        for (Person person : persons) {
+        for (Person person : persons.values()) {
             if (person.equals(tempPers)) {
                 return person;
             }
@@ -91,7 +96,19 @@ public class Project {
     }
 
     public void addPerson(Person person) {
-        this.persons.add(person);
+        this.persons.put(person.getId(), person);
+    }
+
+    public Integer getNextPersonId() {
+        List<Integer> ids = new ArrayList<>();
+        persons.values().stream().forEach((person) -> {
+            ids.add(person.getId());
+        });
+        if (ids.isEmpty()) {
+            return 1;
+        }
+        Collections.sort(ids, (a, b) -> a.compareTo(b));
+        return ids.get(ids.size() - 1) + 1;
     }
 
 }

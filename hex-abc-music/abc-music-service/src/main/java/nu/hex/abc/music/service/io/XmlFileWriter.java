@@ -2,6 +2,7 @@ package nu.hex.abc.music.service.io;
 
 import java.io.File;
 import se.digitman.lightxml.XmlDocument;
+import se.digitman.lightxml.format.XmlPrettyPrinter;
 
 /**
  * Created 2016-dec-02
@@ -24,6 +25,7 @@ public class XmlFileWriter implements Writer<File> {
 
     @Override
     public File write() {
-        return new SimpleFileWriter(file, doc.toString()).write();
+        String docString = new XmlPrettyPrinter(doc).process();
+        return new SimpleFileWriter(file, docString).write();
     }
 }

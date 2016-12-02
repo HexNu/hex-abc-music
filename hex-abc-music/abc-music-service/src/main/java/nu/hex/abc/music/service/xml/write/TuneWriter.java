@@ -24,7 +24,7 @@ public class TuneWriter extends XmlWriter<Tune> {
             result.addChild(NodeFactory.createNode("tilte", title));
         });
         entity.getCreators().forEach((creator) -> {
-            XmlNode node = NodeFactory.createNode(creator.getRole().toString().replaceAll(" ", "-"));
+            XmlNode node = NodeFactory.createNode(creator.getRole().toString().toLowerCase().replaceAll(" ", "-"));
             node.addAttribute("person", creator.getPerson().toString());
             result.addChild(node);
         });

@@ -32,6 +32,10 @@ public abstract class AmePanel extends JPanel {
         setup();
     }
 
+    public AbcMusicEditor getApplication() {
+        return parent;
+    }
+
     private void setup() {
         setOpaque(false);
         setBorder(BorderFactory.createTitledBorder(null, title, TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.TOP, font, Constants.TITLE_COLOR));

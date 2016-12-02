@@ -18,6 +18,7 @@ public class CreateTuneAction extends AmeAction<Tune> {
     @Override
     protected void performAction(ActionEvent event) {
         Tune tune = new Tune(parent.getProject());
+        parent.getProject().addTune(tune);
         setResult(tune);
     }
 }

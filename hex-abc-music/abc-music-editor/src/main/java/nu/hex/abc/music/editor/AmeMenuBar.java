@@ -1,5 +1,7 @@
 package nu.hex.abc.music.editor;
 
+import abc.music.core.domain.Person;
+import abc.music.core.domain.Project;
 import nu.hex.abc.music.editor.action.SaveProjectAction;
 import java.awt.Color;
 import java.awt.Font;
@@ -12,7 +14,10 @@ import javax.swing.Icon;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import nu.hex.abc.music.editor.action.CloseProjectAction;
+import nu.hex.abc.music.editor.action.CreatePersonAction;
 import nu.hex.abc.music.editor.action.CreateProjectAction;
+import nu.hex.abc.music.editor.action.EditPersonAction;
 import nu.hex.abc.music.editor.action.ExitAction;
 import nu.hex.abc.music.editor.action.OpenProjectAction;
 
@@ -28,11 +33,14 @@ public class AmeMenuBar extends JMenuBar {
 
     private AmeMenu fileMenu = new AmeMenu();
     private AmeMenu editMenu = new AmeMenu();
+    private AmeMenu projectMenu = new AmeMenu();
+    private AmeMenu personsMenu;
     private AmeMenu helpMenu = new AmeMenu();
     private AmeMenuItem openMenuItem = new AmeMenuItem();
     private AmeMenuItem newProjectMenuItem = new AmeMenuItem();
     private AmeMenuItem saveMenuItem = new AmeMenuItem();
     private AmeMenuItem saveAsMenuItem = new AmeMenuItem();
+    private AmeMenuItem closeProjectMenuItem = new AmeMenuItem();
     private AmeMenuItem exitMenuItem = new AmeMenuItem();
     private AmeMenuItem contentsMenuItem = new AmeMenuItem();
     private AmeMenuItem aboutMenuItem = new AmeMenuItem();
@@ -57,15 +65,16 @@ public class AmeMenuBar extends JMenuBar {
 
     private void init() {
         fileMenu.setMnemonic('f');
-        fileMenu.setText("file");
+        fileMenu.setText("File");
 
         openMenuItem.setMnemonic('o');
-        openMenuItem.setText("open");
+        openMenuItem.setText("Open");
         openMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(KeyEvent.VK_O, InputEvent.CTRL_MASK));
         openMenuItem.addActionListener((ActionEvent e) -> {
             OpenProjectAction action = new OpenProjectAction(parent);
             action.actionPerformed(e);
             if (action.get() != null) {
+                parent.clearProject();
                 parent.setProject(action.get());
             }
         });
@@ -83,45 +92,94 @@ public class AmeMenuBar extends JMenuBar {
         fileMenu.add(newProjectMenuItem);
 
         saveMenuItem.setMnemonic('s');
-        saveMenuItem.setText("save");
+        saveMenuItem.setText("Save");
         saveMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_MASK));
         saveMenuItem.addActionListener((ActionEvent e) -> {
             new SaveProjectAction(parent).actionPerformed(e);
         });
+        saveMenuItem.setEnabled(false);
         fileMenu.add(saveMenuItem);
 
         saveAsMenuItem.setMnemonic('a');
-        saveAsMenuItem.setText("save as ...");
+        saveAsMenuItem.setText("Save as ...");
         saveAsMenuItem.setDisplayedMnemonicIndex(5);
+        saveAsMenuItem.setEnabled(false);
         fileMenu.add(saveAsMenuItem);
 
+        closeProjectMenuItem.setText("Close Project");
+        closeProjectMenuItem.setMnemonic('c');
+        closeProjectMenuItem.addActionListener((ActionEvent e) -> {
+            new CloseProjectAction(parent).actionPerformed(e);
+        });
+        closeProjectMenuItem.setEnabled(false);
+        fileMenu.add(closeProjectMenuItem);
+
         exitMenuItem.setMnemonic('q');
-        exitMenuItem.setText("quit");
+        exitMenuItem.setText("Quit");
         exitMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(KeyEvent.VK_Q, InputEvent.CTRL_MASK));
         exitMenuItem.addActionListener((ActionEvent evt) -> {
             new ExitAction(parent).actionPerformed(evt);
         });
         fileMenu.add(exitMenuItem);
-
         add(fileMenu);
 
         editMenu.setMnemonic('e');
-        editMenu.setText("edit");
-
+        editMenu.setText("Edit");
+        editMenu.setEnabled(false);
         add(editMenu);
 
+        projectMenu.setText("Project");
+        projectMenu.setMnemonic('p');
+        projectMenu.setEnabled(false);
+        add(projectMenu);
+
         helpMenu.setMnemonic('h');
-        helpMenu.setText("help");
+        helpMenu.setText("Help");
 
         contentsMenuItem.setMnemonic('c');
-        contentsMenuItem.setText("contents");
+        contentsMenuItem.setText("Contents");
         helpMenu.add(contentsMenuItem);
 
         aboutMenuItem.setMnemonic('a');
-        aboutMenuItem.setText("about");
+        aboutMenuItem.setText("About");
         helpMenu.add(aboutMenuItem);
 
         super.add(helpMenu);
+
+    }
+
+    public void updateMenu() {
+        boolean enable = parent.getProject() != null;
+        saveMenuItem.setEnabled(enable);
+        saveAsMenuItem.setEnabled(enable);
+        closeProjectMenuItem.setEnabled(enable);
+        editMenu.setEnabled(enable);
+        projectMenu.setEnabled(enable);
+        projectMenu.removeAll();
+        if (enable) {
+            populateProjectMenu();
+        }
+    }
+
+    private void populateProjectMenu() {
+        Project p = parent.getProject();
+        personsMenu = new AmeMenu("Persons");
+        projectMenu.add(personsMenu);
+        AmeMenuItem addPersonItem = new AmeMenuItem("Add Person");
+        addPersonItem.addActionListener((ActionEvent e) -> {
+            new CreatePersonAction(parent).actionPerformed(e);
+        });
+        personsMenu.add(addPersonItem);
+        personsMenu.addSeparator();
+        p.getPersons().stream().forEach(this::addPersonItem);
+    }
+
+    private void addPersonItem(Person person) {
+        AmeMenuItem personItem = new AmeMenuItem(person.getName());
+        personItem.addActionListener((ActionEvent e) -> {
+            new EditPersonAction(parent, person).actionPerformed(e);
+        });
+        personsMenu.add(personItem);
     }
 
     public static class AmeMenu extends JMenu {
@@ -131,10 +189,14 @@ public class AmeMenuBar extends JMenuBar {
         }
 
         public AmeMenu(String text) {
-            super(text);
+            super(text != null ? text.toLowerCase() : null);
             super.setFont(MENU_FONT);
         }
 
+        @Override
+        public void setText(String text) {
+            super.setText(text != null ? text.toLowerCase() : null);
+        }
     }
 
     public static class AmeMenuItem extends JMenuItem {
@@ -152,8 +214,13 @@ public class AmeMenuBar extends JMenuBar {
         }
 
         public AmeMenuItem(String text, Icon icon) {
-            super(text, icon);
+            super(text != null ? text.toLowerCase() : null, icon);
             super.setFont(MENU_FONT);
+        }
+
+        @Override
+        public void setText(String text) {
+            super.setText(text != null ? text.toLowerCase() : null);
         }
     }
 }

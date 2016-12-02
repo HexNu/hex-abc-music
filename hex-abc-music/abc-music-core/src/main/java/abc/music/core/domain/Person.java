@@ -9,9 +9,36 @@ import java.util.Objects;
  */
 public class Person {
 
+    private Integer id;
+    private Project project;
     private String firstName;
     private String lastName;
     private String email;
+
+    public Person() {
+        project = null;
+        id = 1;
+    }
+
+    public Person(Project project) {
+        this.project = project;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Project getProject() {
+        return project;
+    }
+
+    public void setProject(Project project) {
+        this.project = project;
+    }
 
     public String getFirstName() {
         return firstName;
@@ -113,9 +140,13 @@ public class Person {
             return DEFAULT_ROLE;
         }
 
+        public String getName() {
+            return name().substring(0, 1) + name().replaceAll("_", " ").toLowerCase().substring(1);
+        }
+
         @Override
         public String toString() {
-            return name().substring(0, 1) + name().replaceAll("_", " ").toLowerCase().substring(1);
+            return getName();
         }
     }
 }
