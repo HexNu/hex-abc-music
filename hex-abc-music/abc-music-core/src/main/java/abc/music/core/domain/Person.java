@@ -22,6 +22,7 @@ public class Person {
 
     public Person(Project project) {
         this.project = project;
+        id = project.getNextPersonId();
     }
 
     public Integer getId() {

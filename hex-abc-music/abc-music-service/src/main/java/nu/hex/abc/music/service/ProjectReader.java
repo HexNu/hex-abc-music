@@ -29,8 +29,8 @@ class ProjectReader implements Reader<Project> {
         if (node.hasChildNamed("tunes") && node.getChild("tunes").hasChildNamed("tune")) {
             node.getChild("tunes").getChildren("tune").stream().forEach(this::addTune);
         }
-        if (node.hasChildNamed("persons") && node.getChild("person").hasChildNamed("person")) {
-            node.getChild("person").getChildren("person").stream().forEach(this::addPerson);
+        if (node.hasChildNamed("persons") && node.getChild("persons").hasChildNamed("person")) {
+            node.getChild("persons").getChildren("person").stream().forEach(this::addPerson);
         }
         return result;
     }

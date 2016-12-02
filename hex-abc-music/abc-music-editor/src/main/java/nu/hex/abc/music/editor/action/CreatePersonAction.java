@@ -22,7 +22,7 @@ public class CreatePersonAction extends AmeAction<Person> {
         EditPersonDialog dialog = new EditPersonDialog(parent);
         dialog.setVisible(true);
         if (dialog.getResult().equals(AmeDialog.Result.OK)) {
-            parent.getProject().addPerson(dialog.get());
+//            parent.getProject().addPerson(dialog.get());
             parent.updateMenuBar();
         }
     }

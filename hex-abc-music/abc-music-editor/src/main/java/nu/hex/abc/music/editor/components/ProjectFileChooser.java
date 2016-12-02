@@ -15,6 +15,6 @@ public class ProjectFileChooser extends JFileChooser {
         super(Service.getSourceDirectory());
         super.setDialogTitle("Select Project");
         super.setAcceptAllFileFilterUsed(false);
-        super.setFileFilter(new FileNameExtensionFilter("Project Files", "hmx"));
+        super.setFileFilter(new FileNameExtensionFilter("Project Files", Service.SUFFIX));
     }
 }
