@@ -15,25 +15,25 @@ import nu.hex.abc.music.editor.AmeConstants;
  */
 public abstract class AmePanel extends JPanel {
 
-    protected AbcMusicEditor parent;
+    protected AbcMusicEditor editor;
     protected final Project project;
     private final String title;
     private final Font font;
 
-    public AmePanel(AbcMusicEditor parent, Project project, String title) {
-        this(parent, project, title, AmeConstants.MEDIUM_TITLE_FONT);
+    public AmePanel(AbcMusicEditor editor, Project project, String title) {
+        this(editor, project, title, AmeConstants.MEDIUM_TITLE_FONT);
     }
 
-    public AmePanel(AbcMusicEditor parent, Project project, String title, Font font) {
+    public AmePanel(AbcMusicEditor editor, Project project, String title, Font font) {
         this.project = project;
         this.title = title;
         this.font = font;
-        this.parent = parent;
+        this.editor = editor;
         setup();
     }
 
     public AbcMusicEditor getApplication() {
-        return parent;
+        return editor;
     }
 
     private void setup() {

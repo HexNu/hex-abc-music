@@ -22,6 +22,12 @@ public class VoicesPanel extends AmePanel {
 
     public void clearVoices() {
         voicesTabbedPane.removeAll();
+        voicesTabbedPane.repaint();
+        voicesTabbedPane.revalidate();
+        getParent().repaint();
+        getParent().revalidate();
+        super.repaint();
+        super.revalidate();
     }
 
     public void setVoices(List<Voice> voices) {
@@ -30,7 +36,7 @@ public class VoicesPanel extends AmePanel {
     }
 
     public void addVoice(Voice voice) {
-        voicesTabbedPane.add(voice.getName(), new VoicePanel(parent, project, voice));
+        voicesTabbedPane.add(voice.getName(), new VoicePanel(editor, project, voice));
         repaint();
         revalidate();
         voicesTabbedPane.repaint();

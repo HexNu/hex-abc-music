@@ -24,6 +24,7 @@ import nu.hex.abc.music.editor.action.OpenScoreLayoutAction;
 import nu.hex.abc.music.editor.support.PersonRoleListMouseListener;
 import nu.hex.abc.music.editor.util.TuneHelper;
 import nu.hex.abc.music.editor.AmeConstants;
+import nu.hex.abc.music.editor.action.SaveProjectAction;
 
 /**
  *
@@ -106,11 +107,11 @@ public class TuneHeadersPanel extends AmePanel {
         clefComboBox.setSelectedItem(tune.getKey().getModifier().getClef());
         transposeSpinner.setValue(tune.getKey().getModifier().getTranspose());
         octaveComboBox.setSelectedItem(tune.getKey().getModifier().getOctave());
-        parent.getVoicesPanel().setVoices(tune.getVoices());
+        editor.getVoicesPanel().setVoices(tune.getVoices());
     }
 
     private void resetFields() {
-        newTuneButton.setEnabled(parent.getProject() != null);
+        newTuneButton.setEnabled(editor.getProject() != null);
         openScoreLayoutButton.setEnabled(false);
         addVoiceButton.setEnabled(false);
         titlesTextArea.setText("");
@@ -885,25 +886,29 @@ public class TuneHeadersPanel extends AmePanel {
     }
 
     private void createNewVoice() {
-        CreateVoiceActon action = new CreateVoiceActon(parent, tune);
+        CreateVoiceActon action = new CreateVoiceActon(editor, tune);
         action.actionPerformed(null);
-        parent.getVoicesPanel().addVoice(action.get());
+        editor.getVoicesPanel().addVoice(action.get());
     }
 
     private void openScoreLayout() {
         if (tune != null) {
-            new OpenScoreLayoutAction(parent, tune).actionPerformed(null);
+            new OpenScoreLayoutAction(editor, tune).actionPerformed(null);
         }
     }
 
     private void createTune() {
-        CreateTuneAction action = new CreateTuneAction(parent);
+        CreateTuneAction action = new CreateTuneAction(editor);
         action.actionPerformed(null);
         setTune(action.get());
         createNewVoice();
     }
 
     private void setTune(Tune tune) {
+        updateTune();
+        if (this.tune != null && !this.tune.getTitles().get(0).isEmpty()) {
+            editor.getLatestTunesPane().add(this.tune);
+        }
         this.tune = tune;
         setEditingEnabled(tune != null);
         refresh();

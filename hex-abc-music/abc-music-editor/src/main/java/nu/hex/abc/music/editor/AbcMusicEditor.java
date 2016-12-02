@@ -27,6 +27,7 @@ import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 import nu.hex.abc.music.editor.action.SetEditingEnabledAction;
+import nu.hex.abc.music.editor.components.LatestTunesPane;
 import nu.hex.abc.music.editor.components.TuneHeadersPanel;
 import nu.hex.abc.music.editor.components.VoicesPanel;
 import nu.hex.abc.music.service.Service;
@@ -56,6 +57,7 @@ public class AbcMusicEditor extends JFrame {
     private AmeMenuBar menuBar;
     private Project project;
     private AmeStatusBar statusPanel;
+    private LatestTunesPane latestTunesPane;
 
     public AbcMusicEditor() {
         init();
@@ -97,8 +99,11 @@ public class AbcMusicEditor extends JFrame {
         leftPanel.setLayout(new GridLayout(2, 1, 6, 12));
         leftPanel.setBackground(AmeConstants.BACKGROUND_COLOR);
         recentTunesPanel.setBorder(getTitleBorder("Recent Tunes"));
+        recentTunesPanel.setLayout(new BorderLayout());
         recentTunesPanel.setPreferredSize(sidePanelDimension);
         recentTunesPanel.setOpaque(false);
+        latestTunesPane = new LatestTunesPane();
+        recentTunesPanel.add(latestTunesPane, BorderLayout.CENTER);
         leftPanel.add(recentTunesPanel);
         searchPanel.setBorder(getTitleBorder("Search Tunes"));
         searchPanel.setPreferredSize(sidePanelDimension);
@@ -143,6 +148,10 @@ public class AbcMusicEditor extends JFrame {
 
     public AmeStatusBar getStatusBar() {
         return statusPanel;
+    }
+    
+    public LatestTunesPane getLatestTunesPane() {
+        return latestTunesPane;
     }
 
     private void createMenu() {
