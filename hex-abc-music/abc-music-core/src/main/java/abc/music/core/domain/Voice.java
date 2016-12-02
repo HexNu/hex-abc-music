@@ -15,6 +15,10 @@ public class Voice extends Field {
     private Key key = new Key();
     private String notes;
 
+    public Voice() {
+        super('V');
+    }
+
     public Voice(Tune tune, String voiceId) {
         super('V');
         if (voiceId == null || voiceId.isEmpty()) {
@@ -38,7 +42,7 @@ public class Voice extends Field {
     }
 
     public void setVoiceId(String voiceId) {
-        this.voiceId = voiceId;
+        this.voiceId = voiceId.replaceAll("\\s", "");
     }
 
     public String getName() {

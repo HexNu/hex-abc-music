@@ -21,13 +21,15 @@ public class ClassNode {
     }
 
     public XmlNode getNode() {
-        XmlNode result = NodeFactory.createNode(getNodeName());
-        return result;
+        return NodeFactory.createNode(getNodeName());
+    }
+
+    public XmlNode getCollectionNode() {
+        return NodeFactory.createNode(getCollectionNodeName());
     }
 
     public XmlNode getNode(String content) {
-        XmlNode result = NodeFactory.createNode(getNodeName(), content);
-        return result;
+        return NodeFactory.createNode(getNodeName(), content);
     }
 
     protected String getNodeName() {
@@ -41,5 +43,13 @@ public class ClassNode {
             result += s.toLowerCase();
         }
         return result;
+    }
+
+    private String getCollectionNodeName() {
+        String result = getNodeName();
+        if (result.endsWith("y") && !result.endsWith("ey")) {
+            return result.substring(0, result.lastIndexOf("y")) + "ies";
+        }
+        return result += "s";
     }
 }

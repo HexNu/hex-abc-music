@@ -192,68 +192,78 @@ public class TuneHeadersPanel extends AmePanel {
     }
 
     public void updateTune() {
-        tune.setTitles(Collections.EMPTY_LIST);
-        for (String s : titlesTextArea.getText().split("\n")) {
-            tune.addTitle(s);
-        }
-        tune.setRythm(rythmTextField.getText());
-        if (tempoLabelComboBox.getSelectedItem() != null) {
-            tune.getTempo().setLabel(tempoLabelComboBox.getSelectedItem().toString());
-        }
-        if (tempoUnitComboBox.getSelectedItem() != null) {
-            tune.getTempo().setUnit((Tempo.Unit) tempoUnitComboBox.getSelectedItem());
-        }
-        if (unitsPerMinuteComboBox.getSelectedItem() != null) {
-            tune.getTempo().setUnitsPerMinute((Integer) unitsPerMinuteComboBox.getSelectedItem());
-        }
-        if (modeComboBox.getSelectedItem() != null) {
-            tune.getKey().setMode((Key.Mode) modeComboBox.getSelectedItem());
-        }
-        if (pitchComboBox.getSelectedItem() != null) {
-            tune.getKey().setPitch((Key.Pitch) pitchComboBox.getSelectedItem());
-        }
-        if (signatureComboBox.getSelectedItem() != null) {
-            tune.getKey().setSignature((Key.Signature) signatureComboBox.getSelectedItem());
-        }
-        if (clefComboBox.getSelectedItem() != null) {
-            tune.getKey().getModifier().setClef((Modifier.Clef) clefComboBox.getSelectedItem());
-        }
-        if (octaveComboBox.getSelectedItem() != null) {
-            tune.getKey().getModifier().setOctave((Modifier.OctaveClef) octaveComboBox.getSelectedItem());
-        }
-        if (transposeSpinner.getValue() != null) {
-            tune.getKey().getModifier().setTranspose((Integer) transposeSpinner.getValue());
-        }
-        if (meterDenominatorSpinner.getValue() != null) {
-            tune.getMeter().setDenominator((Integer) meterDenominatorSpinner.getValue());
-        }
-        tune.getMeter().setUseSymbol(useSymbolCheckBox.isSelected());
-        if (defaultTimeValueComboBox.getSelectedItem() != null) {
-            tune.setTimeValue((Tune.TimeValue) defaultTimeValueComboBox.getSelectedItem());
-        }
-        tune.setCreators(Collections.EMPTY_LIST);
-        addCreators((DefaultListModel) composerList.getModel(), Person.Role.COMPOSER);
-        addCreators((DefaultListModel) authorList.getModel(), Person.Role.AUTHOR);
-        addCreators((DefaultListModel) traditionalList.getModel(), Person.Role.TRAD);
-        addCreators((DefaultListModel) transcriberList.getModel(), Person.Role.TRANSCRIBER);
-        tune.setHistory(Collections.EMPTY_LIST);
-        for (String s : historyTextArea.getText().split("\n")) {
-            tune.addHistory(new History(s));
-        }
-        tune.setOrigin(Collections.EMPTY_LIST);
-        for (String s : originTextArea.getText().split("\n")) {
-            tune.addOrigin(new Origin(s));
-        }
-        tune.setComments(Collections.EMPTY_LIST);
-        for (String s : commentsTextArea.getText().split("\n")) {
-            tune.addComment(new Comment(s));
-        }
-        tune.setCopyright(Collections.EMPTY_LIST);
-        for (String s : copyrightTextArea.getText().split("\n")) {
-            tune.addCopyright(new Copyright(s));
-        }
-        if (!tune.getVoices().isEmpty()) {
-            getApplication().getVoicesPanel().updateVoices();
+        if (tune != null) {
+            tune.setTitles(Collections.EMPTY_LIST);
+            for (String s : titlesTextArea.getText().split("\n")) {
+                tune.addTitle(s.trim());
+            }
+            tune.setRythm(rythmTextField.getText().trim());
+            if (tempoLabelComboBox.getSelectedItem() != null) {
+                tune.getTempo().setLabel(tempoLabelComboBox.getSelectedItem().toString());
+            }
+            if (tempoUnitComboBox.getSelectedItem() != null) {
+                tune.getTempo().setUnit((Tempo.Unit) tempoUnitComboBox.getSelectedItem());
+            }
+            if (unitsPerMinuteComboBox.getSelectedItem() != null) {
+                tune.getTempo().setUnitsPerMinute((Integer) unitsPerMinuteComboBox.getSelectedItem());
+            }
+            if (modeComboBox.getSelectedItem() != null) {
+                tune.getKey().setMode((Key.Mode) modeComboBox.getSelectedItem());
+            }
+            if (pitchComboBox.getSelectedItem() != null) {
+                tune.getKey().setPitch((Key.Pitch) pitchComboBox.getSelectedItem());
+            }
+            if (signatureComboBox.getSelectedItem() != null) {
+                tune.getKey().setSignature((Key.Signature) signatureComboBox.getSelectedItem());
+            }
+            if (clefComboBox.getSelectedItem() != null) {
+                tune.getKey().getModifier().setClef((Modifier.Clef) clefComboBox.getSelectedItem());
+            }
+            if (octaveComboBox.getSelectedItem() != null) {
+                tune.getKey().getModifier().setOctave((Modifier.OctaveClef) octaveComboBox.getSelectedItem());
+            }
+            if (transposeSpinner.getValue() != null) {
+                tune.getKey().getModifier().setTranspose((Integer) transposeSpinner.getValue());
+            }
+            if (meterDenominatorSpinner.getValue() != null) {
+                tune.getMeter().setDenominator((Integer) meterDenominatorSpinner.getValue());
+            }
+            tune.getMeter().setUseSymbol(useSymbolCheckBox.isSelected());
+            if (defaultTimeValueComboBox.getSelectedItem() != null) {
+                tune.setTimeValue((Tune.TimeValue) defaultTimeValueComboBox.getSelectedItem());
+            }
+            tune.setCreators(Collections.EMPTY_LIST);
+            addCreators((DefaultListModel) composerList.getModel(), Person.Role.COMPOSER);
+            addCreators((DefaultListModel) authorList.getModel(), Person.Role.AUTHOR);
+            addCreators((DefaultListModel) traditionalList.getModel(), Person.Role.TRAD);
+            addCreators((DefaultListModel) transcriberList.getModel(), Person.Role.TRANSCRIBER);
+            tune.setHistory(Collections.EMPTY_LIST);
+            for (String s : historyTextArea.getText().split("\n")) {
+                if (!s.isEmpty()) {
+                    tune.addHistory(new History(s));
+                }
+            }
+            tune.setOrigin(Collections.EMPTY_LIST);
+            for (String s : originTextArea.getText().split("\n")) {
+                if (!s.isEmpty()) {
+                    tune.addOrigin(new Origin(s));
+                }
+            }
+            tune.setComments(Collections.EMPTY_LIST);
+            for (String s : commentsTextArea.getText().split("\n")) {
+                if (!s.isEmpty()) {
+                    tune.addComment(new Comment(s));
+                }
+            }
+            tune.setCopyright(Collections.EMPTY_LIST);
+            for (String s : copyrightTextArea.getText().split("\n")) {
+                if (!s.isEmpty()) {
+                    tune.addCopyright(new Copyright(s));
+                }
+            }
+            if (!tune.getVoices().isEmpty()) {
+                getApplication().getVoicesPanel().updateVoices();
+            }
         }
     }
 

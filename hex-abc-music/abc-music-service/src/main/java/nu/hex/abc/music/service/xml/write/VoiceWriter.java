@@ -1,6 +1,7 @@
 package nu.hex.abc.music.service.xml.write;
 
 import abc.music.core.domain.Voice;
+import se.digitman.lightxml.NodeFactory;
 import se.digitman.lightxml.XmlNode;
 
 /**
@@ -21,7 +22,7 @@ public class VoiceWriter extends XmlWriter<Voice> {
         result.addAttribute("name", entity.getName());
         result.addAttribute("stem", entity.getStem().getName());
         result.addChild(new KeyWriter(entity.getKey()).write());
-        result.addText(entity.getNotes());
+        result.addChild(NodeFactory.createNode("body", entity.getNotes()));
         return result;
     }
 }

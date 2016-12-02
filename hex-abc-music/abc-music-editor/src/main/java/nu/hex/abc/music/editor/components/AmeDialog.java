@@ -21,11 +21,11 @@ public abstract class AmeDialog<T> extends JDialog {
 
     private T obj;
     private Result result;
-    protected final AbcMusicEditor parent;
+    protected final AbcMusicEditor application;
 
     public AmeDialog(AbcMusicEditor parent, String title) {
         super(parent, title, true);
-        this.parent = parent;
+        this.application = parent;
         init();
         super.setLocationRelativeTo(parent);
     }

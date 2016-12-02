@@ -152,8 +152,8 @@ public class EditPersonDialog extends AmeDialog<Person> {
     @Override
     protected void accept() {
         if (person == null) {
-            person = new Person(parent.getProject());
-            parent.getProject().addPerson(person);
+            person = new Person(application.getProject());
+            application.getProject().addPerson(person);
         }
         person.setEmail(emailTextField.getText());
         person.setFirstName(firstNameTextField.getText());

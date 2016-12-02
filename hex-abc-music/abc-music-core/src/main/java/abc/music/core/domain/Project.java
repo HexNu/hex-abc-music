@@ -2,7 +2,6 @@ package abc.music.core.domain;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -18,6 +17,7 @@ public class Project {
     private final Map<Integer, Tune> tunes = new HashMap<>();
     private final Map<Integer, Person> persons = new HashMap<>();
     private final String name;
+    private String abcVersion;
     private LocalDateTime lastUpdated;
 
     public Project(String name) {
@@ -111,4 +111,11 @@ public class Project {
         return ids.get(ids.size() - 1) + 1;
     }
 
+    public String getAbcVersion() {
+        return abcVersion;
+    }
+
+    public void setAbcVersion(String abcVersion) {
+        this.abcVersion = abcVersion;
+    }
 }

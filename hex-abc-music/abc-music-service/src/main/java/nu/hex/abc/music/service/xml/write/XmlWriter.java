@@ -21,11 +21,18 @@ public abstract class XmlWriter<T> implements Writer<XmlNode> {
         this.result = new ClassNode(entity.getClass()).getNode();
     }
 
-    protected void addSimpleNode(Field field) {
-        result.addChild(getSimpleNode(field));
+    protected void addSimpleNode(XmlNode collectionNode, Field f) {
+        collectionNode.addChild(new ClassNode(f.getClass()).getNode(f.getContent()));
     }
 
-    protected XmlNode getSimpleNode(Field field) {
-        return new ClassNode(field.getClass()).getNode(field.getContent());
-    }
+//    
+//
+//    protected void addSimpleNode(XmlNode parentNode, Field field) {
+//        result.addChild(getSimpleNode(field));
+//        parentNode.addChild(result);
+//    }
+//
+//    protected XmlNode getSimpleNode(Field field) {
+//        return new ClassNode(field.getClass()).getNode(field.getContent());
+//    }
 }

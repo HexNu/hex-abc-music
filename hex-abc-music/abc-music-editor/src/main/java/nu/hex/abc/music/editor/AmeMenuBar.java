@@ -20,6 +20,8 @@ import nu.hex.abc.music.editor.action.CreateProjectAction;
 import nu.hex.abc.music.editor.action.EditPersonAction;
 import nu.hex.abc.music.editor.action.ExitAction;
 import nu.hex.abc.music.editor.action.OpenProjectAction;
+import nu.hex.abc.music.editor.action.ShowAboutAction;
+import nu.hex.abc.music.editor.action.ShowSettingsAction;
 
 /**
  * Created 2016-dec-01
@@ -125,7 +127,16 @@ public class AmeMenuBar extends JMenuBar {
 
         editMenu.setMnemonic('e');
         editMenu.setText("Edit");
-        editMenu.setEnabled(false);
+        editMenu.setEnabled(true);
+
+        editMenu.addSeparator();
+        AmeMenuItem settingsItem = new AmeMenuItem("Settings");
+        settingsItem.setMnemonic('s');
+        settingsItem.addActionListener((ActionEvent e) -> {
+            new ShowSettingsAction(parent).actionPerformed(e);
+        });
+        editMenu.add(settingsItem);
+
         add(editMenu);
 
         projectMenu.setText("Project");
@@ -142,6 +153,9 @@ public class AmeMenuBar extends JMenuBar {
 
         aboutMenuItem.setMnemonic('a');
         aboutMenuItem.setText("About");
+        aboutMenuItem.addActionListener((ActionEvent e) -> {
+            new ShowAboutAction(parent).actionPerformed(e);
+        });
         helpMenu.add(aboutMenuItem);
 
         super.add(helpMenu);
@@ -153,7 +167,6 @@ public class AmeMenuBar extends JMenuBar {
         saveMenuItem.setEnabled(enable);
         saveAsMenuItem.setEnabled(enable);
         closeProjectMenuItem.setEnabled(enable);
-        editMenu.setEnabled(enable);
         projectMenu.setEnabled(enable);
         projectMenu.removeAll();
         if (enable) {
