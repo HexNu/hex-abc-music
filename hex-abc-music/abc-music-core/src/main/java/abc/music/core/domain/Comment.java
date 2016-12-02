@@ -8,6 +8,10 @@ package abc.music.core.domain;
 public class Comment extends Field {
 
     public Comment() {
-        super('N');
+        this(null);
+    }
+
+    public Comment(String content) {
+        super('N', content);
     }
 }

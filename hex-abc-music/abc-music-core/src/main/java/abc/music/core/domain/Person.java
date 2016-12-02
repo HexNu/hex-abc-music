@@ -71,6 +71,20 @@ public class Person {
         return result.isEmpty() ? null : result;
     }
 
+    public String getFormalName() {
+        String result = "";
+        if (getLastName() != null) {
+            result += getLastName();
+            if (getFirstName() != null) {
+                result += ", ";
+            }
+        }
+        if (getFirstName() != null) {
+            result += getFirstName();
+        }
+        return result;
+    }
+
     public String getEmail() {
         return email;
     }
@@ -81,7 +95,7 @@ public class Person {
 
     @Override
     public String toString() {
-        return getName();
+        return getFormalName();
     }
 
     @Override

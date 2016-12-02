@@ -1,12 +1,18 @@
 package nu.hex.abc.music.editor.components;
 
+import abc.music.core.domain.Comment;
+import abc.music.core.domain.Copyright;
+import abc.music.core.domain.History;
 import abc.music.core.domain.Key;
 import abc.music.core.domain.Modifier;
+import abc.music.core.domain.Origin;
 import abc.music.core.domain.Person;
+import abc.music.core.domain.PersonRole;
 import abc.music.core.domain.Project;
 import abc.music.core.domain.Tempo;
 import abc.music.core.domain.Tune;
 import java.awt.Dimension;
+import java.util.Collections;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
@@ -157,10 +163,10 @@ public class TuneHeadersPanel extends AmePanel {
     }
 
     public void updateLists() {
-        DefaultListModel composerListModel = (DefaultListModel) composerList.getModel();
-        DefaultListModel authorListModel = (DefaultListModel) authorList.getModel();
-        DefaultListModel tradListModel = (DefaultListModel) traditionalList.getModel();
-        DefaultListModel transcriberListModel = (DefaultListModel) transcriberList.getModel();
+        DefaultListModel<PersonRole> composerListModel = (DefaultListModel) composerList.getModel();
+        DefaultListModel<PersonRole> authorListModel = (DefaultListModel) authorList.getModel();
+        DefaultListModel<PersonRole> tradListModel = (DefaultListModel) traditionalList.getModel();
+        DefaultListModel<PersonRole> transcriberListModel = (DefaultListModel) transcriberList.getModel();
         composerListModel.clear();
         authorListModel.clear();
         tradListModel.clear();
@@ -183,6 +189,79 @@ public class TuneHeadersPanel extends AmePanel {
                     break;
             }
         });
+    }
+
+    public void updateTune() {
+        tune.setTitles(Collections.EMPTY_LIST);
+        for (String s : titlesTextArea.getText().split("\n")) {
+            tune.addTitle(s);
+        }
+        tune.setRythm(rythmTextField.getText());
+        if (tempoLabelComboBox.getSelectedItem() != null) {
+            tune.getTempo().setLabel(tempoLabelComboBox.getSelectedItem().toString());
+        }
+        if (tempoUnitComboBox.getSelectedItem() != null) {
+            tune.getTempo().setUnit((Tempo.Unit) tempoUnitComboBox.getSelectedItem());
+        }
+        if (unitsPerMinuteComboBox.getSelectedItem() != null) {
+            tune.getTempo().setUnitsPerMinute((Integer) unitsPerMinuteComboBox.getSelectedItem());
+        }
+        if (modeComboBox.getSelectedItem() != null) {
+            tune.getKey().setMode((Key.Mode) modeComboBox.getSelectedItem());
+        }
+        if (pitchComboBox.getSelectedItem() != null) {
+            tune.getKey().setPitch((Key.Pitch) pitchComboBox.getSelectedItem());
+        }
+        if (signatureComboBox.getSelectedItem() != null) {
+            tune.getKey().setSignature((Key.Signature) signatureComboBox.getSelectedItem());
+        }
+        if (clefComboBox.getSelectedItem() != null) {
+            tune.getKey().getModifier().setClef((Modifier.Clef) clefComboBox.getSelectedItem());
+        }
+        if (octaveComboBox.getSelectedItem() != null) {
+            tune.getKey().getModifier().setOctave((Modifier.OctaveClef) octaveComboBox.getSelectedItem());
+        }
+        if (transposeSpinner.getValue() != null) {
+            tune.getKey().getModifier().setTranspose((Integer) transposeSpinner.getValue());
+        }
+        if (meterDenominatorSpinner.getValue() != null) {
+            tune.getMeter().setDenominator((Integer) meterDenominatorSpinner.getValue());
+        }
+        tune.getMeter().setUseSymbol(useSymbolCheckBox.isSelected());
+        if (defaultTimeValueComboBox.getSelectedItem() != null) {
+            tune.setTimeValue((Tune.TimeValue) defaultTimeValueComboBox.getSelectedItem());
+        }
+        tune.setCreators(Collections.EMPTY_LIST);
+        addCreators((DefaultListModel) composerList.getModel(), Person.Role.COMPOSER);
+        addCreators((DefaultListModel) authorList.getModel(), Person.Role.AUTHOR);
+        addCreators((DefaultListModel) traditionalList.getModel(), Person.Role.TRAD);
+        addCreators((DefaultListModel) transcriberList.getModel(), Person.Role.TRANSCRIBER);
+        tune.setHistory(Collections.EMPTY_LIST);
+        for (String s : historyTextArea.getText().split("\n")) {
+            tune.addHistory(new History(s));
+        }
+        tune.setOrigin(Collections.EMPTY_LIST);
+        for (String s : originTextArea.getText().split("\n")) {
+            tune.addOrigin(new Origin(s));
+        }
+        tune.setComments(Collections.EMPTY_LIST);
+        for (String s : commentsTextArea.getText().split("\n")) {
+            tune.addComment(new Comment(s));
+        }
+        tune.setCopyright(Collections.EMPTY_LIST);
+        for (String s : copyrightTextArea.getText().split("\n")) {
+            tune.addCopyright(new Copyright(s));
+        }
+        if (!tune.getVoices().isEmpty()) {
+            getApplication().getVoicesPanel().updateVoices();
+        }
+    }
+
+    private void addCreators(DefaultListModel listModel, Person.Role role) {
+        for (int i = 0; i < listModel.getSize(); i++) {
+            DefaultListModel<PersonRole> model = (DefaultListModel<PersonRole>) listModel;
+            tune.addCreator(model.getElementAt(i));
+        }
     }
 
     /**
@@ -209,7 +288,7 @@ public class TuneHeadersPanel extends AmePanel {
         meterNumeratorSpinner = new javax.swing.JSpinner();
         jLabel8 = new javax.swing.JLabel();
         meterDenominatorSpinner = new javax.swing.JSpinner();
-        useLetterCheckBox = new javax.swing.JCheckBox();
+        useSymbolCheckBox = new javax.swing.JCheckBox();
         jLabel6 = new javax.swing.JLabel();
         defaultTimeValueComboBox = new javax.swing.JComboBox<>();
         jLabel9 = new javax.swing.JLabel();
@@ -308,15 +387,15 @@ public class TuneHeadersPanel extends AmePanel {
 
         jLabel8.setText("/");
 
-        meterDenominatorSpinner.setNextFocusableComponent(useLetterCheckBox);
+        meterDenominatorSpinner.setNextFocusableComponent(useSymbolCheckBox);
         meterDenominatorSpinner.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 meterDenominatorSpinnerStateChanged(evt);
             }
         });
 
-        useLetterCheckBox.setEnabled(false);
-        useLetterCheckBox.setNextFocusableComponent(defaultTimeValueComboBox);
+        useSymbolCheckBox.setEnabled(false);
+        useSymbolCheckBox.setNextFocusableComponent(defaultTimeValueComboBox);
 
         jLabel6.setText("Time value:");
 
@@ -471,7 +550,7 @@ public class TuneHeadersPanel extends AmePanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(meterDenominatorSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(useLetterCheckBox, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(useSymbolCheckBox, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(openScoreLayoutButton, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -601,7 +680,7 @@ public class TuneHeadersPanel extends AmePanel {
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                             .addComponent(jLabel22)
                                             .addComponent(clefComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addComponent(useLetterCheckBox, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                        .addComponent(useSymbolCheckBox, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -725,7 +804,7 @@ public class TuneHeadersPanel extends AmePanel {
     private javax.swing.JList<String> transcriberList;
     private javax.swing.JSpinner transposeSpinner;
     private javax.swing.JComboBox<String> unitsPerMinuteComboBox;
-    private javax.swing.JCheckBox useLetterCheckBox;
+    private javax.swing.JCheckBox useSymbolCheckBox;
     // End of variables declaration//GEN-END:variables
 
     private void updateTempo() {
@@ -746,21 +825,21 @@ public class TuneHeadersPanel extends AmePanel {
                     if (null != numerator) {
                         switch (numerator) {
                             case 2:
-                                useLetterCheckBox.setText("Use ₵ ?");
-                                useLetterCheckBox.setToolTipText("<html>Check this if you whant to use<br>"
+                                useSymbolCheckBox.setText("Use ₵ ?");
+                                useSymbolCheckBox.setToolTipText("<html>Check this if you whant to use<br>"
                                         + " <b>₵</b> instead of 3/4");
-                                useLetterCheckBox.setEnabled(true);
+                                useSymbolCheckBox.setEnabled(true);
                                 break;
                             case 4:
-                                useLetterCheckBox.setText("Use C ?");
-                                useLetterCheckBox.setToolTipText("<html>Check this if you whant to use<br>"
+                                useSymbolCheckBox.setText("Use C ?");
+                                useSymbolCheckBox.setToolTipText("<html>Check this if you whant to use<br>"
                                         + "<b>C</b> instead of 4/4");
-                                useLetterCheckBox.setEnabled(true);
+                                useSymbolCheckBox.setEnabled(true);
                                 break;
                             default:
-                                useLetterCheckBox.setText("");
-                                useLetterCheckBox.setToolTipText("");
-                                useLetterCheckBox.setEnabled(false);
+                                useSymbolCheckBox.setText("");
+                                useSymbolCheckBox.setToolTipText("");
+                                useSymbolCheckBox.setEnabled(false);
                                 break;
                         }
                     }
@@ -768,28 +847,28 @@ public class TuneHeadersPanel extends AmePanel {
                 case 2:
                     switch (numerator) {
                         case 1:
-                            useLetterCheckBox.setText("Use ₵ ?");
-                            useLetterCheckBox.setToolTipText("<html>Check this if you whant to use <br>"
+                            useSymbolCheckBox.setText("Use ₵ ?");
+                            useSymbolCheckBox.setToolTipText("<html>Check this if you whant to use <br>"
                                     + "<b>₵</b> instead of 1/2");
-                            useLetterCheckBox.setEnabled(true);
+                            useSymbolCheckBox.setEnabled(true);
                             break;
                         case 2:
-                            useLetterCheckBox.setText("Use C ?");
-                            useLetterCheckBox.setToolTipText("<html>Check this if you whant to use<br>"
+                            useSymbolCheckBox.setText("Use C ?");
+                            useSymbolCheckBox.setToolTipText("<html>Check this if you whant to use<br>"
                                     + "<b>C</b> instead of 2/2");
-                            useLetterCheckBox.setEnabled(true);
+                            useSymbolCheckBox.setEnabled(true);
                             break;
                         default:
-                            useLetterCheckBox.setText("");
-                            useLetterCheckBox.setToolTipText("");
-                            useLetterCheckBox.setEnabled(false);
+                            useSymbolCheckBox.setText("");
+                            useSymbolCheckBox.setToolTipText("");
+                            useSymbolCheckBox.setEnabled(false);
                             break;
                     }
                     break;
                 default:
-                    useLetterCheckBox.setText("");
-                    useLetterCheckBox.setToolTipText("");
-                    useLetterCheckBox.setEnabled(false);
+                    useSymbolCheckBox.setText("");
+                    useSymbolCheckBox.setToolTipText("");
+                    useSymbolCheckBox.setEnabled(false);
                     break;
             }
         }
@@ -811,6 +890,7 @@ public class TuneHeadersPanel extends AmePanel {
         CreateTuneAction action = new CreateTuneAction(parent);
         action.actionPerformed(null);
         setTune(action.get());
+        createNewVoice();
     }
 
     private void setTune(Tune tune) {

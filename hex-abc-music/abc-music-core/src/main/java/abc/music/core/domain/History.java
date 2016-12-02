@@ -8,6 +8,10 @@ package abc.music.core.domain;
 public class History extends Field {
 
     public History() {
-        super('H');
+        this(null);
+    }
+
+    public History(String content) {
+        super('H', content);
     }
 }

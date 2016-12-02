@@ -37,6 +37,10 @@ public class Voice extends Field {
         return voiceId;
     }
 
+    public void setVoiceId(String voiceId) {
+        this.voiceId = voiceId;
+    }
+
     public String getName() {
         return name;
     }
@@ -118,7 +122,7 @@ public class Voice extends Field {
             }
             return DEFAULT_STEM;
         }
-        
+
         public String getName() {
             return this.equals(NORMAL) ? "" : name().toLowerCase();
         }

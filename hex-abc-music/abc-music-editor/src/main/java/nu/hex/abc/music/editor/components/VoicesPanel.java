@@ -37,6 +37,14 @@ public class VoicesPanel extends AmePanel {
         voicesTabbedPane.revalidate();
     }
 
+    public void updateVoices() {
+        for (int i = 0; i < voicesTabbedPane.getComponentCount(); i++) {
+            if (voicesTabbedPane.getComponent(i) instanceof VoicePanel) {
+                ((VoicePanel) voicesTabbedPane.getComponent(i)).updateVoice();
+            }
+        }
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

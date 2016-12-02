@@ -21,6 +21,7 @@ public class SaveProjectAction extends AmeAction<Project> {
 
     @Override
     protected void performAction(ActionEvent event) {
+        new SaveTuneAction(parent).performAction(event);
         new Service(project).saveProject();
     }
 }

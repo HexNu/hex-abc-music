@@ -13,7 +13,12 @@ public abstract class Field {
     private final char code;
 
     public Field(char code) {
+        this(code, null);
+    }
+
+    public Field(char code, String content) {
         this.code = code;
+        this.content = content;
     }
 
     public String getContent() {

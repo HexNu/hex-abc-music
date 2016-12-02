@@ -8,6 +8,10 @@ package abc.music.core.domain;
 public class Origin extends Field {
 
     public Origin() {
-        super('O');
+        this(null);
+    }
+
+    public Origin(String content) {
+        super('O', content);
     }
 }

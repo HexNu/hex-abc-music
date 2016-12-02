@@ -8,7 +8,11 @@ package abc.music.core.domain;
 public class Copyright extends Field {
 
     public Copyright() {
-        super('I');
+        this(null);
+    }
+
+    public Copyright(String content) {
+        super('I', content);
     }
 
     @Override

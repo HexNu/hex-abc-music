@@ -95,7 +95,7 @@ public class Tune {
     public List<Origin> getOrigin() {
         return origin;
     }
-    
+
     public void setOrigin(List<Origin> origin) {
         this.origin.clear();
         this.origin.addAll(origin);
@@ -154,6 +154,10 @@ public class Tune {
     public void setCopyright(List<Copyright> copyright) {
         this.copyright.clear();
         this.copyright.addAll(copyright);
+    }
+
+    public void addCopyright(Copyright copyright) {
+        this.copyright.add(copyright);
     }
 
     public Tempo getTempo() {

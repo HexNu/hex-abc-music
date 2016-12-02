@@ -55,7 +55,7 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="meterDenominatorSpinner" min="-2" pref="51" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="useLetterCheckBox" min="-2" pref="100" max="-2" attributes="0"/>
+                      <Component id="useSymbolCheckBox" min="-2" pref="100" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="openScoreLayoutButton" min="-2" pref="116" max="-2" attributes="0"/>
@@ -222,7 +222,7 @@
                                           <Component id="jLabel22" alignment="3" min="-2" max="-2" attributes="0"/>
                                           <Component id="clefComboBox" alignment="3" min="-2" max="-2" attributes="0"/>
                                       </Group>
-                                      <Component id="useLetterCheckBox" min="-2" pref="24" max="-2" attributes="0"/>
+                                      <Component id="useSymbolCheckBox" min="-2" pref="24" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                           </Group>
@@ -424,14 +424,14 @@
     <Component class="javax.swing.JSpinner" name="meterDenominatorSpinner">
       <Properties>
         <Property name="nextFocusableComponent" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
-          <ComponentRef name="useLetterCheckBox"/>
+          <ComponentRef name="useSymbolCheckBox"/>
         </Property>
       </Properties>
       <Events>
         <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="meterDenominatorSpinnerStateChanged"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JCheckBox" name="useLetterCheckBox">
+    <Component class="javax.swing.JCheckBox" name="useSymbolCheckBox">
       <Properties>
         <Property name="enabled" type="boolean" value="false"/>
         <Property name="nextFocusableComponent" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">

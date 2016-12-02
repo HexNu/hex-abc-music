@@ -3,6 +3,7 @@ package nu.hex.abc.music.editor.components;
 import abc.music.core.domain.Key;
 import abc.music.core.domain.Modifier;
 import abc.music.core.domain.Project;
+import abc.music.core.domain.Tempo;
 import abc.music.core.domain.Voice;
 import javax.swing.DefaultComboBoxModel;
 import nu.hex.abc.music.editor.AbcMusicEditor;
@@ -46,6 +47,34 @@ public class VoicePanel extends AmePanel {
         clefComboBox.setSelectedItem(modifier.getClef());
         octaveComboBox.setSelectedItem(modifier.getOctave());
         transposeSpinner.setValue(modifier.getTranspose());
+        bodyEditorPane.setText(voice.getNotes());
+    }
+
+    public void updateVoice() {
+        if (idTextField.getText() != null && !idTextField.getText().isEmpty()) {
+            voice.setVoiceId(idTextField.getText());
+        }
+        voice.setShortName(shortNameTextField.getText());
+        voice.setName(nameTextField.getText());
+        if (modeComboBox.getSelectedItem() != null) {
+            voice.getKey().setMode((Key.Mode) modeComboBox.getSelectedItem());
+        }
+        if (pitchComboBox.getSelectedItem() != null) {
+            voice.getKey().setPitch((Key.Pitch) pitchComboBox.getSelectedItem());
+        }
+        if (signatureComboBox.getSelectedItem() != null) {
+            voice.getKey().setSignature((Key.Signature) signatureComboBox.getSelectedItem());
+        }
+        if (clefComboBox.getSelectedItem() != null) {
+            voice.getKey().getModifier().setClef((Modifier.Clef) clefComboBox.getSelectedItem());
+        }
+        if (octaveComboBox.getSelectedItem() != null) {
+            voice.getKey().getModifier().setOctave((Modifier.OctaveClef) octaveComboBox.getSelectedItem());
+        }
+        if (transposeSpinner.getValue() != null) {
+            voice.getKey().getModifier().setTranspose((Integer) transposeSpinner.getValue());
+        }
+        voice.setNotes(bodyEditorPane.getText());
     }
 
     /**
