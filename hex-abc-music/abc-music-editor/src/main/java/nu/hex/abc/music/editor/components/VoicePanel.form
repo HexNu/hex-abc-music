@@ -44,8 +44,8 @@
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
                 <TitledBorder title="Voice Properties">
-                  <Connection PropertyName="font" code="Constants.SMALL_TITLE_FONT" type="code"/>
-                  <Connection PropertyName="color" code="Constants.TITLE_COLOR" type="code"/>
+                  <Connection PropertyName="font" code="nu.hex.abc.music.editor.AmeConstants.SMALL_TITLE_FONT" type="code"/>
+                  <Connection PropertyName="color" code="nu.hex.abc.music.editor.AmeConstants.TITLE_COLOR" type="code"/>
                 </TitledBorder>
               </Border>
             </Property>

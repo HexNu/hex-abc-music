@@ -6,7 +6,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
 import nu.hex.abc.music.editor.AbcMusicEditor;
-import nu.hex.abc.music.editor.Constants;
+import nu.hex.abc.music.editor.AmeConstants;
 
 /**
  * Created 2016-dec-01
@@ -21,7 +21,7 @@ public abstract class AmePanel extends JPanel {
     private final Font font;
 
     public AmePanel(AbcMusicEditor parent, Project project, String title) {
-        this(parent, project, title, Constants.MEDIUM_TITLE_FONT);
+        this(parent, project, title, AmeConstants.MEDIUM_TITLE_FONT);
     }
 
     public AmePanel(AbcMusicEditor parent, Project project, String title, Font font) {
@@ -38,7 +38,7 @@ public abstract class AmePanel extends JPanel {
 
     private void setup() {
         setOpaque(false);
-        setBorder(BorderFactory.createTitledBorder(null, title, TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.TOP, font, Constants.TITLE_COLOR));
+        setBorder(BorderFactory.createTitledBorder(null, title, TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.TOP, font, AmeConstants.TITLE_COLOR));
         init();
     }
 

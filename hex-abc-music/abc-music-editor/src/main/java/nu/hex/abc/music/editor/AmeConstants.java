@@ -8,7 +8,7 @@ import java.awt.Font;
  *
  * @author hl
  */
-public interface Constants {
+public interface AmeConstants {
 
     static final Color TITLE_COLOR = new Color(184, 36, 90);
     static final Color BACKGROUND_COLOR = new Color(251, 255, 229, 229);

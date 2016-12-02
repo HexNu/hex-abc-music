@@ -43,6 +43,7 @@ public class Service {
     public static File getBackupDirectory() {
         return new File(BACKUP_PATH);
     }
+
     public static File getAbcDirectory() {
         return new File(ABC_PATH);
     }
@@ -67,7 +68,8 @@ public class Service {
         XmlNode projectNode = new ProjectWriter(project).write();
         XmlDocument write = new AmxWriter(projectNode).write();
         new XmlFileWriter(write, file).write();
-        return project;// Fix this so it returns what's just been written.
+        AbcMusicProperties.getInstance().setProperty(AbcMusicProperties.LATEST_SAVED_PROJECT, project.getName());
+        return project;
     }
 
     private static File getProjectFile(String name) {

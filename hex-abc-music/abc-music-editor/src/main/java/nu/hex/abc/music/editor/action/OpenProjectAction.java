@@ -22,12 +22,17 @@ public class OpenProjectAction extends AmeAction<Project> {
     @Override
     protected void performAction(ActionEvent event) {
         ProjectFileChooser fileChooser = new ProjectFileChooser();
+        setRightStatus("Select project file to open");
         int status = fileChooser.showOpenDialog(parent);
         if (status == JFileChooser.APPROVE_OPTION) {
             File file = fileChooser.getSelectedFile();
+            setRightStatus("Opening file: " + file.getAbsolutePath());
             if (file != null) {
                 setResult(Service.openProject(file));
+                setRightStatus("Project \"" + get().getName() + "\" opened.", 5000);
             }
+        } else {
+            setRightStatus("Open project cancelled", 3000);
         }
     }
 

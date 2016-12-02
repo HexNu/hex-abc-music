@@ -18,12 +18,12 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.SpinnerListModel;
 import nu.hex.abc.music.editor.AbcMusicEditor;
-import nu.hex.abc.music.editor.Constants;
 import nu.hex.abc.music.editor.action.CreateVoiceActon;
 import nu.hex.abc.music.editor.action.CreateTuneAction;
 import nu.hex.abc.music.editor.action.OpenScoreLayoutAction;
 import nu.hex.abc.music.editor.support.PersonRoleListMouseListener;
 import nu.hex.abc.music.editor.util.TuneHelper;
+import nu.hex.abc.music.editor.AmeConstants;
 
 /**
  *
@@ -38,7 +38,7 @@ public class TuneHeadersPanel extends AmePanel {
     }
 
     public TuneHeadersPanel(AbcMusicEditor parent, Tune tune, Project project) {
-        super(parent, project, "Tune Headers", Constants.SMALL_TITLE_FONT);
+        super(parent, project, "Tune Headers", AmeConstants.SMALL_TITLE_FONT);
         this.tune = tune;
     }
 

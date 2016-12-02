@@ -18,10 +18,15 @@ public class CloseProjectAction extends AmeAction<Void> {
 
     @Override
     protected void performAction(ActionEvent event) {
+        String projectName = parent.getProject().getName();
+        setRightStatus("Closing project \"" + projectName + "\"");
         CloseProjectDialog dialog = new CloseProjectDialog(parent);
         dialog.setVisible(true);
         if (dialog.getResult().equals(AmeDialog.Result.OK)) {
             parent.clearProject();
+            setRightStatus("Project \"" + projectName + "\" closed", 3000);
+        } else {
+            setRightStatus("Closing project \"" + projectName +"\" cancelled", 2000);
         }
     }
 

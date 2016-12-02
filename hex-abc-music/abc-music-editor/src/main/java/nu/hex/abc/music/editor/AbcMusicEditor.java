@@ -29,6 +29,8 @@ import javax.swing.border.TitledBorder;
 import nu.hex.abc.music.editor.action.SetEditingEnabledAction;
 import nu.hex.abc.music.editor.components.TuneHeadersPanel;
 import nu.hex.abc.music.editor.components.VoicesPanel;
+import nu.hex.abc.music.service.Service;
+import nu.hex.abc.music.service.properties.AbcMusicProperties;
 
 /**
  * Created 2016-nov-30
@@ -53,6 +55,7 @@ public class AbcMusicEditor extends JFrame {
     private VoicesPanel voicesPanel;
     private AmeMenuBar menuBar;
     private Project project;
+    private AmeStatusBar statusPanel;
 
     public AbcMusicEditor() {
         init();
@@ -82,7 +85,7 @@ public class AbcMusicEditor extends JFrame {
 
     private void createRightPanel() {
         rightPanel.setLayout(new GridLayout(3, 1, 0, 12));
-        rightPanel.setBackground(Constants.BACKGROUND_COLOR);
+        rightPanel.setBackground(AmeConstants.BACKGROUND_COLOR);
         linksPanel.setBorder(getTitleBorder("Resource Links"));
         linksPanel.setPreferredSize(sidePanelDimension);
         linksPanel.setOpaque(false);
@@ -92,28 +95,28 @@ public class AbcMusicEditor extends JFrame {
 
     private void createLeftPanel() {
         leftPanel.setLayout(new GridLayout(2, 1, 6, 12));
-        leftPanel.setBackground(Constants.BACKGROUND_COLOR);
-        searchPanel.setBorder(getTitleBorder("Search Tunes"));
-        searchPanel.setPreferredSize(sidePanelDimension);
-        searchPanel.setOpaque(false);
-        leftPanel.add(searchPanel);
+        leftPanel.setBackground(AmeConstants.BACKGROUND_COLOR);
         recentTunesPanel.setBorder(getTitleBorder("Recent Tunes"));
         recentTunesPanel.setPreferredSize(sidePanelDimension);
         recentTunesPanel.setOpaque(false);
         leftPanel.add(recentTunesPanel);
+        searchPanel.setBorder(getTitleBorder("Search Tunes"));
+        searchPanel.setPreferredSize(sidePanelDimension);
+        searchPanel.setOpaque(false);
+        leftPanel.add(searchPanel);
         add(leftPanel, BorderLayout.WEST);
     }
 
     private void createCenterPanel() {
         centerPanel.setLayout(new BorderLayout());
-        centerPanel.setBackground(Constants.BACKGROUND_COLOR);
+        centerPanel.setBackground(AmeConstants.BACKGROUND_COLOR);
         editorPanel.setOpaque(false);
         editorPanel.setLayout(new BorderLayout(0, 12));
         centerPanel.add(editorPanel, BorderLayout.CENTER);
         JLabel editorLabel = new JLabel("Music Editor");
         editorLabel.setBorder(new EmptyBorder(0, 18, 0, 0));
-        editorLabel.setFont(Constants.MEDIUM_TITLE_FONT);
-        editorLabel.setForeground(Constants.TITLE_COLOR);
+        editorLabel.setFont(AmeConstants.MEDIUM_TITLE_FONT);
+        editorLabel.setForeground(AmeConstants.TITLE_COLOR);
         editorPanel.add(editorLabel, BorderLayout.NORTH);
         JPanel editorContentPanel = new JPanel(new BorderLayout(0, 12));
         editorContentPanel.setOpaque(false);
@@ -127,13 +130,19 @@ public class AbcMusicEditor extends JFrame {
         centerPanel.add(bottomPanel, BorderLayout.SOUTH);
         topPanel.setOpaque(false);
         topPanel.setLayout(new BorderLayout());
-        topPanel.setBorder(BorderFactory.createTitledBorder(null, APP_TITLE, TitledBorder.CENTER, TitledBorder.TOP, Constants.BIG_TITLE_FONT, Constants.TITLE_COLOR));
+        topPanel.setBorder(BorderFactory.createTitledBorder(null, APP_TITLE, TitledBorder.CENTER, TitledBorder.TOP, AmeConstants.BIG_TITLE_FONT, AmeConstants.TITLE_COLOR));
         JLabel subHeaderLabel = new JLabel("Edit  and  organize  your  abc  music  tunes");
-        subHeaderLabel.setFont(Constants.SMALL_TITLE_FONT);
+        subHeaderLabel.setFont(AmeConstants.SMALL_TITLE_FONT);
         subHeaderLabel.setHorizontalAlignment(JLabel.CENTER);
         topPanel.add(subHeaderLabel, BorderLayout.CENTER);
         centerPanel.add(topPanel, BorderLayout.NORTH);
         add(centerPanel, BorderLayout.CENTER);
+        statusPanel = new AmeStatusBar();
+        centerPanel.add(statusPanel, BorderLayout.SOUTH);
+    }
+
+    public AmeStatusBar getStatusBar() {
+        return statusPanel;
     }
 
     private void createMenu() {
@@ -173,7 +182,7 @@ public class AbcMusicEditor extends JFrame {
     }
 
     public Border getTitleBorder(String title) {
-        return BorderFactory.createTitledBorder(null, title, TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.TOP, Constants.MEDIUM_TITLE_FONT, Constants.TITLE_COLOR);
+        return BorderFactory.createTitledBorder(null, title, TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.TOP, AmeConstants.MEDIUM_TITLE_FONT, AmeConstants.TITLE_COLOR);
     }
 
     private class LogoImages {
@@ -235,7 +244,13 @@ public class AbcMusicEditor extends JFrame {
             Logger.getLogger(AbcMusicEditor.class.getName()).log(Level.SEVERE, null, ex);
         }
         EventQueue.invokeLater(() -> {
-            new AbcMusicEditor().setVisible(true);
+            AbcMusicEditor abcMusicEditor = new AbcMusicEditor();
+            abcMusicEditor.setVisible(true);
+            Boolean autoOpen = AbcMusicProperties.getInstance().getPropertyAsBoolean(AbcMusicProperties.AUTO_OPEN_LATEST_PROJECT);
+            String latestProject = AbcMusicProperties.getInstance().getProperty(AbcMusicProperties.LATEST_SAVED_PROJECT);
+            if (autoOpen != null && autoOpen && latestProject != null && !latestProject.isEmpty()) {
+                abcMusicEditor.setProject(Service.openProject(latestProject));
+            }
         });
     }
 }

@@ -7,7 +7,7 @@ import abc.music.core.domain.Tempo;
 import abc.music.core.domain.Voice;
 import javax.swing.DefaultComboBoxModel;
 import nu.hex.abc.music.editor.AbcMusicEditor;
-import nu.hex.abc.music.editor.Constants;
+import nu.hex.abc.music.editor.AmeConstants;
 
 /**
  *
@@ -122,7 +122,7 @@ public class VoicePanel extends AmePanel {
 
         voicePanel.add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Voice Properties", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, Constants.SMALL_TITLE_FONT, Constants.TITLE_COLOR));
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Voice Properties", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, AmeConstants.SMALL_TITLE_FONT, AmeConstants.TITLE_COLOR));
         jPanel2.setOpaque(false);
 
         modeComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));

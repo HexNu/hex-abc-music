@@ -1,10 +1,10 @@
 package nu.hex.abc.music.editor.settings;
 
 import nu.hex.abc.music.editor.AbcMusicEditor;
-import nu.hex.abc.music.editor.Constants;
 import nu.hex.abc.music.editor.components.AmeDialog;
 import nu.hex.abc.music.service.meta.AppInfo;
 import nu.hex.abc.music.service.properties.AbcMusicProperties;
+import nu.hex.abc.music.editor.AmeConstants;
 
 /**
  *
@@ -44,8 +44,8 @@ public class AboutDialog extends AmeDialog<Void> {
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Logo256Transparent.png"))); // NOI18N
 
-        jLabel2.setFont(Constants.BIG_TITLE_FONT);
-        jLabel2.setForeground(Constants.TITLE_COLOR);
+        jLabel2.setFont(AmeConstants.BIG_TITLE_FONT);
+        jLabel2.setForeground(AmeConstants.TITLE_COLOR);
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("Hex ABC Music Editor");
 
@@ -123,7 +123,7 @@ public class AboutDialog extends AmeDialog<Void> {
             info += "<b>Last Edited Project:</b> <i>\"" + properties.getProperty(AbcMusicProperties.LATEST_SAVED_PROJECT) + "\"</i><br>";
         }
         info += new StringBuilder("<b>Auto Open Latest Project:</b> ")
-                .append(properties.getPropertyAsBoolean("auto-open-project") ? "on" : "off")
+                .append(properties.getPropertyAsBoolean(AbcMusicProperties.AUTO_OPEN_LATEST_PROJECT) ? "on" : "off")
                 .append("</b><br>").toString();
         info += new StringBuilder("<b>Keep Editor History:</b> ")
                 .append(properties.getPropertyAsBoolean("preserve-project-history") ? "on" : "off")

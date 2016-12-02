@@ -31,6 +31,7 @@ public class AbcMusicProperties {
     public static final String BACKUP_FOLDER = "backup-folder";
     public static final String ABC_FOLDER = "abc-folder";
     public static final String LATEST_SAVED_PROJECT = "latest-saved-project";
+    public static final String AUTO_OPEN_LATEST_PROJECT = "auto-open-project";
     private final Map<String, String> defaultSettingsMap = new HashMap<>();
     private File settingsFile;
     private XmlNode settingsNode;
