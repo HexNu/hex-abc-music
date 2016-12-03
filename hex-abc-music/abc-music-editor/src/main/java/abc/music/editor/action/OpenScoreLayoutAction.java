@@ -14,7 +14,6 @@ public class OpenScoreLayoutAction extends AmeAction<String> {
 
     private final Tune tune;
 
-
     public OpenScoreLayoutAction(AbcMusicEditor parent, Tune tune) {
         super(parent);
         this.tune = tune;
@@ -25,5 +24,4 @@ public class OpenScoreLayoutAction extends AmeAction<String> {
         ScoreLayoutDialog dialog = new ScoreLayoutDialog(editor, tune);
         dialog.setVisible(true);
     }
-
 }

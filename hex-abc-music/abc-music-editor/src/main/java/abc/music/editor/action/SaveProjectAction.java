@@ -3,7 +3,6 @@ package abc.music.editor.action;
 import abc.music.core.domain.Project;
 import java.awt.event.ActionEvent;
 import abc.music.editor.AbcMusicEditor;
-import nu.hex.abc.music.service.Service;
 
 /**
  * Created 2016-dec-02
@@ -22,12 +21,11 @@ public class SaveProjectAction extends AmeAction<Project> {
     @Override
     protected void performAction(ActionEvent event) {
         new SaveTuneAction(editor).performAction(event);
-        new Service(project).saveProject();
+        getService().getWriterService().saveProject();
         setRightStatus("Project \"" + project.getName() + "\" saved.", 1800);
         int numberOfTunes = project.getTunes().size();
-        String delayedMessage = "Project contains " + numberOfTunes  + " ";
+        String delayedMessage = "Project contains " + numberOfTunes + " ";
         delayedMessage += numberOfTunes == 1 ? "tune." : "tunes.";
         setRightStatus(delayedMessage, 1500, 1810);
-
     }
 }

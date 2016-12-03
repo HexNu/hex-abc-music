@@ -8,7 +8,7 @@ import se.digitman.lightxml.XmlNode;
  *
  * @author hl
  */
-public class PersonReader extends NodeReader<Person> {
+class PersonReader extends NodeReader<Person> {
 
     public PersonReader(XmlNode node) {
         super(node);

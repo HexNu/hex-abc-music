@@ -8,7 +8,7 @@ import se.digitman.lightxml.XmlNode;
  *
  * @author hl
  */
-public class ModifierWriter extends XmlWriter<Modifier> {
+class ModifierWriter extends XmlWriter<Modifier> {
 
     public ModifierWriter(Modifier modifier) {
         super(modifier);

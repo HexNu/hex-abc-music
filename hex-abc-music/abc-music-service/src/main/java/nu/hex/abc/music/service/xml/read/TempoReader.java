@@ -8,7 +8,7 @@ import se.digitman.lightxml.XmlNode;
  *
  * @author hl
  */
-public class TempoReader extends NodeReader<Tempo> {
+class TempoReader extends NodeReader<Tempo> {
 
     public TempoReader(XmlNode node) {
         super(node);
@@ -28,5 +28,5 @@ public class TempoReader extends NodeReader<Tempo> {
         }
         return result;
     }
-    
+
 }

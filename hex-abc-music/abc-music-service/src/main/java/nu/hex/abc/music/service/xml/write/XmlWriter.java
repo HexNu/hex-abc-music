@@ -11,7 +11,7 @@ import se.digitman.lightxml.XmlNode;
  * @author hl
  * @param <T>
  */
-public abstract class XmlWriter<T> implements Writer<XmlNode> {
+abstract class XmlWriter<T> implements Writer<XmlNode> {
 
     protected final T entity;
     protected final XmlNode result;

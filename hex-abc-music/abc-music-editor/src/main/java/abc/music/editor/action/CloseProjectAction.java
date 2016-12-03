@@ -26,7 +26,7 @@ public class CloseProjectAction extends AmeAction<Void> {
             editor.clearProject();
             setRightStatus("Project \"" + projectName + "\" closed", 3000);
         } else {
-            setRightStatus("Closing project \"" + projectName +"\" cancelled", 2000);
+            setRightStatus("Closing project \"" + projectName + "\" cancelled", 2000);
         }
     }
 

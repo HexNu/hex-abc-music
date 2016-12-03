@@ -9,7 +9,7 @@ import se.digitman.lightxml.format.XmlPrettyPrinter;
  *
  * @author hl
  */
-public class XmlFileWriter implements Writer<File> {
+class XmlFileWriter implements Writer<File> {
 
     private final XmlDocument doc;
     private final File file;

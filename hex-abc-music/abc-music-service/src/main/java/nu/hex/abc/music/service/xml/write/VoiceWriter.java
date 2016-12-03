@@ -9,7 +9,7 @@ import se.digitman.lightxml.XmlNode;
  *
  * @author hl
  */
-public class VoiceWriter extends XmlWriter<Voice> {
+class VoiceWriter extends XmlWriter<Voice> {
 
     public VoiceWriter(Voice voice) {
         super(voice);

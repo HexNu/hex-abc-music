@@ -58,8 +58,19 @@ public class Tune {
         return "X: " + id;
     }
 
+    public boolean hasTitles() {
+        return titles != null && !titles.isEmpty();
+    }
+
     public List<String> getTitles() {
         return titles;
+    }
+
+    public String getName() {
+        if (hasTitles() && titles.get(0) != null && !titles.get(0).isEmpty()) {
+            return getTitles().get(0);
+        }
+        return "Tune " + id;
     }
 
     public List<String> getTitleFields() {

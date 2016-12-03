@@ -3,6 +3,7 @@ package abc.music.editor.action;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import abc.music.editor.AbcMusicEditor;
+import nu.hex.abc.music.service.Service;
 
 /**
  * Created 2016-dec-01
@@ -32,6 +33,13 @@ public abstract class AmeAction<T> implements ActionListener {
 
     public T get() {
         return result;
+    }
+
+    protected Service getService() {
+        if (editor.getProject() == null) {
+            return null;
+        }
+        return new Service(editor.getProject());
     }
 
     protected void setRightStatus(String message) {

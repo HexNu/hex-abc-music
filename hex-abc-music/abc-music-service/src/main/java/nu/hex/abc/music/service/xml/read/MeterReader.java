@@ -8,7 +8,7 @@ import se.digitman.lightxml.XmlNode;
  *
  * @author hl
  */
-public class MeterReader extends NodeReader<Meter> {
+class MeterReader extends NodeReader<Meter> {
 
     public MeterReader(XmlNode node) {
         super(node);

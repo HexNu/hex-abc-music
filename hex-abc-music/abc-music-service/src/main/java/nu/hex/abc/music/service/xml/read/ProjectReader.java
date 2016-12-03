@@ -1,11 +1,9 @@
-package nu.hex.abc.music.service;
+package nu.hex.abc.music.service.xml.read;
 
 import abc.music.core.domain.Project;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import nu.hex.abc.music.service.io.Reader;
-import nu.hex.abc.music.service.xml.read.PersonReader;
-import nu.hex.abc.music.service.xml.read.TuneReader;
 import se.digitman.lightxml.XmlNode;
 
 /**

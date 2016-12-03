@@ -10,6 +10,7 @@ import java.util.Map;
 import javax.swing.JTextField;
 import javax.swing.table.AbstractTableModel;
 import nu.hex.abc.music.service.properties.AbcMusicProperties;
+import nu.hex.abc.music.service.properties.PropertyService;
 
 /**
  *
@@ -18,7 +19,7 @@ import nu.hex.abc.music.service.properties.AbcMusicProperties;
 public class SettingsDialog extends AmeDialog<Void> {
 
     private final Map<String, JTextField> fieldMap = new HashMap<>();
-    private final AbcMusicProperties properties = AbcMusicProperties.getInstance();
+    private final AbcMusicProperties properties = PropertyService.getProperties();
     private final Project project;
 
     public SettingsDialog(Project project, AbcMusicEditor application) {

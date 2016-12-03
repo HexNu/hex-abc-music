@@ -21,9 +21,7 @@ public class CreateProjectAction extends AmeAction<Project> {
         CreateProjectDialog dialog = new CreateProjectDialog(editor);
         dialog.setVisible(true);
         setResult(dialog.get());
-        
-        
-        
+
     }
-    
+
 }

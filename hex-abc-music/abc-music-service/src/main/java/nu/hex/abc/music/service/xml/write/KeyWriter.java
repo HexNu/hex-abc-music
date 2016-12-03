@@ -8,7 +8,7 @@ import se.digitman.lightxml.XmlNode;
  *
  * @author hl
  */
-public class KeyWriter extends XmlWriter<Key> {
+class KeyWriter extends XmlWriter<Key> {
 
     public KeyWriter(Key key) {
         super(key);

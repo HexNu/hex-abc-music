@@ -12,7 +12,7 @@ import java.util.logging.Logger;
  *
  * @author hl
  */
-public class SimpleFileWriter implements Writer<File> {
+class SimpleFileWriter implements Writer<File> {
 
     private final String doc;
     private final File file;

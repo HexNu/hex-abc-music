@@ -4,13 +4,17 @@ import abc.music.editor.AbcMusicEditor;
 import abc.music.editor.AmeConstants;
 import abc.music.editor.components.AmeDialog;
 import nu.hex.abc.music.service.meta.AppInfo;
+import nu.hex.abc.music.service.meta.MetaService;
 import nu.hex.abc.music.service.properties.AbcMusicProperties;
+import nu.hex.abc.music.service.properties.PropertyService;
 
 /**
  *
  * @author hl
  */
 public class AboutDialog extends AmeDialog<Void> {
+
+    private final AbcMusicProperties properties = PropertyService.getProperties();
 
     public AboutDialog(AbcMusicEditor parent) {
         super(parent, "");
@@ -110,8 +114,7 @@ public class AboutDialog extends AmeDialog<Void> {
     // End of variables declaration//GEN-END:variables
 
     private String getInfoText() {
-        AbcMusicProperties properties = AbcMusicProperties.getInstance();
-        AppInfo appInfo = AppInfo.getInstance();
+        AppInfo appInfo = MetaService.getAppInfo();
         String info = "<html>";
         info += "<b>Product Version:</b> " + appInfo.getName() + " " + appInfo.getVersion() + "<br>";
         info += "<b>Vendor:</b> " + appInfo.getVendor() + "<br>";

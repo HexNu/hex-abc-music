@@ -10,7 +10,7 @@ import java.util.List;
  *
  * @author hl
  */
-public class AbcWriter implements Writer<String> {
+class AbcWriter implements Writer<String> {
 
     private static final String NEW_LINE = "\n";
     private final List<Tune> tunes;
@@ -101,7 +101,7 @@ public class AbcWriter implements Writer<String> {
         return result.toString();
     }
     private static final String COMMENT = "%";
-    
+
     public static void main(String[] args) {
         System.out.println(Writer.ABC_CREATOR);
     }

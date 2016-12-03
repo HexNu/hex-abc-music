@@ -8,7 +8,7 @@ import se.digitman.lightxml.XmlNode;
  *
  * @author hl
  */
-public class KeyReader extends NodeReader<Key> {
+class KeyReader extends NodeReader<Key> {
 
     public KeyReader(XmlNode node) {
         super(node);

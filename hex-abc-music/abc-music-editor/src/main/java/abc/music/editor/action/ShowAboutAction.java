@@ -19,6 +19,4 @@ public class ShowAboutAction extends AmeAction<Void> {
     protected void performAction(ActionEvent event) {
         new AboutDialog(editor).setVisible(true);
     }
-
-    
 }

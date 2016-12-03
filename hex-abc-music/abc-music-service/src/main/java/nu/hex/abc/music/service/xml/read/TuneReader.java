@@ -15,7 +15,7 @@ import se.digitman.lightxml.XmlNode;
  *
  * @author hl
  */
-public class TuneReader extends NodeReader<Tune> {
+class TuneReader extends NodeReader<Tune> {
 
     private final Project project;
 

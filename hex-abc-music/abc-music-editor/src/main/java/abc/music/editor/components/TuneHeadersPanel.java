@@ -24,6 +24,8 @@ import abc.music.editor.action.OpenScoreLayoutAction;
 import abc.music.editor.support.PersonRoleListMouseListener;
 import nu.hex.abc.music.service.util.TuneHelper;
 import abc.music.editor.AmeConstants;
+import abc.music.editor.action.CreateSvgDocumentAction;
+import se.digitman.lightxml.XmlDocument;
 
 /**
  *
@@ -342,6 +344,7 @@ public class TuneHeadersPanel extends AmePanel {
         jLabel24 = new javax.swing.JLabel();
         octaveComboBox = new javax.swing.JComboBox<>();
         newTuneButton = new javax.swing.JButton();
+        svgButton = new javax.swing.JButton();
 
         setOpaque(false);
 
@@ -524,6 +527,13 @@ public class TuneHeadersPanel extends AmePanel {
             }
         });
 
+        svgButton.setText("SVG");
+        svgButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                svgButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -557,10 +567,15 @@ public class TuneHeadersPanel extends AmePanel {
                                 .addComponent(meterNumeratorSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel8)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(meterDenominatorSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(useSymbolCheckBox, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(meterDenominatorSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(useSymbolCheckBox, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(svgButton))))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(openScoreLayoutButton, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -702,7 +717,8 @@ public class TuneHeadersPanel extends AmePanel {
                                         .addComponent(transposeSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(layout.createSequentialGroup()
                                         .addGap(8, 8, 8)
-                                        .addComponent(jLabel23)))
+                                        .addComponent(jLabel23))
+                                    .addComponent(svgButton))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -711,7 +727,7 @@ public class TuneHeadersPanel extends AmePanel {
                                         .addComponent(jLabel24)
                                         .addComponent(newTuneButton))
                                     .addComponent(octaveComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(0, 1, Short.MAX_VALUE))
+                                .addGap(0, 0, Short.MAX_VALUE))
                             .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                         .addContainerGap())
                     .addGroup(layout.createSequentialGroup()
@@ -753,6 +769,10 @@ public class TuneHeadersPanel extends AmePanel {
     private void newTuneButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newTuneButtonActionPerformed
         createTune();
     }//GEN-LAST:event_newTuneButtonActionPerformed
+
+    private void svgButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_svgButtonActionPerformed
+        generateSVG();
+    }//GEN-LAST:event_svgButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -807,6 +827,7 @@ public class TuneHeadersPanel extends AmePanel {
     private javax.swing.JComboBox<String> pitchComboBox;
     private javax.swing.JTextField rythmTextField;
     private javax.swing.JComboBox<String> signatureComboBox;
+    private javax.swing.JButton svgButton;
     private javax.swing.JComboBox<String> tempoLabelComboBox;
     private javax.swing.JComboBox<String> tempoUnitComboBox;
     private javax.swing.JTextArea titlesTextArea;
@@ -912,5 +933,16 @@ public class TuneHeadersPanel extends AmePanel {
         setEditingEnabled(tune != null);
         refresh();
         titlesTextArea.requestFocus();
+    }
+
+    private void generateSVG() {
+        if (tune != null) {
+            CreateSvgDocumentAction action = new CreateSvgDocumentAction(editor, tune);
+            action.actionPerformed(null);
+            XmlDocument result = action.get();
+            if (result != null) {
+                
+            }
+        }
     }
 }

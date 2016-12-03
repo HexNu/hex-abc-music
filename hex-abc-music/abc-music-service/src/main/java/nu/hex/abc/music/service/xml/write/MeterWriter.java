@@ -8,7 +8,7 @@ import se.digitman.lightxml.XmlNode;
  *
  * @author hl
  */
-public class MeterWriter extends XmlWriter<Meter> {
+class MeterWriter extends XmlWriter<Meter> {
 
     public MeterWriter(Meter meter) {
         super(meter);

@@ -8,7 +8,7 @@ import se.digitman.lightxml.XmlNode;
  *
  * @author hl
  */
-public class VoiceReader extends NodeReader<Voice> {
+class VoiceReader extends NodeReader<Voice> {
 
     public VoiceReader(XmlNode node) {
         super(node);

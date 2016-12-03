@@ -15,7 +15,7 @@ import se.digitman.lightxml.XmlNode;
  *
  * @author hl
  */
-public class TuneWriter extends XmlWriter<Tune> {
+class TuneWriter extends XmlWriter<Tune> {
 
     public TuneWriter(Tune tune) {
         super(tune);

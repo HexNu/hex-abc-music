@@ -22,7 +22,6 @@ public class CreatePersonAction extends AmeAction<Person> {
         EditPersonDialog dialog = new EditPersonDialog(editor);
         dialog.setVisible(true);
         if (dialog.getResult().equals(AmeDialog.Result.OK)) {
-//            parent.getProject().addPerson(dialog.get());
             editor.updateMenuBar();
         }
     }

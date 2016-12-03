@@ -1,11 +1,8 @@
-package nu.hex.abc.music.service;
+package nu.hex.abc.music.service.xml.write;
 
 import abc.music.core.domain.Project;
 import java.time.format.DateTimeFormatter;
 import nu.hex.abc.music.service.xml.ClassNode;
-import nu.hex.abc.music.service.xml.write.PersonWriter;
-import nu.hex.abc.music.service.xml.write.TuneWriter;
-import nu.hex.abc.music.service.xml.write.XmlWriter;
 import se.digitman.lightxml.NodeFactory;
 import se.digitman.lightxml.XmlNode;
 

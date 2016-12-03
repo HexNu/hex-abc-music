@@ -6,7 +6,7 @@ import java.io.File;
 import javax.swing.JFileChooser;
 import abc.music.editor.AbcMusicEditor;
 import abc.music.editor.components.ProjectFileChooser;
-import nu.hex.abc.music.service.Service;
+import nu.hex.abc.music.service.xml.read.ReaderService;
 
 /**
  * Created 2016-dec-01
@@ -28,7 +28,7 @@ public class OpenProjectAction extends AmeAction<Project> {
             File file = fileChooser.getSelectedFile();
             setRightStatus("Opening file: " + file.getAbsolutePath());
             if (file != null) {
-                setResult(Service.openProject(file));
+                setResult(ReaderService.openProject(file));
                 setRightStatus("Project \"" + get().getName() + "\" opened.", 5000);
             }
         } else {

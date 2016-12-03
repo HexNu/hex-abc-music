@@ -9,7 +9,7 @@ import se.digitman.lightxml.XmlNode;
  * @author hl
  * @param <T>
  */
-public abstract class NodeReader<T> implements Reader<T> {
+abstract class NodeReader<T> implements Reader<T> {
 
     protected XmlNode node;
 

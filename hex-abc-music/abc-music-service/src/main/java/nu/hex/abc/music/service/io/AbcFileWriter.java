@@ -10,7 +10,7 @@ import java.util.List;
  *
  * @author hl
  */
-public class AbcFileWriter implements Writer<File> {
+class AbcFileWriter implements Writer<File> {
 
     private final List<Tune> tunes;
     private final File file;

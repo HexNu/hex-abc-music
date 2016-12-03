@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import nu.hex.abc.music.service.io.SimpleFileWriter;
+import nu.hex.abc.music.service.io.IoService;
 import se.digitman.lightxml.DocumentToXmlNodeParser;
 import se.digitman.lightxml.NodeFactory;
 import se.digitman.lightxml.XmlDocument;
@@ -25,9 +25,11 @@ public class AbcMusicProperties {
     public static final String SETTINGS_FOLDER = APPLICATION_ROOT_FOLDER + "settings/";
     private static final String SETTINGS_FILE = SETTINGS_FOLDER + "settings.xml";
     private static final String DEFAULT_PROJECT_FOLDER = APPLICATION_ROOT_FOLDER + "projects/";
+    private static final String DEFAULT_PROJECT_SVG_FOLDER = DEFAULT_PROJECT_FOLDER + "svg/";
     private static final String DEFAULT_BACKUP_FOLDER = APPLICATION_ROOT_FOLDER + "backup/";
     private static final String DEFAULT_ABC_FOLDER = PUBLIC_APPLICATION_FOLDER + "ABC/";
     public static final String PROJECT_FOLDER = "project-folder";
+    public static final String PROJECT_SVG_FOLDER = "project-svg-folder";
     public static final String BACKUP_FOLDER = "backup-folder";
     public static final String ABC_FOLDER = "abc-folder";
     public static final String LATEST_SAVED_PROJECT = "latest-saved-project";
@@ -37,22 +39,24 @@ public class AbcMusicProperties {
     private XmlNode settingsNode;
     private static final AbcMusicProperties properties = new AbcMusicProperties();
 
-    private AbcMusicProperties() {
+     AbcMusicProperties() {
         init();
     }
 
-    public static AbcMusicProperties getInstance() {
-        return properties;
-    }
+//    static AbcMusicProperties getInstance() {
+//        return properties;
+//    }
 
     private void init() {
         defaultSettingsMap.put(PROJECT_FOLDER, DEFAULT_PROJECT_FOLDER);
+        defaultSettingsMap.put(PROJECT_SVG_FOLDER, DEFAULT_PROJECT_SVG_FOLDER);
         defaultSettingsMap.put(BACKUP_FOLDER, DEFAULT_BACKUP_FOLDER);
         defaultSettingsMap.put(ABC_FOLDER, DEFAULT_ABC_FOLDER);
         try {
             new File(APPLICATION_ROOT_FOLDER).mkdirs();
             new File(SETTINGS_FOLDER).mkdir();
             new File(DEFAULT_PROJECT_FOLDER).mkdir();
+            new File(DEFAULT_PROJECT_SVG_FOLDER).mkdir();
             new File(DEFAULT_BACKUP_FOLDER).mkdir();
             new File(DEFAULT_ABC_FOLDER).mkdirs();
             settingsFile = new File(SETTINGS_FILE);
@@ -131,12 +135,13 @@ public class AbcMusicProperties {
 
     private void writeToSettingsFile() {
         XmlDocument settingsDoc = new XmlDocument(settingsNode);
-        new SimpleFileWriter(settingsFile, settingsDoc.toString()).write();
+        IoService.writeToFile(settingsFile, settingsDoc.toString());
     }
 
     private void createSettingsFile() {
         settingsNode = NodeFactory.createNode("settings");
         addSettingNode(DEFAULT_PROJECT_FOLDER, PROJECT_FOLDER);
+        addSettingNode(DEFAULT_PROJECT_SVG_FOLDER, PROJECT_SVG_FOLDER);
         addSettingNode(DEFAULT_BACKUP_FOLDER, BACKUP_FOLDER);
         addSettingNode(DEFAULT_ABC_FOLDER, ABC_FOLDER);
         writeToSettingsFile();

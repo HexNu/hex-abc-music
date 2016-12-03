@@ -8,7 +8,7 @@ import se.digitman.lightxml.XmlNode;
  *
  * @author hl
  */
-public class PersonWriter extends XmlWriter<Person> {
+class PersonWriter extends XmlWriter<Person> {
 
     public PersonWriter(Person person) {
         super(person);
