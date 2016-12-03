@@ -2,7 +2,7 @@ package nu.hex.abc.music.service.util;
 
 import abc.music.core.domain.Field;
 import abc.music.core.domain.Tune;
-import abc.music.core.domain.Voice;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -17,10 +17,12 @@ public class TuneHelper {
     public TuneHelper(Tune tune) {
         this.tune = tune;
     }
-    
-    public String getMusicNotesAsSearchString() {
-        String result = "";
-        result = tune.getVoices().stream().map((voice) -> musicNotesToSearchString(voice.getNotes())).reduce(result, String::concat);
+
+    public List<String> getMusicNotesAsSearchString() {
+        List<String> result = new ArrayList<>();
+        tune.getVoices().stream().forEach((voice) -> {
+            result.add(musicNotesToSearchString(voice.getNotes()));
+        });
         return result;
     }
 
@@ -63,9 +65,9 @@ public class TuneHelper {
         }
         return result;
     }
-    
+
     public static String musicNotesToSearchString(String notes) {
-        notes = notes.toLowerCase().replaceAll("\\s*[\\(\\[\"][^\\)]*[\\)\\]\"]\\s*", "");
+        notes = notes.toLowerCase().replaceAll("\\s*[\\[\"][^\\)]*[\\]\"]\\s*", "");
         notes = notes.replaceAll("[^a-g]", "");
         String latestLetter = "";
         String[] letterArray = notes.split("");
@@ -78,9 +80,11 @@ public class TuneHelper {
         }
         return result;
     }
-    
+
     public static void main(String[] args) {
         String s = musicNotesToSearchString("abCd [I:beta] < | ^t\" [am] hiASAaaa");
+        System.out.println(s);
+        s = musicNotesToSearchString("abCd [I:beta] < | ^t\" [am] hiASAaaa");
         System.out.println(s);
     }
 }

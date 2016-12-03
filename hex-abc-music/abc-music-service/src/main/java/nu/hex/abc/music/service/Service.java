@@ -82,13 +82,17 @@ public class Service {
                     break;
                 }
             }
-            String reducedTuneString = new TuneHelper(tune).getMusicNotesAsSearchString();
-            String reducedSearchString = TuneHelper.musicNotesToSearchString(searchString);
-            if (reducedSearchString != null
-                    && !reducedSearchString.isEmpty()
-                    && reducedTuneString.startsWith(reducedSearchString)
-                    && !result.contains(tune)) {
-                result.add(tune);
+            if (!result.contains(tune)) {
+                List<String> reducedTuneStrings = new TuneHelper(tune).getMusicNotesAsSearchString();
+                String reducedSearchString = TuneHelper.musicNotesToSearchString(searchString);
+                if (reducedSearchString != null && !reducedSearchString.isEmpty()) {
+                    for (String reducedString : reducedTuneStrings) {
+                        if (reducedString.startsWith(reducedSearchString)) {
+                            result.add(tune);
+                            break;
+                        }
+                    }
+                }
             }
         }
         return result;
