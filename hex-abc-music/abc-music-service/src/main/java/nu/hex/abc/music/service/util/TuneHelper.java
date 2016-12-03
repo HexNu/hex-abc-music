@@ -67,24 +67,18 @@ public class TuneHelper {
     }
 
     public static String musicNotesToSearchString(String notes) {
-        notes = notes.toLowerCase().replaceAll("\\s*[\\[\"][^\\)]*[\\]\"]\\s*", "");
-        notes = notes.replaceAll("[^a-g]", "");
         String latestLetter = "";
-        String[] letterArray = notes.split("");
         String result = "";
-        for (String letter : letterArray) {
+        for (String letter : notes
+                .toLowerCase()
+                .replaceAll("\\s*[\\[\"][^\\)]*[\\]\"]\\s*", "")
+                .replaceAll("[^a-g]", "")
+                .split("")) {
             if (!letter.equals(latestLetter)) {
                 result += letter;
                 latestLetter = letter;
             }
         }
         return result;
-    }
-
-    public static void main(String[] args) {
-        String s = musicNotesToSearchString("abCd [I:beta] < | ^t\" [am] hiASAaaa");
-        System.out.println(s);
-        s = musicNotesToSearchString("abCd [I:beta] < | ^t\" [am] hiASAaaa");
-        System.out.println(s);
     }
 }
