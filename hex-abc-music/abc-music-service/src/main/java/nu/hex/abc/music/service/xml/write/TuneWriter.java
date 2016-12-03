@@ -29,15 +29,17 @@ public class TuneWriter extends XmlWriter<Tune> {
         XmlNode titlesNode = NodeFactory.createNode("titles");
         result.addChild(titlesNode);
         entity.getTitles().stream().forEach((title) -> {
-            titlesNode.addChild(NodeFactory.createNode("tilte", title));
+            titlesNode.addChild(NodeFactory.createNode("title", title));
         });
         XmlNode creatorsNode = NodeFactory.createNode("creators");
         result.addChild(creatorsNode);
-        entity.getCreators().forEach((creator) -> {
-            XmlNode node = NodeFactory.createNode(creator.getRole().toString().toLowerCase().replaceAll(" ", "-"));
-            node.addAttribute("person", creator.getPerson().getId());
-            creatorsNode.addChild(node);
-        });
+        if (!entity.getCreators().isEmpty()) {
+            entity.getCreators().forEach((creator) -> {
+                XmlNode node = NodeFactory.createNode(creator.getRole().toString().toLowerCase().replaceAll(" ", "-"));
+                node.addAttribute("person", creator.getPerson().getId());
+                creatorsNode.addChild(node);
+            });
+        }
         XmlNode originsNode = new ClassNode(Origin.class).getCollectionNode();
         result.addChild(originsNode);
         entity.getOrigin().stream().forEach((o) -> {

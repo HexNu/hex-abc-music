@@ -1,16 +1,20 @@
 package nu.hex.abc.music.service;
 
 import abc.music.core.domain.Project;
+import abc.music.core.domain.Tune;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import nu.hex.abc.music.service.exception.NoProjectException;
 import nu.hex.abc.music.service.exception.ProjectNotFoundException;
 import nu.hex.abc.music.service.exception.ServiceException;
 import nu.hex.abc.music.service.io.AmxWriter;
 import nu.hex.abc.music.service.io.XmlFileWriter;
 import nu.hex.abc.music.service.properties.AbcMusicProperties;
+import nu.hex.abc.music.service.util.TuneHelper;
 import se.digitman.lightxml.DocumentToXmlNodeParser;
 import se.digitman.lightxml.XmlDocument;
 import se.digitman.lightxml.XmlNode;
@@ -70,6 +74,29 @@ public class Service {
         new XmlFileWriter(write, file).write();
         AbcMusicProperties.getInstance().setProperty(AbcMusicProperties.LATEST_SAVED_PROJECT, project.getName());
         return project;
+    }
+
+    public List<Tune> searchTunes(String searchString) {
+        List<Tune> result = new ArrayList<>();
+        for (Tune tune : project.getTunes()) {
+            for (String title : tune.getTitles()) {
+                if (title.toLowerCase()
+                        .startsWith(searchString.toLowerCase())
+                        && !result.contains(tune)) {
+                    result.add(tune);
+                    break;
+                }
+            }
+            String reducedTuneString = new TuneHelper(tune).getMusicNotesAsSearchString();
+            String reducedSearchString = TuneHelper.musicNotesToSearchString(searchString);
+            if (reducedSearchString != null
+                    && !reducedSearchString.isEmpty()
+                    && reducedTuneString.startsWith(reducedSearchString)
+                    && !result.contains(tune)) {
+                result.add(tune);
+            }
+        }
+        return result;
     }
 
     private static File getProjectFile(String name) {

@@ -29,7 +29,7 @@ public class TuneReader extends NodeReader<Tune> {
         Tune result = new Tune(project);
         result.setId(Integer.valueOf(node.getAttribute("id")));
         if (node.hasChildNamed("titles") && node.getChild("titles").hasChildNamed("title")) {
-            node.getChild("title").getChildren("titles").stream().forEach((n) -> {
+            node.getChild("titles").getChildren("title").stream().forEach((n) -> {
                 result.addTitle(n.getText());
             });
         }
