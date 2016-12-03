@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <links>
-    <link-group title="ABC">
+    <link-group title="ABC" short-description="Good ">
         <link title="abc:standard:v2.2" uri="http://abcnotation.com/wiki/abc:standard:v2.2">The DRAFT abc music notation standard 2.2 (Feb 2013 - present)</link>
         <link title="abc:standard:v2.1" uri="http://abcnotation.com/wiki/abc:standard:v2.1">The abc music standard 2.1 (Dec 2011)</link>
         <link title="Jef's page" uri="http://moinejf.free.fr/">ABC music notation software.</link>
-        <link title="abc2svg" uri="http://moinejf.free.fr/js/index.html">abc2svg is a rewrite of abcm2ps into Javascript.
-        </link>
         <link title="The Lesession pages" uri="http://www.lesession.co.uk/abc/abc_notation.htm">Steve Mansfield's Abc music tutorial - 
             Abc music notation tutorial, tune 
             collections in abc, rauschpfeifes, and more ... </link>
+    </link-group>
+    <link-group title="abcm2ps">
+        <link title="Ubuntu Manpage" uri="http://manpages.ubuntu.com/manpages/trusty/man1/abcm2ps.1.html">Ubuntus manual page on abcm2ps
+            Here is listed, under "Fomatting parameter", what parameters that can be used for fomatting the output.</link>
+        <link title="Format fine tuning" uri="http://www.lautengesellschaft.de/cdmm/userguide/node9.html">Fine tuned layoug - about abctab2ps</link>
     </link-group>
 </links>

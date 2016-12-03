@@ -25,6 +25,20 @@ class ProjectReader implements Reader<Project> {
     @Override
     public Project read() {
         result = new Project(node.getAttribute("name"));
+        if (node.hasAttribute("abc-version")) {
+            result.setAbcVersion(node.getAttribute("abc-version"));
+        }
+        if (node.hasAttribute("summary")) {
+            result.setSummary(node.getAttribute("summary"));
+        }
+        if (node.hasChildNamed("owner")) {
+            if (result.getOwner() == null) {
+                result.setOwner(new Project.Owner(result));
+            }
+            result.getOwner().setFirstName(node.getChild("owner").getAttribute("first-name"));
+            result.getOwner().setLastName(node.getChild("owner").getAttribute("last-name"));
+            result.getOwner().setEmail(node.getChild("owner").getAttribute("email"));
+        }
         result.setLastUpdated(LocalDateTime.parse(node.getAttribute("last-updated"), DateTimeFormatter.ISO_DATE_TIME));
         if (node.hasChildNamed("persons") && node.getChild("persons").hasChildNamed("person")) {
             node.getChild("persons").getChildren("person").stream().forEach(this::addPerson);

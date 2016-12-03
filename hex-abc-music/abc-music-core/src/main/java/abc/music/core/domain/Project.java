@@ -16,8 +16,10 @@ public class Project {
 
     private final Map<Integer, Tune> tunes = new HashMap<>();
     private final Map<Integer, Person> persons = new HashMap<>();
-    private final String name;
+    private String name;
+    private String summary;
     private String abcVersion;
+    private Owner owner = new Owner();
     private LocalDateTime lastUpdated;
 
     public Project(String name) {
@@ -26,6 +28,26 @@ public class Project {
 
     public String getName() {
         return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getSummary() {
+        return summary;
+    }
+
+    public void setSummary(String summary) {
+        this.summary = summary;
+    }
+
+    public Owner getOwner() {
+        return owner;
+    }
+
+    public void setOwner(Owner owner) {
+        this.owner = owner;
     }
 
     public LocalDateTime getLastUpdated() {
@@ -117,5 +139,16 @@ public class Project {
 
     public void setAbcVersion(String abcVersion) {
         this.abcVersion = abcVersion;
+    }
+
+    public static class Owner extends Person {
+
+        public Owner() {
+            super();
+        }
+
+        public Owner(Project project) {
+            super(project);
+        }
     }
 }

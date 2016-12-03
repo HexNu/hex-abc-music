@@ -2,6 +2,7 @@ package nu.hex.abc.music.service;
 
 import abc.music.core.domain.Project;
 import java.time.format.DateTimeFormatter;
+import nu.hex.abc.music.service.xml.ClassNode;
 import nu.hex.abc.music.service.xml.write.PersonWriter;
 import nu.hex.abc.music.service.xml.write.TuneWriter;
 import nu.hex.abc.music.service.xml.write.XmlWriter;
@@ -22,18 +23,26 @@ class ProjectWriter extends XmlWriter<Project> {
     @Override
     public XmlNode write() {
         result.addAttribute("name", entity.getName());
+        result.addAttribute("abc-version", entity.getAbcVersion());
+        result.addAttribute("summary", entity.getSummary());
+        if (entity.getOwner() != null) {
+            XmlNode ownerNode = new ClassNode(Project.Owner.class).getNode();
+            ownerNode.addAttribute("first-name", entity.getOwner().getFirstName());
+            ownerNode.addAttribute("last-name", entity.getOwner().getLastName());
+            ownerNode.addAttribute("email", entity.getOwner().getEmail());
+            result.addChild(ownerNode);
+        }
         result.addAttribute("last-updated", entity.getLastUpdated().format(DateTimeFormatter.ISO_DATE_TIME));
         XmlNode tunesNode = NodeFactory.createNode("tunes");
         result.addChild(tunesNode);
         XmlNode personsNode = NodeFactory.createNode("persons");
         result.addChild(personsNode);
-        entity.getTunes().stream().forEach((tune) -> {
-            tunesNode.addChild(new TuneWriter(tune).write());
-        });
         entity.getPersons().stream().forEach((person) -> {
             personsNode.addChild(new PersonWriter(person).write());
         });
+        entity.getTunes().stream().forEach((tune) -> {
+            tunesNode.addChild(new TuneWriter(tune).write());
+        });
         return result;
     }
-
 }

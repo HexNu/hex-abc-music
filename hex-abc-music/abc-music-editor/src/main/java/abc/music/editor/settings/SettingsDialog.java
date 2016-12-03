@@ -1,11 +1,14 @@
 package abc.music.editor.settings;
 
+import abc.music.core.domain.Person;
 import abc.music.core.domain.Project;
-import java.util.HashMap;
-import java.util.Map;
-import javax.swing.JTextField;
 import abc.music.editor.AbcMusicEditor;
 import abc.music.editor.components.AmeDialog;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import javax.swing.JTextField;
+import javax.swing.table.AbstractTableModel;
 import nu.hex.abc.music.service.properties.AbcMusicProperties;
 
 /**
@@ -45,22 +48,24 @@ public class SettingsDialog extends AmeDialog<Void> {
     private void initComponents() {
 
         projectPanel = new javax.swing.JPanel();
-        managerPanel = new javax.swing.JPanel();
-        jLabel5 = new javax.swing.JLabel();
-        managerEmailTextField = new javax.swing.JTextField();
-        jLabel6 = new javax.swing.JLabel();
-        managerFirstNameTextField = new javax.swing.JTextField();
-        managerLastNameTextField = new javax.swing.JTextField();
-        playerPanel = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        playersTable = new javax.swing.JTable();
-        jPanel3 = new javax.swing.JPanel();
+        projectInformationPanel = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
-        typeOfGameTextField = new javax.swing.JTextField();
+        projectNameTextField = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
-        versionTextField = new javax.swing.JTextField();
-        jLabel9 = new javax.swing.JLabel();
         abcVersionTextField = new javax.swing.JTextField();
+        jLabel9 = new javax.swing.JLabel();
+        summaryTextField = new javax.swing.JTextField();
+        jLabel10 = new javax.swing.JLabel();
+        projectOwnerPanel = new javax.swing.JPanel();
+        jLabel6 = new javax.swing.JLabel();
+        firstNameTextField = new javax.swing.JTextField();
+        lastNameTextField = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
+        creatorButton = new javax.swing.JButton();
+        emailTextField = new javax.swing.JTextField();
+        creatorsPanel = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        creatorsTable = new javax.swing.JTable();
         settingsTabbedPane = new javax.swing.JTabbedPane();
         generalOptionsPanel = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
@@ -79,48 +84,111 @@ public class SettingsDialog extends AmeDialog<Void> {
 
         projectPanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        managerPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Manager"));
+        projectInformationPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Project Information"));
 
-        jLabel5.setText("Email Address:");
+        jLabel7.setText("Project Name:");
+
+        jLabel8.setText("ABC-Version:");
+
+        jLabel9.setText("Summary:");
+
+        jLabel10.setFont(new java.awt.Font("Ubuntu", 2, 12)); // NOI18N
+        jLabel10.setText("Latest stable: 2.1 Draft: 2.2");
+
+        javax.swing.GroupLayout projectInformationPanelLayout = new javax.swing.GroupLayout(projectInformationPanel);
+        projectInformationPanel.setLayout(projectInformationPanelLayout);
+        projectInformationPanelLayout.setHorizontalGroup(
+            projectInformationPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(projectInformationPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(projectInformationPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(projectInformationPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(projectNameTextField)
+                    .addComponent(summaryTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
+                    .addGroup(projectInformationPanelLayout.createSequentialGroup()
+                        .addComponent(abcVersionTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel10)))
+                .addContainerGap())
+        );
+        projectInformationPanelLayout.setVerticalGroup(
+            projectInformationPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(projectInformationPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(projectInformationPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(projectNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(projectInformationPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8)
+                    .addComponent(abcVersionTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel10))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(projectInformationPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel9)
+                    .addComponent(summaryTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(13, Short.MAX_VALUE))
+        );
+
+        projectOwnerPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Project owner Information"));
 
         jLabel6.setText("Name:");
 
-        javax.swing.GroupLayout managerPanelLayout = new javax.swing.GroupLayout(managerPanel);
-        managerPanel.setLayout(managerPanelLayout);
-        managerPanelLayout.setHorizontalGroup(
-            managerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(managerPanelLayout.createSequentialGroup()
+        jLabel5.setText("Email Address:");
+
+        creatorButton.setText("Creator");
+        creatorButton.setToolTipText("Click this if you want to add the user as a creator");
+        creatorButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                creatorButtonActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout projectOwnerPanelLayout = new javax.swing.GroupLayout(projectOwnerPanel);
+        projectOwnerPanel.setLayout(projectOwnerPanelLayout);
+        projectOwnerPanelLayout.setHorizontalGroup(
+            projectOwnerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(projectOwnerPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(managerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(projectOwnerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel5)
                     .addComponent(jLabel6))
-                .addGap(18, 18, 18)
-                .addGroup(managerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(managerPanelLayout.createSequentialGroup()
-                        .addComponent(managerFirstNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(managerLastNameTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 124, Short.MAX_VALUE))
-                    .addComponent(managerEmailTextField))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        managerPanelLayout.setVerticalGroup(
-            managerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(managerPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(managerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(managerFirstNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(managerLastNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(managerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(projectOwnerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, projectOwnerPanelLayout.createSequentialGroup()
+                        .addComponent(emailTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(creatorButton))
+                    .addGroup(projectOwnerPanelLayout.createSequentialGroup()
+                        .addComponent(firstNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lastNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
+        );
+        projectOwnerPanelLayout.setVerticalGroup(
+            projectOwnerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(projectOwnerPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(projectOwnerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(firstNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lastNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(projectOwnerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(managerEmailTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(creatorButton)
+                    .addComponent(emailTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        playerPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Players"));
+        creatorsPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Composers, Authors et al"));
+        creatorsPanel.setToolTipText("You can add creators here as well as through the menu");
 
-        playersTable.setModel(new javax.swing.table.DefaultTableModel(
+        creatorsTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},
                 {null, null, null},
@@ -140,66 +208,23 @@ public class SettingsDialog extends AmeDialog<Void> {
                 return types [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(playersTable);
+        jScrollPane1.setViewportView(creatorsTable);
 
-        javax.swing.GroupLayout playerPanelLayout = new javax.swing.GroupLayout(playerPanel);
-        playerPanel.setLayout(playerPanelLayout);
-        playerPanelLayout.setHorizontalGroup(
-            playerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(playerPanelLayout.createSequentialGroup()
+        javax.swing.GroupLayout creatorsPanelLayout = new javax.swing.GroupLayout(creatorsPanel);
+        creatorsPanel.setLayout(creatorsPanelLayout);
+        creatorsPanelLayout.setHorizontalGroup(
+            creatorsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(creatorsPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 368, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        playerPanelLayout.setVerticalGroup(
-            playerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(playerPanelLayout.createSequentialGroup()
+        creatorsPanelLayout.setVerticalGroup(
+            creatorsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(creatorsPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Project Information"));
-
-        jLabel7.setText("Game Type:");
-
-        jLabel8.setText("Version:");
-
-        jLabel9.setText("Flavour:");
-
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(typeOfGameTextField)
-                    .addComponent(abcVersionTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
-                    .addComponent(versionTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
-                    .addComponent(typeOfGameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel8)
-                    .addComponent(versionTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel9)
-                    .addComponent(abcVersionTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(13, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout projectPanelLayout = new javax.swing.GroupLayout(projectPanel);
@@ -209,20 +234,20 @@ public class SettingsDialog extends AmeDialog<Void> {
             .addGroup(projectPanelLayout.createSequentialGroup()
                 .addGap(42, 42, 42)
                 .addGroup(projectPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(managerPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(playerPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(creatorsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(projectInformationPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(projectOwnerPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(156, Short.MAX_VALUE))
         );
         projectPanelLayout.setVerticalGroup(
             projectPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(projectPanelLayout.createSequentialGroup()
                 .addGap(14, 14, 14)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(projectInformationPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(managerPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(projectOwnerPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(playerPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(creatorsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -331,7 +356,7 @@ public class SettingsDialog extends AmeDialog<Void> {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(127, Short.MAX_VALUE))
+                .addContainerGap(173, Short.MAX_VALUE))
         );
 
         settingsTabbedPane.addTab("General", generalOptionsPanel);
@@ -371,6 +396,10 @@ public class SettingsDialog extends AmeDialog<Void> {
         ok();
     }//GEN-LAST:event_saveAndCloseButtonActionPerformed
 
+    private void creatorButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_creatorButtonActionPerformed
+        addUserToCreator();
+    }//GEN-LAST:event_creatorButtonActionPerformed
+
     @Override
     protected void accept() {
         updateProperties();
@@ -381,8 +410,14 @@ public class SettingsDialog extends AmeDialog<Void> {
     private javax.swing.JCheckBox autoOpenLatesProjectCheckBox;
     private javax.swing.JTextField backupDirectoryTextField;
     private javax.swing.JPanel buttonPanel;
+    private javax.swing.JButton creatorButton;
+    private javax.swing.JPanel creatorsPanel;
+    private javax.swing.JTable creatorsTable;
+    private javax.swing.JTextField emailTextField;
+    private javax.swing.JTextField firstNameTextField;
     private javax.swing.JPanel generalOptionsPanel;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -393,21 +428,17 @@ public class SettingsDialog extends AmeDialog<Void> {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JCheckBox keepHistoryCheckBox;
-    private javax.swing.JTextField managerEmailTextField;
-    private javax.swing.JTextField managerFirstNameTextField;
-    private javax.swing.JTextField managerLastNameTextField;
-    private javax.swing.JPanel managerPanel;
-    private javax.swing.JPanel playerPanel;
-    private javax.swing.JTable playersTable;
+    private javax.swing.JTextField lastNameTextField;
     private javax.swing.JTextField projectFolderTextField;
+    private javax.swing.JPanel projectInformationPanel;
+    private javax.swing.JTextField projectNameTextField;
+    private javax.swing.JPanel projectOwnerPanel;
     private javax.swing.JPanel projectPanel;
     private javax.swing.JButton saveAndCloseButton;
     private javax.swing.JTabbedPane settingsTabbedPane;
-    private javax.swing.JTextField typeOfGameTextField;
-    private javax.swing.JTextField versionTextField;
+    private javax.swing.JTextField summaryTextField;
     // End of variables declaration//GEN-END:variables
 
     private void setProperties() {
@@ -417,18 +448,96 @@ public class SettingsDialog extends AmeDialog<Void> {
         autoOpenLatesProjectCheckBox.setSelected(Boolean.valueOf(properties.getProperty("auto-open-project")));
         keepHistoryCheckBox.setSelected(Boolean.valueOf(properties.getProperty("preserve-project-history")));
         if (project != null) {
-            if (project.getAbcVersion() != null) {
-                abcVersionTextField.setText(project.getAbcVersion());
+            if (project.getOwner() != null) {
+                firstNameTextField.setText(project.getOwner().getFirstName());
+                lastNameTextField.setText(project.getOwner().getLastName());
+                emailTextField.setText(project.getOwner().getEmail());
             }
+            projectNameTextField.setText(project.getName());
+            abcVersionTextField.setText(project.getAbcVersion());
+            summaryTextField.setText(project.getSummary());
+            refreshCreatorTable();
         }
+    }
+
+    private void refreshCreatorTable() {
+        creatorsTable.setModel(new CreatorTableModel(project.getPersons()));
     }
 
     private void updateProperties() {
         properties.getProperties().keySet().stream().filter((key) -> (fieldMap.containsKey(key))).forEach((key) -> {
-            AbcMusicProperties.getInstance().setProperty(key, fieldMap.get(key).getText());
+            properties.setProperty(key, fieldMap.get(key).getText());
         });
-        AbcMusicProperties.getInstance().setProperty("auto-open-project", String.valueOf(autoOpenLatesProjectCheckBox.isSelected()));
-        AbcMusicProperties.getInstance().setProperty("preserve-project-history", String.valueOf(keepHistoryCheckBox.isSelected()));
+        properties.setProperty("auto-open-project", String.valueOf(autoOpenLatesProjectCheckBox.isSelected()));
+        properties.setProperty("preserve-project-history", String.valueOf(keepHistoryCheckBox.isSelected()));
+        if (project != null) {
+            if (project.getOwner() == null) {
+                project.setOwner(new Project.Owner());
+            }
+            project.getOwner().setFirstName(firstNameTextField.getText());
+            project.getOwner().setLastName(lastNameTextField.getText());
+            project.getOwner().setEmail(emailTextField.getText());
+            project.setName(projectNameTextField.getText());
+            project.setAbcVersion(abcVersionTextField.getText());
+            project.setSummary(summaryTextField.getText());
+        }
     }
 
+    private void addUserToCreator() {
+        if (project != null) {
+            Person person = new Person(project);
+            person.setFirstName(firstNameTextField.getText());
+            person.setLastName(lastNameTextField.getText());
+            person.setEmail(emailTextField.getText());
+            project.addPerson(person);
+            refreshCreatorTable();
+        }
+    }
+
+    class CreatorTableModel extends AbstractTableModel {
+
+        private final String[] columnNames = {"First Name", "Last Name", "Email"};
+        private final List<Person> person;
+        private Object[][] data;
+
+        public CreatorTableModel(List<Person> person) {
+            this.person = person;
+            setValues();
+        }
+
+        private void setValues() {
+            data = new Object[person.size() + 1][];
+            int i = 0;
+            for (Person p : person) {
+                data[i++] = new Object[]{p.getFirstName(), p.getLastName(), p.getEmail()};
+            }
+            data[i] = new Object[]{"", "", ""};
+        }
+
+        @Override
+        public int getRowCount() {
+            return data.length;
+        }
+
+        @Override
+        public int getColumnCount() {
+            return columnNames.length;
+        }
+
+        @Override
+        public Object getValueAt(int row, int col) {
+            return data[row][col];
+        }
+
+        @Override
+        public boolean isCellEditable(int row, int col) {
+            return true;
+        }
+
+        @Override
+        public void setValueAt(Object value, int row, int col) {
+            data[row][col] = value;
+            fireTableCellUpdated(row, col);
+        }
+    }
 }

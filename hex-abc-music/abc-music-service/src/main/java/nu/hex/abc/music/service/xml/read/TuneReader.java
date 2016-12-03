@@ -34,11 +34,13 @@ public class TuneReader extends NodeReader<Tune> {
             });
         }
         if (node.hasChildNamed("creators") && node.getChild("creators").getChildren() != null && !node.getChildren().isEmpty()) {
-            if (!node.isCdata()) {
-                PersonRole pr = new PersonRole(Person.Role.find(node.getName()));
-                pr.setPerson(project.getPerson(Integer.valueOf(node.getAttribute("id"))));
-                result.addCreator(pr);
-            }
+            node.getChild("creators").getChildren().forEach((creatorNode) -> {
+                if (!creatorNode.isCdata()) {
+                    PersonRole pr = new PersonRole(Person.Role.find(creatorNode.getName()));
+                    pr.setPerson(project.getPerson(Integer.valueOf(creatorNode.getAttribute("person"))));
+                    result.addCreator(pr);
+                }
+            });
         }
         if (node.hasChildNamed("origins") && node.getChild("origins").hasChildNamed("origin")) {
             node.getChild("origins").getChildren("origin").stream().forEach((f) -> {
@@ -78,7 +80,7 @@ public class TuneReader extends NodeReader<Tune> {
             result.setKey(new KeyReader(node.getChild("key")).read());
         }
         if (node.hasChildNamed("voices") && node.getChild("voices").hasChildNamed("voice")) {
-            node.getChild("voices").getChildren("voice").stream().forEach((v)-> {
+            node.getChild("voices").getChildren("voice").stream().forEach((v) -> {
                 result.addVoice(new VoiceReader(v).read());
             });
         }
