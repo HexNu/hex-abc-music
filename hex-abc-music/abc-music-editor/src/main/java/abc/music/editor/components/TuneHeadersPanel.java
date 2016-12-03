@@ -345,6 +345,8 @@ public class TuneHeadersPanel extends AmePanel {
         octaveComboBox = new javax.swing.JComboBox<>();
         newTuneButton = new javax.swing.JButton();
         svgButton = new javax.swing.JButton();
+        abcButton = new javax.swing.JButton();
+        abcButton1 = new javax.swing.JButton();
 
         setOpaque(false);
 
@@ -527,10 +529,33 @@ public class TuneHeadersPanel extends AmePanel {
             }
         });
 
+        svgButton.setBackground(java.awt.Color.white);
+        svgButton.setFont(AmeConstants.TAB_LABEL_FONT);
+        svgButton.setForeground(AmeConstants.TITLE_COLOR);
         svgButton.setText("SVG");
         svgButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 svgButtonActionPerformed(evt);
+            }
+        });
+
+        abcButton.setBackground(java.awt.Color.white);
+        abcButton.setFont(AmeConstants.TAB_LABEL_FONT);
+        abcButton.setForeground(AmeConstants.TITLE_COLOR);
+        abcButton.setText("ABC");
+        abcButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                abcButtonActionPerformed(evt);
+            }
+        });
+
+        abcButton1.setBackground(java.awt.Color.white);
+        abcButton1.setFont(AmeConstants.TAB_LABEL_FONT);
+        abcButton1.setForeground(AmeConstants.TITLE_COLOR);
+        abcButton1.setText("PS");
+        abcButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                abcButton1ActionPerformed(evt);
             }
         });
 
@@ -567,14 +592,17 @@ public class TuneHeadersPanel extends AmePanel {
                                 .addComponent(meterNumeratorSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel8)))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(meterDenominatorSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(useSymbolCheckBox, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(abcButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(abcButton)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(svgButton))))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(openScoreLayoutButton, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -718,7 +746,10 @@ public class TuneHeadersPanel extends AmePanel {
                                     .addGroup(layout.createSequentialGroup()
                                         .addGap(8, 8, 8)
                                         .addComponent(jLabel23))
-                                    .addComponent(svgButton))
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(svgButton)
+                                        .addComponent(abcButton)
+                                        .addComponent(abcButton1)))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -774,8 +805,18 @@ public class TuneHeadersPanel extends AmePanel {
         generateSVG();
     }//GEN-LAST:event_svgButtonActionPerformed
 
+    private void abcButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_abcButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_abcButtonActionPerformed
+
+    private void abcButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_abcButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_abcButton1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton abcButton;
+    private javax.swing.JButton abcButton1;
     private javax.swing.JButton addVoiceButton;
     private javax.swing.JList<String> authorList;
     private javax.swing.JComboBox<String> clefComboBox;

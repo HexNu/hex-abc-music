@@ -3,22 +3,19 @@ package nu.hex.abc.music.service.io;
 import abc.music.core.domain.Tune;
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import nu.hex.abc.music.service.properties.AbcMusicProperties;
 import nu.hex.abc.music.service.properties.PropertyService;
-import se.digitman.lightxml.DocumentToXmlNodeParser;
-import se.digitman.lightxml.XmlDocument;
 
 /**
  * Created 2016-dec-03
  *
  * @author hl
  */
-class SvgWriter implements Writer<XmlDocument> {
+class SvgWriter implements Writer<File> {
 
     private final Tune tune;
     private File abcFile;
@@ -29,12 +26,12 @@ class SvgWriter implements Writer<XmlDocument> {
     }
 
     @Override
-    public XmlDocument write() {
+    public File write() {
         try {
             String svgFolder = PropertyService.getProperties().getProperty(AbcMusicProperties.PROJECT_SVG_FOLDER);
             String tuneFileName = tune.getName().replaceAll(" ", "_");
-            abcFile = new File(svgFolder + tuneFileName + ".abc");
             svgFile = new File(svgFolder + tuneFileName + ".svg");
+            abcFile = new File(svgFolder + tuneFileName + ".abc");
             new AbcFileWriter(tune, abcFile).write();
             String cmdString = "/usr/bin/abcm2ps " + getCmdFilePath(abcFile) + " -g -O " + getCmdFilePath(svgFile);
             System.out.println(cmdString);
@@ -48,9 +45,11 @@ class SvgWriter implements Writer<XmlDocument> {
                 }
             }
             process.waitFor();
-            return new XmlDocument(new DocumentToXmlNodeParser(new FileInputStream(new File(svgFolder + tuneFileName + "001.svg"))).parse());
+            return new File(svgFolder + tuneFileName + "001.svg");
         } catch (IOException | InterruptedException ex) {
             Logger.getLogger(SvgWriter.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            abcFile.delete();
         }
         return null;
     }

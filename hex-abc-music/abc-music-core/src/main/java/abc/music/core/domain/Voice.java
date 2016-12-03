@@ -82,7 +82,7 @@ public class Voice extends Field {
     }
 
     public String getNotes() {
-        return notes.trim();
+        return notes != null ? notes.trim() : "";
     }
 
     public void setNotes(String notes) {

@@ -32,7 +32,7 @@ public class IoService {
         return new AmxWriter(projectNode).write();
     }
 
-    public XmlDocument createSvgDocument(Tune tune) {
+    public File createSvgFile(Tune tune) {
         return new SvgWriter(tune).write();
     }
 

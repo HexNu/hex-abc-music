@@ -1,15 +1,22 @@
 package abc.music.editor.components;
 
 import abc.music.core.domain.Project;
+import abc.music.core.domain.Tune;
 import abc.music.core.domain.Voice;
-import java.util.List;
 import abc.music.editor.AbcMusicEditor;
+import abc.music.editor.action.SaveTuneAction;
+import abc.music.editor.action.UpdateSvgFileAction;
+import javax.swing.JTabbedPane;
+import javax.swing.event.ChangeEvent;
+import java.util.List;
 
 /**
  *
  * @author hl
  */
 public class VoicesPanel extends AmePanel {
+
+    private SvgViewPanel svgPanel;
 
     public VoicesPanel(AbcMusicEditor parent, Project project) {
         super(parent, project, "Voices");
@@ -18,6 +25,15 @@ public class VoicesPanel extends AmePanel {
     @Override
     protected void init() {
         initComponents();
+        voicesTabbedPane.addChangeListener((ChangeEvent e) -> {
+            JTabbedPane sourceTabbedPane = (JTabbedPane) e.getSource();
+            int index = sourceTabbedPane.getSelectedIndex();
+            if (index + 1 == sourceTabbedPane.getComponentCount()) {
+                new SaveTuneAction(editor).actionPerformed(null);
+                new UpdateSvgFileAction(editor, svgPanel.getTune()).actionPerformed(null);
+                svgPanel.updateFile();
+            }
+        });
     }
 
     public void clearVoices() {
@@ -32,17 +48,31 @@ public class VoicesPanel extends AmePanel {
 
     public void setVoices(List<Voice> voices) {
         clearVoices();
+        if (!voices.isEmpty() && voices.get(0) != null && voices.get(0).getTune() != null) {
+            addSvgPanel(voices.get(0).getTune());
+        }
         voices.stream().forEach(this::addVoice);
     }
 
     public void addVoice(Voice voice) {
         if (voice != null) {
-            voicesTabbedPane.add(voice.getName(), new VoicePanel(editor, project, voice));
+            int newIndex = voicesTabbedPane.getComponentCount() - 1;
+            voicesTabbedPane.add(new VoicePanel(editor, project, voice), newIndex);
+            voicesTabbedPane.setTitleAt(newIndex, voice.getName());
             repaint();
             revalidate();
             voicesTabbedPane.repaint();
             voicesTabbedPane.revalidate();
         }
+    }
+
+    private void addSvgPanel(Tune tune) {
+        svgPanel = new SvgViewPanel(editor, tune);
+        voicesTabbedPane.add("View", svgPanel);
+        repaint();
+        revalidate();
+        voicesTabbedPane.repaint();
+        voicesTabbedPane.revalidate();
     }
 
     public void updateVoices() {
@@ -75,4 +105,5 @@ public class VoicesPanel extends AmePanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTabbedPane voicesTabbedPane;
     // End of variables declaration//GEN-END:variables
+
 }

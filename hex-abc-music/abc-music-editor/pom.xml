@@ -29,6 +29,16 @@
     <version>1.0</version>
     <dependencies>
         <dependency>
+            <groupId>org.codeartisans.thirdparties.swing</groupId>
+            <artifactId>batik-all</artifactId>
+            <version>1.8pre-r1084380</version>
+        </dependency>
+        <dependency>
+            <groupId>org.axsl.org.w3c.dom.svg</groupId>
+            <artifactId>svg-dom-java</artifactId>
+            <version>1.1</version>
+        </dependency>
+        <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>abc-music-service</artifactId>
             <version>${project.version}</version>
