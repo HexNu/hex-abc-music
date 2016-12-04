@@ -55,23 +55,37 @@ public class VoicePanel extends AmePanel {
         }
         voice.setShortName(shortNameTextField.getText());
         voice.setName(nameTextField.getText());
-        if (modeComboBox.getSelectedItem() != null) {
-            voice.getKey().setMode((Key.Mode) modeComboBox.getSelectedItem());
+        if (useKeyCheckBox.isSelected()) {
+            if (modeComboBox.getSelectedItem() != null) {
+                voice.getKey().setMode((Key.Mode) modeComboBox.getSelectedItem());
+            }
+            if (pitchComboBox.getSelectedItem() != null) {
+                voice.getKey().setPitch((Key.Pitch) pitchComboBox.getSelectedItem());
+            }
+            if (signatureComboBox.getSelectedItem() != null) {
+                voice.getKey().setSignature((Key.Signature) signatureComboBox.getSelectedItem());
+            }
+        } else {
+            Key key = voice.getTune().getKey();
+            voice.getKey().setMode(key.getMode());
+            voice.getKey().setPitch(key.getPitch());
+            voice.getKey().setSignature(key.getSignature());
         }
-        if (pitchComboBox.getSelectedItem() != null) {
-            voice.getKey().setPitch((Key.Pitch) pitchComboBox.getSelectedItem());
-        }
-        if (signatureComboBox.getSelectedItem() != null) {
-            voice.getKey().setSignature((Key.Signature) signatureComboBox.getSelectedItem());
-        }
-        if (clefComboBox.getSelectedItem() != null) {
-            voice.getKey().getModifier().setClef((Modifier.Clef) clefComboBox.getSelectedItem());
-        }
-        if (octaveComboBox.getSelectedItem() != null) {
-            voice.getKey().getModifier().setOctave((Modifier.OctaveClef) octaveComboBox.getSelectedItem());
-        }
-        if (transposeSpinner.getValue() != null) {
-            voice.getKey().getModifier().setTranspose((Integer) transposeSpinner.getValue());
+        if (useModifiersCheckBox.isSelected()) {
+            if (clefComboBox.getSelectedItem() != null) {
+                voice.getKey().getModifier().setClef((Modifier.Clef) clefComboBox.getSelectedItem());
+            }
+            if (octaveComboBox.getSelectedItem() != null) {
+                voice.getKey().getModifier().setOctave((Modifier.OctaveClef) octaveComboBox.getSelectedItem());
+            }
+            if (transposeSpinner.getValue() != null) {
+                voice.getKey().getModifier().setTranspose((Integer) transposeSpinner.getValue());
+            }
+        } else {
+            Modifier modifier = voice.getTune().getKey().getModifier();
+            voice.getKey().getModifier().setClef(modifier.getClef());
+            voice.getKey().getModifier().setOctave(modifier.getOctave());
+            voice.getKey().getModifier().setTranspose(modifier.getTranspose());
         }
         voice.setNotes(bodyEditorPane.getText());
     }
@@ -111,6 +125,8 @@ public class VoicePanel extends AmePanel {
         nameTextField = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
         otherPropertiesButton = new javax.swing.JButton();
+        useKeyCheckBox = new javax.swing.JCheckBox();
+        useModifiersCheckBox = new javax.swing.JCheckBox();
 
         setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.LINE_AXIS));
 
@@ -125,17 +141,20 @@ public class VoicePanel extends AmePanel {
         jPanel2.setOpaque(false);
 
         modeComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        modeComboBox.setEnabled(false);
 
         jLabel22.setText("Clef:");
 
         jLabel20.setText("Modus:");
 
         transposeSpinner.setModel(new javax.swing.SpinnerNumberModel(0, -24, 24, 1));
+        transposeSpinner.setEnabled(false);
 
         jLabel21.setFont(new java.awt.Font("Ubuntu", 2, 15)); // NOI18N
         jLabel21.setText("Modifiers:");
 
         signatureComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        signatureComboBox.setEnabled(false);
 
         jLabel18.setText("Pitch:");
 
@@ -143,10 +162,12 @@ public class VoicePanel extends AmePanel {
 
         clefComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         clefComboBox.setToolTipText("<html>Select clef.<br>\nThe number on some choices indecates which line the clef is drawn on.<br>\nThe defaults are:\n<dl>\n<dt>G = 2 (Treble Clef)</dt>\n<dt>F = 4 (Bass Clef)</dt>\n<dt>C = 3 (Alto Clef)</dt>\n</dl>\nThe others are:\n<dl>\n<dt>G1 = French Violin Clef</dt>\n<dt>F3 = Baritone Clef</dt>\n<dt>C4 = Tenor Clef</dt>\n<dt>C2 = Mezzosoprano Clef</dt>\n<dt>C1 = Soprano Clef</dt>\n</dl>");
+        clefComboBox.setEnabled(false);
 
         jLabel19.setText("Signature:");
 
         octaveComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        octaveComboBox.setEnabled(false);
 
         jLabel23.setText("Transpose:");
 
@@ -154,6 +175,7 @@ public class VoicePanel extends AmePanel {
         jLabel15.setText("Key:");
 
         pitchComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        pitchComboBox.setEnabled(false);
 
         jLabel1.setText("ID:");
 
@@ -171,6 +193,18 @@ public class VoicePanel extends AmePanel {
             }
         });
         jPanel1.add(otherPropertiesButton, java.awt.BorderLayout.CENTER);
+
+        useKeyCheckBox.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                useKeyCheckBoxItemStateChanged(evt);
+            }
+        });
+
+        useModifiersCheckBox.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                useModifiersCheckBoxItemStateChanged(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -201,7 +235,10 @@ public class VoicePanel extends AmePanel {
                                     .addComponent(transposeSpinner)
                                     .addComponent(octaveComboBox, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                             .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(useModifiersCheckBox))
                             .addComponent(nameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 2, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
@@ -217,7 +254,10 @@ public class VoicePanel extends AmePanel {
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(pitchComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(signatureComboBox, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(modeComboBox, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(modeComboBox, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(useKeyCheckBox)
+                                .addGap(0, 0, Short.MAX_VALUE)))))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -234,23 +274,29 @@ public class VoicePanel extends AmePanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel3)
                 .addGap(3, 3, 3)
-                .addComponent(nameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel15)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(pitchComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel18))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(signatureComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel19))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel20)
-                    .addComponent(modeComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel21)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(nameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLabel15))
+                            .addComponent(useKeyCheckBox))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(pitchComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel18))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(signatureComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel19))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel20)
+                            .addComponent(modeComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel21))
+                    .addComponent(useModifiersCheckBox))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel22)
@@ -276,6 +322,14 @@ public class VoicePanel extends AmePanel {
     private void otherPropertiesButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_otherPropertiesButtonActionPerformed
         showOtherProperties();
     }//GEN-LAST:event_otherPropertiesButtonActionPerformed
+
+    private void useKeyCheckBoxItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_useKeyCheckBoxItemStateChanged
+        toggleKeyEnabled();
+    }//GEN-LAST:event_useKeyCheckBoxItemStateChanged
+
+    private void useModifiersCheckBoxItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_useModifiersCheckBoxItemStateChanged
+        toggleModifiersEnabled();
+    }//GEN-LAST:event_useModifiersCheckBoxItemStateChanged
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -304,11 +358,27 @@ public class VoicePanel extends AmePanel {
     private javax.swing.JTextField shortNameTextField;
     private javax.swing.JComboBox<String> signatureComboBox;
     private javax.swing.JSpinner transposeSpinner;
+    private javax.swing.JCheckBox useKeyCheckBox;
+    private javax.swing.JCheckBox useModifiersCheckBox;
     private javax.swing.JPanel voicePanel;
     // End of variables declaration//GEN-END:variables
 
     private void showOtherProperties() {
         System.out.println("TODO: Create dialog for other voice properties (Midi etc)");
+    }
+
+    private void toggleKeyEnabled() {
+        boolean enabled = useKeyCheckBox.isSelected();
+        pitchComboBox.setEnabled(enabled);
+        signatureComboBox.setEnabled(enabled);
+        modeComboBox.setEnabled(enabled);
+    }
+
+    private void toggleModifiersEnabled() {
+        boolean enabled = useModifiersCheckBox.isSelected();
+        clefComboBox.setEnabled(enabled);
+        transposeSpinner.setEnabled(enabled);
+        octaveComboBox.setEnabled(enabled);
     }
 
 }

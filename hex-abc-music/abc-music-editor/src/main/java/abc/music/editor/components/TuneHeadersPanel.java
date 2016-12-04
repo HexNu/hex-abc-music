@@ -108,7 +108,9 @@ public class TuneHeadersPanel extends AmePanel {
         clefComboBox.setSelectedItem(tune.getKey().getModifier().getClef());
         transposeSpinner.setValue(tune.getKey().getModifier().getTranspose());
         octaveComboBox.setSelectedItem(tune.getKey().getModifier().getOctave());
-        editor.getVoicesPanel().setVoices(tune.getVoices());
+        if (tune.getVoices() != null && !tune.getVoices().isEmpty()) {
+            editor.getVoicesPanel().setVoices(tune.getVoices());
+        }
     }
 
     private void resetFields() {
@@ -962,7 +964,7 @@ public class TuneHeadersPanel extends AmePanel {
         CreateTuneAction action = new CreateTuneAction(editor);
         action.actionPerformed(null);
         setTune(action.get());
-        createNewVoice();
+//        createNewVoice();
     }
 
     public void setTune(Tune tune) {
@@ -982,7 +984,7 @@ public class TuneHeadersPanel extends AmePanel {
             action.actionPerformed(null);
             XmlDocument result = action.get();
             if (result != null) {
-                
+
             }
         }
     }

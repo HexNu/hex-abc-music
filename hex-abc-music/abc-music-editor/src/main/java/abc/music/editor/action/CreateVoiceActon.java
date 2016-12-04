@@ -27,6 +27,16 @@ public class CreateVoiceActon extends AmeAction<Voice> {
         dialog.setVisible(true);
         setResult(dialog.get());
         if (dialog.getResult().equals(AmeDialog.Result.OK)) {
+            Voice voice = get();
+            if (voice.getVoiceId() == null || voice.getVoiceId().isEmpty()) {
+                voice.setVoiceId(String.valueOf(tune.getVoices().size() + 1));
+                voice.getKey().setMode(tune.getKey().getMode());
+                voice.getKey().setPitch(tune.getKey().getPitch());
+                voice.getKey().setSignature(tune.getKey().getSignature());
+                voice.getKey().getModifier().setClef(tune.getKey().getModifier().getClef());
+                voice.getKey().getModifier().setOctave(tune.getKey().getModifier().getOctave());
+                voice.getKey().getModifier().setTranspose(tune.getKey().getModifier().getTranspose());
+            }
             tune.addVoice(get());
         }
     }

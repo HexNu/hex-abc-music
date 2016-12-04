@@ -13,6 +13,8 @@ public class Voice extends Field {
     private String shortName;
     private Stem stem = Stem.DEFAULT_STEM;
     private Key key = new Key();
+    private Boolean useVoiceKey = false;
+    private Boolean useVoiceModifiers = false;
     private String notes;
 
     public Voice() {
@@ -79,6 +81,22 @@ public class Voice extends Field {
 
     public boolean hasKey() {
         return key != null && !key.isEmpty();
+    }
+
+    public Boolean getUseVoiceKey() {
+        return useVoiceKey;
+    }
+
+    public void setUseVoiceKey(Boolean useVoiceKey) {
+        this.useVoiceKey = useVoiceKey;
+    }
+
+    public Boolean getUseVoiceModifiers() {
+        return useVoiceModifiers;
+    }
+
+    public void setUseVoiceModifiers(Boolean useVoiceModifiers) {
+        this.useVoiceModifiers = useVoiceModifiers;
     }
 
     public String getNotes() {
