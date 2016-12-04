@@ -197,7 +197,9 @@ public class AbcMusicEditor extends JFrame {
 
     public void setProject(Project project) {
         this.project = project;
-        setTitle(APP_TITLE + " - " + project.getName());
+        if (project != null && project.getName() != null) {
+            setTitle(APP_TITLE + " - " + project.getName());
+        }
         updateMenuBar();
         tuneSearchPanel.checkSearchEnabled();
         new SetEditingEnabledAction(this, false).actionPerformed(null);

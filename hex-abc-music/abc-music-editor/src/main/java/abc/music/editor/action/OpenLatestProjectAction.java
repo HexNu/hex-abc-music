@@ -17,12 +17,17 @@ public class OpenLatestProjectAction extends AmeAction<Project> {
     public OpenLatestProjectAction(AbcMusicEditor editor) {
         super(editor);
     }
-
+    
+    public static boolean isEnabled() {
+        return PropertyService.getProperties().getProperty(AbcMusicProperties.LATEST_SAVED_PROJECT) != null
+                && !PropertyService.getProperties().getProperty(AbcMusicProperties.LATEST_SAVED_PROJECT).isEmpty();
+    }
+    
     @Override
     protected void performAction(ActionEvent event) {
         Boolean autoOpen = PropertyService.getProperties().getPropertyAsBoolean(AbcMusicProperties.AUTO_OPEN_LATEST_PROJECT);
         String latestProject = PropertyService.getProperties().getProperty(AbcMusicProperties.LATEST_SAVED_PROJECT);
-        if (autoOpen != null && autoOpen && latestProject != null && !latestProject.isEmpty()) {
+        if (autoOpen != null && autoOpen && isEnabled()) {
             setResult(ReaderService.openProject(latestProject));
         }
     }

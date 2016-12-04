@@ -86,6 +86,7 @@ public class AmeMenuBar extends JMenuBar {
         
         openLatestMenuItem.setMnemonic('l');
         openLatestMenuItem.setText("Open Latest Project");
+        openLatestMenuItem.setEnabled(OpenLatestProjectAction.isEnabled());
         openLatestMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(KeyEvent.VK_L, InputEvent.CTRL_MASK));
         openLatestMenuItem.addActionListener((ActionEvent e) -> {
             OpenLatestProjectAction action = new OpenLatestProjectAction(parent);
@@ -180,6 +181,7 @@ public class AmeMenuBar extends JMenuBar {
     public void updateMenu() {
         boolean enable = parent.getProject() != null;
         saveMenuItem.setEnabled(enable);
+        openLatestMenuItem.setEnabled(OpenLatestProjectAction.isEnabled());
         saveAsMenuItem.setEnabled(enable);
         closeProjectMenuItem.setEnabled(enable);
         projectMenu.setEnabled(enable);

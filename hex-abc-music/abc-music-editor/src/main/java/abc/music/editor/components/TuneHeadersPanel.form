@@ -60,7 +60,7 @@
                               <Component id="useSymbolCheckBox" min="-2" pref="100" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" attributes="0">
-                              <Component id="abcButton1" min="-2" pref="42" max="-2" attributes="0"/>
+                              <Component id="postScriptButton" min="-2" pref="42" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="abcButton" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
@@ -255,7 +255,7 @@
                                   <Group type="103" alignment="0" groupAlignment="3" attributes="0">
                                       <Component id="svgButton" alignment="3" min="-2" max="-2" attributes="0"/>
                                       <Component id="abcButton" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      <Component id="abcButton1" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="postScriptButton" alignment="3" min="-2" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
@@ -860,6 +860,7 @@
           <Connection code="AmeConstants.TITLE_COLOR" type="code"/>
         </Property>
         <Property name="text" type="java.lang.String" value="SVG"/>
+        <Property name="enabled" type="boolean" value="false"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="svgButtonActionPerformed"/>
@@ -877,12 +878,13 @@
           <Connection code="AmeConstants.TITLE_COLOR" type="code"/>
         </Property>
         <Property name="text" type="java.lang.String" value="ABC"/>
+        <Property name="enabled" type="boolean" value="false"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="abcButtonActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="abcButton1">
+    <Component class="javax.swing.JButton" name="postScriptButton">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="ff" green="ff" id="white" palette="1" red="ff" type="palette"/>
@@ -894,9 +896,10 @@
           <Connection code="AmeConstants.TITLE_COLOR" type="code"/>
         </Property>
         <Property name="text" type="java.lang.String" value="PS"/>
+        <Property name="enabled" type="boolean" value="false"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="abcButton1ActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="postScriptButtonActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

@@ -22,6 +22,11 @@
             <artifactId>lightXML</artifactId>
             <version>1.1</version>
         </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>hex-media-type</artifactId>
+            <version>1.0</version>
+        </dependency>
         <!-- https://mvnrepository.com/artifact/org.ghost4j/ghost4j -->
         <dependency>
             <groupId>org.ghost4j</groupId>

@@ -24,7 +24,9 @@ import abc.music.editor.action.OpenScoreLayoutAction;
 import abc.music.editor.support.PersonRoleListMouseListener;
 import nu.hex.abc.music.service.util.TuneHelper;
 import abc.music.editor.AmeConstants;
+import abc.music.editor.action.CreateFileAction;
 import abc.music.editor.action.CreateSvgDocumentAction;
+import nu.hex.mediatype.CommonMediaType;
 import se.digitman.lightxml.XmlDocument;
 
 /**
@@ -164,6 +166,8 @@ public class TuneHeadersPanel extends AmePanel {
         clefComboBox.setEnabled(enabled);
         transposeSpinner.setEnabled(enabled);
         octaveComboBox.setEnabled(enabled);
+        abcButton.setEnabled(enabled);
+        postScriptButton.setEnabled(enabled);
     }
 
     public void updateLists() {
@@ -348,7 +352,7 @@ public class TuneHeadersPanel extends AmePanel {
         newTuneButton = new javax.swing.JButton();
         svgButton = new javax.swing.JButton();
         abcButton = new javax.swing.JButton();
-        abcButton1 = new javax.swing.JButton();
+        postScriptButton = new javax.swing.JButton();
 
         setOpaque(false);
 
@@ -535,6 +539,7 @@ public class TuneHeadersPanel extends AmePanel {
         svgButton.setFont(AmeConstants.TAB_LABEL_FONT);
         svgButton.setForeground(AmeConstants.TITLE_COLOR);
         svgButton.setText("SVG");
+        svgButton.setEnabled(false);
         svgButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 svgButtonActionPerformed(evt);
@@ -545,19 +550,21 @@ public class TuneHeadersPanel extends AmePanel {
         abcButton.setFont(AmeConstants.TAB_LABEL_FONT);
         abcButton.setForeground(AmeConstants.TITLE_COLOR);
         abcButton.setText("ABC");
+        abcButton.setEnabled(false);
         abcButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 abcButtonActionPerformed(evt);
             }
         });
 
-        abcButton1.setBackground(java.awt.Color.white);
-        abcButton1.setFont(AmeConstants.TAB_LABEL_FONT);
-        abcButton1.setForeground(AmeConstants.TITLE_COLOR);
-        abcButton1.setText("PS");
-        abcButton1.addActionListener(new java.awt.event.ActionListener() {
+        postScriptButton.setBackground(java.awt.Color.white);
+        postScriptButton.setFont(AmeConstants.TAB_LABEL_FONT);
+        postScriptButton.setForeground(AmeConstants.TITLE_COLOR);
+        postScriptButton.setText("PS");
+        postScriptButton.setEnabled(false);
+        postScriptButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                abcButton1ActionPerformed(evt);
+                postScriptButtonActionPerformed(evt);
             }
         });
 
@@ -601,7 +608,7 @@ public class TuneHeadersPanel extends AmePanel {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(useSymbolCheckBox, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(abcButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(postScriptButton, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(abcButton)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -751,7 +758,7 @@ public class TuneHeadersPanel extends AmePanel {
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                         .addComponent(svgButton)
                                         .addComponent(abcButton)
-                                        .addComponent(abcButton1)))
+                                        .addComponent(postScriptButton)))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -804,21 +811,20 @@ public class TuneHeadersPanel extends AmePanel {
     }//GEN-LAST:event_newTuneButtonActionPerformed
 
     private void svgButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_svgButtonActionPerformed
-        generateSVG();
+        createSvgFile();
     }//GEN-LAST:event_svgButtonActionPerformed
 
     private void abcButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_abcButtonActionPerformed
-        // TODO add your handling code here:
+        createAbcFile();
     }//GEN-LAST:event_abcButtonActionPerformed
 
-    private void abcButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_abcButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_abcButton1ActionPerformed
+    private void postScriptButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_postScriptButtonActionPerformed
+        createPostScriptFile();
+    }//GEN-LAST:event_postScriptButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton abcButton;
-    private javax.swing.JButton abcButton1;
     private javax.swing.JButton addVoiceButton;
     private javax.swing.JList<String> authorList;
     private javax.swing.JComboBox<String> clefComboBox;
@@ -868,6 +874,7 @@ public class TuneHeadersPanel extends AmePanel {
     private javax.swing.JButton openScoreLayoutButton;
     private javax.swing.JTextArea originTextArea;
     private javax.swing.JComboBox<String> pitchComboBox;
+    private javax.swing.JButton postScriptButton;
     private javax.swing.JTextField rythmTextField;
     private javax.swing.JComboBox<String> signatureComboBox;
     private javax.swing.JButton svgButton;
@@ -978,14 +985,23 @@ public class TuneHeadersPanel extends AmePanel {
         titlesTextArea.requestFocus();
     }
 
-    private void generateSVG() {
+    private void createSvgFile() {
         if (tune != null) {
-            CreateSvgDocumentAction action = new CreateSvgDocumentAction(editor, tune);
-            action.actionPerformed(null);
-            XmlDocument result = action.get();
-            if (result != null) {
-
-            }
+//            CreateSvgDocumentAction action = new CreateSvgDocumentAction(editor, tune);
+//            action.actionPerformed(null);
+//            XmlDocument result = action.get();
+//            if (result != null) {
+//
+//            }
         }
+    }
+
+    private void createAbcFile() {
+        new CreateFileAction(editor, tune, CommonMediaType.TEXT_VND_ABC).actionPerformed(null);
+
+    }
+
+    private void createPostScriptFile() {
+        new CreateFileAction(editor, tune, CommonMediaType.APPLICATION_POSTSCRIPT).actionPerformed(null);
     }
 }

@@ -41,7 +41,7 @@ class SvgWriter implements Writer<File> {
                     new InputStreamReader(process.getErrorStream()))) {
                 String line;
                 while ((line = reader.readLine()) != null) {
-                    Logger.getLogger(SvgWriter.class.getName()).log(Level.WARNING, line);
+//                    Logger.getLogger(SvgWriter.class.getName()).log(Level.WARNING, line);
                 }
             }
             process.waitFor();

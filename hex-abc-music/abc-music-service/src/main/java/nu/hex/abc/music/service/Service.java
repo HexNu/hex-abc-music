@@ -42,9 +42,22 @@ public class Service {
         return new File(PropertyService.BACKUP_PATH);
     }
 
+    public static File getAppDirectory() {
+        return new File(PropertyService.APP_PATH);
+    }
+
     public static File getAbcDirectory() {
         return new File(PropertyService.ABC_PATH);
     }
+
+    public static File getPsDirectory() {
+        return new File(PropertyService.PS_PATH);
+    }
+
+    public static File getSvgDirectory() {
+        return new File(PropertyService.SVG_PATH);
+    }
+
 //
 //    public static Project openProject(File file) throws ServiceException {
 //        try {
@@ -70,7 +83,6 @@ public class Service {
 //        return project;
 //    }
 //
-
     public List<Tune> searchTunes(String searchString) {
         List<Tune> result = new ArrayList<>();
         for (Tune tune : project.getTunes()) {

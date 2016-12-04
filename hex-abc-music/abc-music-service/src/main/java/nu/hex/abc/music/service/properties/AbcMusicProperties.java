@@ -21,17 +21,22 @@ import se.digitman.lightxml.XmlNode;
 public class AbcMusicProperties {
 
     private static final String APPLICATION_ROOT_FOLDER = System.getProperty("user.home") + "/.amx/";
-    private static final String PUBLIC_APPLICATION_FOLDER = System.getProperty("user.home") + "/HexAbcMusic/";
     public static final String SETTINGS_FOLDER = APPLICATION_ROOT_FOLDER + "settings/";
     private static final String SETTINGS_FILE = SETTINGS_FOLDER + "settings.xml";
     private static final String DEFAULT_PROJECT_FOLDER = APPLICATION_ROOT_FOLDER + "projects/";
     private static final String DEFAULT_PROJECT_SVG_FOLDER = DEFAULT_PROJECT_FOLDER + "svg/";
     private static final String DEFAULT_BACKUP_FOLDER = APPLICATION_ROOT_FOLDER + "backup/";
+    private static final String PUBLIC_APPLICATION_FOLDER = System.getProperty("user.home") + "/HexAbcMusic/";
     private static final String DEFAULT_ABC_FOLDER = PUBLIC_APPLICATION_FOLDER + "ABC/";
+    private static final String DEFAULT_PS_FOLDER = PUBLIC_APPLICATION_FOLDER + "PS/";
+    private static final String DEFAULT_SVG_FOLDER = PUBLIC_APPLICATION_FOLDER + "SVG/";
     public static final String PROJECT_FOLDER = "project-folder";
     public static final String PROJECT_SVG_FOLDER = "project-svg-folder";
     public static final String BACKUP_FOLDER = "backup-folder";
+    public static final String APP_FOLDER = "app-folder";
     public static final String ABC_FOLDER = "abc-folder";
+    public static final String PS_FOLDER = "ps-folder";
+    public static final String SVG_FOLDER = "svg-folder";
     public static final String LATEST_SAVED_PROJECT = "latest-saved-project";
     public static final String AUTO_OPEN_LATEST_PROJECT = "auto-open-project";
     private final Map<String, String> defaultSettingsMap = new HashMap<>();
@@ -51,14 +56,20 @@ public class AbcMusicProperties {
         defaultSettingsMap.put(PROJECT_FOLDER, DEFAULT_PROJECT_FOLDER);
         defaultSettingsMap.put(PROJECT_SVG_FOLDER, DEFAULT_PROJECT_SVG_FOLDER);
         defaultSettingsMap.put(BACKUP_FOLDER, DEFAULT_BACKUP_FOLDER);
+        defaultSettingsMap.put(APP_FOLDER, PUBLIC_APPLICATION_FOLDER);
         defaultSettingsMap.put(ABC_FOLDER, DEFAULT_ABC_FOLDER);
+        defaultSettingsMap.put(PS_FOLDER, DEFAULT_PS_FOLDER);
+        defaultSettingsMap.put(SVG_FOLDER, DEFAULT_SVG_FOLDER);
         try {
             new File(APPLICATION_ROOT_FOLDER).mkdirs();
             new File(SETTINGS_FOLDER).mkdir();
             new File(DEFAULT_PROJECT_FOLDER).mkdir();
+            new File(PUBLIC_APPLICATION_FOLDER).mkdirs();
             new File(DEFAULT_PROJECT_SVG_FOLDER).mkdir();
             new File(DEFAULT_BACKUP_FOLDER).mkdir();
             new File(DEFAULT_ABC_FOLDER).mkdirs();
+            new File(DEFAULT_PS_FOLDER).mkdirs();
+            new File(DEFAULT_SVG_FOLDER).mkdirs();
             settingsFile = new File(SETTINGS_FILE);
             if (!settingsFile.exists()) {
                 createSettingsFile();
@@ -143,7 +154,10 @@ public class AbcMusicProperties {
         addSettingNode(DEFAULT_PROJECT_FOLDER, PROJECT_FOLDER);
         addSettingNode(DEFAULT_PROJECT_SVG_FOLDER, PROJECT_SVG_FOLDER);
         addSettingNode(DEFAULT_BACKUP_FOLDER, BACKUP_FOLDER);
+        addSettingNode(PUBLIC_APPLICATION_FOLDER, APP_FOLDER);
         addSettingNode(DEFAULT_ABC_FOLDER, ABC_FOLDER);
+        addSettingNode(DEFAULT_PS_FOLDER, PS_FOLDER);
+        addSettingNode(DEFAULT_SVG_FOLDER, SVG_FOLDER);
         writeToSettingsFile();
     }
 }
