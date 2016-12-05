@@ -8,11 +8,11 @@ import se.digitman.lightxml.XmlNode;
  *
  * @author hl
  */
-class AmxWriter implements Writer<XmlDocument> {
+class AmxfWriter implements Writer<XmlDocument> {
 
     private final XmlNode node;
 
-    public AmxWriter(XmlNode node) {
+    public AmxfWriter(XmlNode node) {
         this.node = node;
     }
 

@@ -20,7 +20,7 @@ import nu.hex.abc.music.service.xml.write.WriterService;
  */
 public class Service {
 
-    public static final String SUFFIX = "amx";
+    public static final String[] SUFFIX = {"amx", "amxf"};
 //    public static final String PROJECT_PATH = AbcMusicProperties.getInstance().getProperty(AbcMusicProperties.PROJECT_FOLDER);
 //    public static final String BACKUP_PATH = AbcMusicProperties.getInstance().getProperty(AbcMusicProperties.BACKUP_FOLDER);
 //    public static final String ABC_PATH = AbcMusicProperties.getInstance().getProperty(AbcMusicProperties.ABC_FOLDER);
@@ -131,7 +131,11 @@ public class Service {
     }
 
     public static File getProjectFile(String name) {
-        return new File(PropertyService.PROJECT_PATH + name + "." + SUFFIX);
+        return new File(PropertyService.PROJECT_PATH + name + "." + SUFFIX[0]);
     }
+//    
+//    public static File getCompressedProjectFile() {
+//        return new File(PropertyService.PROJECT_PATH + "project.xml");
+//    }
 
 }

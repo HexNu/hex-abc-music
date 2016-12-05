@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="Vandors Visor" abc-version="2.2" summary="En samling visor av Karl Klockare, Borgevid" last-updated="2016-12-04T22:21:39.664">
+  <owner first-name="Håkan" last-name="Lidén" email="hl@hex.nu"/>
+  <tunes>
+    <tune id="1" rythm="" time-value="1/8">
+      <titles>
+        <title>No 1</title>
+        <title>Freja Fränder</title>
+      </titles>
+      <creators>
+        <composer person="2"/>
+      </creators>
+      <origins>
+        <origin>Borgevid</origin>
+      </origins>
+      <comments/>
+      <histories/>
+      <copyrights/>
+      <tempo label="" default-unit="1/4" units-per-minute="84"/>
+      <meter numerator="3" denominator="4" use-symbol="false"/>
+      <key pitch="G" mode="Major" signature="">
+        <modifier transpose="0" clef="G" octave=""/>
+      </key>
+      <voices>
+        <voice id="1" short-name="" name="Voice 1" stem="">
+          <key pitch="G" mode="Major" signature="">
+            <modifier transpose="0" clef="G" octave=""/>
+          </key>
+          <body>DD | &quot;G&quot;G2 BB | D2 G2 | &quot;D&quot;AB cA | &quot;G&quot;BG DD | G2 BB | &quot;A&quot;E2 A2 |  AG FE | &quot;D&quot;D2 :|
+FG | &quot;D&quot;A2 A2 | &quot;A7&quot;B2 G2 | &quot;D&quot;A2 DD | D2 FG |  &quot;D&quot;A2 &quot;E&quot;B2 | &quot;Am&quot;dc BA | &quot;C&quot;G4 | &quot;D&quot;F2 DD |
+&quot;C&quot;E2 &quot;D&quot;FF | &quot;G&quot;G2 &quot;D&quot;A2 | &quot;G&quot;BA Bc | d2 &quot;E&quot;e2 | &quot;Am&quot;c2 A2 | &quot;D&quot;GF EF | &quot;G&quot;G4- | G2 |]</body>
+        </voice>
+      </voices>
+      <score-layout/>
+    </tune>
+  </tunes>
+  <persons>
+    <person id="1" first-name="Håkan" last-name="Lidén" email="hl@hex.nu"/>
+    <person id="2" first-name="Karl" last-name="Klockare" email=""/>
+  </persons>
+</project>

@@ -26,10 +26,9 @@ public class WriterService {
         project.setLastUpdated(LocalDateTime.now());
         File file = Service.getProjectFile(project.getName());
         file.getParentFile().mkdirs();
-        System.out.println(file.getAbsolutePath());
         XmlNode projectNode = new ProjectWriter(project).write();
-        XmlDocument write = service.getIoService().createAmxDocument(projectNode);
-        service.getIoService().createXmlFile(file, write);
+        XmlDocument projectDoc = service.getIoService().createAmxfDocument(projectNode);
+        service.getIoService().createAmxFile(file, projectDoc);
         service.getPropertyService().setProperty(PropertyService.LATEST_SAVED_PROJECT, project.getName());
         return project;
     }

@@ -29,8 +29,13 @@ public class IoService {
         return new XmlFileWriter(doc, file).write();
     }
 
-    public XmlDocument createAmxDocument(XmlNode projectNode) {
-        return new AmxWriter(projectNode).write();
+    public File createAmxFile(File file, XmlDocument doc) {
+        new AmxFileWriter(doc.toString(), "project.xml", file).write();
+        return file;
+    }
+
+    public XmlDocument createAmxfDocument(XmlNode projectNode) {
+        return new AmxfWriter(projectNode).write();
     }
 
     public File createSvgFile(Tune tune) {
