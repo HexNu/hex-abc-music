@@ -2,7 +2,7 @@ package abc.music.editor.action;
 
 import java.awt.event.ActionEvent;
 import abc.music.editor.AbcMusicEditor;
-import abc.music.editor.settings.AboutDialog;
+import abc.music.editor.help.AboutDialog;
 
 /**
  * Created 2016-dec-02

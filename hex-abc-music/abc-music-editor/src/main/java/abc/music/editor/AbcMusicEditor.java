@@ -28,11 +28,17 @@ import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 import abc.music.editor.action.SetEditingEnabledAction;
+import abc.music.editor.action.ShowHelpDialogAction;
 import abc.music.editor.gui.LatestTunesPane;
 import abc.music.editor.gui.LinksPanel;
 import abc.music.editor.gui.TuneHeadersPanel;
 import abc.music.editor.gui.TuneSearchPanel;
 import abc.music.editor.gui.VoicesPanel;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import javax.swing.JRootPane;
+import javax.swing.KeyStroke;
 
 /**
  * Created 2016-nov-30
@@ -79,6 +85,17 @@ public class AbcMusicEditor extends JFrame {
         createMenu();
         new SetEditingEnabledAction(this, false).actionPerformed(null);
         pack();
+    }
+
+    @Override
+    protected JRootPane createRootPane() {
+        JRootPane customRootPane = new JRootPane();
+//        ActionListener f1ActionListener = (ActionEvent e) -> {
+//            new ShowHelpDialogAction(this).actionPerformed(e);
+//        };
+//        customRootPane.registerKeyboardAction(f1ActionListener,
+//                KeyStroke.getKeyStroke(KeyEvent.VK_F1, 0), JComponent.WHEN_IN_FOCUSED_WINDOW);
+        return customRootPane;
     }
 
     private void setComponents() {

@@ -1,4 +1,4 @@
-package abc.music.editor.settings;
+package abc.music.editor.help;
 
 import abc.music.editor.AbcMusicEditor;
 import abc.music.editor.AmeConstants;

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<help>
+    <item-group label="Shortcuts" summary="Keyboard shortcuts in the editor">
+        <item label="Sharp, flat and natural">
+            <content>
+                <html>
+                    <p>
+                        There are shortcuts for the sharp, flat and natural signs that can be used in some of the editor input fields.
+                    </p>
+                    <table>
+                        <tr>
+                            <td>Sharp (♯)</td>
+                            <td>=</td>
+                            <td>Ctrl + 3 (#)</td>
+                        </tr>
+                        <tr>
+                            <td>Flat (♭)</td>
+                            <td>=</td>
+                            <td>Ctrl + b</td>
+                        </tr>
+                        <tr>
+                            <td>Natural (♮)</td>
+                            <td>=</td>
+                            <td>Ctrl + 0 (=)</td>
+                        </tr>
+                    </table>
+                    <p>
+                        The fields in question are:
+                    </p>
+                    <h4>Tune Headers</h4>
+                    <ul>
+                        <li>Titles</li>
+                        <li>History</li>
+                        <li>Origin</li>
+                        <li>Comments</li>
+                        <li>Copyright</li>
+                        <li>Copyright</li>
+                    </ul>
+                    <h4>Voices</h4>
+                    <ul>
+                        <li>Short Name</li>
+                        <li>Name</li>
+                    </ul>
+                </html>
+            </content>            
+        </item>
+    </item-group>
+</help>

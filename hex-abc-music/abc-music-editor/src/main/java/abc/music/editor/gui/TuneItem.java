@@ -1,8 +1,6 @@
 package abc.music.editor.gui;
 
 import abc.music.core.domain.Tune;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.util.Objects;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;

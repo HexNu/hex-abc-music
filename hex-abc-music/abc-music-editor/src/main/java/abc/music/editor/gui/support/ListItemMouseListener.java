@@ -1,6 +1,5 @@
 package abc.music.editor.gui.support;
 
-import abc.music.editor.action.OpenLinkAction;
 import java.awt.Cursor;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;

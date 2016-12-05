@@ -23,6 +23,7 @@ import abc.music.editor.action.OpenLatestProjectAction;
 import abc.music.editor.action.OpenProjectAction;
 import abc.music.editor.action.ShowAboutAction;
 import abc.music.editor.action.ShowSettingsAction;
+import abc.music.editor.help.HelpDialog;
 
 /**
  * Created 2016-dec-01
@@ -73,7 +74,7 @@ public class AmeMenuBar extends JMenuBar {
 
         openMenuItem.setMnemonic('o');
         openMenuItem.setText("Open");
-        openMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(KeyEvent.VK_O, InputEvent.CTRL_MASK));
+        openMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(KeyEvent.VK_O, InputEvent.CTRL_DOWN_MASK));
         openMenuItem.addActionListener((ActionEvent e) -> {
             OpenProjectAction action = new OpenProjectAction(parent);
             action.actionPerformed(e);
@@ -83,11 +84,11 @@ public class AmeMenuBar extends JMenuBar {
             }
         });
         fileMenu.add(openMenuItem);
-        
+
         openLatestMenuItem.setMnemonic('l');
         openLatestMenuItem.setText("Open Latest Project");
         openLatestMenuItem.setEnabled(OpenLatestProjectAction.isEnabled());
-        openLatestMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(KeyEvent.VK_L, InputEvent.CTRL_MASK));
+        openLatestMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(KeyEvent.VK_L, InputEvent.CTRL_DOWN_MASK));
         openLatestMenuItem.addActionListener((ActionEvent e) -> {
             OpenLatestProjectAction action = new OpenLatestProjectAction(parent);
             action.actionPerformed(e);
@@ -111,7 +112,7 @@ public class AmeMenuBar extends JMenuBar {
 
         saveMenuItem.setMnemonic('s');
         saveMenuItem.setText("Save");
-        saveMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_MASK));
+        saveMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_DOWN_MASK));
         saveMenuItem.addActionListener((ActionEvent e) -> {
             new SaveProjectAction(parent).actionPerformed(e);
         });
@@ -134,7 +135,7 @@ public class AmeMenuBar extends JMenuBar {
 
         exitMenuItem.setMnemonic('q');
         exitMenuItem.setText("Quit");
-        exitMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(KeyEvent.VK_Q, InputEvent.CTRL_MASK));
+        exitMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(KeyEvent.VK_Q, InputEvent.CTRL_DOWN_MASK));
         exitMenuItem.addActionListener((ActionEvent evt) -> {
             new ExitAction(parent).actionPerformed(evt);
         });
@@ -165,8 +166,12 @@ public class AmeMenuBar extends JMenuBar {
 
         contentsMenuItem.setMnemonic('c');
         contentsMenuItem.setText("Contents");
+        contentsMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(KeyEvent.VK_F1, 0));
+        contentsMenuItem.addActionListener((ActionEvent e) -> {
+            new HelpDialog(parent).setVisible(true);
+        });
+        
         helpMenu.add(contentsMenuItem);
-
         aboutMenuItem.setMnemonic('a');
         aboutMenuItem.setText("About");
         aboutMenuItem.addActionListener((ActionEvent e) -> {
