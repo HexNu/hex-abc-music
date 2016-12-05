@@ -1,4 +1,4 @@
-package abc.music.editor.components;
+package abc.music.editor.gui;
 
 import abc.music.core.domain.Project;
 import java.awt.Font;
@@ -7,6 +7,7 @@ import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
 import abc.music.editor.AbcMusicEditor;
 import abc.music.editor.AmeConstants;
+import javax.swing.border.Border;
 
 /**
  * Created 2016-dec-01
@@ -38,8 +39,12 @@ public abstract class AmePanel extends JPanel {
 
     private void setup() {
         setOpaque(false);
-        setBorder(BorderFactory.createTitledBorder(null, title, TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.TOP, font, AmeConstants.TITLE_COLOR));
+        setBorder(getPanelBorder());
         init();
+    }
+    
+    protected Border getPanelBorder() {
+        return BorderFactory.createTitledBorder(null, title, TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.TOP, font, AmeConstants.TITLE_COLOR);
     }
 
     protected abstract void init();

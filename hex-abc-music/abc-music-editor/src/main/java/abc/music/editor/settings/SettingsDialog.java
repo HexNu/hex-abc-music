@@ -3,7 +3,7 @@ package abc.music.editor.settings;
 import abc.music.core.domain.Person;
 import abc.music.core.domain.Project;
 import abc.music.editor.AbcMusicEditor;
-import abc.music.editor.components.AmeDialog;
+import abc.music.editor.gui.dialog.AmeDialog;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

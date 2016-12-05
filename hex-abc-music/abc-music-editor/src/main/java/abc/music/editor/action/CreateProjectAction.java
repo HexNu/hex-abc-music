@@ -3,7 +3,7 @@ package abc.music.editor.action;
 import abc.music.core.domain.Project;
 import java.awt.event.ActionEvent;
 import abc.music.editor.AbcMusicEditor;
-import abc.music.editor.components.CreateProjectDialog;
+import abc.music.editor.gui.dialog.CreateProjectDialog;
 
 /**
  * Created 2016-dec-02

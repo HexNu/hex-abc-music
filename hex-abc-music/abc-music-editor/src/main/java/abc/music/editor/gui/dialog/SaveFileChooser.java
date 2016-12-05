@@ -1,4 +1,4 @@
-package abc.music.editor.components;
+package abc.music.editor.gui.dialog;
 
 import java.io.File;
 import javax.swing.JFileChooser;

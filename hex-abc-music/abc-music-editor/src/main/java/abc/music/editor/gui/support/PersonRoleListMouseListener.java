@@ -1,4 +1,4 @@
-package abc.music.editor.support;
+package abc.music.editor.gui.support;
 
 import abc.music.core.domain.Person;
 import abc.music.core.domain.PersonRole;
@@ -12,7 +12,7 @@ import javax.swing.JPopupMenu;
 import abc.music.editor.AbcMusicEditor;
 import abc.music.editor.action.AddPersonRoleAction;
 import abc.music.editor.action.RemovePersonRoleAction;
-import abc.music.editor.components.TuneHeadersPanel;
+import abc.music.editor.gui.TuneHeadersPanel;
 
 /**
  * Created 2016-dec-01

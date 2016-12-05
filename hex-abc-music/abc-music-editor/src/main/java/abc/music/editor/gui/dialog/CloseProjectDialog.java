@@ -1,4 +1,4 @@
-package abc.music.editor.components;
+package abc.music.editor.gui.dialog;
 
 import abc.music.editor.AbcMusicEditor;
 import abc.music.editor.action.SaveProjectAction;

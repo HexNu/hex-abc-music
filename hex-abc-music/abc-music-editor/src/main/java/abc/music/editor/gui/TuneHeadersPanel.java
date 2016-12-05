@@ -1,4 +1,4 @@
-package abc.music.editor.components;
+package abc.music.editor.gui;
 
 import abc.music.core.domain.Comment;
 import abc.music.core.domain.Copyright;
@@ -21,7 +21,7 @@ import abc.music.editor.AbcMusicEditor;
 import abc.music.editor.action.CreateVoiceActon;
 import abc.music.editor.action.CreateTuneAction;
 import abc.music.editor.action.OpenScoreLayoutAction;
-import abc.music.editor.support.PersonRoleListMouseListener;
+import abc.music.editor.gui.support.PersonRoleListMouseListener;
 import nu.hex.abc.music.service.util.TuneHelper;
 import abc.music.editor.AmeConstants;
 import abc.music.editor.action.CreateFileAction;

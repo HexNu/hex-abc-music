@@ -1,4 +1,4 @@
-package abc.music.editor.components;
+package abc.music.editor.gui;
 
 import abc.music.core.domain.Key;
 import abc.music.core.domain.Modifier;

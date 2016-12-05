@@ -2,7 +2,7 @@ package abc.music.editor.settings;
 
 import abc.music.editor.AbcMusicEditor;
 import abc.music.editor.AmeConstants;
-import abc.music.editor.components.AmeDialog;
+import abc.music.editor.gui.dialog.AmeDialog;
 import nu.hex.abc.music.service.meta.AppInfo;
 import nu.hex.abc.music.service.meta.MetaService;
 import nu.hex.abc.music.service.properties.AbcMusicProperties;

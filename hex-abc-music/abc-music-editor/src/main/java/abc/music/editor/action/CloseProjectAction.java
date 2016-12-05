@@ -2,8 +2,8 @@ package abc.music.editor.action;
 
 import java.awt.event.ActionEvent;
 import abc.music.editor.AbcMusicEditor;
-import abc.music.editor.components.AmeDialog;
-import abc.music.editor.components.CloseProjectDialog;
+import abc.music.editor.gui.dialog.AmeDialog;
+import abc.music.editor.gui.dialog.CloseProjectDialog;
 
 /**
  * Created 2016-dec-02

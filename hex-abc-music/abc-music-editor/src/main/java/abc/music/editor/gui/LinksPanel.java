@@ -1,10 +1,7 @@
-package abc.music.editor.components;
+package abc.music.editor.gui;
 
 import abc.music.editor.AbcMusicEditor;
 import abc.music.editor.AmeConstants;
-import java.awt.Color;
-import java.awt.Dimension;
-import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import se.digitman.lightxml.DocumentToXmlNodeParser;
 import se.digitman.lightxml.XmlNode;
@@ -13,12 +10,12 @@ import se.digitman.lightxml.XmlNode;
  *
  * @author hl
  */
-public class LinksPanel extends AmePanel {
+public class LinksPanel extends AmeSidePanel {
 
     private XmlNode linksNode;
 
     public LinksPanel(AbcMusicEditor editor) {
-        super(editor, editor.getProject(), "");
+        super(editor, editor.getProject());
     }
 
     @Override
@@ -72,7 +69,7 @@ public class LinksPanel extends AmePanel {
     private class GroupLabel extends JLabel {
 
         public GroupLabel(String text) {
-            super.setText(text);
+            super.setText("  " + text);
             super.setFont(AmeConstants.SMALL_TITLE_FONT);
             super.setForeground(AmeConstants.TITLE_COLOR);
         }

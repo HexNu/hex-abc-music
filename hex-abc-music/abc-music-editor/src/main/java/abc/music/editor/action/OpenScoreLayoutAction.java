@@ -3,7 +3,7 @@ package abc.music.editor.action;
 import abc.music.core.domain.Tune;
 import java.awt.event.ActionEvent;
 import abc.music.editor.AbcMusicEditor;
-import abc.music.editor.components.ScoreLayoutDialog;
+import abc.music.editor.gui.dialog.ScoreLayoutDialog;
 
 /**
  * Created 2016-dec-01

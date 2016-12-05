@@ -6,7 +6,7 @@ import abc.music.core.domain.Tune;
 import java.awt.event.ActionEvent;
 import java.util.List;
 import abc.music.editor.AbcMusicEditor;
-import abc.music.editor.components.CreatePersonRolesDialog;
+import abc.music.editor.gui.dialog.CreatePersonRolesDialog;
 
 /**
  * Created 2016-dec-01

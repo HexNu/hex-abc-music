@@ -1,4 +1,4 @@
-package abc.music.editor.components;
+package abc.music.editor.gui;
 
 import abc.music.core.domain.Tune;
 import abc.music.editor.AbcMusicEditor;
@@ -6,10 +6,10 @@ import abc.music.editor.action.SearchTunesAction;
 import java.awt.Component;
 import java.awt.event.KeyEvent;
 
-public class TuneSearchPanel extends AmePanel {
+public class TuneSearchPanel extends AmeSidePanel {
     
     public TuneSearchPanel(AbcMusicEditor editor) {
-        super(editor, editor.getProject(), "");
+        super(editor, editor.getProject());
     }
     
     @Override

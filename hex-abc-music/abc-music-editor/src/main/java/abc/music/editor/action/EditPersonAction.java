@@ -3,8 +3,8 @@ package abc.music.editor.action;
 import abc.music.core.domain.Person;
 import java.awt.event.ActionEvent;
 import abc.music.editor.AbcMusicEditor;
-import abc.music.editor.components.AmeDialog;
-import abc.music.editor.components.EditPersonDialog;
+import abc.music.editor.gui.dialog.AmeDialog;
+import abc.music.editor.gui.dialog.EditPersonDialog;
 
 /**
  * Created 2016-dec-02

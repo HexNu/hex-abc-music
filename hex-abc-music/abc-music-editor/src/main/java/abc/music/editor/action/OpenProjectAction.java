@@ -5,7 +5,7 @@ import java.awt.event.ActionEvent;
 import java.io.File;
 import javax.swing.JFileChooser;
 import abc.music.editor.AbcMusicEditor;
-import abc.music.editor.components.ProjectFileChooser;
+import abc.music.editor.gui.dialog.ProjectFileChooser;
 import nu.hex.abc.music.service.xml.read.ReaderService;
 
 /**

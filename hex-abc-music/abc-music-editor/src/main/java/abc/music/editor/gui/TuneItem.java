@@ -1,4 +1,4 @@
-package abc.music.editor.components;
+package abc.music.editor.gui;
 
 import abc.music.core.domain.Tune;
 import java.awt.event.MouseAdapter;
@@ -21,7 +21,16 @@ public class TuneItem extends JLabel {
     public TuneItem(AbcMusicEditor editor, Tune tune) {
         super.setIcon(new ImageIcon(getClass().getResource("/images/empty-icon.png")));
         super.setText(tune.getTitles().get(0));
-        super.setToolTipText("Double Click to Edit");
+        int titleIndex = 0;
+        String toolTip = "<html>";
+        for (String title : tune.getTitles()) {
+            if (titleIndex++ == 0) {
+                toolTip += "<b>" + title + "</b><br/>";
+            } else {
+                toolTip += title + "<br/>";
+            }
+        }
+        super.setToolTipText(toolTip + "<br><i>Double Click to Edit</i>");
         this.tune = tune;
         super.addMouseListener(new MouseAdapter() {
             @Override

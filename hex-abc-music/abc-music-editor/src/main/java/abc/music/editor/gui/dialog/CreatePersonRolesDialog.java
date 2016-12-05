@@ -1,4 +1,4 @@
-package abc.music.editor.components;
+package abc.music.editor.gui.dialog;
 
 import abc.music.core.domain.Person;
 import abc.music.core.domain.PersonRole;

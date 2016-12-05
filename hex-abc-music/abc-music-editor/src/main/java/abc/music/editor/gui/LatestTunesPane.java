@@ -1,4 +1,4 @@
-package abc.music.editor.components;
+package abc.music.editor.gui;
 
 import abc.music.core.domain.Tune;
 import abc.music.editor.AbcMusicEditor;
@@ -9,10 +9,10 @@ import java.awt.Component;
  *
  * @author hl
  */
-public class LatestTunesPane extends AmePanel {
+public class LatestTunesPane extends AmeSidePanel {
 
     public LatestTunesPane(AbcMusicEditor editor) {
-        super(editor, editor.getProject(), "");
+        super(editor, editor.getProject());
     }
 
     @Override

@@ -1,9 +1,12 @@
-package abc.music.editor.components;
+package abc.music.editor.gui;
 
 import abc.music.editor.AbcMusicEditor;
 import abc.music.editor.action.OpenLinkAction;
+import abc.music.editor.gui.support.ListItemMouseListener;
+import java.awt.Cursor;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.logging.Level;
@@ -32,12 +35,11 @@ public class LinkItem extends JLabel {
         super.setToolTipText(toolTip.toString());
         try {
             this.uri = new URI(node.getAttribute("uri"));
-            super.addMouseListener(new MouseAdapter() {
+            super.addMouseListener(new ListItemMouseListener() {
+
                 @Override
-                public void mouseClicked(MouseEvent e) {
-                    if (e.getClickCount() == 2) {
-                        new OpenLinkAction(editor, uri).actionPerformed(null);
-                    }
+                protected void doubleClickAction() {
+                    new OpenLinkAction(editor, uri).actionPerformed(null);
                 }
             });
         } catch (URISyntaxException ex) {

@@ -2,7 +2,7 @@ package abc.music.editor.action;
 
 import abc.music.core.domain.Tune;
 import abc.music.editor.AbcMusicEditor;
-import abc.music.editor.components.SaveFileChooser;
+import abc.music.editor.gui.dialog.SaveFileChooser;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.util.Arrays;

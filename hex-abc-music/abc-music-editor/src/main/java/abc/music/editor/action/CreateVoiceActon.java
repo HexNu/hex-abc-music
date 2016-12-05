@@ -4,8 +4,8 @@ import abc.music.core.domain.Tune;
 import abc.music.core.domain.Voice;
 import java.awt.event.ActionEvent;
 import abc.music.editor.AbcMusicEditor;
-import abc.music.editor.components.AmeDialog;
-import abc.music.editor.components.CreateVoiceDialog;
+import abc.music.editor.gui.dialog.AmeDialog;
+import abc.music.editor.gui.dialog.CreateVoiceDialog;
 
 /**
  * Created 2016-dec-01
