@@ -128,18 +128,24 @@ public class Key extends Field {
     }
 
     public enum Signature {
-        SHARP("#"),
-        NATURAL(""),
-        FLAT("b");
+        SHARP("#", "♯"),
+        NATURAL("", ""),
+        FLAT("b", "♭");
         public static final Signature DEFAULT_SIGNATURE = NATURAL;
         private final String sign;
+        private final String symbol;
 
-        private Signature(String sign) {
+        private Signature(String sign, String symbol) {
             this.sign = sign;
+            this.symbol = symbol;
         }
 
         public String getSign() {
             return sign;
+        }
+
+        public String getSymbol() {
+            return symbol;
         }
 
         public String getName() {
@@ -149,7 +155,9 @@ public class Key extends Field {
         public static Signature find(String text) {
             if (text != null) {
                 for (Signature signature : values()) {
-                    if (text.toUpperCase().equals(signature.name()) || text.equals(signature.getSign())) {
+                    if (text.toUpperCase().equals(signature.name())
+                            || text.equals(signature.getSign())
+                            || text.equalsIgnoreCase(signature.getSymbol())) {
                         return signature;
                     }
                 }
@@ -159,7 +167,7 @@ public class Key extends Field {
 
         @Override
         public String toString() {
-            return getSign();
+            return getSymbol();
         }
     }
 

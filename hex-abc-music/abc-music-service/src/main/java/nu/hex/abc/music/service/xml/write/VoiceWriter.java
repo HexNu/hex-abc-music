@@ -20,6 +20,8 @@ class VoiceWriter extends XmlWriter<Voice> {
         result.addAttribute("id", entity.getVoiceId());
         result.addAttribute("short-name", entity.getShortName());
         result.addAttribute("name", entity.getName());
+        result.addAttribute("use-voice-key", entity.getUseVoiceKey().toString());
+        result.addAttribute("use-voice-modifier", entity.getUseVoiceModifiers().toString());
         result.addAttribute("stem", entity.getStem().getName());
         result.addChild(new KeyWriter(entity.getKey()).write());
         result.addChild(NodeFactory.createNode("body", entity.getNotes()));

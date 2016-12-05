@@ -25,9 +25,10 @@ import abc.music.editor.gui.support.PersonRoleListMouseListener;
 import nu.hex.abc.music.service.util.TuneHelper;
 import abc.music.editor.AmeConstants;
 import abc.music.editor.action.CreateFileAction;
-import abc.music.editor.action.CreateSvgDocumentAction;
+import abc.music.editor.gui.support.SharpFlatNaturalKeyListener;
+import abc.music.editor.gui.support.TransposeComboBoxModel;
+import abc.music.editor.gui.support.TransposeMap;
 import nu.hex.mediatype.CommonMediaType;
-import se.digitman.lightxml.XmlDocument;
 
 /**
  *
@@ -51,6 +52,11 @@ public class TuneHeadersPanel extends AmePanel {
         initComponents();
         List<Tempo.Marking> tempi = Tempo.getTempi();
         tempi.add(0, null);
+        titlesTextArea.addKeyListener(new SharpFlatNaturalKeyListener());
+        historyTextArea.addKeyListener(new SharpFlatNaturalKeyListener());
+        originTextArea.addKeyListener(new SharpFlatNaturalKeyListener());
+        copyrightTextArea.addKeyListener(new SharpFlatNaturalKeyListener());
+        commentsTextArea.addKeyListener(new SharpFlatNaturalKeyListener());
         tempoLabelComboBox.setModel(new DefaultComboBoxModel(tempi.toArray()));
         tempoUnitComboBox.setModel(new DefaultComboBoxModel(Tempo.Unit.values()));
         unitsPerMinuteComboBox.setModel(new DefaultComboBoxModel(Tempo.getMM().toArray()));
@@ -72,8 +78,11 @@ public class TuneHeadersPanel extends AmePanel {
         octaveComboBox.setModel(new DefaultComboBoxModel(Modifier.OctaveClef.values()));
         octaveComboBox.setSize(keyFieldsDimension);
         octaveComboBox.setPreferredSize(keyFieldsDimension);
-        transposeSpinner.setSize(keyFieldsDimension);
-        transposeSpinner.setPreferredSize(keyFieldsDimension);
+        transposeComboBox.setModel(new TransposeComboBoxModel());
+        transposeComboBox.setSize(keyFieldsDimension);
+        transposeComboBox.setPreferredSize(keyFieldsDimension);
+//        transposeSpinner.setSize(keyFieldsDimension);
+//        transposeSpinner.setPreferredSize(keyFieldsDimension);
         setFields();
     }
 
@@ -108,7 +117,8 @@ public class TuneHeadersPanel extends AmePanel {
         signatureComboBox.setSelectedItem(tune.getKey().getSignature());
         modeComboBox.setSelectedItem(tune.getKey().getMode());
         clefComboBox.setSelectedItem(tune.getKey().getModifier().getClef());
-        transposeSpinner.setValue(tune.getKey().getModifier().getTranspose());
+        transposeComboBox.setSelectedItem(TransposeMap.getItem(tune.getKey().getModifier().getTranspose()));
+//        transposeSpinner.setValue(tune.getKey().getModifier().getTranspose());
         octaveComboBox.setSelectedItem(tune.getKey().getModifier().getOctave());
         if (tune.getVoices() != null && !tune.getVoices().isEmpty()) {
             editor.getVoicesPanel().setVoices(tune.getVoices());
@@ -137,7 +147,8 @@ public class TuneHeadersPanel extends AmePanel {
         signatureComboBox.setSelectedItem(Key.Signature.DEFAULT_SIGNATURE);
         modeComboBox.setSelectedItem(Key.Mode.DEFAULT_MODE);
         clefComboBox.setSelectedItem(Modifier.Clef.DEFAULT_CLEF);
-        transposeSpinner.setValue(0);
+        transposeComboBox.setSelectedItem(TransposeMap.getDefaultItem());
+//        transposeSpinner.setValue(0);
         octaveComboBox.setSelectedItem(Modifier.OctaveClef.DEFAULT_OCTAVE);
     }
 
@@ -164,7 +175,8 @@ public class TuneHeadersPanel extends AmePanel {
         signatureComboBox.setEnabled(enabled);
         modeComboBox.setEnabled(enabled);
         clefComboBox.setEnabled(enabled);
-        transposeSpinner.setEnabled(enabled);
+        transposeComboBox.setEditable(enabled);
+//        transposeSpinner.setEnabled(enabled);
         octaveComboBox.setEnabled(enabled);
         abcButton.setEnabled(enabled);
         postScriptButton.setEnabled(enabled);
@@ -230,9 +242,12 @@ public class TuneHeadersPanel extends AmePanel {
             if (octaveComboBox.getSelectedItem() != null) {
                 tune.getKey().getModifier().setOctave((Modifier.OctaveClef) octaveComboBox.getSelectedItem());
             }
-            if (transposeSpinner.getValue() != null) {
-                tune.getKey().getModifier().setTranspose((Integer) transposeSpinner.getValue());
+            if (transposeComboBox.getSelectedItem() != null) {
+                tune.getKey().getModifier().setTranspose(((TransposeMap.Item) transposeComboBox.getSelectedItem()).getInterval());
             }
+//            if (transposeSpinner.getValue() != null) {
+//                tune.getKey().getModifier().setTranspose((Integer) transposeSpinner.getValue());
+//            }
             if (meterDenominatorSpinner.getValue() != null) {
                 tune.getMeter().setDenominator((Integer) meterDenominatorSpinner.getValue());
             }
@@ -346,13 +361,13 @@ public class TuneHeadersPanel extends AmePanel {
         jLabel22 = new javax.swing.JLabel();
         clefComboBox = new javax.swing.JComboBox<>();
         jLabel23 = new javax.swing.JLabel();
-        transposeSpinner = new javax.swing.JSpinner();
         jLabel24 = new javax.swing.JLabel();
         octaveComboBox = new javax.swing.JComboBox<>();
         newTuneButton = new javax.swing.JButton();
         svgButton = new javax.swing.JButton();
         abcButton = new javax.swing.JButton();
         postScriptButton = new javax.swing.JButton();
+        transposeComboBox = new javax.swing.JComboBox<>();
 
         setOpaque(false);
 
@@ -516,12 +531,8 @@ public class TuneHeadersPanel extends AmePanel {
 
         clefComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         clefComboBox.setToolTipText("<html>Select clef.<br>\nThe number on some choices indecates which line the clef is drawn on.<br>\nThe defaults are:\n<dl>\n<dt>G = 2 (Treble Clef)</dt>\n<dt>F = 4 (Bass Clef)</dt>\n<dt>C = 3 (Alto Clef)</dt>\n</dl>\nThe others are:\n<dl>\n<dt>G1 = French Violin Clef</dt>\n<dt>F3 = Baritone Clef</dt>\n<dt>C4 = Tenor Clef</dt>\n<dt>C2 = Mezzosoprano Clef</dt>\n<dt>C1 = Soprano Clef</dt>\n</dl>");
-        clefComboBox.setNextFocusableComponent(transposeSpinner);
 
         jLabel23.setText("Transpose:");
-
-        transposeSpinner.setModel(new javax.swing.SpinnerNumberModel(0, -24, 24, 1));
-        transposeSpinner.setNextFocusableComponent(octaveComboBox);
 
         jLabel24.setText("Octave:");
 
@@ -567,6 +578,8 @@ public class TuneHeadersPanel extends AmePanel {
                 postScriptButtonActionPerformed(evt);
             }
         });
+
+        transposeComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -638,8 +651,8 @@ public class TuneHeadersPanel extends AmePanel {
                             .addComponent(signatureComboBox, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(pitchComboBox, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(clefComboBox, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(transposeSpinner, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(octaveComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(octaveComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(transposeComboBox, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addComponent(jLabel15, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
@@ -750,15 +763,14 @@ public class TuneHeadersPanel extends AmePanel {
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                         .addComponent(jLabel6)
                                         .addComponent(defaultTimeValueComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jLabel12)
-                                        .addComponent(transposeSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(8, 8, 8)
-                                        .addComponent(jLabel23))
+                                        .addComponent(jLabel12))
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                         .addComponent(svgButton)
                                         .addComponent(abcButton)
-                                        .addComponent(postScriptButton)))
+                                        .addComponent(postScriptButton))
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(transposeComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jLabel23)))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -883,7 +895,7 @@ public class TuneHeadersPanel extends AmePanel {
     private javax.swing.JTextArea titlesTextArea;
     private javax.swing.JList<String> traditionalList;
     private javax.swing.JList<String> transcriberList;
-    private javax.swing.JSpinner transposeSpinner;
+    private javax.swing.JComboBox<String> transposeComboBox;
     private javax.swing.JComboBox<String> unitsPerMinuteComboBox;
     private javax.swing.JCheckBox useSymbolCheckBox;
     // End of variables declaration//GEN-END:variables

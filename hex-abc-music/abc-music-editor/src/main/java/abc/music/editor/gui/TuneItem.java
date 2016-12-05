@@ -8,6 +8,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import abc.music.editor.AbcMusicEditor;
 import abc.music.editor.action.OpenTuneAction;
+import abc.music.editor.gui.support.ListItemMouseListener;
 
 /**
  * Created 2016-dec-02
@@ -32,12 +33,10 @@ public class TuneItem extends JLabel {
         }
         super.setToolTipText(toolTip + "<br><i>Double Click to Edit</i>");
         this.tune = tune;
-        super.addMouseListener(new MouseAdapter() {
+        super.addMouseListener(new ListItemMouseListener() {
             @Override
-            public void mouseClicked(MouseEvent e) {
-                if (e.getClickCount() == 2) {
-                    new OpenTuneAction(editor, tune).actionPerformed(null);
-                }
+            protected void doubleClickAction() {
+                new OpenTuneAction(editor, tune).actionPerformed(null);
             }
         });
     }

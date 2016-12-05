@@ -99,8 +99,8 @@
                           <Component id="signatureComboBox" alignment="0" max="32767" attributes="0"/>
                           <Component id="pitchComboBox" alignment="0" max="32767" attributes="0"/>
                           <Component id="clefComboBox" alignment="0" max="32767" attributes="0"/>
-                          <Component id="transposeSpinner" alignment="0" max="32767" attributes="0"/>
                           <Component id="octaveComboBox" max="32767" attributes="0"/>
+                          <Component id="transposeComboBox" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
@@ -246,16 +246,15 @@
                                       <Component id="jLabel6" alignment="3" min="-2" max="-2" attributes="0"/>
                                       <Component id="defaultTimeValueComboBox" alignment="3" min="-2" max="-2" attributes="0"/>
                                       <Component id="jLabel12" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      <Component id="transposeSpinner" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
-                                      <Component id="jLabel23" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <Group type="103" alignment="0" groupAlignment="3" attributes="0">
                                       <Component id="svgButton" alignment="3" min="-2" max="-2" attributes="0"/>
                                       <Component id="abcButton" alignment="3" min="-2" max="-2" attributes="0"/>
                                       <Component id="postScriptButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="103" alignment="0" groupAlignment="1" attributes="0">
+                                      <Component id="transposeComboBox" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jLabel23" min="-2" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
@@ -794,9 +793,6 @@
           </StringArray>
         </Property>
         <Property name="toolTipText" type="java.lang.String" value="&lt;html&gt;Select clef.&lt;br&gt;&#xa;The number on some choices indecates which line the clef is drawn on.&lt;br&gt;&#xa;The defaults are:&#xa;&lt;dl&gt;&#xa;&lt;dt&gt;G = 2 (Treble Clef)&lt;/dt&gt;&#xa;&lt;dt&gt;F = 4 (Bass Clef)&lt;/dt&gt;&#xa;&lt;dt&gt;C = 3 (Alto Clef)&lt;/dt&gt;&#xa;&lt;/dl&gt;&#xa;The others are:&#xa;&lt;dl&gt;&#xa;&lt;dt&gt;G1 = French Violin Clef&lt;/dt&gt;&#xa;&lt;dt&gt;F3 = Baritone Clef&lt;/dt&gt;&#xa;&lt;dt&gt;C4 = Tenor Clef&lt;/dt&gt;&#xa;&lt;dt&gt;C2 = Mezzosoprano Clef&lt;/dt&gt;&#xa;&lt;dt&gt;C1 = Soprano Clef&lt;/dt&gt;&#xa;&lt;/dl&gt;"/>
-        <Property name="nextFocusableComponent" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
-          <ComponentRef name="transposeSpinner"/>
-        </Property>
       </Properties>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
@@ -805,16 +801,6 @@
     <Component class="javax.swing.JLabel" name="jLabel23">
       <Properties>
         <Property name="text" type="java.lang.String" value="Transpose:"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JSpinner" name="transposeSpinner">
-      <Properties>
-        <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
-          <SpinnerModel initial="0" maximum="24" minimum="-24" numberType="java.lang.Integer" stepSize="1" type="number"/>
-        </Property>
-        <Property name="nextFocusableComponent" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
-          <ComponentRef name="octaveComboBox"/>
-        </Property>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel24">
@@ -901,6 +887,21 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="postScriptButtonActionPerformed"/>
       </Events>
+    </Component>
+    <Component class="javax.swing.JComboBox" name="transposeComboBox">
+      <Properties>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+          <StringArray count="4">
+            <StringItem index="0" value="Item 1"/>
+            <StringItem index="1" value="Item 2"/>
+            <StringItem index="2" value="Item 3"/>
+            <StringItem index="3" value="Item 4"/>
+          </StringArray>
+        </Property>
+      </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+      </AuxValues>
     </Component>
   </SubComponents>
 </Form>

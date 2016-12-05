@@ -27,6 +27,12 @@ class VoiceReader extends NodeReader<Voice> {
         if (node.hasAttribute("stem")) {
             result.setStem(Voice.Stem.find(node.getAttribute("stem")));
         }
+        if (node.hasAttribute("use-voice-key")) {
+            result.setUseVoiceKey(Boolean.valueOf(node.getAttribute("use-voice-key")));
+        }
+        if (node.hasAttribute("use-voice-modifier")) {
+            result.setUseVoiceModifiers(Boolean.valueOf(node.getAttribute("use-voice-modifier")));
+        }
         if (node.hasChildNamed("key")) {
             result.setKey(new KeyReader(node.getChild("key")).read());
         }
