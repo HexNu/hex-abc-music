@@ -69,6 +69,14 @@ public class Key extends Field {
         return toString() + getModifier();
     }
 
+    public static Pitch getPitchFromString(String keyString) {
+        return Pitch.find(keyString.substring(0, 1));
+    }
+
+    public static Signature getSignatureFromString(String keyString) {
+        return Signature.find(keyString.replaceAll("[A-H]", ""));
+    }
+
     @Override
     public int hashCode() {
         int hash = 3;
@@ -140,10 +148,24 @@ public class Key extends Field {
             this.symbol = symbol;
         }
 
+        /**
+         * The sign representing the signature in abc-files.
+         * <br>
+         * #, b or empty string
+         *
+         * @return
+         */
         public String getSign() {
             return sign;
         }
 
+        /**
+         * The utf-symbol for the signature.
+         * <br>
+         * ♯, ♭ or empty string.
+         *
+         * @return
+         */
         public String getSymbol() {
             return symbol;
         }
