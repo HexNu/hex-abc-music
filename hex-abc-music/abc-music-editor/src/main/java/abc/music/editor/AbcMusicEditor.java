@@ -28,17 +28,12 @@ import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 import abc.music.editor.action.SetEditingEnabledAction;
-import abc.music.editor.action.ShowHelpDialogAction;
 import abc.music.editor.gui.LatestTunesPane;
 import abc.music.editor.gui.LinksPanel;
 import abc.music.editor.gui.TuneHeadersPanel;
 import abc.music.editor.gui.TuneSearchPanel;
 import abc.music.editor.gui.VoicesPanel;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
 import javax.swing.JRootPane;
-import javax.swing.KeyStroke;
 
 /**
  * Created 2016-nov-30

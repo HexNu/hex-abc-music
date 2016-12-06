@@ -11,7 +11,6 @@ import abc.music.editor.gui.support.TransposeComboBoxModel;
 import abc.music.editor.gui.support.TransposeMap;
 import javax.swing.DefaultComboBoxModel;
 
-
 /**
  *
  * @author hl
@@ -58,6 +57,14 @@ public class VoicePanel extends AmePanel {
         transposeComboBox.setSelectedItem(TransposeMap.getItem(modifier.getTranspose()));
 //        transposeSpinner.setValue(modifier.getTranspose());
         bodyEditorPane.setText(voice.getNotes());
+    }
+
+    public void updatePanel() {
+        setFields();
+    }
+    
+    public Voice getVoice() {
+        return voice;
     }
 
     public void updateVoice() {
@@ -396,7 +403,7 @@ public class VoicePanel extends AmePanel {
         boolean enabled = useModifiersCheckBox.isSelected();
         clefComboBox.setEnabled(enabled);
         transposeComboBox.setEnabled(enabled);
-        
+
 //        transposeSpinner.setEnabled(enabled);
         octaveComboBox.setEnabled(enabled);
     }

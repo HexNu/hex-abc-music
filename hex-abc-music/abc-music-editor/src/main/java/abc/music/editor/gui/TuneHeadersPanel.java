@@ -11,6 +11,7 @@ import abc.music.core.domain.PersonRole;
 import abc.music.core.domain.Project;
 import abc.music.core.domain.Tempo;
 import abc.music.core.domain.Tune;
+import abc.music.core.util.CircleOfFifths;
 import java.awt.Dimension;
 import java.util.Collections;
 import java.util.List;
@@ -37,6 +38,7 @@ import nu.hex.mediatype.CommonMediaType;
 public class TuneHeadersPanel extends AmePanel {
 
     private Tune tune;
+    private Key originalKey;
 
     public TuneHeadersPanel(AbcMusicEditor parent, Project project) {
         this(parent, null, project);
@@ -45,6 +47,9 @@ public class TuneHeadersPanel extends AmePanel {
     public TuneHeadersPanel(AbcMusicEditor parent, Tune tune, Project project) {
         super(parent, project, "Tune Headers", AmeConstants.SMALL_TITLE_FONT);
         this.tune = tune;
+        if (tune != null) {
+            originalKey = tune.getKey();
+        }
     }
 
     @Override
@@ -511,11 +516,21 @@ public class TuneHeadersPanel extends AmePanel {
 
         pitchComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         pitchComboBox.setNextFocusableComponent(signatureComboBox);
+        pitchComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pitchComboBoxActionPerformed(evt);
+            }
+        });
 
         jLabel18.setText("Pitch:");
 
         signatureComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         signatureComboBox.setNextFocusableComponent(modeComboBox);
+        signatureComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                signatureComboBoxActionPerformed(evt);
+            }
+        });
 
         jLabel19.setText("Signature:");
 
@@ -523,6 +538,11 @@ public class TuneHeadersPanel extends AmePanel {
 
         modeComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         modeComboBox.setNextFocusableComponent(clefComboBox);
+        modeComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                modeComboBoxActionPerformed(evt);
+            }
+        });
 
         jLabel21.setFont(new java.awt.Font("Ubuntu", 2, 15)); // NOI18N
         jLabel21.setText("Modifiers:");
@@ -834,6 +854,18 @@ public class TuneHeadersPanel extends AmePanel {
         createPostScriptFile();
     }//GEN-LAST:event_postScriptButtonActionPerformed
 
+    private void pitchComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pitchComboBoxActionPerformed
+        handleKeyChange();
+    }//GEN-LAST:event_pitchComboBoxActionPerformed
+
+    private void signatureComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signatureComboBoxActionPerformed
+        handleKeyChange();
+    }//GEN-LAST:event_signatureComboBoxActionPerformed
+
+    private void modeComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modeComboBoxActionPerformed
+        handleKeyChange();
+    }//GEN-LAST:event_modeComboBoxActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton abcButton;
@@ -1015,5 +1047,26 @@ public class TuneHeadersPanel extends AmePanel {
 
     private void createPostScriptFile() {
         new CreateFileAction(editor, tune, CommonMediaType.APPLICATION_POSTSCRIPT).actionPerformed(null);
+    }
+
+    private void handleKeyChange() {
+        if (tune != null) {
+            Key.Pitch oldPitch = tune.getKey().getPitch();
+            Key.Pitch newPitch = (Key.Pitch) pitchComboBox.getSelectedItem();
+            tune.getKey().setPitch(newPitch);
+            Key.Signature oldSignature = tune.getKey().getSignature();
+            Key.Signature newSignature = (Key.Signature) signatureComboBox.getSelectedItem();
+            tune.getKey().setSignature(newSignature);
+            Key.Mode mode = (Key.Mode) modeComboBox.getSelectedItem();
+            tune.getKey().setMode(mode);
+            Integer steps = CircleOfFifths.getSteps(oldPitch, oldSignature, newPitch, newSignature);
+            tune.getVoices().stream().forEach((voice) -> {
+                String newKeyString = CircleOfFifths.getNew(voice.getKey().getPitch(), voice.getKey().getSignature(), steps);
+                voice.getKey().setPitch(Key.getPitchFromString(newKeyString));
+                voice.getKey().setSignature(Key.getSignatureFromString(newKeyString));
+                voice.getKey().setMode(mode);
+            });
+            getApplication().getVoicesPanel().updateVoicePanels();
+        }
     }
 }

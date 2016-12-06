@@ -18,7 +18,7 @@ public class SvgViewPanel extends JPanel {
 
     private JSVGCanvas canvas;
     private final File file;
-    private Tune tune;
+    private final Tune tune;
 
     public SvgViewPanel(AbcMusicEditor editor, Tune tune) {
         initComponents();

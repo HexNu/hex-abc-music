@@ -7,9 +7,10 @@ import abc.music.editor.AbcMusicEditor;
 import abc.music.editor.action.SaveTuneAction;
 import abc.music.editor.action.UpdateSvgFileAction;
 import java.awt.Component;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JTabbedPane;
 import javax.swing.event.ChangeEvent;
-import java.util.List;
 
 /**
  *
@@ -55,6 +56,16 @@ public class VoicesPanel extends AmePanel {
         voices.stream().forEach(this::addVoice);
     }
 
+    public List<VoicePanel> getVoicePanels() {
+        List<VoicePanel> result = new ArrayList<>();
+        for (Component c : voicesTabbedPane.getComponents()) {
+            if (c instanceof VoicePanel) {
+                result.add((VoicePanel) c);
+            }
+        }
+        return result;
+    }
+
     private boolean hasSvgPanel() {
         for (Component c : voicesTabbedPane.getComponents()) {
             if (c instanceof SvgViewPanel) {
@@ -86,6 +97,22 @@ public class VoicesPanel extends AmePanel {
         revalidate();
         voicesTabbedPane.repaint();
         voicesTabbedPane.revalidate();
+    }
+
+    public void updateVoicePanels() {
+        for (int i = 0; i < voicesTabbedPane.getComponentCount(); i++) {
+            if (voicesTabbedPane.getComponent(i) instanceof VoicePanel) {
+                ((VoicePanel) voicesTabbedPane.getComponent(i)).updatePanel();
+            }
+        }
+        refreshSvgPanel();
+    }
+
+    private void refreshSvgPanel() {
+        if (hasSvgPanel()) {
+            voicesTabbedPane.remove(svgPanel);
+            addSvgPanel(getVoicePanels().get(0).getVoice().getTune());
+        }
     }
 
     public void updateVoices() {
