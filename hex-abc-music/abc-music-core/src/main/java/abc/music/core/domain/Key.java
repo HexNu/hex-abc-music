@@ -133,6 +133,11 @@ public class Key extends Field {
             }
             return C;
         }
+
+        @Override
+        public String toString() {
+            return name();
+        }
     }
 
     public enum Signature {
@@ -178,8 +183,8 @@ public class Key extends Field {
             if (text != null) {
                 for (Signature signature : values()) {
                     if (text.toUpperCase().equals(signature.name())
-                            || text.equals(signature.getSign())
-                            || text.equalsIgnoreCase(signature.getSymbol())) {
+                            || text.equalsIgnoreCase(signature.getSign())
+                            || text.equals(signature.getSymbol())) {
                         return signature;
                     }
                 }
@@ -189,7 +194,7 @@ public class Key extends Field {
 
         @Override
         public String toString() {
-            return getSymbol();
+            return getSign();
         }
     }
 

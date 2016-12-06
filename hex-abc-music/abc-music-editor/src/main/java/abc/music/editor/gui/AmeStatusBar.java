@@ -1,4 +1,4 @@
-package abc.music.editor;
+package abc.music.editor.gui;
 
 import java.awt.event.ActionEvent;
 import javax.swing.Timer;

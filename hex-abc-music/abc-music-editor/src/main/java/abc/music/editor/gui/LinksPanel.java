@@ -27,7 +27,7 @@ public class LinksPanel extends AmeSidePanel {
 
     private void populateList() {
         linksNode.getChildren("link-group").stream().forEach((node) -> {
-            linkListPanel.add(new GroupLabel(node.getAttribute("title")));
+            linkListPanel.add(new GroupLabel(node));
             node.getChildren("link").stream().forEach((linkNode) -> {
                 linkListPanel.add(new LinkItem(editor, linkNode));
             });
@@ -68,8 +68,11 @@ public class LinksPanel extends AmeSidePanel {
 
     private class GroupLabel extends JLabel {
 
-        public GroupLabel(String text) {
-            super.setText("  " + text);
+        public GroupLabel(XmlNode node) {
+            super.setText("  " + node.getAttribute("title"));
+            if (node.hasAttribute("short-description")) {
+                super.setToolTipText(node.getAttribute("short-description"));
+            }
             super.setFont(AmeConstants.SMALL_TITLE_FONT);
             super.setForeground(AmeConstants.TITLE_COLOR);
         }

@@ -1,8 +1,9 @@
 package abc.music.editor;
 
+import abc.music.editor.gui.AmeStatusBar;
+import abc.music.editor.gui.AmeMenuBar;
 import abc.music.core.domain.Project;
 import abc.music.editor.action.OpenLatestProjectAction;
-import nu.hex.abc.music.editor.z.OldAbcMusicEditor;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.EventQueue;
@@ -42,7 +43,6 @@ import javax.swing.JRootPane;
  */
 public class AbcMusicEditor extends JFrame {
 
-    public static final String APP_TITLE = "Hex ABC Music Editor";
     private static final Dimension sidePanelDimension = new Dimension(275, 300);
 
     private final JPanel bottomPanel = new JPanel();
@@ -71,7 +71,7 @@ public class AbcMusicEditor extends JFrame {
         Dimension dimension = new Dimension(1800, 1000);
         setContentPane(new BackgroundImagePanel("Background.png"));
         setIconImages(new LogoImages().get());
-        setTitle(APP_TITLE);
+        setTitle(AmeConstants.APP_TITLE);
         setSize(dimension);
         setPreferredSize(dimension);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -157,8 +157,8 @@ public class AbcMusicEditor extends JFrame {
         centerPanel.add(bottomPanel, BorderLayout.SOUTH);
         topPanel.setOpaque(false);
         topPanel.setLayout(new BorderLayout());
-        topPanel.setBorder(BorderFactory.createTitledBorder(null, APP_TITLE, TitledBorder.CENTER, TitledBorder.TOP, AmeConstants.BIG_TITLE_FONT, AmeConstants.TITLE_COLOR));
-        JLabel subHeaderLabel = new JLabel("Edit  and  organize  your  abc  music  tunes");
+        topPanel.setBorder(BorderFactory.createTitledBorder(null, AmeConstants.APP_TITLE, TitledBorder.CENTER, TitledBorder.TOP, AmeConstants.BIG_TITLE_FONT, AmeConstants.TITLE_COLOR));
+        JLabel subHeaderLabel = new JLabel("Edit  and  Organize  Your  Abc  Music  Tunes");
         subHeaderLabel.setFont(AmeConstants.SMALL_TITLE_FONT);
         subHeaderLabel.setHorizontalAlignment(JLabel.CENTER);
         topPanel.add(subHeaderLabel, BorderLayout.CENTER);
@@ -199,7 +199,7 @@ public class AbcMusicEditor extends JFrame {
 
     public void clearProject() {
         this.project = null;
-        setTitle(APP_TITLE);
+        setTitle(AmeConstants.APP_TITLE);
         updateMenuBar();
         tuneSearchPanel.checkSearchEnabled();
         new SetEditingEnabledAction(this, false).actionPerformed(null);
@@ -208,7 +208,7 @@ public class AbcMusicEditor extends JFrame {
     public void setProject(Project project) {
         this.project = project;
         if (project != null && project.getName() != null) {
-            setTitle(APP_TITLE + " - " + project.getName());
+            setTitle(AmeConstants.APP_TITLE + " - " + project.getName());
         }
         updateMenuBar();
         tuneSearchPanel.checkSearchEnabled();
@@ -261,7 +261,7 @@ public class AbcMusicEditor extends JFrame {
             try {
                 return ImageIO.read(imageStream);
             } catch (IOException e) {
-                Logger.getLogger(OldAbcMusicEditor.class.getName()).log(Level.SEVERE, "Background Image {0} could not be found", backgroundImage);
+                Logger.getLogger(AbcMusicEditor.class.getName()).log(Level.SEVERE, "Background Image {0} could not be found", backgroundImage);
                 return null;
             }
         }

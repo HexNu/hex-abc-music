@@ -1,7 +1,8 @@
-package abc.music.editor;
+package abc.music.editor.gui;
 
 import abc.music.core.domain.Person;
 import abc.music.core.domain.Project;
+import abc.music.editor.AbcMusicEditor;
 import abc.music.editor.action.BackupProjectAction;
 import abc.music.editor.action.SaveProjectAction;
 import java.awt.Color;
