@@ -1,6 +1,5 @@
 package abc.music.editor.gui;
 
-import abc.music.core.domain.Project;
 import abc.music.editor.AbcMusicEditor;
 import java.awt.Font;
 import javax.swing.BorderFactory;
@@ -13,12 +12,12 @@ import javax.swing.border.Border;
  */
 public abstract class AmeSidePanel extends AmePanel {
 
-    public AmeSidePanel(AbcMusicEditor editor, Project project) {
-        super(editor, project, "");
+    public AmeSidePanel(AbcMusicEditor editor) {
+        super(editor, "");
     }
 
-    public AmeSidePanel(AbcMusicEditor editor, Project project, Font font) {
-        super(editor, project, "", font);
+    public AmeSidePanel(AbcMusicEditor editor, Font font) {
+        super(editor, "", font);
     }
 
     @Override

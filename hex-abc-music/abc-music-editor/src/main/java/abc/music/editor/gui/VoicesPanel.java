@@ -1,6 +1,5 @@
 package abc.music.editor.gui;
 
-import abc.music.core.domain.Project;
 import abc.music.core.domain.Tune;
 import abc.music.core.domain.Voice;
 import abc.music.editor.AbcMusicEditor;
@@ -20,8 +19,8 @@ public class VoicesPanel extends AmePanel {
 
     private SvgViewPanel svgPanel;
 
-    public VoicesPanel(AbcMusicEditor parent, Project project) {
-        super(parent, project, "Voices");
+    public VoicesPanel(AbcMusicEditor parent) {
+        super(parent, "Voices");
     }
 
     @Override
@@ -81,7 +80,7 @@ public class VoicesPanel extends AmePanel {
                 addSvgPanel(voice.getTune());
             }
             int newIndex = voicesTabbedPane.getComponentCount() - 1;
-            voicesTabbedPane.add(new VoicePanel(editor, project, voice), newIndex);
+            voicesTabbedPane.add(new VoicePanel(editor, voice), newIndex);
             voicesTabbedPane.setTitleAt(newIndex, voice.getName());
             repaint();
             revalidate();

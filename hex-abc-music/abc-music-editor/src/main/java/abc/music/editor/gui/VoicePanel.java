@@ -2,7 +2,6 @@ package abc.music.editor.gui;
 
 import abc.music.core.domain.Key;
 import abc.music.core.domain.Modifier;
-import abc.music.core.domain.Project;
 import abc.music.core.domain.Voice;
 import abc.music.editor.AbcMusicEditor;
 import abc.music.editor.AmeConstants;
@@ -19,8 +18,8 @@ public class VoicePanel extends AmePanel {
 
     private final Voice voice;
 
-    public VoicePanel(AbcMusicEditor parent, Project project, Voice voice) {
-        super(parent, project, null);
+    public VoicePanel(AbcMusicEditor parent, Voice voice) {
+        super(parent, null);
         this.voice = voice;
         setFields();
     }

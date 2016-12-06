@@ -15,7 +15,7 @@ public class LinksPanel extends AmeSidePanel {
     private XmlNode linksNode;
 
     public LinksPanel(AbcMusicEditor editor) {
-        super(editor, editor.getProject());
+        super(editor);
     }
 
     @Override

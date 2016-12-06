@@ -9,7 +9,7 @@ import java.awt.event.KeyEvent;
 public class TuneSearchPanel extends AmeSidePanel {
     
     public TuneSearchPanel(AbcMusicEditor editor) {
-        super(editor, editor.getProject());
+        super(editor);
     }
     
     @Override

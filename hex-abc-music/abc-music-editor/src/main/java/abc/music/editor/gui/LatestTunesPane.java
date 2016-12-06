@@ -12,7 +12,7 @@ import java.awt.Component;
 public class LatestTunesPane extends AmeSidePanel {
 
     public LatestTunesPane(AbcMusicEditor editor) {
-        super(editor, editor.getProject());
+        super(editor);
     }
 
     @Override

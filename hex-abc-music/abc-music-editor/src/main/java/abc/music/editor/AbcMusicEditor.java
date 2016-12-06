@@ -147,9 +147,9 @@ public class AbcMusicEditor extends JFrame {
         editorPanel.add(editorLabel, BorderLayout.NORTH);
         JPanel editorContentPanel = new JPanel(new BorderLayout(0, 12));
         editorContentPanel.setOpaque(false);
-        headersPanel = new TuneHeadersPanel(this, project);
+        headersPanel = new TuneHeadersPanel(this);
         editorContentPanel.add(headersPanel, BorderLayout.NORTH);
-        voicesPanel = new VoicesPanel(this, project);
+        voicesPanel = new VoicesPanel(this);
         editorContentPanel.add(voicesPanel, BorderLayout.CENTER);
         editorPanel.add(editorContentPanel, BorderLayout.CENTER);
 

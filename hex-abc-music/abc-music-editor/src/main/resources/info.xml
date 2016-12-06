@@ -4,4 +4,13 @@
     <vendor>${vendor}</vendor>
     <version>${pom.version}</version>
     <last-build>${timestamp}</last-build>
+    <credits>
+        <images>
+            <item label="Background Image" creator="J. S. Bach"/>
+        </images>
+        <fonts>
+            <item label="Aniron" creator="Pete Klassen" uri="http://www.dafont.com/aniron.font"/>
+            <item label="Ringbearer" creator="Pete Klassen" uri="http://www.dafont.com/ringbearer.font"/>
+        </fonts>
+    </credits>
 </program-info>

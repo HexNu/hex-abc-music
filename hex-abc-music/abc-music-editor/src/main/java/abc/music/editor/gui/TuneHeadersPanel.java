@@ -8,7 +8,6 @@ import abc.music.core.domain.Modifier;
 import abc.music.core.domain.Origin;
 import abc.music.core.domain.Person;
 import abc.music.core.domain.PersonRole;
-import abc.music.core.domain.Project;
 import abc.music.core.domain.Tempo;
 import abc.music.core.domain.Tune;
 import abc.music.core.util.CircleOfFifths;
@@ -40,12 +39,12 @@ public class TuneHeadersPanel extends AmePanel {
     private Tune tune;
     private Key originalKey;
 
-    public TuneHeadersPanel(AbcMusicEditor parent, Project project) {
-        this(parent, null, project);
+    public TuneHeadersPanel(AbcMusicEditor parent) {
+        this(parent, null);
     }
 
-    public TuneHeadersPanel(AbcMusicEditor parent, Tune tune, Project project) {
-        super(parent, project, "Tune Headers", AmeConstants.SMALL_TITLE_FONT);
+    public TuneHeadersPanel(AbcMusicEditor parent, Tune tune) {
+        super(parent, "Tune Headers", AmeConstants.SMALL_TITLE_FONT);
         this.tune = tune;
         if (tune != null) {
             originalKey = tune.getKey();
