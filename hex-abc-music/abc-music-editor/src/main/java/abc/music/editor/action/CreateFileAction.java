@@ -60,7 +60,9 @@ public class CreateFileAction extends AmeAction<File> {
                     break;
                 case CommonMediaType.IMAGE_SVG_XML:
                     break;
-                case HexMediaType.APPLICATION_VND_HEX_AMX_XML:
+                case HexMediaType.APPLICATION_VND_HEX_AMX:
+                    break;
+                case HexMediaType.APPLICATION_VND_HEX_AMXF_XML:
                     break;
                 default:
                     break;

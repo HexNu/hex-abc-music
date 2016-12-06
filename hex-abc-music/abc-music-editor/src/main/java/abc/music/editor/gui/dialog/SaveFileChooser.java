@@ -1,5 +1,6 @@
 package abc.music.editor.gui.dialog;
 
+import abc.music.editor.gui.support.AmeFileView;
 import java.io.File;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -17,6 +18,7 @@ public class SaveFileChooser extends JFileChooser {
     public SaveFileChooser(String name, String mediaType) {
         super(getDirectory(mediaType));
         super.setDialogTitle("Select Destination Directory");
+        super.setFileView(new AmeFileView());
         super.setAcceptAllFileFilterUsed(mediaType != null && !mediaType.isEmpty());
         super.setFileFilter(getFileFilter(mediaType));
         super.setSelectedFile(setFile(name, mediaType));
@@ -31,8 +33,10 @@ public class SaveFileChooser extends JFileChooser {
                 return new File(getDirectory(mediaType) + "/" + name + ".ps");
             case CommonMediaType.IMAGE_SVG_XML:
                 return new File(getDirectory(mediaType) + "/" + name + ".svg");
-            case HexMediaType.APPLICATION_VND_HEX_AMX_XML:
+            case HexMediaType.APPLICATION_VND_HEX_AMX:
                 return new File(getDirectory(mediaType) + "/" + name + ".amx");
+            case HexMediaType.APPLICATION_VND_HEX_AMXF_XML:
+                return new File(getDirectory(mediaType) + "/" + name + ".amxf");
             default:
                 return new File(getDirectory(mediaType) + "/" + name);
         }
@@ -59,10 +63,12 @@ public class SaveFileChooser extends JFileChooser {
                 return new FileNameExtensionFilter("PostScript Files", "ps");
             case CommonMediaType.IMAGE_SVG_XML:
                 return new FileNameExtensionFilter("SVG Image Files", "svg");
-            case HexMediaType.APPLICATION_VND_HEX_AMX_XML:
+            case HexMediaType.APPLICATION_VND_HEX_AMX:
                 return new FileNameExtensionFilter("Hex ABC Editor Files", "amx");
+            case HexMediaType.APPLICATION_VND_HEX_AMXF_XML:
+                return new FileNameExtensionFilter("Hex ABC Editor Files", "amxf");
             default:
-                return new FileNameExtensionFilter("Files", "abc", "ps", "svg", "amx");
+                return new FileNameExtensionFilter("Files", "abc", "ps", "svg", "amx", "amxf");
         }
     }
 

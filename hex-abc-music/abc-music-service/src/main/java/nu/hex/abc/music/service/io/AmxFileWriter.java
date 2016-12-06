@@ -1,7 +1,6 @@
 package nu.hex.abc.music.service.io;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
@@ -36,7 +35,7 @@ public class AmxFileWriter implements Writer<Void> {
         try {
             ZipOutputStream zipOutputStream;
             writer = new OutputStreamWriter(zipOutputStream = new ZipOutputStream(new FileOutputStream(resultFile)), StandardCharsets.UTF_8);
-            addZipEntry(zipOutputStream, "mimetype", HexMediaType.APPLICATION_VND_HEX_AMX_XML);
+            addZipEntry(zipOutputStream, "mimetype", HexMediaType.APPLICATION_VND_HEX_AMX);
             addZipEntry(zipOutputStream, name, content);
 
         } catch (IOException ex) {
