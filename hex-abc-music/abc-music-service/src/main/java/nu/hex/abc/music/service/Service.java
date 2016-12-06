@@ -3,6 +3,8 @@ package nu.hex.abc.music.service;
 import abc.music.core.domain.Project;
 import abc.music.core.domain.Tune;
 import java.io.File;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import nu.hex.abc.music.service.exception.NoProjectException;
@@ -132,6 +134,11 @@ public class Service {
 
     public static File getProjectFile(String name) {
         return new File(PropertyService.PROJECT_PATH + name + "." + SUFFIX[0]);
+    }
+
+    public static File getBackupFile(String name) {
+        name = name + "-" + LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME).replaceAll("\\D", "");
+        return new File(PropertyService.BACKUP_PATH + name + "." + SUFFIX[0]);
     }
 //    
 //    public static File getCompressedProjectFile() {

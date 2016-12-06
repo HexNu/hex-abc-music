@@ -2,6 +2,7 @@ package abc.music.editor;
 
 import abc.music.core.domain.Person;
 import abc.music.core.domain.Project;
+import abc.music.editor.action.BackupProjectAction;
 import abc.music.editor.action.SaveProjectAction;
 import java.awt.Color;
 import java.awt.Font;
@@ -44,7 +45,7 @@ public class AmeMenuBar extends JMenuBar {
     private AmeMenuItem openLatestMenuItem = new AmeMenuItem();
     private AmeMenuItem newProjectMenuItem = new AmeMenuItem();
     private AmeMenuItem saveMenuItem = new AmeMenuItem();
-    private AmeMenuItem saveAsMenuItem = new AmeMenuItem();
+    private AmeMenuItem backupMenuItem = new AmeMenuItem();
     private AmeMenuItem closeProjectMenuItem = new AmeMenuItem();
     private AmeMenuItem exitMenuItem = new AmeMenuItem();
     private AmeMenuItem contentsMenuItem = new AmeMenuItem();
@@ -119,11 +120,14 @@ public class AmeMenuBar extends JMenuBar {
         saveMenuItem.setEnabled(false);
         fileMenu.add(saveMenuItem);
 
-        saveAsMenuItem.setMnemonic('a');
-        saveAsMenuItem.setText("Save as ...");
-        saveAsMenuItem.setDisplayedMnemonicIndex(5);
-        saveAsMenuItem.setEnabled(false);
-        fileMenu.add(saveAsMenuItem);
+        backupMenuItem.setMnemonic('b');
+        backupMenuItem.setText("Save a Backup");
+        backupMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_MASK | InputEvent.SHIFT_MASK));
+        backupMenuItem.addActionListener((ActionEvent e) -> {
+            new BackupProjectAction(parent).actionPerformed(e);
+        });
+        backupMenuItem.setEnabled(false);
+        fileMenu.add(backupMenuItem);
 
         closeProjectMenuItem.setText("Close Project");
         closeProjectMenuItem.setMnemonic('c');
@@ -187,7 +191,7 @@ public class AmeMenuBar extends JMenuBar {
         boolean enable = parent.getProject() != null;
         saveMenuItem.setEnabled(enable);
         openLatestMenuItem.setEnabled(OpenLatestProjectAction.isEnabled());
-        saveAsMenuItem.setEnabled(enable);
+        backupMenuItem.setEnabled(enable);
         closeProjectMenuItem.setEnabled(enable);
         projectMenu.setEnabled(enable);
         projectMenu.removeAll();

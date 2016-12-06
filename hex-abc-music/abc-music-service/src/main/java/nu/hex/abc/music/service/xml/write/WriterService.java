@@ -22,15 +22,24 @@ public class WriterService {
     }
 
     public Project saveProject() {
-        Service service = new Service(project);
-        project.setLastUpdated(LocalDateTime.now());
         File file = Service.getProjectFile(project.getName());
+        project.setLastUpdated(LocalDateTime.now());
+        Service service = save(file);
+        service.getPropertyService().setProperty(PropertyService.LATEST_SAVED_PROJECT, project.getName());
+        return project;
+    }
+
+    public void backupProject() {
+        save(Service.getBackupFile(project.getName()));
+    }
+
+    private Service save(File file) {
+        Service service = new Service(project);
         file.getParentFile().mkdirs();
         XmlNode projectNode = new ProjectWriter(project).write();
         XmlDocument projectDoc = service.getIoService().createAmxfDocument(projectNode);
         service.getIoService().createAmxFile(file, projectDoc);
-        service.getPropertyService().setProperty(PropertyService.LATEST_SAVED_PROJECT, project.getName());
-        return project;
+        return service;
     }
 
 }
