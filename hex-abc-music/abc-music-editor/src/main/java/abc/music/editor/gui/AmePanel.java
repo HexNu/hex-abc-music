@@ -30,7 +30,7 @@ public abstract class AmePanel extends JPanel {
         setup();
     }
 
-    public AbcMusicEditor getApplication() {
+    public AbcMusicEditor getEditor() {
         return editor;
     }
 

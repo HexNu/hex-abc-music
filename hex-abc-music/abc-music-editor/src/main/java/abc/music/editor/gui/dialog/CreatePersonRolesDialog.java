@@ -45,7 +45,7 @@ public class CreatePersonRolesDialog extends AmeDialog<List<PersonRole>> {
     }
 
     private void updatePersonsComboBox() {
-        Project project = application.getProject();
+        Project project = editor.getProject();
         personComboBox.setModel(new DefaultComboBoxModel(project.getPersons().toArray()));
     }
 
@@ -185,12 +185,12 @@ public class CreatePersonRolesDialog extends AmeDialog<List<PersonRole>> {
     }
 
     private void addPerson(ActionEvent evt) {
-        CreatePersonAction action = new CreatePersonAction(application);
+        CreatePersonAction action = new CreatePersonAction(editor);
         action.actionPerformed(evt);
         Person person = action.get();
         updatePersonsComboBox();
         int index = -1;
-        for (Person p : application.getProject().getPersons()) {
+        for (Person p : editor.getProject().getPersons()) {
             index++;
             if (p.equals(person)) {
                 break;

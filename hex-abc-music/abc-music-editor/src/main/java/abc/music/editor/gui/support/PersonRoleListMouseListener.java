@@ -35,7 +35,7 @@ public class PersonRoleListMouseListener implements MouseListener {
 
         JMenuItem add = new JMenuItem("Select Person and Role(s) to add");
         add.addActionListener((ActionEvent e) -> {
-            AddPersonRoleAction action = new AddPersonRoleAction(parent.getApplication(), role);
+            AddPersonRoleAction action = new AddPersonRoleAction(parent.getEditor(), role);
                     action.actionPerformed(e);
                     action.get().forEach((pr) -> {
                         tune.addCreator(pr);
@@ -45,7 +45,7 @@ public class PersonRoleListMouseListener implements MouseListener {
 
         JMenuItem remove = new JMenuItem("Remove " + role.toString());
         remove.addActionListener((ActionEvent e) -> {
-            new RemovePersonRoleAction(parent.getApplication(), (PersonRole) list.getModel().getElementAt(selectedIndex)).actionPerformed(e);
+            new RemovePersonRoleAction(parent.getEditor(), (PersonRole) list.getModel().getElementAt(selectedIndex)).actionPerformed(e);
             list.requestFocus();
         });
         menu.add(add);

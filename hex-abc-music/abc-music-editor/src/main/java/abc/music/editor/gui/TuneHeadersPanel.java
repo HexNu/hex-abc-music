@@ -282,7 +282,7 @@ public class TuneHeadersPanel extends AmePanel {
                 }
             }
             if (!tune.getVoices().isEmpty()) {
-                getApplication().getVoicesPanel().updateVoices();
+                getEditor().getVoicesPanel().updateVoices();
             }
         }
     }
@@ -1045,7 +1045,7 @@ public class TuneHeadersPanel extends AmePanel {
                 voice.getKey().setSignature(Key.getSignatureFromString(newKeyString));
                 voice.getKey().setMode(mode);
             });
-            getApplication().getVoicesPanel().updateVoicePanels();
+            getEditor().getVoicesPanel().updateVoicePanels();
         }
     }
 }

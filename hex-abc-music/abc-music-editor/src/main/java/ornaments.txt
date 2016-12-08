@@ -1,0 +1,18 @@
+X:1
+T:Ornaments
+M:none
+L:1/1
+K:C
+"_!trill!"!trill!c | "_!trill(!"!trill(!c | "_!trill)!"!trill)!c | "_!lowermordent!"!lowermordent!c | "_!uppermordent!"!uppermordent!c |
+"_!mordent!"!mordent!c | "_!pralltriller!"!pralltriller!c | "_!roll!"!roll!c | "_!turn!"!turn!c | "_!turnx!"!turnx!c |
+"_!invertedturn!"!invertedturn!c | "_!invertedturnx!"!invertedturnx!c | "_!arpeggio!"!arpeggio!c | "_!>!"!>!c | "_!accent!"!accent!c |
+"_!emphasis!"!emphasis!c | "_!fermata!"!fermata!c | "_!invertedfermata!"!invertedfermata!c | "_!tenuto!"!tenuto!c | "_!0!"!0!c |
+"_!1!"!1!c | "_!2!"!2!c | "_!3!"!3!c | "_!4!"!4!c | "_!5!"!5!c |
+"_!+!"!+!c | "_!plus!"!plus!c | "_!snap!"!snap!c | "_!slide!"!slide!c | "_!wedge!"!wedge!c |
+"_!upbow!"!upbow!c | "_!downbow!"!downbow!c | "_!open!"!open!c | "_!thumb!"!thumb!c | "_!breath!"!breath!c |
+"^!pppp!"!pppp!c | "^!ppp!"!ppp!c | "^!pp!"!pp!c | "^!p!"!p!c | "^!mp!"!mp!c |
+"^!mf!"!mf!c | "^!f!"!f!c | "^!ff!"!ff!c | "^!fff!"!fff!c | "^!ffff!"!ffff!c |
+"^!sfz!"!sfz!c | "^!crescendo(!"!crescendo(!c | "^!crescendo)!"!crescendo)!c | "^!<(!"!<(!c | "^!<)!"!<)!c |
+"^!diminuendo(!"!diminuendo(!c | "^!diminuendo)!"!diminuendo)!c | "^!>(!"!>(!c | "^!>)!"!>)!c | "_!segno!"!segno!c |
+"_!coda!"!coda!c | "_!D.S.!"!D.S.!c | "_!D.C.!"!D.C.!c | "_!fine!"!fine!c | "_!shortphrase!"!shortphrase!c |
+"_!mediumphrase!"!mediumphrase!c | "_!longphrase!"!longphrase!c | 

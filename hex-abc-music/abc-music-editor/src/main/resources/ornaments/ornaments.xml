@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<list>
+    <group label="Dynamics">
+        <item value="!pppp!">dynamics marks</item>
+        <item value="!ppp!">dynamics marks</item>
+        <item value="!pp!">dynamics marks</item>
+        <item value="!p!">dynamics marks</item>
+        <item value="!mp!">dynamics marks</item>
+        <item value="!mf!">dynamics marks</item>
+        <item value="!f!">dynamics marks</item>
+        <item value="!ff!">dynamics marks</item>
+        <item value="!fff!">dynamics marks</item>
+        <item value="!ffff!">dynamics marks</item>
+        <item value="!sfz!">sforzando</item>
+        <item value="!crescendo(!">start of a &lt; crescendo mark</item>
+        <item value="!crescendo)!">end of a &lt; crescendo mark, placed after the last note</item>
+        <item value="!&lt;(!">same as !crescendo(!</item>
+        <item value="!&lt;)!">same as !crescendo)!</item>
+        <item value="!diminuendo(!">start of a &gt;diminuendo mark</item>
+        <item value="!diminuendo)!">end of a &gt;diminuendo mark, placed after the last note</item>
+        <item value="!&gt;(!">same as !diminuendo(!</item>
+        <item value="!&gt;)!">same as !diminuendo)!</item>
+    </group>
+    <group label="Accents">
+        <item value="!>!">accent (>mark)</item>
+        <item value="!accent!">same as !>!</item>
+        <item value="!emphasis!">same as !>!</item>
+        <!--    <item value="!^!">marcato (inverted V)</item>
+        <item value="!marcato!">same as !^!</item>-->
+        <item value="!tenuto!">horizontal line to indicate holding note for full duration</item>
+    </group>
+    <group label="Trills et al">
+        <item value="!trill!">"tr" (trill mark)</item>
+        <item value="!trill(!">start of an extended trill</item>
+        <item value="!trill)!">end of an extended trill</item>
+        <item value="!lowermordent!">short /|/|/ squiggle with a vertical line through it</item>
+        <item value="!uppermordent!">short /|/|/ squiggle</item>
+        <item value="!mordent!">same as !lowermordent!</item>
+        <item value="!pralltriller!">same as !uppermordent!</item>
+        <item value="!roll!">a roll mark (arc) as used in Irish music</item>
+        <item value="!turn!">a turn mark (also known as gruppetto)</item>
+        <item value="!turnx!">a turn mark with a line through it</item>
+        <item value="!invertedturn!">an inverted turn mark</item>
+        <item value="!invertedturnx!">an inverted turn mark with a line through it</item>
+        <item value="!arpeggio!">vertical squiggle</item>
+    </group>
+    <group label="Fermata">
+        <item value="!fermata!">fermata or hold (arc above dot)</item>
+        <item value="!invertedfermata!">upside down fermata</item>
+    </group>
+    <group label="Fingering">
+        <item value="!0!">fingerings</item>
+        <item value="!1!">fingerings</item>
+        <item value="!2!">fingerings</item>
+        <item value="!3!">fingerings</item>
+        <item value="!4!">fingerings</item>
+        <item value="!5!">fingerings</item>
+    </group>
+    <group label="Special playing instructions">
+        <item value="!+!">left-hand pizzicato, or rasp for French horns</item>
+        <item value="!plus!">same as !+!</item>
+        <item value="!snap!">snap-pizzicato mark, visually similar to !thumb!</item>
+        <item value="!slide!">slide up to a note, visually similar to a half slur</item>
+        <item value="!wedge!">small filled-in wedge mark</item>
+        <item value="!upbow!">V mark</item>
+        <item value="!downbow!">squared n mark</item>
+        <item value="!open!">small circle above note indicating open string or harmonic</item>
+        <item value="!thumb!">cello thumb symbol</item>
+    </group>
+    <group label="Instructions on repetition">
+        <item value="!segno!">2 ornate s-like symbols separated by a diagonal line</item>
+        <item value="!coda!">a ring with a cross in it</item>
+        <item value="!D.S.!">the letters D.S. (=Da Segno)</item>
+        <!--    <item value="!D.S.alcoda!">the words "D.S. al coda"</item>-->
+        <!--    <item value="!D.S.alfine!">the words "D.S. al fine"</item>-->
+        <item value="!D.C.!">the letters D.C. (=either Da Coda or Da Capo)</item>
+        <!--    <item value="!D.C.alcoda!">the words "D.C. al coda"</item>-->
+        <!--    <item value="!D.C.alfine!">the words "D.C. al fine"</item>-->
+        <!--    <item value="!dacoda!">the word "Da" followed by a Coda sign</item>-->
+        <!--    <item value="!dacapo!">the words "Da Capo"</item>-->
+        <item value="!fine!">the word "fine"</item>
+    </group>
+    <group label="Phrasing">
+        <item value="!breath!">a breath mark (apostrophe-like) after note</item>
+        <item value="!shortphrase!">vertical line on the upper part of the staff</item>
+        <item value="!mediumphrase!">same, but extending down to the centre line</item>
+        <item value="!longphrase!">same, but extending 3/4 of the way down</item>
+    </group>
+<!--    <group label="Accidentals">
+        <item value="!editorial!">places the subsequent accidental above the notehead</item>
+        <item value="!courtsey!">adds a courtesy accidental (sharp, flat or natural) in parentheses to the subsequent note</item>
+    </group>-->
+</list>

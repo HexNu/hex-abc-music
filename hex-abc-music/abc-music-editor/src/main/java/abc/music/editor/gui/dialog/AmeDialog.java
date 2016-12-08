@@ -10,6 +10,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import abc.music.editor.AbcMusicEditor;
+import javax.swing.WindowConstants;
 
 /**
  * Created 2016-dec-01
@@ -21,13 +22,18 @@ public abstract class AmeDialog<T> extends JDialog {
 
     private T obj;
     private Result result;
-    protected final AbcMusicEditor application;
+    protected final AbcMusicEditor editor;
 
-    public AmeDialog(AbcMusicEditor parent, String title) {
-        super(parent, title, true);
-        this.application = parent;
+    public AmeDialog(AbcMusicEditor editor, String title) {
+        super(editor, title, true);
+        this.editor = editor;
+        setup();
+        super.setLocationRelativeTo(editor);
+        super.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+    }
+
+    private void setup() {
         init();
-        super.setLocationRelativeTo(parent);
     }
 
     protected abstract void init();

@@ -71,7 +71,7 @@ public class AmeMenuBar extends JMenuBar {
     }
 
     private void init() {
-        fileMenu.setMnemonic('f');
+        fileMenu.setMnemonic('i');
         fileMenu.setText("File");
 
         openMenuItem.setMnemonic('o');
@@ -147,7 +147,7 @@ public class AmeMenuBar extends JMenuBar {
         fileMenu.add(exitMenuItem);
         add(fileMenu);
 
-        editMenu.setMnemonic('e');
+        editMenu.setMnemonic('t');
         editMenu.setText("Edit");
         editMenu.setEnabled(true);
 

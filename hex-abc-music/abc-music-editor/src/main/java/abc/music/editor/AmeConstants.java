@@ -21,4 +21,5 @@ public interface AmeConstants {
     static final Font SMALL_TITLE_FONT = FontFactory.ringbearer(15);
     static final Font TAB_LABEL_FONT = FontFactory.ringbearer(12);
     static final Font MENU_HEADER_FONT = FontFactory.ringbearer(15);
+    static final Font NOTE_AREA_FONT = new Font("FreeMono", 0, 15);
 }

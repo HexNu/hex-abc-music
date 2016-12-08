@@ -114,7 +114,7 @@ public class CloseProjectDialog extends AmeDialog {
     }
 
     private void save() {
-        new SaveProjectAction(application).actionPerformed(null);
+        new SaveProjectAction(editor).actionPerformed(null);
         ok();
     }
 }

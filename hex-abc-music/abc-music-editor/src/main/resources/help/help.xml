@@ -9,19 +9,19 @@
                     </p>
                     <table>
                         <tr>
-                            <td>Sharp (♯)</td>
-                            <td>=</td>
-                            <td>Ctrl + 3 (#)</td>
+                            <td valign="top">Sharp (♯)</td>
+                            <td valign="top">=</td>
+                            <td valign="top">Ctrl + <b>3</b> (#)</td>
                         </tr>
                         <tr>
-                            <td>Flat (♭)</td>
-                            <td>=</td>
-                            <td>Ctrl + b</td>
+                            <td valign="top">Flat (♭)</td>
+                            <td valign="top">=</td>
+                            <td valign="top">Ctrl + <b>b</b></td>
                         </tr>
                         <tr>
-                            <td>Natural (♮)</td>
-                            <td>=</td>
-                            <td>Ctrl + 0 (=)</td>
+                            <td valign="top">Natural (♮)</td>
+                            <td valign="top">=</td>
+                            <td valign="top">Ctrl + <b>0</b> (=)</td>
                         </tr>
                     </table>
                     <p>
@@ -41,6 +41,73 @@
                         <li>Short Name</li>
                         <li>Name</li>
                     </ul>
+                    <p>
+                        It is also possible to use these in the voice notes editor, but should only be used for annotations.
+                    </p>
+                </html>
+            </content>            
+        </item>
+        <item label="In the notes editor">
+            <content>
+                <html>
+                    <p>
+                        Apart from the sharp, flat and natural shortcuts the editor have a few specific ones:
+                    </p>
+                    <table>
+                        <tr>
+                            <td valign="top">Soft line break (\)</td>
+                            <td valign="top">=</td>
+                            <td valign="top">Ctrl + <b>Enter</b></td>
+                            <td valign="top">
+                                This will place the character for a soft linebreak<br/>
+                                ("\") at the cursor position and generate a new <br/>
+                                line with indentation.<br/>
+                                This new line will not show in the note output.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td valign="top">Line comment (%)</td>
+                            <td valign="top">=</td>
+                            <td valign="top">Ctrl + <b>5</b></td>
+                            <td valign="top">
+                                This will place a percent sign at the cursor position. <br/>
+                                Anything following this will be dismissed when the <br/>
+                                notes are rendered.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td valign="top">
+                                <u>K</u>ey change</td>
+                            <td valign="top">=</td>
+                            <td valign="top">Ctrl + <b>K</b></td>
+                            <td valign="top">
+                                This will open a dialog where you select the new Key.<br/>
+                                The necessary code for changing key in the abc notes <br/>
+                                will be inserted at the cursor position.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td valign="top">A<u>n</u>notation</td>
+                            <td valign="top">=</td>
+                            <td valign="top">Ctrl + <b>N</b></td>
+                            <td valign="top">
+                                This will open a dialog where you may write a text.<br/>
+                                This will be inserted at the cursor position.<br/>
+                                If you leave the text field empty in the dialog, <br/>
+                                the cursor will be moved to inside the citation <br/>
+                                marks, before the last one.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td valign="top">Add a <u>g</u>uitar chord</td>
+                            <td valign="top">=</td>
+                            <td valign="top">Ctrl + <b>G</b></td>
+                            <td valign="top">
+                                Places two citation marks at the cursor position <br/>
+                                and places the cursor between them.
+                            </td>
+                        </tr>
+                    </table>
                 </html>
             </content>            
         </item>
