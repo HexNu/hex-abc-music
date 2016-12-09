@@ -6,9 +6,11 @@ import abc.music.editor.AbcMusicEditor;
 import abc.music.editor.action.SaveTuneAction;
 import abc.music.editor.action.UpdateSvgFileAction;
 import java.awt.Component;
+import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JTabbedPane;
+import javax.swing.Timer;
 import javax.swing.event.ChangeEvent;
 
 /**
@@ -80,13 +82,28 @@ public class VoicesPanel extends AmePanel {
                 addSvgPanel(voice.getTune());
             }
             int newIndex = voicesTabbedPane.getComponentCount() - 1;
-            voicesTabbedPane.add(new VoicePanel(editor, voice), newIndex);
+            voicesTabbedPane.add(new VoicePanel(editor, voice, this), newIndex);
             voicesTabbedPane.setTitleAt(newIndex, voice.getName());
             repaint();
             revalidate();
             voicesTabbedPane.repaint();
             voicesTabbedPane.revalidate();
         }
+    }
+
+    public void setFocus(int index) {
+        voicesTabbedPane.setSelectedIndex(index);
+    }
+
+    public void reattachVoicePanel(VoicePanel voicePanel, int index) {
+        voicesTabbedPane.add(voicePanel, index);
+        voicesTabbedPane.setTitleAt(index, voicePanel.getVoice().getName());
+//        Timer timer = new Timer(1000, (ActionEvent e) -> {
+//            setFocus(index);
+//        });
+//        timer.setRepeats(false);
+//        timer.start();
+        setFocus(index);
     }
 
     private void addSvgPanel(Tune tune) {

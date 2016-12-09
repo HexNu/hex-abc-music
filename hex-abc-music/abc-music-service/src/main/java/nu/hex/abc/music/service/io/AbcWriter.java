@@ -68,8 +68,8 @@ class AbcWriter implements Writer<String> {
         if (tune.hasMeter()) {
             result.append(tune.getMeter().get()).append(NEW_LINE);
         }
-        if (tune.hasUnit()) {
-            result.append(tune.getUnitField()).append(NEW_LINE);
+        if (tune.hasTimeValue()) {
+            result.append(tune.getTimeValueField()).append(NEW_LINE);
         }
         if (tune.hasKey()) {
             result.append(tune.getKey().get());

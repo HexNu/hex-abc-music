@@ -1,6 +1,7 @@
 package nu.hex.abc.music.service.xml.write;
 
 import abc.music.core.domain.Project;
+import abc.music.core.domain.Tune;
 import java.io.File;
 import java.time.LocalDateTime;
 import nu.hex.abc.music.service.Service;
@@ -22,6 +23,13 @@ public class WriterService {
     }
 
     public Project saveProject() {
+        int i = 1;
+        for (Tune tune : project.getTunes()) {
+            if (tune.getName() == null || tune.getName().isEmpty()) {
+                tune.addTitle("New Tune " + i);
+                i++;
+            }
+        }
         File file = Service.getProjectFile(project.getName());
         project.setLastUpdated(LocalDateTime.now());
         Service service = save(file);

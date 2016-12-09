@@ -9,8 +9,10 @@ import abc.music.editor.gui.support.NoteEditorKeyListener;
 import abc.music.editor.gui.support.SharpFlatNaturalKeyListener;
 import abc.music.editor.gui.support.TransposeComboBoxModel;
 import abc.music.editor.gui.support.TransposeMap;
+import java.awt.Component;
 import java.awt.event.KeyListener;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JTabbedPane;
 
 /**
  *
@@ -19,11 +21,14 @@ import javax.swing.DefaultComboBoxModel;
 public class VoicePanel extends AmePanel {
 
     private final Voice voice;
+    private final VoicesPanel parentPanel;
+    private boolean docked = true;
 
-    public VoicePanel(AbcMusicEditor parent, Voice voice) {
+    public VoicePanel(AbcMusicEditor parent, Voice voice, VoicesPanel parentPanel) {
         super(parent, null);
         this.voice = voice;
         setFields();
+        this.parentPanel = parentPanel;
     }
 
     @Override
@@ -40,7 +45,7 @@ public class VoicePanel extends AmePanel {
                 bodyEditorTextArea.removeKeyListener(listener);
             }
             bodyEditorTextArea.addKeyListener(new SharpFlatNaturalKeyListener());
-            bodyEditorTextArea.addKeyListener(new NoteEditorKeyListener(editor, voice));
+            bodyEditorTextArea.addKeyListener(new NoteEditorKeyListener(editor, this));
             idTextField.setText(voice.getVoiceId());
             shortNameTextField.setText(voice.getShortName());
             nameTextField.setText(voice.getName());
@@ -410,5 +415,28 @@ public class VoicePanel extends AmePanel {
         clefComboBox.setEnabled(enabled);
         transposeComboBox.setEnabled(enabled);
         octaveComboBox.setEnabled(enabled);
+    }
+
+    public Integer getIndex() {
+        JTabbedPane tabParent = (JTabbedPane) getParent();
+        int index = 0;
+        for (Component c : tabParent.getComponents()) {
+            if (c.equals(this)) {
+                return index;
+            }
+        }
+        return -1;
+    }
+
+    public VoicesPanel getVoicesPanel() {
+        return parentPanel;
+    }
+
+    public boolean isDocked() {
+        return docked;
+    }
+
+    public void setDocked(boolean docked) {
+        this.docked = docked;
     }
 }

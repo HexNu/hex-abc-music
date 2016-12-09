@@ -1,5 +1,6 @@
 package abc.music.core.domain;
 
+import com.sun.org.apache.xpath.internal.operations.Equals;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -199,11 +200,11 @@ public class Tune {
         return timeValue;
     }
 
-    public String getUnitField() {
+    public String getTimeValueField() {
         return "L: 1/" + timeValue.getFraction();
     }
 
-    public boolean hasUnit() {
+    public boolean hasTimeValue() {
         return timeValue != null;
     }
 
@@ -274,7 +275,7 @@ public class Tune {
         }
 
         public static TimeValue find(String text) {
-            if (text != null && text.isEmpty()) {
+            if (text != null && !text.isEmpty()) {
                 for (TimeValue unit : values()) {
                     if (text.equalsIgnoreCase(unit.name()) || text.equals(unit.toString())) {
                         return unit;

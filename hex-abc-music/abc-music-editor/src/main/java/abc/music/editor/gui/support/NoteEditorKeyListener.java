@@ -2,12 +2,16 @@ package abc.music.editor.gui.support;
 
 import abc.music.core.domain.Voice;
 import abc.music.editor.AbcMusicEditor;
+import abc.music.editor.gui.VoicePanel;
 import abc.music.editor.gui.dialog.AmeDialog;
+import abc.music.editor.gui.dialog.UndockedVoicePanelDialog;
 import abc.music.editor.gui.dialog.notes.AnnotationDialog;
 import abc.music.editor.gui.dialog.notes.KeyChangeDialog;
+import abc.music.editor.gui.dialog.notes.MeterChangeDialog;
 import abc.music.editor.gui.dialog.notes.OrnamentChooser;
 import java.awt.event.KeyEvent;
 import javax.swing.JTextArea;
+import org.ghost4j.GhostscriptLibrary;
 
 /**
  * Created 2016-dec-07
@@ -18,12 +22,12 @@ public class NoteEditorKeyListener extends AmeKeyAdapter {
 
     private static final String SOFT_LINE_BREAK = "\\ \n  ",
             COMMENT = "% ";
-    private final Voice voice;
     private final AbcMusicEditor editor;
+    private final VoicePanel panel;
 
-    public NoteEditorKeyListener(AbcMusicEditor editor, Voice voice) {
+    public NoteEditorKeyListener(AbcMusicEditor editor, VoicePanel panel) {
         this.editor = editor;
-        this.voice = voice;
+        this.panel = panel;
     }
 
     @Override
@@ -39,6 +43,9 @@ public class NoteEditorKeyListener extends AmeKeyAdapter {
                 case KeyEvent.VK_K:
                     changeKey(e);
                     break;
+                case KeyEvent.VK_M:
+                    changeMeter(e);
+                    break;
                 case KeyEvent.VK_N:
                     addAnnotation(e);
                     break;
@@ -47,6 +54,9 @@ public class NoteEditorKeyListener extends AmeKeyAdapter {
                     break;
                 case KeyEvent.VK_D:
                     addDecoration(e);
+                    break;
+                case KeyEvent.VK_U:
+                    detachPanel(e);
                     break;
                 case KeyEvent.VK_8:
                     addTie(e);
@@ -59,7 +69,15 @@ public class NoteEditorKeyListener extends AmeKeyAdapter {
     }
 
     private void changeKey(KeyEvent event) {
-        KeyChangeDialog dialog = new KeyChangeDialog(editor, voice);
+        KeyChangeDialog dialog = new KeyChangeDialog(editor, panel.getVoice());
+        dialog.setVisible(true);
+        if (dialog.getResult().equals(AmeDialog.Result.OK)) {
+            setString(event, "[" + dialog.get().get() + "] ");
+        }
+    }
+
+    private void changeMeter(KeyEvent event) {
+        MeterChangeDialog dialog = new MeterChangeDialog(editor, panel.getVoice());
         dialog.setVisible(true);
         if (dialog.getResult().equals(AmeDialog.Result.OK)) {
             setString(event, "[" + dialog.get().get() + "] ");
@@ -99,6 +117,13 @@ public class NoteEditorKeyListener extends AmeKeyAdapter {
             String third = text.substring(source.getSelectionEnd());
             source.setText(first + "(" + second + ")" + third);
             source.setCaretPosition(end + 2);
+        }
+    }
+
+    private void detachPanel(KeyEvent e) {
+        if (panel.isDocked()) {
+            UndockedVoicePanelDialog dialog = new UndockedVoicePanelDialog(panel, panel.getIndex());
+            dialog.setVisible(true);
         }
     }
 }

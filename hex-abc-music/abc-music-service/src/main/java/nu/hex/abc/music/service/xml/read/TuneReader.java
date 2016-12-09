@@ -28,6 +28,9 @@ class TuneReader extends NodeReader<Tune> {
     public Tune read() {
         Tune result = new Tune(project);
         result.setId(Integer.valueOf(node.getAttribute("id")));
+        if (node.hasAttribute("time-value")) {
+            result.setTimeValue(Tune.TimeValue.find(node.getAttribute("time-value")));
+        }
         if (node.hasChildNamed("titles") && node.getChild("titles").hasChildNamed("title")) {
             node.getChild("titles").getChildren("title").stream().forEach((n) -> {
                 result.addTitle(n.getText());

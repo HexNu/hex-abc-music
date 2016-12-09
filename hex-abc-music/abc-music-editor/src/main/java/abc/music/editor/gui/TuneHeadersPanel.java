@@ -111,9 +111,11 @@ public class TuneHeadersPanel extends AmePanel {
         copyrightTextArea.setText(tuneHelper.getCopyrightAsString());
         tempoUnitComboBox.setSelectedItem(tune.getTempo().getUnit());
         unitsPerMinuteComboBox.setSelectedItem(tune.getTempo().getUnitsPerMinute());
-        defaultTimeValueComboBox.setSelectedItem(tune.getTimeValue());
+        System.out.println(tune.getTimeValue());
+        defaultTimeValueComboBox.getModel().setSelectedItem(tune.getTimeValue());
         meterNumeratorSpinner.setValue(tune.getMeter().getNumerator());
         meterDenominatorSpinner.setValue(tune.getMeter().getDenominator());
+        useSymbolCheckBox.setSelected(tune.getMeter().useSymbol());
         updateLists();
         pitchComboBox.setSelectedItem(tune.getKey().getPitch());
         signatureComboBox.setSelectedItem(tune.getKey().getSignature());
@@ -150,6 +152,9 @@ public class TuneHeadersPanel extends AmePanel {
         clefComboBox.setSelectedItem(Modifier.Clef.DEFAULT_CLEF);
         transposeComboBox.setSelectedItem(TransposeMap.getDefaultItem());
         octaveComboBox.setSelectedItem(Modifier.OctaveClef.DEFAULT_OCTAVE);
+        if (editor.getVoicesPanel() != null) {
+            editor.getVoicesPanel().clearVoicesPanel();
+        }
     }
 
     public void setEditingEnabled(boolean enabled) {
@@ -211,6 +216,10 @@ public class TuneHeadersPanel extends AmePanel {
         });
     }
 
+    public Tune getTune() {
+        return tune;
+    }
+
     public void updateTune() {
         if (tune != null) {
             tune.setTitles(Collections.EMPTY_LIST);
@@ -245,10 +254,13 @@ public class TuneHeadersPanel extends AmePanel {
             if (transposeComboBox.getSelectedItem() != null) {
                 tune.getKey().getModifier().setTranspose(((TransposeMap.Item) transposeComboBox.getSelectedItem()).getInterval());
             }
+            if (meterNumeratorSpinner.getValue() != null) {
+                tune.getMeter().setNumerator((Integer) meterNumeratorSpinner.getValue());
+            }
             if (meterDenominatorSpinner.getValue() != null) {
                 tune.getMeter().setDenominator((Integer) meterDenominatorSpinner.getValue());
             }
-//            tune.getMeter().setUseSymbol(useSymbolCheckBox.isSelected());
+            tune.getMeter().setUseSymbol(useSymbolCheckBox.isSelected());
             if (defaultTimeValueComboBox.getSelectedItem() != null) {
                 tune.setTimeValue((Tune.TimeValue) defaultTimeValueComboBox.getSelectedItem());
             }
@@ -924,58 +936,20 @@ public class TuneHeadersPanel extends AmePanel {
     private void checkMeter() {
         Integer numerator = (Integer) meterNumeratorSpinner.getValue();
         Integer denominator = (Integer) meterDenominatorSpinner.getValue();
-        if (null != denominator) {
-            switch (denominator) {
-                case 4:
-                    if (null != numerator) {
-                        switch (numerator) {
-                            case 2:
-                                useSymbolCheckBox.setText("Use ₵ ?");
-                                useSymbolCheckBox.setToolTipText("<html>Check this if you whant to use<br>"
-                                        + " <b>₵</b> instead of 3/4");
-                                useSymbolCheckBox.setEnabled(true);
-                                break;
-                            case 4:
-                                useSymbolCheckBox.setText("Use C ?");
-                                useSymbolCheckBox.setToolTipText("<html>Check this if you whant to use<br>"
-                                        + "<b>C</b> instead of 4/4");
-                                useSymbolCheckBox.setEnabled(true);
-                                break;
-                            default:
-                                useSymbolCheckBox.setText("");
-                                useSymbolCheckBox.setToolTipText("");
-                                useSymbolCheckBox.setEnabled(false);
-                                break;
-                        }
-                    }
-                    break;
-                case 2:
-                    switch (numerator) {
-                        case 1:
-                            useSymbolCheckBox.setText("Use ₵ ?");
-                            useSymbolCheckBox.setToolTipText("<html>Check this if you whant to use <br>"
-                                    + "<b>₵</b> instead of 1/2");
-                            useSymbolCheckBox.setEnabled(true);
-                            break;
-                        case 2:
-                            useSymbolCheckBox.setText("Use C ?");
-                            useSymbolCheckBox.setToolTipText("<html>Check this if you whant to use<br>"
-                                    + "<b>C</b> instead of 2/2");
-                            useSymbolCheckBox.setEnabled(true);
-                            break;
-                        default:
-                            useSymbolCheckBox.setText("");
-                            useSymbolCheckBox.setToolTipText("");
-                            useSymbolCheckBox.setEnabled(false);
-                            break;
-                    }
-                    break;
-                default:
-                    useSymbolCheckBox.setText("");
-                    useSymbolCheckBox.setToolTipText("");
-                    useSymbolCheckBox.setEnabled(false);
-                    break;
-            }
+        if (denominator == 4 && numerator == 4) {
+            useSymbolCheckBox.setText("Use C ?");
+            useSymbolCheckBox.setToolTipText("<html>Check this if you want to use<br>"
+                    + " <b>C</b> instead of 4/4");
+            useSymbolCheckBox.setEnabled(true);
+        } else if (denominator == 2 && numerator == 2) {
+            useSymbolCheckBox.setText("Use ₵ ?");
+            useSymbolCheckBox.setToolTipText("<html>Check this if you want to use<br>"
+                    + " <b>₵</b> instead of 2/2");
+            useSymbolCheckBox.setEnabled(true);
+        } else {
+            useSymbolCheckBox.setText("");
+            useSymbolCheckBox.setToolTipText("");
+            useSymbolCheckBox.setEnabled(false);
         }
     }
 

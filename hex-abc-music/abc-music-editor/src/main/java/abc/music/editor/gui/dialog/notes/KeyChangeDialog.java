@@ -1,12 +1,9 @@
 package abc.music.editor.gui.dialog.notes;
 
 import abc.music.core.domain.Key;
-import abc.music.core.domain.Modifier;
 import abc.music.core.domain.Voice;
 import abc.music.editor.AbcMusicEditor;
 import abc.music.editor.gui.dialog.AmeDialog;
-import abc.music.editor.gui.support.TransposeComboBoxModel;
-import abc.music.editor.gui.support.TransposeMap;
 import javax.swing.DefaultComboBoxModel;
 
 /**
@@ -170,9 +167,9 @@ public class KeyChangeDialog extends AmeDialog<Key> {
     private javax.swing.JComboBox<String> signatureComboBox;
     // End of variables declaration//GEN-END:variables
 
-    private void toggleKeyEnabled() {
-    }
-
-    private void toggleModifiersEnabled() {
-    }
+//    private void toggleKeyEnabled() {
+//    }
+//
+//    private void toggleModifiersEnabled() {
+//    }
 }
