@@ -53,7 +53,7 @@ class SvgWriter implements Writer<File> {
     }
 
     private void createTemporaryAbcFile() {
-        new AbcFileWriter(tune, abcFile, Charset.forName(ISO_8859_1)).write();
+        new AbcFileWriter(tune, abcFile).write();
     }
 
     private Process processFile() throws IOException {
