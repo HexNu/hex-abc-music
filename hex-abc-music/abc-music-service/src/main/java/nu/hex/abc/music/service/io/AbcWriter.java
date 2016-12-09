@@ -4,6 +4,7 @@ import abc.music.core.domain.Tune;
 import abc.music.core.domain.Voice;
 import java.util.Arrays;
 import java.util.List;
+import nu.hex.abc.music.service.meta.MetaService;
 
 /**
  * Created 2016-nov-27
@@ -12,6 +13,9 @@ import java.util.List;
  */
 class AbcWriter implements Writer<String> {
 
+    private static final String DEFAULT_CHARSET = "%%encoding utf-8";
+    private static final String ABC_VERSION = "%%abc-version 2.2";
+    private static final String ABC_CREATOR = "%%abc-creator hex-abc-music " + MetaService.getAppInfo().getVersion();
     private static final String NEW_LINE = "\n";
     private final List<Tune> tunes;
     private int voiceIndex = 0;
@@ -101,8 +105,4 @@ class AbcWriter implements Writer<String> {
         return result.toString();
     }
     private static final String COMMENT = "%";
-
-    public static void main(String[] args) {
-        System.out.println(Writer.ABC_CREATOR);
-    }
 }

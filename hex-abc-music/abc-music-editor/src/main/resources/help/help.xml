@@ -76,7 +76,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td valign="top">
+                            <td valign="top">                                
                                 <u>K</u>ey change</td>
                             <td valign="top">=</td>
                             <td valign="top">Ctrl + <b>K</b></td>
@@ -84,6 +84,18 @@
                                 This will open a dialog where you select the new Key.<br/>
                                 The necessary code for changing key in the abc notes <br/>
                                 will be inserted at the cursor position.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td valign="top">Add a slur</td>
+                            <td valign="top">=</td>
+                            <td valign="top">Ctrl + Shift <b>(</b></td>
+                            <td valign="top">
+                                Select the part of the score you want to add a slur to.<br/>
+                                Press Ctrl + Shift + ( (Left Paranthesis).<br/>
+                                The selected text will be put between paranthesis <br/>
+                                and the cursor will position itself after the last one.
+                                
                             </td>
                         </tr>
                         <tr>

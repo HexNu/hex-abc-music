@@ -7,6 +7,7 @@ import abc.music.editor.gui.dialog.notes.AnnotationDialog;
 import abc.music.editor.gui.dialog.notes.KeyChangeDialog;
 import abc.music.editor.gui.dialog.notes.OrnamentChooser;
 import java.awt.event.KeyEvent;
+import javax.swing.JTextArea;
 
 /**
  * Created 2016-dec-07
@@ -47,6 +48,9 @@ public class NoteEditorKeyListener extends AmeKeyAdapter {
                 case KeyEvent.VK_D:
                     addDecoration(e);
                     break;
+                case KeyEvent.VK_8:
+                    addTie(e);
+                    break;
                 default:
                     super.keyTyped(e);
                     break;
@@ -80,9 +84,21 @@ public class NoteEditorKeyListener extends AmeKeyAdapter {
 
     private void addDecoration(KeyEvent e) {
         OrnamentChooser chooser = new OrnamentChooser(editor);
-//        chooser.setVisible(true);
         if (chooser.getResult().equals(AmeDialog.Result.OK) && !chooser.get().isEmpty()) {
             setString(e, chooser.get());
+        }
+    }
+
+    private void addTie(KeyEvent event) {
+        JTextArea source = (JTextArea) event.getSource();
+        if (source.getSelectedText() != null) {
+            String text = source.getText();
+            int end = source.getSelectionEnd();
+            String first = text.substring(0, source.getSelectionStart());
+            String second = source.getSelectedText();
+            String third = text.substring(source.getSelectionEnd());
+            source.setText(first + "(" + second + ")" + third);
+            source.setCaretPosition(end + 2);
         }
     }
 }

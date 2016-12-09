@@ -7,17 +7,13 @@ import abc.music.core.exception.AbcException;
  *
  * @author hl
  */
-public class Meter extends Field {
+public class Meter {
 
     public static final Integer DEFAULT_NUMERATOR = 3;
     public static final Integer DEFAULT_DENOMINATOR = 4;
     private Integer numerator = DEFAULT_NUMERATOR;
     private Integer denominator = DEFAULT_DENOMINATOR;
     private Boolean useSymbol;
-
-    public Meter() {
-        super('M');
-    }
 
     public Integer getNumerator() {
         return numerator;
@@ -42,47 +38,25 @@ public class Meter extends Field {
     }
 
     public Boolean useSymbol() {
-        if (useSymbol == null) {
-            return false;
-        }
-        return useSymbol && denominator == 4 && (numerator == 2 || numerator == 4);
-
+        return useSymbol == null ? false : useSymbol;
     }
 
     public void setUseSymbol(Boolean useSymbol) {
         this.useSymbol = useSymbol;
     }
 
-    @Override
-    public String getContent() {
-        if (useSymbol()) {
-            return getNumerator() == 2 ? "C|" : "C";
-        }
-        return getNumerator() + "/" + getDenominator();
+    public boolean isEmpty() {
+        return numerator == null || denominator == null;
     }
 
-    @Override
-    public void setFieldContent(String content) {
-        if (content.matches("\\d+/\\d+")) {
-            try {
-                String[] parts = content.split("/");
-                setNumerator(Integer.valueOf(parts[0]));
-                setDenominator(Integer.valueOf(parts[1]));
-                setUseSymbol(false);
-            } catch (NumberFormatException | AbcException e) {
-                throw new AbcException("The string " + content + " could not be used as meter");
+    public String get() {
+        if (useSymbol() && getNumerator() != null && getDenominator() != null) {
+            if (getNumerator() == 2 && getDenominator() == 2) {
+                return "M: C|";
+            } else if (getNumerator() == 4 && getDenominator() == 4) {
+                return "M: C";
             }
-        } else if (content.equalsIgnoreCase("C")) {
-            setNumerator(4);
-            setDenominator(4);
-            setUseSymbol(true);
-        } else if (content.equalsIgnoreCase("C|") || content.equals("₵")) {
-            setNumerator(2);
-            setDenominator(4);
-            setUseSymbol(false);
         }
-    }
-
-    public static void main(String[] args) {
+        return "M: " + getNumerator() + "/" + getDenominator();
     }
 }

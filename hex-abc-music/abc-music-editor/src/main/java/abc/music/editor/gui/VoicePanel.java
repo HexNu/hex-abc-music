@@ -108,9 +108,6 @@ public class VoicePanel extends AmePanel {
             if (transposeComboBox.getSelectedItem() != null) {
                 voice.getKey().getModifier().setTranspose(((TransposeMap.Item) transposeComboBox.getSelectedItem()).getInterval());
             }
-//            if (transposeSpinner.getValue() != null) {
-//                voice.getKey().getModifier().setTranspose((Integer) transposeSpinner.getValue());
-//            }
             voice.setUseVoiceModifiers(true);
         } else {
             Modifier modifier = voice.getTune().getKey().getModifier();
@@ -216,15 +213,14 @@ public class VoicePanel extends AmePanel {
         jLabel3.setText("Name:");
 
         jPanel1.setOpaque(false);
-        jPanel1.setLayout(new java.awt.BorderLayout());
 
-        otherPropertiesButton.setText("Other Properties");
+        otherPropertiesButton.setText("Properties");
         otherPropertiesButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 otherPropertiesButtonActionPerformed(evt);
             }
         });
-        jPanel1.add(otherPropertiesButton, java.awt.BorderLayout.CENTER);
+        jPanel1.add(otherPropertiesButton);
 
         useKeyCheckBox.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
@@ -344,7 +340,7 @@ public class VoicePanel extends AmePanel {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(octaveComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel24))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 104, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 94, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -413,9 +409,6 @@ public class VoicePanel extends AmePanel {
         boolean enabled = useModifiersCheckBox.isSelected();
         clefComboBox.setEnabled(enabled);
         transposeComboBox.setEnabled(enabled);
-
-//        transposeSpinner.setEnabled(enabled);
         octaveComboBox.setEnabled(enabled);
     }
-
 }

@@ -248,7 +248,7 @@ public class TuneHeadersPanel extends AmePanel {
             if (meterDenominatorSpinner.getValue() != null) {
                 tune.getMeter().setDenominator((Integer) meterDenominatorSpinner.getValue());
             }
-            tune.getMeter().setUseSymbol(useSymbolCheckBox.isSelected());
+//            tune.getMeter().setUseSymbol(useSymbolCheckBox.isSelected());
             if (defaultTimeValueComboBox.getSelectedItem() != null) {
                 tune.setTimeValue((Tune.TimeValue) defaultTimeValueComboBox.getSelectedItem());
             }
