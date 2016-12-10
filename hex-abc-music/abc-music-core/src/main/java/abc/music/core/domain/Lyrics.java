@@ -39,11 +39,15 @@ public class Lyrics {
         return strophes;
     }
 
-    public void addVerse(List<String> strophe) {
-        addVerse(strophes.size(), strophe);
+    public void clearStrophes() {
+        this.strophes.clear();
     }
 
-    public void addVerse(Integer number, List<String> strophe) {
+    public void addStrophe(List<String> strophe) {
+        addStrophe(strophes.size(), strophe);
+    }
+
+    public void addStrophe(Integer number, List<String> strophe) {
         strophes.put(number, strophe);
     }
 

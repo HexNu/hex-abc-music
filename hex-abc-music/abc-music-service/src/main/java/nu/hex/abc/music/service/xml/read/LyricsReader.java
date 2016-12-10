@@ -30,7 +30,7 @@ public class LyricsReader implements Reader<Lyrics> {
             stropheNode.getChildren("line").stream().forEach((lineNode) -> {
                 strophe.add(lineNode.getText());
             });
-            lyrics.addVerse(Integer.valueOf(stropheNode.getAttribute("number")), strophe);
+            lyrics.addStrophe(Integer.valueOf(stropheNode.getAttribute("number")), strophe);
         });
         return lyrics;
     }

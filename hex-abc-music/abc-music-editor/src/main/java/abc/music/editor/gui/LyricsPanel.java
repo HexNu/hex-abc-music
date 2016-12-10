@@ -3,6 +3,7 @@ package abc.music.editor.gui;
 import abc.music.core.domain.Lyrics;
 import abc.music.editor.AbcMusicEditor;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -31,7 +32,6 @@ public class LyricsPanel extends AmePanel {
         if (lyrics != null && !lyrics.isEmpty()) {
             text = "";
             lyrics.getStrophes().keySet().stream().forEach((number) -> {
-                text += "V. " + number + "\n";
                 lyrics.getStrophe(number).stream().forEach((line) -> {
                     text += line + "\n";
                 });
@@ -44,21 +44,11 @@ public class LyricsPanel extends AmePanel {
     }
 
     public void updateLyrics() {
-        Map<Integer, List<String>> text = new TreeMap<>();
-        Integer rowNumber = 0;
-        List<String> lines = new ArrayList<>();
-        String[] rows = lyricsTextArea.getText().split("\n");
-        for (String line : rows) {
-            if (line.startsWith("V.")) {
-                rowNumber = Integer.valueOf(line.replaceAll("D", ""));
-                lines = new ArrayList<>();
-            } else if (line.isEmpty()) {
-                text.put(rowNumber, lines);
-            } else {
-                lines.add(line);
-            }
+        lyrics.clearStrophes();
+        String[] strophes = lyricsTextArea.getText().split("\n\n");
+        for (String strophe : strophes) {
+            lyrics.addStrophe(Arrays.asList(strophe.split("\n")));
         }
-        lyrics.setStrophes(text);
     }
 
     /**

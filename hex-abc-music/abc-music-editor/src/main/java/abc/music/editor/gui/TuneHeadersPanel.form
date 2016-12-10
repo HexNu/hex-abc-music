@@ -834,7 +834,7 @@
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="addVoiceButton" min="-2" pref="130" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Component id="addLyricsButton" min="-2" pref="130" max="-2" attributes="0"/>
+                  <Component id="lyricsButton" min="-2" pref="130" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="openScoreLayoutButton" min="-2" pref="130" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -855,7 +855,7 @@
                       <Component id="addVoiceButton" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="openScoreLayoutButton" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="newTuneButton" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="addLyricsButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="lyricsButton" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="svgButton" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="postScriptButton" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="abcButton" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -896,12 +896,12 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="newTuneButtonActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="addLyricsButton">
+        <Component class="javax.swing.JButton" name="lyricsButton">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Add Lyrics"/>
+            <Property name="text" type="java.lang.String" value="Lyrics"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="addLyricsButtonActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="lyricsButtonActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JButton" name="svgButton">

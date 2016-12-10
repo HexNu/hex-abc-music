@@ -102,6 +102,7 @@ public class TuneHeadersPanel extends AmePanel {
     private void populateFields() {
         openScoreLayoutButton.setEnabled(true);
         addVoiceButton.setEnabled(true);
+        lyricsButton.setEnabled(true);
         TuneHelper tuneHelper = new TuneHelper(tune);
         titlesTextArea.setText(tuneHelper.getTitlesAsString());
         rythmTextField.setText(tune.getRythm());
@@ -126,12 +127,16 @@ public class TuneHeadersPanel extends AmePanel {
         if (tune.getVoices() != null && !tune.getVoices().isEmpty()) {
             editor.getVoicesPanel().setVoices(tune.getVoices());
         }
+        if (tune.getLyrics() != null && !tune.getLyrics().isEmpty()) {
+            editor.getVoicesPanel().addLyrics(tune.getLyrics());
+        }
     }
 
     private void resetFields() {
         newTuneButton.setEnabled(editor.getProject() != null);
         openScoreLayoutButton.setEnabled(false);
         addVoiceButton.setEnabled(false);
+        lyricsButton.setEnabled(false);
         titlesTextArea.setText("");
         rythmTextField.setText("");
         historyTextArea.setText("");
@@ -160,6 +165,7 @@ public class TuneHeadersPanel extends AmePanel {
     public void setEditingEnabled(boolean enabled) {
         openScoreLayoutButton.setEnabled(enabled);
         addVoiceButton.setEnabled(enabled);
+        lyricsButton.setEnabled(enabled);
         titlesTextArea.setEnabled(enabled);
         rythmTextField.setEnabled(enabled);
         historyTextArea.setEnabled(enabled);
@@ -296,6 +302,9 @@ public class TuneHeadersPanel extends AmePanel {
             if (!tune.getVoices().isEmpty()) {
                 getEditor().getVoicesPanel().updateVoices();
             }
+            if (getEditor().getVoicesPanel().hasLyricsPanel()) {
+                getEditor().getVoicesPanel().updateLyrics();
+            }
         }
     }
 
@@ -376,7 +385,7 @@ public class TuneHeadersPanel extends AmePanel {
         addVoiceButton = new javax.swing.JButton();
         openScoreLayoutButton = new javax.swing.JButton();
         newTuneButton = new javax.swing.JButton();
-        addLyricsButton = new javax.swing.JButton();
+        lyricsButton = new javax.swing.JButton();
         svgButton = new javax.swing.JButton();
         postScriptButton = new javax.swing.JButton();
         abcButton = new javax.swing.JButton();
@@ -579,10 +588,10 @@ public class TuneHeadersPanel extends AmePanel {
             }
         });
 
-        addLyricsButton.setText("Add Lyrics");
-        addLyricsButton.addActionListener(new java.awt.event.ActionListener() {
+        lyricsButton.setText("Lyrics");
+        lyricsButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addLyricsButtonActionPerformed(evt);
+                lyricsButtonActionPerformed(evt);
             }
         });
 
@@ -629,7 +638,7 @@ public class TuneHeadersPanel extends AmePanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(addVoiceButton, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(addLyricsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lyricsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(openScoreLayoutButton, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -648,7 +657,7 @@ public class TuneHeadersPanel extends AmePanel {
                     .addComponent(addVoiceButton)
                     .addComponent(openScoreLayoutButton)
                     .addComponent(newTuneButton)
-                    .addComponent(addLyricsButton)
+                    .addComponent(lyricsButton)
                     .addComponent(svgButton)
                     .addComponent(postScriptButton)
                     .addComponent(abcButton))
@@ -899,14 +908,13 @@ public class TuneHeadersPanel extends AmePanel {
         handleKeyChange();
     }//GEN-LAST:event_applyKeyChangesButtonActionPerformed
 
-    private void addLyricsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addLyricsButtonActionPerformed
-        createLyrics();
-    }//GEN-LAST:event_addLyricsButtonActionPerformed
+    private void lyricsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lyricsButtonActionPerformed
+        openLyricsPanel();
+    }//GEN-LAST:event_lyricsButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton abcButton;
-    private javax.swing.JButton addLyricsButton;
     private javax.swing.JButton addVoiceButton;
     private javax.swing.JButton applyKeyChangesButton;
     private javax.swing.JList<String> authorList;
@@ -950,6 +958,7 @@ public class TuneHeadersPanel extends AmePanel {
     private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JScrollPane jScrollPane8;
     private javax.swing.JScrollPane jScrollPane9;
+    private javax.swing.JButton lyricsButton;
     private javax.swing.JSpinner meterDenominatorSpinner;
     private javax.swing.JSpinner meterNumeratorSpinner;
     private javax.swing.JComboBox<String> modeComboBox;
@@ -1071,7 +1080,7 @@ public class TuneHeadersPanel extends AmePanel {
         }
     }
 
-    private void createLyrics() {
+    private void openLyricsPanel() {
         editor.getVoicesPanel().addLyrics(tune.getLyrics());
     }
 }

@@ -127,11 +127,6 @@ public class VoicesPanel extends AmePanel {
     public void reattachVoicePanel(VoicePanel voicePanel, int index) {
         voicesTabbedPane.add(voicePanel, index);
         voicesTabbedPane.setTitleAt(index, voicePanel.getVoice().getName());
-//        Timer timer = new Timer(1000, (ActionEvent e) -> {
-//            setFocus(index);
-//        });
-//        timer.setRepeats(false);
-//        timer.start();
         setFocus(index);
     }
 
@@ -164,6 +159,14 @@ public class VoicesPanel extends AmePanel {
         for (int i = 0; i < voicesTabbedPane.getComponentCount(); i++) {
             if (voicesTabbedPane.getComponent(i) instanceof VoicePanel) {
                 ((VoicePanel) voicesTabbedPane.getComponent(i)).updateVoice();
+            }
+        }
+    }
+    
+    public void updateLyrics() {
+        for (int i = 0; i < voicesTabbedPane.getComponentCount(); i++) {
+            if (voicesTabbedPane.getComponent(i) instanceof LyricsPanel) {
+                ((LyricsPanel) voicesTabbedPane.getComponent(i)).updateLyrics();
             }
         }
     }
