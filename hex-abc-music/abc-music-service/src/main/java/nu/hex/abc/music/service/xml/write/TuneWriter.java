@@ -67,6 +67,9 @@ class TuneWriter extends XmlWriter<Tune> {
         result.addChild(new KeyWriter(entity.getKey()).write());
         result.addChild(new ClassNode(Voice.class).getCollectionNode());
         entity.getVoices().stream().forEach(this::addVoice);
+        if (!entity.getLyrics().isEmpty()) {
+            result.addChild(new LyricsWriter(entity.getLyrics()).write());
+        }
         result.addChild(NodeFactory.createNode("score-layout", entity.getScoreLayout()));
         return result;
     }

@@ -14,6 +14,7 @@ public class Person {
     private String firstName;
     private String lastName;
     private String email;
+    private String history;
 
     public Person() {
         project = null;
@@ -91,6 +92,14 @@ public class Person {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getHistory() {
+        return history;
+    }
+
+    public void setHistory(String history) {
+        this.history = history;
     }
 
     @Override

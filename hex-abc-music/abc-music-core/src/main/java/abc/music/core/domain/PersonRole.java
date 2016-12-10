@@ -1,6 +1,7 @@
 package abc.music.core.domain;
 
 import abc.music.core.exception.AbcException;
+import java.util.Objects;
 
 /**
  * Created 2016-nov-27
@@ -62,5 +63,34 @@ public class PersonRole extends Field {
             result.setFirstName(text);
         }
         return result;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 31 * hash + Objects.hashCode(this.person);
+        hash = 31 * hash + Objects.hashCode(this.role);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final PersonRole other = (PersonRole) obj;
+        if (!Objects.equals(this.person, other.person)) {
+            return false;
+        }
+        if (this.role != other.role) {
+            return false;
+        }
+        return true;
     }
 }

@@ -1,8 +1,8 @@
 package abc.music.core.domain;
 
-import com.sun.org.apache.xpath.internal.operations.Equals;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -27,6 +27,7 @@ public class Tune {
     private TimeValue timeValue = TimeValue.DEFAULT_TIME_VALUE;
     private Key key = new Key();
     private final Map<String, Voice> voices = new HashMap<>();
+    private Lyrics lyrics = new Lyrics();
     private String scoreLayout;
 
     public Tune() {
@@ -102,6 +103,15 @@ public class Tune {
 
     public void addCreator(PersonRole originator) {
         this.creators.add(originator);
+    }
+    
+    public void removeCreator(PersonRole creator) {
+        for (Iterator<PersonRole> it = creators.iterator(); it.hasNext();) {
+            PersonRole pr = it.next();
+            if (pr.equals(creator)) {
+                it.remove();
+            }
+        }
     }
 
     public List<Origin> getOrigin() {
@@ -240,6 +250,19 @@ public class Tune {
     public void addVoice(Voice voice) {
         voice.setTune(this);
         this.voices.put(voice.getVoiceId(), voice);
+    }
+
+    public Lyrics getLyrics() {
+        return lyrics;
+    }
+
+    public boolean hasLyrics() {
+        return getLyrics() != null && !getLyrics().isEmpty();
+    }
+
+    public void setLyrics(Lyrics lyrics) {
+        lyrics.setTune(this);
+        this.lyrics = lyrics;
     }
 
     public String getScoreLayout() {

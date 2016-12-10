@@ -9,7 +9,6 @@ import java.awt.event.MouseListener;
 import javax.swing.JList;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
-import abc.music.editor.AbcMusicEditor;
 import abc.music.editor.action.AddPersonRoleAction;
 import abc.music.editor.action.RemovePersonRoleAction;
 import abc.music.editor.gui.TuneHeadersPanel;
@@ -45,7 +44,7 @@ public class PersonRoleListMouseListener implements MouseListener {
 
         JMenuItem remove = new JMenuItem("Remove " + role.toString());
         remove.addActionListener((ActionEvent e) -> {
-            new RemovePersonRoleAction(parent.getEditor(), (PersonRole) list.getModel().getElementAt(selectedIndex)).actionPerformed(e);
+            new RemovePersonRoleAction(parent, (PersonRole) list.getModel().getElementAt(selectedIndex), parent.getTune()).actionPerformed(e);
             list.requestFocus();
         });
         menu.add(add);

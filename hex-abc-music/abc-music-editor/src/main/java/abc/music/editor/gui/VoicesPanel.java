@@ -1,16 +1,15 @@
 package abc.music.editor.gui;
 
+import abc.music.core.domain.Lyrics;
 import abc.music.core.domain.Tune;
 import abc.music.core.domain.Voice;
 import abc.music.editor.AbcMusicEditor;
 import abc.music.editor.action.SaveTuneAction;
 import abc.music.editor.action.UpdateSvgFileAction;
 import java.awt.Component;
-import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JTabbedPane;
-import javax.swing.Timer;
 import javax.swing.event.ChangeEvent;
 
 /**
@@ -82,12 +81,42 @@ public class VoicesPanel extends AmePanel {
                 addSvgPanel(voice.getTune());
             }
             int newIndex = voicesTabbedPane.getComponentCount() - 1;
+            if (hasLyricsPanel()) {
+                newIndex = newIndex - 1;
+            }
             voicesTabbedPane.add(new VoicePanel(editor, voice, this), newIndex);
             voicesTabbedPane.setTitleAt(newIndex, voice.getName());
             repaint();
             revalidate();
             voicesTabbedPane.repaint();
             voicesTabbedPane.revalidate();
+        }
+    }
+
+    public boolean hasLyricsPanel() {
+        for (Component c : voicesTabbedPane.getComponents()) {
+            if (c instanceof LyricsPanel) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void addLyrics(Lyrics lyrics) {
+        if (!hasSvgPanel()) {
+            addSvgPanel(lyrics.getTune());
+        }
+        if (!hasLyricsPanel()) {
+            LyricsPanel lyricsPanel = new LyricsPanel(editor, lyrics);
+            int newIndex = voicesTabbedPane.getComponentCount() - 1;
+            voicesTabbedPane.add(lyricsPanel, newIndex);
+            voicesTabbedPane.setTitleAt(newIndex, "Lyrics");
+            repaint();
+            revalidate();
+            voicesTabbedPane.repaint();
+            voicesTabbedPane.revalidate();
+        } else {
+            setFocus(voicesTabbedPane.getComponentCount() - 2);
         }
     }
 

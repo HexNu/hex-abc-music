@@ -27,6 +27,7 @@ class PersonReader extends NodeReader<Person> {
         if (node.hasAttribute("email")) {
             result.setEmail(node.getAttribute("email"));
         }
+        result.setHistory(node.getText());
         return result;
     }
 }

@@ -20,6 +20,7 @@ class PersonWriter extends XmlWriter<Person> {
         result.addAttribute("first-name", entity.getFirstName());
         result.addAttribute("last-name", entity.getLastName());
         result.addAttribute("email", entity.getEmail());
+        result.addText(entity.getHistory());
         return result;
     }
 }

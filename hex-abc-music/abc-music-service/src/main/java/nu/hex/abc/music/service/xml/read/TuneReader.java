@@ -87,6 +87,12 @@ class TuneReader extends NodeReader<Tune> {
                 result.addVoice(new VoiceReader(v).read());
             });
         }
+        if (node.hasChildNamed("lyrics")) {
+            result.setLyrics(new LyricsReader(node.getChild("lyrics")).read());
+        }
+        if (node.hasChildNamed("score-layout")) {
+            result.setScoreLayout(node.getChild("score-layout").getText());
+        }
         return result;
     }
 
