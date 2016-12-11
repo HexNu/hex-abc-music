@@ -33,7 +33,7 @@ public class TuneItem extends JLabel {
         this.tune = tune;
         super.addMouseListener(new ListItemMouseListener() {
             @Override
-            protected void doubleClickAction() {
+            protected void clickAction() {
                 new OpenTuneAction(editor, tune).actionPerformed(null);
             }
         });

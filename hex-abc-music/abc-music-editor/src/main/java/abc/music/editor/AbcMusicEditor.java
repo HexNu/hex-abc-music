@@ -31,6 +31,7 @@ import javax.swing.border.TitledBorder;
 import abc.music.editor.action.SetEditingEnabledAction;
 import abc.music.editor.gui.LatestTunesPane;
 import abc.music.editor.gui.LinksPanel;
+import abc.music.editor.gui.BooksPanel;
 import abc.music.editor.gui.TuneHeadersPanel;
 import abc.music.editor.gui.TuneSearchPanel;
 import abc.music.editor.gui.VoicesPanel;
@@ -50,11 +51,13 @@ public class AbcMusicEditor extends JFrame {
     private final JPanel editorPanel = new JPanel();
     private final JPanel leftPanel = new JPanel();
     private final JPanel linksPanel = new JPanel();
+    private final JPanel booksPanel = new JPanel();
     private final JPanel recentTunesPanel = new JPanel();
     private final JPanel rightPanel = new JPanel();
     private final JPanel searchPanel = new JPanel();
     private final JPanel topPanel = new JPanel();
     private LinksPanel linkListPanel;
+    private BooksPanel bookListPanel;
     private TuneHeadersPanel headersPanel;
     private VoicesPanel voicesPanel;
     private AmeMenuBar menuBar;
@@ -103,6 +106,7 @@ public class AbcMusicEditor extends JFrame {
     private void createRightPanel() {
         rightPanel.setLayout(new GridLayout(3, 1, 0, 12));
         rightPanel.setBackground(AmeConstants.BACKGROUND_COLOR);
+
         linksPanel.setBorder(getTitleBorder("Resource Links"));
         linksPanel.setLayout(new BorderLayout());
         linksPanel.setPreferredSize(sidePanelDimension);
@@ -110,6 +114,15 @@ public class AbcMusicEditor extends JFrame {
         linkListPanel = new LinksPanel(this);
         linksPanel.add(linkListPanel, BorderLayout.CENTER);
         rightPanel.add(linksPanel);
+
+        booksPanel.setBorder(getTitleBorder("Books"));
+        booksPanel.setLayout(new BorderLayout());
+        booksPanel.setPreferredSize(sidePanelDimension);
+        booksPanel.setOpaque(false);
+        bookListPanel = new BooksPanel(this);
+        booksPanel.add(bookListPanel, BorderLayout.CENTER);
+        rightPanel.add(booksPanel);
+
         add(rightPanel, BorderLayout.EAST);
     }
 
@@ -176,6 +189,10 @@ public class AbcMusicEditor extends JFrame {
         return latestTunesPane;
     }
 
+    public BooksPanel getBooksPanel() {
+        return bookListPanel;
+    }
+
     private void createMenu() {
         menuBar = new AmeMenuBar(this);
         setJMenuBar(menuBar);
@@ -202,6 +219,7 @@ public class AbcMusicEditor extends JFrame {
         setTitle(AmeConstants.APP_TITLE);
         updateMenuBar();
         tuneSearchPanel.checkSearchEnabled();
+        bookListPanel.updateBooks();
         new SetEditingEnabledAction(this, false).actionPerformed(null);
     }
 
@@ -212,6 +230,7 @@ public class AbcMusicEditor extends JFrame {
         }
         updateMenuBar();
         tuneSearchPanel.checkSearchEnabled();
+        bookListPanel.updateBooks();
         new SetEditingEnabledAction(this, false).actionPerformed(null);
         getTuneEditor().refresh();
     }
