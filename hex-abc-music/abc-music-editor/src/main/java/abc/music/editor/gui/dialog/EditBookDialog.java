@@ -5,10 +5,13 @@ import abc.music.core.domain.Tune;
 import abc.music.editor.AbcMusicEditor;
 import java.awt.Component;
 import java.awt.Container;
+import java.awt.Dimension;
+import java.awt.event.ActionEvent;
 import java.awt.event.ItemEvent;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import javax.swing.AbstractAction;
 import javax.swing.JCheckBox;
 import javax.swing.JPanel;
 
@@ -33,6 +36,15 @@ public class EditBookDialog extends AmeDialog<Book> {
         initComponents();
         bookTunesScrollPane.getVerticalScrollBar().setUnitIncrement(10);
         otherTunesScrollPane.getVerticalScrollBar().setUnitIncrement(10);
+        Dimension buttonDimension = new Dimension(28, 28);
+//        moveUpButton.setMaximumSize(buttonDimension);
+//        moveUpButton.setPreferredSize(buttonDimension);
+//        moveDownButton.setMaximumSize(buttonDimension);
+//        moveDownButton.setPreferredSize(buttonDimension);
+//        addToBookButton.setMaximumSize(buttonDimension);
+//        addToBookButton.setPreferredSize(buttonDimension);
+//        removeFromBookButton.setMaximumSize(buttonDimension);
+//        removeFromBookButton.setPreferredSize(buttonDimension);
     }
 
     private void setFields() {
@@ -91,13 +103,17 @@ public class EditBookDialog extends AmeDialog<Book> {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel3 = new javax.swing.JPanel();
+        textButtonPanel = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         nameTextField = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         ingressTextField = new javax.swing.JTextArea();
-        jPanel4 = new javax.swing.JPanel();
+        dialogButtonsPanel = new javax.swing.JPanel();
+        doneButton = new javax.swing.JButton();
+        cancelButton = new javax.swing.JButton();
+        listHandlingPanel = new javax.swing.JPanel();
+        listsPanel = new javax.swing.JPanel();
         bookTunesScrollPane = new javax.swing.JScrollPane();
         bookTunesPanel = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
@@ -106,17 +122,14 @@ public class EditBookDialog extends AmeDialog<Book> {
         jLabel4 = new javax.swing.JLabel();
         addToBookButton = new javax.swing.JButton();
         removeFromBookButton = new javax.swing.JButton();
-        jPanel1 = new javax.swing.JPanel();
+        bookTunesButtonPanel = new javax.swing.JPanel();
         moveUpButton = new javax.swing.JButton();
         moveDownButton = new javax.swing.JButton();
         allBookItemsButton = new javax.swing.JButton();
         noBookItemsButton = new javax.swing.JButton();
-        jPanel2 = new javax.swing.JPanel();
+        otherTunesButtonPanel = new javax.swing.JPanel();
         allOtherItemButton = new javax.swing.JButton();
         noOtherItemsButton = new javax.swing.JButton();
-        jPanel5 = new javax.swing.JPanel();
-        doneButton = new javax.swing.JButton();
-        cancelButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -128,26 +141,26 @@ public class EditBookDialog extends AmeDialog<Book> {
         ingressTextField.setRows(5);
         jScrollPane1.setViewportView(ingressTextField);
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
+        javax.swing.GroupLayout textButtonPanelLayout = new javax.swing.GroupLayout(textButtonPanel);
+        textButtonPanel.setLayout(textButtonPanelLayout);
+        textButtonPanelLayout.setHorizontalGroup(
+            textButtonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(textButtonPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGroup(textButtonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 652, Short.MAX_VALUE)
+                    .addGroup(textButtonPanelLayout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addGap(42, 42, 42)
                         .addComponent(nameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel2))
                 .addContainerGap())
         );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
+        textButtonPanelLayout.setVerticalGroup(
+            textButtonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(textButtonPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(textButtonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(nameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -156,6 +169,43 @@ public class EditBookDialog extends AmeDialog<Book> {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
+
+        doneButton.setText("Done");
+        doneButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                doneButtonActionPerformed(evt);
+            }
+        });
+
+        cancelButton.setText("Cancel");
+        cancelButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancelButtonActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout dialogButtonsPanelLayout = new javax.swing.GroupLayout(dialogButtonsPanel);
+        dialogButtonsPanel.setLayout(dialogButtonsPanelLayout);
+        dialogButtonsPanelLayout.setHorizontalGroup(
+            dialogButtonsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(dialogButtonsPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(cancelButton, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(doneButton, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        dialogButtonsPanelLayout.setVerticalGroup(
+            dialogButtonsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(dialogButtonsPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(dialogButtonsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(doneButton)
+                    .addComponent(cancelButton))
+                .addContainerGap())
+        );
+
+        listHandlingPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
         bookTunesPanel.setBackground(java.awt.Color.white);
         bookTunesPanel.setLayout(new javax.swing.BoxLayout(bookTunesPanel, javax.swing.BoxLayout.PAGE_AXIS));
@@ -185,44 +235,44 @@ public class EditBookDialog extends AmeDialog<Book> {
             }
         });
 
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
+        javax.swing.GroupLayout listsPanelLayout = new javax.swing.GroupLayout(listsPanel);
+        listsPanel.setLayout(listsPanelLayout);
+        listsPanelLayout.setHorizontalGroup(
+            listsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(listsPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGroup(listsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(listsPanelLayout.createSequentialGroup()
                         .addComponent(bookTunesScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(addToBookButton)
-                            .addComponent(removeFromBookButton)))
+                        .addGroup(listsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(addToBookButton, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(removeFromBookButton, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(listsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(otherTunesScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
                     .addComponent(jLabel4))
                 .addContainerGap())
         );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
+        listsPanelLayout.setVerticalGroup(
+            listsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(listsPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(listsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(jLabel4))
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGroup(listsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(listsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(listsPanelLayout.createSequentialGroup()
                             .addGap(24, 24, 24)
-                            .addComponent(addToBookButton)
+                            .addComponent(addToBookButton, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(removeFromBookButton))
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                            .addComponent(removeFromBookButton, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, listsPanelLayout.createSequentialGroup()
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(otherTunesScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, listsPanelLayout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(bookTunesScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(0, 0, 0))
@@ -258,31 +308,31 @@ public class EditBookDialog extends AmeDialog<Book> {
             }
         });
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        javax.swing.GroupLayout bookTunesButtonPanelLayout = new javax.swing.GroupLayout(bookTunesButtonPanel);
+        bookTunesButtonPanel.setLayout(bookTunesButtonPanelLayout);
+        bookTunesButtonPanelLayout.setHorizontalGroup(
+            bookTunesButtonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(bookTunesButtonPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(moveUpButton)
+                .addComponent(moveUpButton, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(moveDownButton)
+                .addComponent(moveDownButton, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(allBookItemsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(allBookItemsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(noBookItemsButton)
-                .addContainerGap(127, Short.MAX_VALUE))
+                .addComponent(noBookItemsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(115, Short.MAX_VALUE))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        bookTunesButtonPanelLayout.setVerticalGroup(
+            bookTunesButtonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(bookTunesButtonPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(bookTunesButtonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(bookTunesButtonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(allBookItemsButton)
                         .addComponent(noBookItemsButton))
-                    .addComponent(moveDownButton)
-                    .addComponent(moveUpButton))
+                    .addComponent(moveDownButton, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(moveUpButton, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -300,59 +350,50 @@ public class EditBookDialog extends AmeDialog<Book> {
             }
         });
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(allOtherItemButton, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(noOtherItemsButton)
-                .addContainerGap(198, Short.MAX_VALUE))
+        javax.swing.GroupLayout otherTunesButtonPanelLayout = new javax.swing.GroupLayout(otherTunesButtonPanel);
+        otherTunesButtonPanel.setLayout(otherTunesButtonPanelLayout);
+        otherTunesButtonPanelLayout.setHorizontalGroup(
+            otherTunesButtonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(otherTunesButtonPanelLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(allOtherItemButton, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(noOtherItemsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+        otherTunesButtonPanelLayout.setVerticalGroup(
+            otherTunesButtonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(otherTunesButtonPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(otherTunesButtonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(allOtherItemButton)
                     .addComponent(noOtherItemsButton))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        doneButton.setText("Done");
-        doneButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                doneButtonActionPerformed(evt);
-            }
-        });
-
-        cancelButton.setText("Cancel");
-        cancelButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cancelButtonActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
-        jPanel5.setLayout(jPanel5Layout);
-        jPanel5Layout.setHorizontalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
+        javax.swing.GroupLayout listHandlingPanelLayout = new javax.swing.GroupLayout(listHandlingPanel);
+        listHandlingPanel.setLayout(listHandlingPanelLayout);
+        listHandlingPanelLayout.setHorizontalGroup(
+            listHandlingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(listHandlingPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(cancelButton, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(doneButton, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(listHandlingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(listHandlingPanelLayout.createSequentialGroup()
+                        .addComponent(bookTunesButtonPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(otherTunesButtonPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(listsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
-        jPanel5Layout.setVerticalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
+        listHandlingPanelLayout.setVerticalGroup(
+            listHandlingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(listHandlingPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(doneButton)
-                    .addComponent(cancelButton))
+                .addComponent(listsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(listHandlingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(bookTunesButtonPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(otherTunesButtonPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -364,33 +405,25 @@ public class EditBookDialog extends AmeDialog<Book> {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(29, 29, 29)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(24, Short.MAX_VALUE))
+                        .addComponent(textButtonPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 40, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(0, 0, Short.MAX_VALUE))))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(dialogButtonsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(listHandlingPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(textButtonPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(listHandlingPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(28, 28, 28)
-                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(dialogButtonsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -406,19 +439,19 @@ public class EditBookDialog extends AmeDialog<Book> {
     }//GEN-LAST:event_doneButtonActionPerformed
 
     private void moveDownButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_moveDownButtonActionPerformed
-        moveSelectedTunesDown();
+        new MoveSelectedTunesDownAction().actionPerformed(evt);
     }//GEN-LAST:event_moveDownButtonActionPerformed
 
     private void moveUpButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_moveUpButtonActionPerformed
-        moveSelectedTunesUp();
+        new MoveSelectedTunesUpAction().actionPerformed(evt);
     }//GEN-LAST:event_moveUpButtonActionPerformed
 
     private void addToBookButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addToBookButtonActionPerformed
-        addSelectedTunesToBook();
+        new AddSelecteTunesToBookAction().actionPerformed(evt);
     }//GEN-LAST:event_addToBookButtonActionPerformed
 
     private void removeFromBookButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeFromBookButtonActionPerformed
-        removeSeletedTunesFromBook();
+        new RemoveSelectedTunesFromBookAction().actionPerformed(evt);
     }//GEN-LAST:event_removeFromBookButtonActionPerformed
 
     private void allBookItemsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_allBookItemsButtonActionPerformed
@@ -452,98 +485,97 @@ public class EditBookDialog extends AmeDialog<Book> {
     private javax.swing.JButton addToBookButton;
     private javax.swing.JButton allBookItemsButton;
     private javax.swing.JButton allOtherItemButton;
+    private javax.swing.JPanel bookTunesButtonPanel;
     private javax.swing.JPanel bookTunesPanel;
     private javax.swing.JScrollPane bookTunesScrollPane;
     private javax.swing.JButton cancelButton;
+    private javax.swing.JPanel dialogButtonsPanel;
     private javax.swing.JButton doneButton;
     private javax.swing.JTextArea ingressTextField;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JPanel listHandlingPanel;
+    private javax.swing.JPanel listsPanel;
     private javax.swing.JButton moveDownButton;
     private javax.swing.JButton moveUpButton;
     private javax.swing.JTextField nameTextField;
     private javax.swing.JButton noBookItemsButton;
     private javax.swing.JButton noOtherItemsButton;
+    private javax.swing.JPanel otherTunesButtonPanel;
     private javax.swing.JPanel otherTunesPanel;
     private javax.swing.JScrollPane otherTunesScrollPane;
     private javax.swing.JButton removeFromBookButton;
+    private javax.swing.JPanel textButtonPanel;
     // End of variables declaration//GEN-END:variables
 
-    private void moveSelectedTunesUp() {
-        List<Integer> selectedIndices = new ArrayList<>();
-        for (Component c : bookTunesPanel.getComponents()) {
-            BookItem item = (BookItem) c;
-            if (item.isSelected()) {
-                selectedIndices.add(item.getIndex() - 1);
-                List<Tune> subList = bookTunes.subList(item.getIndex() - 1, item.getIndex() + 1);
-                Collections.rotate(subList, 1);
-            }
-        }
-        updateBookTunesPanel();
-        int i = 0;
-        for (Component c : bookTunesPanel.getComponents()) {
-            if (selectedIndices.contains(i)) {
-                ((BookItem) c).setSelected(true);
-            }
-            i++;
-        }
-    }
-
-    private void moveSelectedTunesDown() {
-        List<Integer> selectedIndices = new ArrayList<>();
-        List<BookItem> items = new ArrayList<>();
-        for (Component c : bookTunesPanel.getComponents()) {
-            items.add(0, (BookItem) c);
-        }
-        for (BookItem item : items) {
-            if (item.isSelected()) {
-                selectedIndices.add(item.getIndex() + 1);
-                List<Tune> subList = bookTunes.subList(item.getIndex(), item.getIndex() + 2);
-                Collections.rotate(subList, -1);
-            }
-        }
-        updateBookTunesPanel();
-        int i = 0;
-        for (Component c : bookTunesPanel.getComponents()) {
-            if (selectedIndices.contains(i)) {
-                ((BookItem) c).setSelected(true);
-            }
-            i++;
-        }
-    }
-
-    private void addSelectedTunesToBook() {
-        for (Component c : otherTunesPanel.getComponents()) {
-            BookItem item = (BookItem) c;
-            if (item.isSelected()) {
-                bookTunes.add(item.getTune());
-                otherTunes.remove(item.getTune());
-            }
-        }
-        updatePanels();
-        updateAddToBookButton();
-    }
-
-    private void removeSeletedTunesFromBook() {
-        for (Component c : bookTunesPanel.getComponents()) {
-            BookItem item = (BookItem) c;
-            if (item.isSelected()) {
-                bookTunes.remove(item.getTune());
-                otherTunes.add(item.getTune());
-            }
-        }
-        updatePanels();
-        updateRemoveFromBookButton();
-    }
-
+//    private void moveSelectedTunesUp() {
+//        List<Integer> selectedIndices = new ArrayList<>();
+//        for (Component c : bookTunesPanel.getComponents()) {
+//            BookItem item = (BookItem) c;
+//            if (item.isSelected()) {
+//                selectedIndices.add(item.getIndex() - 1);
+//                List<Tune> subList = bookTunes.subList(item.getIndex() - 1, item.getIndex() + 1);
+//                Collections.rotate(subList, 1);
+//            }
+//        }
+//        updateBookTunesPanel();
+//        int i = 0;
+//        for (Component c : bookTunesPanel.getComponents()) {
+//            if (selectedIndices.contains(i)) {
+//                ((BookItem) c).setSelected(true);
+//            }
+//            i++;
+//        }
+//    }
+//
+//    private void moveSelectedTunesDown() {
+//        List<Integer> selectedIndices = new ArrayList<>();
+//        List<BookItem> items = new ArrayList<>();
+//        for (Component c : bookTunesPanel.getComponents()) {
+//            items.add(0, (BookItem) c);
+//        }
+//        for (BookItem item : items) {
+//            if (item.isSelected()) {
+//                selectedIndices.add(item.getIndex() + 1);
+//                List<Tune> subList = bookTunes.subList(item.getIndex(), item.getIndex() + 2);
+//                Collections.rotate(subList, -1);
+//            }
+//        }
+//        updateBookTunesPanel();
+//        int i = 0;
+//        for (Component c : bookTunesPanel.getComponents()) {
+//            if (selectedIndices.contains(i)) {
+//                ((BookItem) c).setSelected(true);
+//            }
+//            i++;
+//        }
+//    }
+//    private void addSelectedTunesToBook() {
+//        for (Component c : otherTunesPanel.getComponents()) {
+//            BookItem item = (BookItem) c;
+//            if (item.isSelected()) {
+//                bookTunes.add(item.getTune());
+//                otherTunes.remove(item.getTune());
+//            }
+//        }
+//        updatePanels();
+//        updateAddToBookButton();
+//    }
+//
+//    private void removeSeletedTunesFromBook() {
+//        for (Component c : bookTunesPanel.getComponents()) {
+//            BookItem item = (BookItem) c;
+//            if (item.isSelected()) {
+//                bookTunes.remove(item.getTune());
+//                otherTunes.add(item.getTune());
+//            }
+//        }
+//        updatePanels();
+//        updateRemoveFromBookButton();
+//    }
     private boolean otherTunesPanelHasSelection() {
         for (Component c : otherTunesPanel.getComponents()) {
             BookItem item = (BookItem) c;
@@ -647,6 +679,89 @@ public class EditBookDialog extends AmeDialog<Book> {
                 }
             }
             return -1;
+        }
+    }
+
+    private class AddSelecteTunesToBookAction extends AbstractAction {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            for (Component c : otherTunesPanel.getComponents()) {
+                BookItem item = (BookItem) c;
+                if (item.isSelected()) {
+                    bookTunes.add(item.getTune());
+                    otherTunes.remove(item.getTune());
+                }
+            }
+            updatePanels();
+            updateAddToBookButton();
+        }
+    }
+
+    private class RemoveSelectedTunesFromBookAction extends AbstractAction {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            for (Component c : bookTunesPanel.getComponents()) {
+                BookItem item = (BookItem) c;
+                if (item.isSelected()) {
+                    bookTunes.remove(item.getTune());
+                    otherTunes.add(item.getTune());
+                }
+            }
+            updatePanels();
+            updateRemoveFromBookButton();
+        }
+    }
+
+    private class MoveSelectedTunesUpAction extends AbstractAction {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            List<Integer> selectedIndices = new ArrayList<>();
+            for (Component c : bookTunesPanel.getComponents()) {
+                BookItem item = (BookItem) c;
+                if (item.isSelected()) {
+                    selectedIndices.add(item.getIndex() - 1);
+                    List<Tune> subList = bookTunes.subList(item.getIndex() - 1, item.getIndex() + 1);
+                    Collections.rotate(subList, 1);
+                }
+            }
+            updateBookTunesPanel();
+            int i = 0;
+            for (Component c : bookTunesPanel.getComponents()) {
+                if (selectedIndices.contains(i)) {
+                    ((BookItem) c).setSelected(true);
+                }
+                i++;
+            }
+        }
+    }
+
+    private class MoveSelectedTunesDownAction extends AbstractAction {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            List<Integer> selectedIndices = new ArrayList<>();
+            List<BookItem> items = new ArrayList<>();
+            for (Component c : bookTunesPanel.getComponents()) {
+                items.add(0, (BookItem) c);
+            }
+            for (BookItem item : items) {
+                if (item.isSelected()) {
+                    selectedIndices.add(item.getIndex() + 1);
+                    List<Tune> subList = bookTunes.subList(item.getIndex(), item.getIndex() + 2);
+                    Collections.rotate(subList, -1);
+                }
+            }
+            updateBookTunesPanel();
+            int i = 0;
+            for (Component c : bookTunesPanel.getComponents()) {
+                if (selectedIndices.contains(i)) {
+                    ((BookItem) c).setSelected(true);
+                }
+                i++;
+            }
         }
     }
 }
