@@ -6,7 +6,6 @@ import abc.music.editor.AbcMusicEditor;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -59,19 +58,27 @@ public class EditBookDialog extends AmeDialog<Book> {
     }
 
     private void updatePanels() {
+        updateBookTunesPanel();
+        updateOtherTunesPanel();
+    }
+
+    private void updateOtherTunesPanel() {
         sortList(otherTunes);
-        bookTunesPanel.removeAll();
         otherTunesPanel.removeAll();
-        bookTunes.stream().forEach((tune) -> {
-            bookTunesPanel.add(new BookItem(tune));
-        });
         otherTunes.stream().forEach((tune) -> {
             otherTunesPanel.add(new BookItem(tune));
         });
-        bookTunesPanel.repaint();
-        bookTunesPanel.revalidate();
         otherTunesPanel.repaint();
         otherTunesPanel.revalidate();
+    }
+
+    private void updateBookTunesPanel() {
+        bookTunesPanel.removeAll();
+        bookTunes.stream().forEach((tune) -> {
+            bookTunesPanel.add(new BookItem(tune));
+        });
+        bookTunesPanel.repaint();
+        bookTunesPanel.revalidate();
     }
 
     /**
@@ -193,10 +200,6 @@ public class EditBookDialog extends AmeDialog<Book> {
                                 .addComponent(nameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jLabel2)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(moveUpButton)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(moveDownButton))
-                            .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(bookTunesScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -204,7 +207,11 @@ public class EditBookDialog extends AmeDialog<Book> {
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(addToBookButton)
                                             .addComponent(removeFromBookButton)))
-                                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(moveUpButton)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(moveDownButton)))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(otherTunesScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -243,7 +250,7 @@ public class EditBookDialog extends AmeDialog<Book> {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(moveDownButton)
                     .addComponent(moveUpButton))
-                .addGap(18, 66, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 51, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(doneButton)
                     .addComponent(cancelButton))
@@ -309,22 +316,45 @@ public class EditBookDialog extends AmeDialog<Book> {
     // End of variables declaration//GEN-END:variables
 
     private void moveSelectedTunesUp() {
+        List<Integer> selectedIndices = new ArrayList<>();
         for (Component c : bookTunesPanel.getComponents()) {
             BookItem item = (BookItem) c;
             if (item.isSelected()) {
-                // TODO: Fix move
-                System.out.println(item.getIndex());
+                selectedIndices.add(item.getIndex() - 1);
+                List<Tune> subList = bookTunes.subList(item.getIndex() - 1, item.getIndex() + 1);
+                Collections.rotate(subList, 1);
             }
+        }
+        updateBookTunesPanel();
+        int i = 0;
+        for (Component c : bookTunesPanel.getComponents()) {
+            if (selectedIndices.contains(i)) {
+                ((BookItem) c).setSelected(true);
+            }
+            i++;
         }
     }
 
     private void moveSelectedTunesDown() {
+        List<Integer> selectedIndices = new ArrayList<>();
+        List<BookItem> items = new ArrayList<>();
         for (Component c : bookTunesPanel.getComponents()) {
-            BookItem item = (BookItem) c;
+            items.add(0, (BookItem) c);
+        }
+        for (BookItem item : items) {
             if (item.isSelected()) {
-                // TODO: Fix move
-                System.out.println(item.getIndex());
+                selectedIndices.add(item.getIndex() + 1);
+                List<Tune> subList = bookTunes.subList(item.getIndex(), item.getIndex() + 2);
+                Collections.rotate(subList, -1);
             }
+        }
+        updateBookTunesPanel();
+        int i = 0;
+        for (Component c : bookTunesPanel.getComponents()) {
+            if (selectedIndices.contains(i)) {
+                ((BookItem) c).setSelected(true);
+            }
+            i++;
         }
     }
 
