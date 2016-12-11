@@ -52,7 +52,9 @@ public class Book {
     }
 
     public void addTune(Tune tune) {
-        this.tunes.add(tune);
+        if (!hasTune(tune)) {
+            tunes.add(tune);
+        }
     }
 
     public boolean hasTune(Tune tune) {

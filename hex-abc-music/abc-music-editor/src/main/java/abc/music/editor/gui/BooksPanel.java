@@ -4,8 +4,6 @@ import abc.music.core.domain.Book;
 import abc.music.editor.AbcMusicEditor;
 import abc.music.editor.action.EditBookAction;
 import abc.music.editor.gui.support.ListItemMouseListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
@@ -25,14 +23,13 @@ public class BooksPanel extends AmeSidePanel {
     }
 
     public void updateBooks() {
+        booksPanel.removeAll();
         if (editor.getProject() != null) {
-            for (Book book : editor.getProject().getBooks()) {
+            editor.getProject().getBooks().stream().forEach((book) -> {
                 booksPanel.add(new BookItem(book));
-            }
+            });
             booksPanel.repaint();
             booksPanel.revalidate();
-        } else {
-            booksPanel.removeAll();
         }
     }
 

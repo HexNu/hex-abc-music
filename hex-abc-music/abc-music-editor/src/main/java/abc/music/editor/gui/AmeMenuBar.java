@@ -3,6 +3,7 @@ package abc.music.editor.gui;
 import abc.music.core.domain.Book;
 import abc.music.core.domain.Person;
 import abc.music.core.domain.Project;
+import abc.music.core.domain.Tune;
 import abc.music.editor.AbcMusicEditor;
 import abc.music.editor.action.BackupProjectAction;
 import abc.music.editor.action.SaveProjectAction;
@@ -19,6 +20,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import abc.music.editor.action.CloseProjectAction;
 import abc.music.editor.action.CreateBookAction;
+import abc.music.editor.action.CreateFileAction;
 import abc.music.editor.action.CreatePersonAction;
 import abc.music.editor.action.CreateProjectAction;
 import abc.music.editor.action.EditBookAction;
@@ -29,6 +31,8 @@ import abc.music.editor.action.OpenProjectAction;
 import abc.music.editor.action.ShowAboutAction;
 import abc.music.editor.action.ShowSettingsAction;
 import abc.music.editor.help.HelpDialog;
+import java.util.List;
+import nu.hex.mediatype.CommonMediaType;
 
 /**
  * Created 2016-dec-01
@@ -43,6 +47,8 @@ public class AmeMenuBar extends JMenuBar {
     private AmeMenu fileMenu = new AmeMenu();
     private AmeMenu editMenu = new AmeMenu();
     private AmeMenu projectMenu = new AmeMenu();
+    private AmeMenu exportMenu;
+    private AmeMenu printMenu;
     private AmeMenu personsMenu;
     private AmeMenu booksMenu;
     private AmeMenu helpMenu = new AmeMenu();
@@ -56,13 +62,13 @@ public class AmeMenuBar extends JMenuBar {
     private AmeMenuItem contentsMenuItem = new AmeMenuItem();
     private AmeMenuItem aboutMenuItem = new AmeMenuItem();
 
-    private final AbcMusicEditor parent;
+    private final AbcMusicEditor editor;
 
     public AmeMenuBar(AbcMusicEditor parent) {
         super();
         super.setBackground(BACKGROUND);
         init();
-        this.parent = parent;
+        this.editor = parent;
     }
 
     @Override
@@ -82,11 +88,11 @@ public class AmeMenuBar extends JMenuBar {
         openMenuItem.setText("Open");
         openMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(KeyEvent.VK_O, InputEvent.CTRL_DOWN_MASK));
         openMenuItem.addActionListener((ActionEvent e) -> {
-            OpenProjectAction action = new OpenProjectAction(parent);
+            OpenProjectAction action = new OpenProjectAction(editor);
             action.actionPerformed(e);
             if (action.get() != null) {
-                parent.clearProject();
-                parent.setProject(action.get());
+                editor.clearProject();
+                editor.setProject(action.get());
             }
         });
         fileMenu.add(openMenuItem);
@@ -95,11 +101,11 @@ public class AmeMenuBar extends JMenuBar {
         openLatestMenuItem.setText("Open Latest Project");
         openLatestMenuItem.setEnabled(OpenLatestProjectAction.isEnabled());
         openLatestMenuItem.addActionListener((ActionEvent e) -> {
-            OpenLatestProjectAction action = new OpenLatestProjectAction(parent);
+            OpenLatestProjectAction action = new OpenLatestProjectAction(editor);
             action.actionPerformed(e);
             if (action.get() != null) {
-                parent.clearProject();
-                parent.setProject(action.get());
+                editor.clearProject();
+                editor.setProject(action.get());
             }
         });
         fileMenu.add(openLatestMenuItem);
@@ -107,10 +113,10 @@ public class AmeMenuBar extends JMenuBar {
         newProjectMenuItem.setMnemonic('e');
         newProjectMenuItem.setText("Create Project");
         newProjectMenuItem.addActionListener((ActionEvent e) -> {
-            CreateProjectAction action = new CreateProjectAction(parent);
+            CreateProjectAction action = new CreateProjectAction(editor);
             action.actionPerformed(e);
             if (action.get() != null) {
-                parent.setProject(action.get());
+                editor.setProject(action.get());
             }
         });
         fileMenu.add(newProjectMenuItem);
@@ -119,7 +125,7 @@ public class AmeMenuBar extends JMenuBar {
         saveMenuItem.setText("Save");
         saveMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_DOWN_MASK));
         saveMenuItem.addActionListener((ActionEvent e) -> {
-            new SaveProjectAction(parent).actionPerformed(e);
+            new SaveProjectAction(editor).actionPerformed(e);
         });
         saveMenuItem.setEnabled(false);
         fileMenu.add(saveMenuItem);
@@ -128,7 +134,7 @@ public class AmeMenuBar extends JMenuBar {
         backupMenuItem.setText("Save a Backup");
         backupMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_MASK | InputEvent.SHIFT_MASK));
         backupMenuItem.addActionListener((ActionEvent e) -> {
-            new BackupProjectAction(parent).actionPerformed(e);
+            new BackupProjectAction(editor).actionPerformed(e);
         });
         backupMenuItem.setEnabled(false);
         fileMenu.add(backupMenuItem);
@@ -136,16 +142,25 @@ public class AmeMenuBar extends JMenuBar {
         closeProjectMenuItem.setText("Close Project");
         closeProjectMenuItem.setMnemonic('c');
         closeProjectMenuItem.addActionListener((ActionEvent e) -> {
-            new CloseProjectAction(parent).actionPerformed(e);
+            new CloseProjectAction(editor).actionPerformed(e);
         });
         closeProjectMenuItem.setEnabled(false);
         fileMenu.add(closeProjectMenuItem);
+        fileMenu.addSeparator();
+        exportMenu = new AmeMenu("Export");
+        fileMenu.add(exportMenu);
+        printMenu = new AmeMenu("Print");
+        // TODO: Implement print
+        printMenu.setEnabled(false);
+
+        fileMenu.add(printMenu);
+        fileMenu.addSeparator();
 
         exitMenuItem.setMnemonic('q');
         exitMenuItem.setText("Quit");
         exitMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(KeyEvent.VK_Q, InputEvent.CTRL_DOWN_MASK));
         exitMenuItem.addActionListener((ActionEvent evt) -> {
-            new ExitAction(parent).actionPerformed(evt);
+            new ExitAction(editor).actionPerformed(evt);
         });
         fileMenu.add(exitMenuItem);
         add(fileMenu);
@@ -158,7 +173,7 @@ public class AmeMenuBar extends JMenuBar {
         AmeMenuItem settingsItem = new AmeMenuItem("Settings");
         settingsItem.setMnemonic('s');
         settingsItem.addActionListener((ActionEvent e) -> {
-            new ShowSettingsAction(parent).actionPerformed(e);
+            new ShowSettingsAction(editor).actionPerformed(e);
         });
         editMenu.add(settingsItem);
 
@@ -176,14 +191,14 @@ public class AmeMenuBar extends JMenuBar {
         contentsMenuItem.setText("Contents");
         contentsMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(KeyEvent.VK_F1, 0));
         contentsMenuItem.addActionListener((ActionEvent e) -> {
-            new HelpDialog(parent).setVisible(true);
+            new HelpDialog(editor).setVisible(true);
         });
 
         helpMenu.add(contentsMenuItem);
         aboutMenuItem.setMnemonic('a');
         aboutMenuItem.setText("About");
         aboutMenuItem.addActionListener((ActionEvent e) -> {
-            new ShowAboutAction(parent).actionPerformed(e);
+            new ShowAboutAction(editor).actionPerformed(e);
         });
         helpMenu.add(aboutMenuItem);
 
@@ -192,11 +207,16 @@ public class AmeMenuBar extends JMenuBar {
     }
 
     public void updateMenu() {
-        boolean enable = parent.getProject() != null;
+        boolean enable = editor.getProject() != null;
         saveMenuItem.setEnabled(enable);
         openLatestMenuItem.setEnabled(OpenLatestProjectAction.isEnabled());
         backupMenuItem.setEnabled(enable);
         closeProjectMenuItem.setEnabled(enable);
+        exportMenu.setEnabled(enable);
+        exportMenu.removeAll();
+        if (enable) {
+            populateExportMenu();
+        }
         projectMenu.setEnabled(enable);
         projectMenu.removeAll();
         if (enable) {
@@ -204,14 +224,54 @@ public class AmeMenuBar extends JMenuBar {
         }
     }
 
+    private void populateExportMenu() {
+        Project p = editor.getProject();
+        AmeMenu exportProjectMenu = new AmeMenu("Project");
+        exportProjectMenu.add(createExportListItem(p.getTunes(), CommonMediaType.TEXT_VND_ABC, p.getName()));
+        exportProjectMenu.add(createExportListItem(p.getTunes(), CommonMediaType.APPLICATION_POSTSCRIPT, p.getName()));
+        exportMenu.add(exportProjectMenu);
+        exportMenu.addSeparator();
+        p.getBooks().stream().forEach((book) -> {
+            AmeMenu bookMenu = new AmeMenu(book.getName());
+            bookMenu.add(createExportListItem(book.getTunes(), CommonMediaType.TEXT_VND_ABC, book.getName()));
+            bookMenu.add(createExportListItem(book.getTunes(), CommonMediaType.APPLICATION_POSTSCRIPT, book.getName()));
+            exportMenu.add(bookMenu);
+        });
+    }
+
+    private AmeMenuItem createExportListItem(List<Tune> tunes, String mediaType, String name) {
+        String label;
+        switch (mediaType) {
+            case CommonMediaType.TEXT_VND_ABC:
+                label = "ABC";
+                break;
+            case CommonMediaType.APPLICATION_POSTSCRIPT:
+                label = "PostScript";
+                break;
+            case CommonMediaType.APPLICATION_PDF:
+                label = "PDF";
+                break;
+            default:
+                label = "TXT";
+                break;
+        }
+        AmeMenuItem exportListItem = new AmeMenuItem("As " + label);
+        exportListItem.addActionListener((ActionEvent e) -> {
+            CreateFileAction action = new CreateFileAction(editor, tunes, mediaType);
+            action.setName(name);
+            action.actionPerformed(null);
+        });
+        return exportListItem;
+    }
+
     private void populateProjectMenu() {
-        Project p = parent.getProject();
+        Project p = editor.getProject();
 
         personsMenu = new AmeMenu("Persons");
         projectMenu.add(personsMenu);
         AmeMenuItem addPersonItem = new AmeMenuItem("Add Person");
         addPersonItem.addActionListener((ActionEvent e) -> {
-            new CreatePersonAction(parent).actionPerformed(e);
+            new CreatePersonAction(editor).actionPerformed(e);
         });
         personsMenu.add(addPersonItem);
         personsMenu.addSeparator();
@@ -221,7 +281,7 @@ public class AmeMenuBar extends JMenuBar {
         projectMenu.add(booksMenu);
         AmeMenuItem addBookItem = new AmeMenuItem("Add Book");
         addBookItem.addActionListener((ActionEvent e) -> {
-            new CreateBookAction(parent).actionPerformed(e);
+            new CreateBookAction(editor).actionPerformed(e);
         });
         booksMenu.add(addBookItem);
         booksMenu.addSeparator();
@@ -231,7 +291,7 @@ public class AmeMenuBar extends JMenuBar {
     private void addPersonItem(Person person) {
         AmeMenuItem personItem = new AmeMenuItem(person.getName());
         personItem.addActionListener((ActionEvent e) -> {
-            new EditPersonAction(parent, person).actionPerformed(e);
+            new EditPersonAction(editor, person).actionPerformed(e);
         });
         personsMenu.add(personItem);
     }
@@ -239,7 +299,7 @@ public class AmeMenuBar extends JMenuBar {
     private void addBookItem(Book book) {
         AmeMenuItem bookItem = new AmeMenuItem(book.getName());
         bookItem.addActionListener((ActionEvent e) -> {
-            new EditBookAction(parent, book).actionPerformed(e);
+            new EditBookAction(editor, book).actionPerformed(e);
         });
         booksMenu.add(bookItem);
     }

@@ -104,6 +104,7 @@ public class TuneHeadersPanel extends AmePanel {
         openScoreLayoutButton.setEnabled(true);
         addVoiceButton.setEnabled(true);
         lyricsButton.setEnabled(true);
+        booksButton.setEnabled(true);
         TuneHelper tuneHelper = new TuneHelper(tune);
         titlesTextArea.setText(tuneHelper.getTitlesAsString());
         rythmTextField.setText(tune.getRythm());
@@ -138,6 +139,7 @@ public class TuneHeadersPanel extends AmePanel {
         openScoreLayoutButton.setEnabled(false);
         addVoiceButton.setEnabled(false);
         lyricsButton.setEnabled(false);
+        booksButton.setEnabled(false);
         titlesTextArea.setText("");
         rythmTextField.setText("");
         historyTextArea.setText("");
@@ -167,6 +169,7 @@ public class TuneHeadersPanel extends AmePanel {
         openScoreLayoutButton.setEnabled(enabled);
         addVoiceButton.setEnabled(enabled);
         lyricsButton.setEnabled(enabled);
+        booksButton.setEnabled(enabled);
         titlesTextArea.setEnabled(enabled);
         rythmTextField.setEnabled(enabled);
         historyTextArea.setEnabled(enabled);

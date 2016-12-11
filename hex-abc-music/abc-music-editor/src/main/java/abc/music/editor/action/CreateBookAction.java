@@ -26,6 +26,7 @@ public class CreateBookAction extends AmeAction<Book> {
             setResult(dialog.get());
             editor.getProject().addBook(dialog.get());
             editor.updateMenuBar();
+            editor.getBooksPanel().updateBooks();
         }
     }
 

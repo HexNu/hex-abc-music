@@ -22,14 +22,14 @@ public class CreateFileAction extends AmeAction<File> {
     private final String mediaType;
     private String name;
 
-    public CreateFileAction(AbcMusicEditor editor, List<Tune> tunes) {
-        this(editor, tunes, null);
-    }
+//    public CreateFileAction(AbcMusicEditor editor, List<Tune> tunes) {
+//        this(editor, tunes, null);
+//    }
 
-    public CreateFileAction(AbcMusicEditor editor, Tune tune) {
-        this(editor, tune, null);
-        name = tune.getName();
-    }
+//    public CreateFileAction(AbcMusicEditor editor, Tune tune) {
+//        this(editor, tune, null);
+//        name = tune.getName();
+//    }
 
     public CreateFileAction(AbcMusicEditor editor, Tune tune, String mediaType) {
         this(editor, Arrays.asList(tune), mediaType);
@@ -40,6 +40,10 @@ public class CreateFileAction extends AmeAction<File> {
         super(editor);
         this.tunes = tunes;
         this.mediaType = mediaType;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override

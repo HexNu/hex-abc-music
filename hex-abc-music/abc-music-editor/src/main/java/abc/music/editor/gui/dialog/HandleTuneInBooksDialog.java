@@ -144,10 +144,13 @@ public class HandleTuneInBooksDialog extends AmeDialog<Void> {
     private void newBookButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newBookButtonActionPerformed
         createNewBook();
     }//GEN-LAST:event_newBookButtonActionPerformed
+
     private void createNewBook() {
         CreateBookAction action = new CreateBookAction(editor);
         action.actionPerformed(null);
-        action.get().addTune(tune);
+        if (!action.get().hasTune(tune)) {
+            action.get().addTune(tune);
+        }
         updateBookList();
     }
 

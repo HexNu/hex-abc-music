@@ -1,6 +1,5 @@
 package abc.music.editor.gui.support;
 
-import abc.music.core.domain.Voice;
 import abc.music.editor.AbcMusicEditor;
 import abc.music.editor.gui.VoicePanel;
 import abc.music.editor.gui.dialog.AmeDialog;
@@ -11,7 +10,6 @@ import abc.music.editor.gui.dialog.notes.MeterChangeDialog;
 import abc.music.editor.gui.dialog.notes.OrnamentChooser;
 import java.awt.event.KeyEvent;
 import javax.swing.JTextArea;
-import org.ghost4j.GhostscriptLibrary;
 
 /**
  * Created 2016-dec-07
@@ -99,7 +97,7 @@ public class NoteEditorKeyListener extends AmeKeyAdapter {
     private void addChord(KeyEvent event) {
         setString(event, "\"\"", -1);
     }
-
+    
     private void addDecoration(KeyEvent e) {
         OrnamentChooser chooser = new OrnamentChooser(editor);
         if (chooser.getResult().equals(AmeDialog.Result.OK) && !chooser.get().isEmpty()) {
