@@ -27,6 +27,7 @@ import abc.music.editor.action.EditBookAction;
 import abc.music.editor.action.EditPersonAction;
 import abc.music.editor.action.EditProjectExportSettingsAction;
 import abc.music.editor.action.ExitAction;
+import abc.music.editor.action.ImportFromOtherProjectAction;
 import abc.music.editor.action.OpenLatestProjectAction;
 import abc.music.editor.action.OpenProjectAction;
 import abc.music.editor.action.ShowAboutAction;
@@ -49,6 +50,7 @@ public class AmeMenuBar extends JMenuBar {
     private AmeMenu editMenu = new AmeMenu();
     private AmeMenu projectMenu = new AmeMenu();
     private AmeMenu exportMenu;
+    private AmeMenu importMenu;
     private AmeMenu printMenu;
     private AmeMenu personsMenu;
     private AmeMenu booksMenu;
@@ -149,7 +151,13 @@ public class AmeMenuBar extends JMenuBar {
         fileMenu.add(closeProjectMenuItem);
         fileMenu.addSeparator();
         exportMenu = new AmeMenu("Export");
+        exportMenu.setEnabled(false);
         fileMenu.add(exportMenu);
+        importMenu = new AmeMenu("Import");
+        importMenu.setEnabled(false);
+        fileMenu.add(importMenu);
+        fileMenu.addSeparator();
+        
         printMenu = new AmeMenu("Print");
         // TODO: Implement print
         printMenu.setEnabled(false);
@@ -214,9 +222,11 @@ public class AmeMenuBar extends JMenuBar {
         backupMenuItem.setEnabled(enable);
         closeProjectMenuItem.setEnabled(enable);
         exportMenu.setEnabled(enable);
+        importMenu.setEnabled(enable);
+        importMenu.removeAll();
         exportMenu.removeAll();
         if (enable) {
-            populateExportMenu();
+            populateImportExportMenu();
         }
         projectMenu.setEnabled(enable);
         projectMenu.removeAll();
@@ -225,7 +235,7 @@ public class AmeMenuBar extends JMenuBar {
         }
     }
 
-    private void populateExportMenu() {
+    private void populateImportExportMenu() {
         Project p = editor.getProject();
         AmeMenu exportProjectMenu = new AmeMenu("Project");
         exportProjectMenu.add(createExportListItem(p.getTunes(), CommonMediaType.TEXT_VND_ABC, p.getName()));
@@ -238,6 +248,11 @@ public class AmeMenuBar extends JMenuBar {
             bookMenu.add(createExportListItem(book.getTunes(), CommonMediaType.APPLICATION_POSTSCRIPT, book.getName()));
             exportMenu.add(bookMenu);
         });
+        AmeMenuItem importTunesFromProjectItem = new AmeMenuItem("Import tunes from other project...");
+        importTunesFromProjectItem.addActionListener((ActionEvent e) -> {
+            new ImportFromOtherProjectAction(editor).actionPerformed(e);
+        });
+        importMenu.add(importTunesFromProjectItem);
     }
 
     private AmeMenuItem createExportListItem(List<Tune> tunes, String mediaType, String name) {

@@ -1,20 +1,30 @@
 package nu.hex.abc.music.service;
 
+import abc.music.core.ProjectCarrier;
 import abc.music.core.domain.Book;
 import abc.music.core.domain.Project;
 import abc.music.core.domain.Tune;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import nu.hex.abc.music.service.exception.NoProjectException;
+import nu.hex.abc.music.service.io.AmxFileReader;
 import nu.hex.abc.music.service.io.IoService;
 import nu.hex.abc.music.service.meta.MetaService;
 import nu.hex.abc.music.service.properties.PropertyService;
 import nu.hex.abc.music.service.util.TuneHelper;
 import nu.hex.abc.music.service.xml.read.ReaderService;
+import nu.hex.abc.music.service.xml.read.SimpleProjectReader;
 import nu.hex.abc.music.service.xml.write.WriterService;
+import se.digitman.lightxml.DocumentToXmlNodeParser;
+import se.digitman.lightxml.XmlNode;
 
 /**
  * Created 2016-nov-30
@@ -61,6 +71,10 @@ public class Service {
         return new File(PropertyService.SVG_PATH);
     }
 
+    public static ProjectCarrier extractTunesAndPersons(File file) {
+        XmlNode node = new AmxFileReader(file).read().getRoot();
+        return new SimpleProjectReader(node).read();
+    }
 //
 //    public static Project openProject(File file) throws ServiceException {
 //        try {
@@ -86,6 +100,7 @@ public class Service {
 //        return project;
 //    }
 //
+
     public List<Tune> searchTunes(String searchString) {
         List<Tune> result = new ArrayList<>();
         for (Tune tune : project.getTunes()) {
@@ -112,7 +127,7 @@ public class Service {
         }
         return result;
     }
-    
+
     public List<Book> findByTune(Tune tune) {
         List<Book> result = new ArrayList<>();
         project.getBooks().stream().filter((book) -> (book.hasTune(tune))).forEach((book) -> {

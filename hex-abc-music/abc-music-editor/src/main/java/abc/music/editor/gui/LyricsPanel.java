@@ -39,7 +39,7 @@ public class LyricsPanel extends AmePanel {
             });
             lyricsTextArea.setText(text);
         } else {
-            lyricsTextArea.setText("V. 1\n");
+            lyricsTextArea.setText("\n");
         }
     }
 
