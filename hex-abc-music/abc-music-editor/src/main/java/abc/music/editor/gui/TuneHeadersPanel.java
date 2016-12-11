@@ -190,7 +190,7 @@ public class TuneHeadersPanel extends AmePanel {
         signatureComboBox.setEnabled(enabled);
         modeComboBox.setEnabled(enabled);
         clefComboBox.setEnabled(enabled);
-        transposeComboBox.setEditable(enabled);
+        transposeComboBox.setEnabled(enabled);
         octaveComboBox.setEnabled(enabled);
         abcButton.setEnabled(enabled);
         postScriptButton.setEnabled(enabled);

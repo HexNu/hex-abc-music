@@ -1,5 +1,6 @@
 package abc.music.editor.gui.support;
 
+import abc.music.core.util.TextUtil;
 import abc.music.editor.AbcMusicEditor;
 import abc.music.editor.gui.VoicePanel;
 import abc.music.editor.gui.dialog.AmeDialog;
@@ -38,6 +39,15 @@ public class NoteEditorKeyListener extends AmeKeyAdapter {
                 case KeyEvent.VK_5:
                     setString(e, COMMENT);
                     break;
+                case KeyEvent.VK_8:
+                    addTie(e);
+                    break;
+                case KeyEvent.VK_D:
+                    addDecoration(e);
+                    break;
+                case KeyEvent.VK_G:
+                    addChord(e);
+                    break;
                 case KeyEvent.VK_K:
                     changeKey(e);
                     break;
@@ -47,17 +57,14 @@ public class NoteEditorKeyListener extends AmeKeyAdapter {
                 case KeyEvent.VK_N:
                     addAnnotation(e);
                     break;
-                case KeyEvent.VK_G:
-                    addChord(e);
-                    break;
-                case KeyEvent.VK_D:
-                    addDecoration(e);
+                case KeyEvent.VK_R:
+                    reverse(e);
                     break;
                 case KeyEvent.VK_U:
                     detachPanel(e);
                     break;
-                case KeyEvent.VK_8:
-                    addTie(e);
+                case KeyEvent.VK_W:
+                    addWordLine(e);
                     break;
                 default:
                     super.keyTyped(e);
@@ -97,7 +104,7 @@ public class NoteEditorKeyListener extends AmeKeyAdapter {
     private void addChord(KeyEvent event) {
         setString(event, "\"\"", -1);
     }
-    
+
     private void addDecoration(KeyEvent e) {
         OrnamentChooser chooser = new OrnamentChooser(editor);
         if (chooser.getResult().equals(AmeDialog.Result.OK) && !chooser.get().isEmpty()) {
@@ -118,7 +125,36 @@ public class NoteEditorKeyListener extends AmeKeyAdapter {
         }
     }
 
-    private void detachPanel(KeyEvent e) {
+    private void reverse(KeyEvent event) {
+        JTextArea source = (JTextArea) event.getSource();
+        if (source.getSelectedText() != null) {
+            String text = source.getText();
+            int end = source.getSelectionEnd();
+            String first = text.substring(0, source.getSelectionStart());
+            String second = source.getSelectedText();
+            String reversed = "";
+            for (String s : second.split("(?=[a-gA-G])")) {
+                reversed = s + reversed;
+            }
+            String third = text.substring(source.getSelectionEnd());
+            source.setText(first + reversed + third);
+            source.setCaretPosition(end);
+        }
+    }
+
+    private void addWordLine(KeyEvent event) {
+        JTextArea source = (JTextArea) event.getSource();
+        String text = source.getText();
+        int caretPosition = source.getCaretPosition();
+        int endOfCurrentLine = new TextUtil(text).nextIndexOf('\n', caretPosition);
+        String first = text.substring(0, endOfCurrentLine);
+        String second = "\nw: ";
+        String third = text.substring(endOfCurrentLine);
+        source.setText(first + second + third);
+        source.setCaretPosition(endOfCurrentLine + 4);
+    }
+
+    private void detachPanel(KeyEvent event) {
         if (panel.isDocked()) {
             UndockedVoicePanelDialog dialog = new UndockedVoicePanelDialog(panel, panel.getIndex());
             dialog.setVisible(true);

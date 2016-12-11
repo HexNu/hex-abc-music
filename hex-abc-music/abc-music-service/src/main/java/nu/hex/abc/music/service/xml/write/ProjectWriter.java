@@ -22,6 +22,11 @@ class ProjectWriter extends XmlWriter<Project> {
         result.addAttribute("name", entity.getName());
         result.addAttribute("abc-version", entity.getAbcVersion());
         result.addAttribute("summary", entity.getSummary());
+        result.addAttribute("print-creators", entity.getPrintCreators().toString());
+        result.addAttribute("print-books", entity.getPrintBooks().toString());
+        if (entity.getIntroduction() != null && !entity.getIntroduction().isEmpty()) {
+            result.addChild(NodeFactory.createNode("introduction", entity.getIntroduction()));
+        }
         if (entity.getOwner() != null) {
             XmlNode ownerNode = new ClassNode(Project.Owner.class).getNode();
             ownerNode.addAttribute("first-name", entity.getOwner().getFirstName());

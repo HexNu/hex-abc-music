@@ -25,6 +25,14 @@ public class BookReader extends NodeReader<Book> {
         if (node.hasAttribute("name")) {
             result.setName(node.getAttribute("name"));
         }
+        if (node.hasAttribute("print-creators")) {
+            result.setPrintCreators(Boolean.valueOf(node.getAttribute("print-creators")));
+        } else {
+            result.setPrintCreators(Boolean.FALSE);
+        }
+        if (node.hasChildNamed("short-description")) {
+            result.setShortDescription(node.getChild("short-description").getText());
+        }
         if (node.hasChildNamed("introduction")) {
             result.setIntroduction(node.getChild("introduction").getText());
         }

@@ -19,6 +19,9 @@ public class Project {
     private List<Book> books = new ArrayList<>();
     private String name;
     private String summary;
+    private String introduction;
+    private Boolean printCreators;
+    private Boolean printBooks;
     private String abcVersion;
     private Owner owner = new Owner();
     private LocalDateTime lastUpdated;
@@ -41,6 +44,30 @@ public class Project {
 
     public void setSummary(String summary) {
         this.summary = summary;
+    }
+
+    public String getIntroduction() {
+        return introduction;
+    }
+
+    public void setIntroduction(String introduction) {
+        this.introduction = introduction;
+    }
+
+    public Boolean getPrintCreators() {
+        return printCreators == null ? false : printCreators;
+    }
+
+    public void setPrintCreators(Boolean printCreators) {
+        this.printCreators = printCreators;
+    }
+
+    public Boolean getPrintBooks() {
+        return printBooks == null ? false : printBooks;
+    }
+
+    public void setPrintBooks(Boolean printBooks) {
+        this.printBooks = printBooks;
     }
 
     public Owner getOwner() {

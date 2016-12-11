@@ -30,6 +30,15 @@ class ProjectReader implements Reader<Project> {
         if (node.hasAttribute("summary")) {
             result.setSummary(node.getAttribute("summary"));
         }
+        if (node.hasAttribute("print-creators")) {
+            result.setPrintCreators(Boolean.valueOf(node.getAttribute("print-creators")));
+        }
+        if (node.hasAttribute("print-books")) {
+            result.setPrintBooks(Boolean.valueOf(node.getAttribute("print-books")));
+        }
+        if (node.hasChildNamed("introduction")) {
+            result.setIntroduction(node.getChild("introduction").getText());
+        }
         if (node.hasChildNamed("owner")) {
             if (result.getOwner() == null) {
                 result.setOwner(new Project.Owner(result));

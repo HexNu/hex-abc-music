@@ -24,6 +24,10 @@ public class BookWriter implements Writer<XmlNode> {
     @Override
     public XmlNode write() {
         result.addAttribute("name", book.getName());
+        result.addAttribute("print-creators", book.getPrintCreators().toString());
+        if (book.getShortDescription()!= null) {
+            result.addChild(NodeFactory.createNode("short-description", book.getShortDescription()));
+        }
         if (book.getIntroduction() != null) {
             result.addChild(NodeFactory.createNode("introduction", book.getIntroduction()));
         }

@@ -12,7 +12,9 @@ import java.util.List;
 public class Book {
 
     private String name;
+    private String shortDescription;
     private String introduction;
+    private Boolean printCreators;
     private List<Tune> tunes = new ArrayList<>();
 
     public Book() {
@@ -30,12 +32,28 @@ public class Book {
         this.name = name;
     }
 
+    public String getShortDescription() {
+        return shortDescription;
+    }
+
+    public void setShortDescription(String shortDescription) {
+        this.shortDescription = shortDescription;
+    }
+
     public String getIntroduction() {
         return introduction;
     }
 
     public void setIntroduction(String introduction) {
         this.introduction = introduction;
+    }
+
+    public Boolean getPrintCreators() {
+        return printCreators == null ? false : printCreators;
+    }
+
+    public void setPrintCreators(Boolean printCreators) {
+        this.printCreators = printCreators;
     }
 
     public List<Tune> getTunes() {

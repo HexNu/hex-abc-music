@@ -41,6 +41,9 @@ public class EditBookDialog extends AmeDialog<Book> {
         if (book.getName() != null) {
             nameTextField.setText(book.getName());
         }
+        if (book.getShortDescription()!= null) {
+            shortDescriptionTextArea.setText(book.getShortDescription());
+        }
         if (book.getIntroduction() != null) {
             introductionTextField.setText(book.getIntroduction());
         }
@@ -52,6 +55,7 @@ public class EditBookDialog extends AmeDialog<Book> {
                 otherTunes.add(tune);
             }
         });
+        printCreatorsCheckBox.setSelected(book.getPrintCreators());
         sortList(otherTunes);
         updatePanels();
     }
@@ -99,6 +103,10 @@ public class EditBookDialog extends AmeDialog<Book> {
         nameTextField = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         introductionTextField = new javax.swing.JTextArea();
+        printCreatorsCheckBox = new javax.swing.JCheckBox();
+        jLabel5 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        shortDescriptionTextArea = new javax.swing.JTextArea();
         dialogButtonsPanel = new javax.swing.JPanel();
         doneButton = new javax.swing.JButton();
         cancelButton = new javax.swing.JButton();
@@ -133,6 +141,15 @@ public class EditBookDialog extends AmeDialog<Book> {
         introductionTextField.setWrapStyleWord(true);
         jScrollPane1.setViewportView(introductionTextField);
 
+        printCreatorsCheckBox.setText("Include Persons Information on Export");
+
+        jLabel5.setText("Short Description:");
+        jLabel5.setToolTipText("<html>A short description of the book.<br/>\nThis text will be included in the projects export if the project has \"print books\" set to true.");
+
+        shortDescriptionTextArea.setColumns(20);
+        shortDescriptionTextArea.setRows(3);
+        jScrollPane2.setViewportView(shortDescriptionTextArea);
+
         javax.swing.GroupLayout textButtonPanelLayout = new javax.swing.GroupLayout(textButtonPanel);
         textButtonPanel.setLayout(textButtonPanelLayout);
         textButtonPanelLayout.setHorizontalGroup(
@@ -142,10 +159,17 @@ public class EditBookDialog extends AmeDialog<Book> {
                 .addGroup(textButtonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 652, Short.MAX_VALUE)
                     .addGroup(textButtonPanelLayout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(42, 42, 42)
-                        .addComponent(nameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel2))
+                        .addGroup(textButtonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(textButtonPanelLayout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addGap(42, 42, 42)
+                                .addComponent(nameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(printCreatorsCheckBox))
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel5))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane2))
                 .addContainerGap())
         );
         textButtonPanelLayout.setVerticalGroup(
@@ -154,11 +178,16 @@ public class EditBookDialog extends AmeDialog<Book> {
                 .addContainerGap()
                 .addGroup(textButtonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(nameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(nameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(printCreatorsCheckBox))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -470,7 +499,9 @@ public class EditBookDialog extends AmeDialog<Book> {
 
     private void updateBook() {
         book.setName(nameTextField.getText());
+        book.setShortDescription(shortDescriptionTextArea.getText());
         book.setIntroduction(introductionTextField.getText());
+        book.setPrintCreators(printCreatorsCheckBox.isSelected());
         book.setTunes(bookTunes);
     }
 
@@ -489,7 +520,9 @@ public class EditBookDialog extends AmeDialog<Book> {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JPanel listHandlingPanel;
     private javax.swing.JPanel listsPanel;
     private javax.swing.JButton moveDownButton;
@@ -500,7 +533,9 @@ public class EditBookDialog extends AmeDialog<Book> {
     private javax.swing.JPanel otherTunesButtonPanel;
     private javax.swing.JPanel otherTunesPanel;
     private javax.swing.JScrollPane otherTunesScrollPane;
+    private javax.swing.JCheckBox printCreatorsCheckBox;
     private javax.swing.JButton removeFromBookButton;
+    private javax.swing.JTextArea shortDescriptionTextArea;
     private javax.swing.JPanel textButtonPanel;
     // End of variables declaration//GEN-END:variables
 

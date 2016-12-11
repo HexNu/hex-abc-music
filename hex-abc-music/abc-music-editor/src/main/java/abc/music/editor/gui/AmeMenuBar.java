@@ -25,6 +25,7 @@ import abc.music.editor.action.CreatePersonAction;
 import abc.music.editor.action.CreateProjectAction;
 import abc.music.editor.action.EditBookAction;
 import abc.music.editor.action.EditPersonAction;
+import abc.music.editor.action.EditProjectExportSettingsAction;
 import abc.music.editor.action.ExitAction;
 import abc.music.editor.action.OpenLatestProjectAction;
 import abc.music.editor.action.OpenProjectAction;
@@ -266,7 +267,13 @@ public class AmeMenuBar extends JMenuBar {
 
     private void populateProjectMenu() {
         Project p = editor.getProject();
-
+        AmeMenuItem editProjectItem = new AmeMenuItem(p.getName());
+        editProjectItem.addActionListener((ActionEvent e) -> {
+            new EditProjectExportSettingsAction(editor).actionPerformed(e);
+        });
+        projectMenu.add(editProjectItem);
+        projectMenu.addSeparator();
+        
         personsMenu = new AmeMenu("Persons");
         projectMenu.add(personsMenu);
         AmeMenuItem addPersonItem = new AmeMenuItem("Add Person");
