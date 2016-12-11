@@ -20,17 +20,21 @@ public class SaveTuneAction extends AmeAction<Tune> {
 
     @Override
     protected void performAction(ActionEvent event) {
-        TuneHeadersPanel tuneEditor = editor.getTuneEditor();
-        if (tuneEditor.getTune().getName() == null || tuneEditor.getTune().getName().isEmpty()) {
-            AmeTextDialog dialog = new AmeTextDialog(editor, "Set a Tune Title", "Title:");
-            dialog.setVisible(true);
-            if (dialog.getResult().equals(AmeDialog.Result.OK)) {
-                tuneEditor.getTune().addTitle(dialog.get());
-            } else {
-                return;
+        if (editor.getTuneEditor() != null) {
+            TuneHeadersPanel tuneEditor = editor.getTuneEditor();
+            if (tuneEditor.getTune() != null) {
+                if (tuneEditor.getTune().getName() == null || tuneEditor.getTune().getName().isEmpty()) {
+                    AmeTextDialog dialog = new AmeTextDialog(editor, "Set a Tune Title", "Title:");
+                    dialog.setVisible(true);
+                    if (dialog.getResult().equals(AmeDialog.Result.OK)) {
+                        tuneEditor.getTune().addTitle(dialog.get());
+                    } else {
+                        return;
+                    }
+                }
+                tuneEditor.updateTune();
             }
         }
-        tuneEditor.updateTune();
     }
 
 }

@@ -34,6 +34,7 @@ public abstract class AmeDialog<T> extends JDialog {
 
     private void setup() {
         init();
+        result = Result.CANCEL;
     }
 
     protected abstract void init();

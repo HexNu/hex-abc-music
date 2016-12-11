@@ -11,20 +11,21 @@ import nu.hex.abc.music.service.meta.MetaService;
  *
  * @author hl
  */
-class AbcWriter implements Writer<String> {
+class AbcDocWriter implements Writer<String> {
 
     private static final String DEFAULT_CHARSET = "%%encoding utf-8";
     private static final String ABC_VERSION = "%%abc-version 2.2";
     private static final String ABC_CREATOR = "%%abc-creator hex-abc-music " + MetaService.getAppInfo().getVersion();
     private static final String NEW_LINE = "\n";
+    private static final String COMMENT = "%";
     private final List<Tune> tunes;
     private int voiceIndex = 0;
 
-    public AbcWriter(Tune tune) {
+    public AbcDocWriter(Tune tune) {
         this(Arrays.asList(tune));
     }
 
-    public AbcWriter(List<Tune> tunes) {
+    public AbcDocWriter(List<Tune> tunes) {
         this.tunes = tunes;
     }
 
@@ -101,8 +102,10 @@ class AbcWriter implements Writer<String> {
                 }
             });
         }
+        if (tune.hasLyrics()) {
+            result.append(tune.getLyrics().getAbcString()).append(NEW_LINE);
+        }
         result.append(NEW_LINE);
         return result.toString();
     }
-    private static final String COMMENT = "%";
 }

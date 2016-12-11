@@ -34,6 +34,7 @@ public class SvgViewPanel extends JPanel {
     private void init() {
         canvas = new JSVGCanvas();
         svgCanvasPanel.add(canvas, BorderLayout.CENTER);
+        canvasScrollPane.getVerticalScrollBar().setUnitIncrement(10);
     }
 
     public Tune getTune() {
@@ -53,21 +54,21 @@ public class SvgViewPanel extends JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane1 = new javax.swing.JScrollPane();
+        canvasScrollPane = new javax.swing.JScrollPane();
         svgCanvasPanel = new javax.swing.JPanel();
 
         setLayout(new java.awt.BorderLayout());
 
         svgCanvasPanel.setBackground(java.awt.Color.white);
         svgCanvasPanel.setLayout(new java.awt.BorderLayout());
-        jScrollPane1.setViewportView(svgCanvasPanel);
+        canvasScrollPane.setViewportView(svgCanvasPanel);
 
-        add(jScrollPane1, java.awt.BorderLayout.CENTER);
+        add(canvasScrollPane, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane canvasScrollPane;
     private javax.swing.JPanel svgCanvasPanel;
     // End of variables declaration//GEN-END:variables
 }

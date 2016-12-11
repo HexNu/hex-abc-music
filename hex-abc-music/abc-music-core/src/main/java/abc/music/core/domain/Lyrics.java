@@ -11,6 +11,7 @@ import java.util.TreeMap;
  */
 public class Lyrics {
 
+    private static final String NEW_LINE = "\n";
     private final Map<Integer, List<String>> strophes = new TreeMap<>();
     private StringBuilder abcStringBuilder;
     private boolean firstLineRead;
@@ -57,18 +58,14 @@ public class Lyrics {
     }
 
     public String getAbcString() {
-        abcStringBuilder = new StringBuilder();
+        abcStringBuilder = new StringBuilder("% Lyrics:").append(NEW_LINE).append("%").append(NEW_LINE);
         getStrophes().keySet().stream().forEach((stropheNumber) -> {
-            firstLineRead = false;
-            abcStringBuilder.append("W: ").append(stropheNumber).append(".~");
+            abcStringBuilder.append("W: ").append(stropheNumber + 1).append(".").append(NEW_LINE);
             getStrophes().get(stropheNumber).forEach((line) -> {
-                if (firstLineRead) {
-                    abcStringBuilder.append("W: ");
-                }
-                abcStringBuilder.append(line).append("\n");
-                firstLineRead = true;
+                abcStringBuilder.append("W: ");
+                abcStringBuilder.append(line).append(NEW_LINE);
             });
-            abcStringBuilder.append("\n");
+            abcStringBuilder.append("%").append(NEW_LINE);
         });
         return abcStringBuilder.toString().trim();
     }

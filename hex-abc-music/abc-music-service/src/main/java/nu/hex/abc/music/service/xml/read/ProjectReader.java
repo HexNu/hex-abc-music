@@ -1,5 +1,6 @@
 package nu.hex.abc.music.service.xml.read;
 
+import abc.music.core.domain.Book;
 import abc.music.core.domain.Project;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -44,6 +45,9 @@ class ProjectReader implements Reader<Project> {
         if (node.hasChildNamed("tunes") && node.getChild("tunes").hasChildNamed("tune")) {
             node.getChild("tunes").getChildren("tune").stream().forEach(this::addTune);
         }
+        if (node.hasChildNamed("books") && node.getChild("books").hasChildNamed("book")) {
+            node.getChild("books").getChildren("book").stream().forEach(this::addBook);
+        }
         return result;
     }
 
@@ -53,5 +57,12 @@ class ProjectReader implements Reader<Project> {
 
     private void addPerson(XmlNode personNode) {
         result.addPerson(new PersonReader(personNode).read());
+    }
+    private void addBook(XmlNode bookNode) {
+        Book book = new BookReader(result, bookNode).read();
+        result.addBook(book);
+        if (book.getName() == null || book.getName().isEmpty()) {
+            book.setName("No name");
+        }
     }
 }

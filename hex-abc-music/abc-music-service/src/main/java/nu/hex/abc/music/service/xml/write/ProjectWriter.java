@@ -34,11 +34,16 @@ class ProjectWriter extends XmlWriter<Project> {
         result.addChild(tunesNode);
         XmlNode personsNode = NodeFactory.createNode("persons");
         result.addChild(personsNode);
+        XmlNode booksNode = NodeFactory.createNode("books");
+        result.addChild(booksNode);
         entity.getPersons().stream().forEach((person) -> {
             personsNode.addChild(new PersonWriter(person).write());
         });
         entity.getTunes().stream().forEach((tune) -> {
             tunesNode.addChild(new TuneWriter(tune).write());
+        });
+        entity.getBooks().stream().forEach((book) -> {
+            booksNode.addChild(new BookWriter(book).write());
         });
         return result;
     }

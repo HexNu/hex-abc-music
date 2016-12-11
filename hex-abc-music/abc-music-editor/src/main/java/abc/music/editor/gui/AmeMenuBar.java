@@ -1,5 +1,6 @@
 package abc.music.editor.gui;
 
+import abc.music.core.domain.Book;
 import abc.music.core.domain.Person;
 import abc.music.core.domain.Project;
 import abc.music.editor.AbcMusicEditor;
@@ -17,8 +18,10 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import abc.music.editor.action.CloseProjectAction;
+import abc.music.editor.action.CreateBookAction;
 import abc.music.editor.action.CreatePersonAction;
 import abc.music.editor.action.CreateProjectAction;
+import abc.music.editor.action.EditBookAction;
 import abc.music.editor.action.EditPersonAction;
 import abc.music.editor.action.ExitAction;
 import abc.music.editor.action.OpenLatestProjectAction;
@@ -41,6 +44,7 @@ public class AmeMenuBar extends JMenuBar {
     private AmeMenu editMenu = new AmeMenu();
     private AmeMenu projectMenu = new AmeMenu();
     private AmeMenu personsMenu;
+    private AmeMenu booksMenu;
     private AmeMenu helpMenu = new AmeMenu();
     private AmeMenuItem openMenuItem = new AmeMenuItem();
     private AmeMenuItem openLatestMenuItem = new AmeMenuItem();
@@ -174,7 +178,7 @@ public class AmeMenuBar extends JMenuBar {
         contentsMenuItem.addActionListener((ActionEvent e) -> {
             new HelpDialog(parent).setVisible(true);
         });
-        
+
         helpMenu.add(contentsMenuItem);
         aboutMenuItem.setMnemonic('a');
         aboutMenuItem.setText("About");
@@ -202,6 +206,7 @@ public class AmeMenuBar extends JMenuBar {
 
     private void populateProjectMenu() {
         Project p = parent.getProject();
+
         personsMenu = new AmeMenu("Persons");
         projectMenu.add(personsMenu);
         AmeMenuItem addPersonItem = new AmeMenuItem("Add Person");
@@ -211,6 +216,16 @@ public class AmeMenuBar extends JMenuBar {
         personsMenu.add(addPersonItem);
         personsMenu.addSeparator();
         p.getPersons().stream().forEach(this::addPersonItem);
+
+        booksMenu = new AmeMenu("Books");
+        projectMenu.add(booksMenu);
+        AmeMenuItem addBookItem = new AmeMenuItem("Add Book");
+        addBookItem.addActionListener((ActionEvent e) -> {
+            new CreateBookAction(parent).actionPerformed(e);
+        });
+        booksMenu.add(addBookItem);
+        booksMenu.addSeparator();
+        p.getBooks().stream().forEach(this::addBookItem);
     }
 
     private void addPersonItem(Person person) {
@@ -219,6 +234,14 @@ public class AmeMenuBar extends JMenuBar {
             new EditPersonAction(parent, person).actionPerformed(e);
         });
         personsMenu.add(personItem);
+    }
+
+    private void addBookItem(Book book) {
+        AmeMenuItem bookItem = new AmeMenuItem(book.getName());
+        bookItem.addActionListener((ActionEvent e) -> {
+            new EditBookAction(parent, book).actionPerformed(e);
+        });
+        booksMenu.add(bookItem);
     }
 
     public static class AmeMenu extends JMenu {

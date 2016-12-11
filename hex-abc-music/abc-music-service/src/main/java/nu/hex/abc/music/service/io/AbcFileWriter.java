@@ -27,7 +27,7 @@ class AbcFileWriter implements Writer<File> {
     @Override
     public File write() {
         String abcDoc = "%abc-2.2\n\n";
-        abcDoc += new AbcWriter(tunes).write();
+        abcDoc += new AbcDocWriter(tunes).write();
         return new SimpleFileWriter(file, abcDoc).write();
     }
 }

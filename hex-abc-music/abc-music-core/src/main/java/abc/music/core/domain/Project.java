@@ -16,6 +16,7 @@ public class Project {
 
     private final Map<Integer, Tune> tunes = new HashMap<>();
     private final Map<Integer, Person> persons = new HashMap<>();
+    private List<Book> books = new ArrayList<>();
     private String name;
     private String summary;
     private String abcVersion;
@@ -131,6 +132,19 @@ public class Project {
         }
         Collections.sort(ids, (a, b) -> a.compareTo(b));
         return ids.get(ids.size() - 1) + 1;
+    }
+
+    public List<Book> getBooks() {
+        return books;
+    }
+
+    public void setBooks(List<Book> books) {
+        this.books.clear();
+        this.books.addAll(books);
+    }
+
+    public void addBook(Book book) {
+        this.books.add(book);
     }
 
     public String getAbcVersion() {
