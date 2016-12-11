@@ -12,7 +12,7 @@ import java.util.List;
 public class Book {
 
     private String name;
-    private String ingress;
+    private String introduction;
     private List<Tune> tunes = new ArrayList<>();
 
     public Book() {
@@ -30,12 +30,12 @@ public class Book {
         this.name = name;
     }
 
-    public String getIngress() {
-        return ingress;
+    public String getIntroduction() {
+        return introduction;
     }
 
-    public void setIngress(String ingress) {
-        this.ingress = ingress;
+    public void setIntroduction(String introduction) {
+        this.introduction = introduction;
     }
 
     public List<Tune> getTunes() {

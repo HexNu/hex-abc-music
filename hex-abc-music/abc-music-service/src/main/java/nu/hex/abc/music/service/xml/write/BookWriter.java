@@ -24,8 +24,8 @@ public class BookWriter implements Writer<XmlNode> {
     @Override
     public XmlNode write() {
         result.addAttribute("name", book.getName());
-        if (book.getIngress() != null) {
-            result.addChild(NodeFactory.createNode("ingress", book.getIngress()));
+        if (book.getIntroduction() != null) {
+            result.addChild(NodeFactory.createNode("introduction", book.getIntroduction()));
         }
         book.getTunes().stream().forEach(this::addTune);
         return result;

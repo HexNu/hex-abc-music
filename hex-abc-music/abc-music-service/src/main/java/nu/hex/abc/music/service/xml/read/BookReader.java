@@ -25,8 +25,8 @@ public class BookReader extends NodeReader<Book> {
         if (node.hasAttribute("name")) {
             result.setName(node.getAttribute("name"));
         }
-        if (node.hasChildNamed("ingress")) {
-            result.setIngress(node.getChild("ingress").getText());
+        if (node.hasChildNamed("introduction")) {
+            result.setIntroduction(node.getChild("introduction").getText());
         }
         node.getChildren("tune").stream().forEach(this::addTune);
         return result;

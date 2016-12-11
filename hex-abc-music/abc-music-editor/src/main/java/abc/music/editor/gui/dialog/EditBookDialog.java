@@ -5,7 +5,6 @@ import abc.music.core.domain.Tune;
 import abc.music.editor.AbcMusicEditor;
 import java.awt.Component;
 import java.awt.Container;
-import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ItemEvent;
 import java.util.ArrayList;
@@ -36,23 +35,14 @@ public class EditBookDialog extends AmeDialog<Book> {
         initComponents();
         bookTunesScrollPane.getVerticalScrollBar().setUnitIncrement(10);
         otherTunesScrollPane.getVerticalScrollBar().setUnitIncrement(10);
-//        Dimension buttonDimension = new Dimension(28, 28);
-//        moveUpButton.setMaximumSize(buttonDimension);
-//        moveUpButton.setPreferredSize(buttonDimension);
-//        moveDownButton.setMaximumSize(buttonDimension);
-//        moveDownButton.setPreferredSize(buttonDimension);
-//        addToBookButton.setMaximumSize(buttonDimension);
-//        addToBookButton.setPreferredSize(buttonDimension);
-//        removeFromBookButton.setMaximumSize(buttonDimension);
-//        removeFromBookButton.setPreferredSize(buttonDimension);
     }
 
     private void setFields() {
         if (book.getName() != null) {
             nameTextField.setText(book.getName());
         }
-        if (book.getIngress() != null) {
-            ingressTextField.setText(book.getIngress());
+        if (book.getIntroduction() != null) {
+            introductionTextField.setText(book.getIntroduction());
         }
         book.getTunes().forEach((tune) -> {
             bookTunes.add(tune);
@@ -108,7 +98,7 @@ public class EditBookDialog extends AmeDialog<Book> {
         jLabel2 = new javax.swing.JLabel();
         nameTextField = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        ingressTextField = new javax.swing.JTextArea();
+        introductionTextField = new javax.swing.JTextArea();
         dialogButtonsPanel = new javax.swing.JPanel();
         doneButton = new javax.swing.JButton();
         cancelButton = new javax.swing.JButton();
@@ -135,11 +125,13 @@ public class EditBookDialog extends AmeDialog<Book> {
 
         jLabel1.setText("Name:");
 
-        jLabel2.setText("Ingress:");
+        jLabel2.setText("Introduction:");
 
-        ingressTextField.setColumns(20);
-        ingressTextField.setRows(5);
-        jScrollPane1.setViewportView(ingressTextField);
+        introductionTextField.setColumns(20);
+        introductionTextField.setLineWrap(true);
+        introductionTextField.setRows(5);
+        introductionTextField.setWrapStyleWord(true);
+        jScrollPane1.setViewportView(introductionTextField);
 
         javax.swing.GroupLayout textButtonPanelLayout = new javax.swing.GroupLayout(textButtonPanel);
         textButtonPanel.setLayout(textButtonPanelLayout);
@@ -478,7 +470,7 @@ public class EditBookDialog extends AmeDialog<Book> {
 
     private void updateBook() {
         book.setName(nameTextField.getText());
-        book.setIngress(ingressTextField.getText());
+        book.setIntroduction(introductionTextField.getText());
         book.setTunes(bookTunes);
     }
 
@@ -492,7 +484,7 @@ public class EditBookDialog extends AmeDialog<Book> {
     private javax.swing.JButton cancelButton;
     private javax.swing.JPanel dialogButtonsPanel;
     private javax.swing.JButton doneButton;
-    private javax.swing.JTextArea ingressTextField;
+    private javax.swing.JTextArea introductionTextField;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
