@@ -1,9 +1,9 @@
 package abc.music.editor.action;
 
-import abc.music.core.domain.Book;
+import abc.music.core.domain.Tune;
 import abc.music.editor.AbcMusicEditor;
 import abc.music.editor.gui.dialog.AmeDialog;
-import abc.music.editor.gui.dialog.EditBookDialog;
+import abc.music.editor.gui.dialog.HandleTuneInBooksDialog;
 import java.awt.event.ActionEvent;
 
 /**
@@ -11,20 +11,20 @@ import java.awt.event.ActionEvent;
  *
  * @author hl
  */
-public class CreateBookAction extends AmeAction<Book> {
+public class HandleTuneInBooksAction extends AmeAction<Void> {
 
-    public CreateBookAction(AbcMusicEditor editor) {
+    private final Tune tune;
+
+    public HandleTuneInBooksAction(AbcMusicEditor editor, Tune tune) {
         super(editor);
+        this.tune = tune;
     }
 
     @Override
     protected void performAction(ActionEvent event) {
-        Book book = new Book();
-        EditBookDialog dialog = new EditBookDialog(editor, book);
+        HandleTuneInBooksDialog dialog = new HandleTuneInBooksDialog(editor, tune);
         dialog.setVisible(true);
         if (dialog.getResult().equals(AmeDialog.Result.OK)) {
-            setResult(dialog.get());
-            editor.getProject().addBook(dialog.get());
             editor.updateMenuBar();
         }
     }

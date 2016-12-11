@@ -36,7 +36,7 @@ public class EditBookDialog extends AmeDialog<Book> {
         initComponents();
         bookTunesScrollPane.getVerticalScrollBar().setUnitIncrement(10);
         otherTunesScrollPane.getVerticalScrollBar().setUnitIncrement(10);
-        Dimension buttonDimension = new Dimension(28, 28);
+//        Dimension buttonDimension = new Dimension(28, 28);
 //        moveUpButton.setMaximumSize(buttonDimension);
 //        moveUpButton.setPreferredSize(buttonDimension);
 //        moveDownButton.setMaximumSize(buttonDimension);
@@ -79,7 +79,7 @@ public class EditBookDialog extends AmeDialog<Book> {
         sortList(otherTunes);
         otherTunesPanel.removeAll();
         otherTunes.stream().forEach((tune) -> {
-            otherTunesPanel.add(new BookItem(tune));
+            otherTunesPanel.add(new BookTuneItem(tune));
         });
         otherTunesPanel.repaint();
         otherTunesPanel.revalidate();
@@ -88,7 +88,7 @@ public class EditBookDialog extends AmeDialog<Book> {
     private void updateBookTunesPanel() {
         bookTunesPanel.removeAll();
         bookTunes.stream().forEach((tune) -> {
-            bookTunesPanel.add(new BookItem(tune));
+            bookTunesPanel.add(new BookTuneItem(tune));
         });
         bookTunesPanel.repaint();
         bookTunesPanel.revalidate();
@@ -473,6 +473,7 @@ public class EditBookDialog extends AmeDialog<Book> {
     @Override
     protected void accept() {
         updateBook();
+        set(book);
     }
 
     private void updateBook() {
@@ -511,74 +512,9 @@ public class EditBookDialog extends AmeDialog<Book> {
     private javax.swing.JPanel textButtonPanel;
     // End of variables declaration//GEN-END:variables
 
-//    private void moveSelectedTunesUp() {
-//        List<Integer> selectedIndices = new ArrayList<>();
-//        for (Component c : bookTunesPanel.getComponents()) {
-//            BookItem item = (BookItem) c;
-//            if (item.isSelected()) {
-//                selectedIndices.add(item.getIndex() - 1);
-//                List<Tune> subList = bookTunes.subList(item.getIndex() - 1, item.getIndex() + 1);
-//                Collections.rotate(subList, 1);
-//            }
-//        }
-//        updateBookTunesPanel();
-//        int i = 0;
-//        for (Component c : bookTunesPanel.getComponents()) {
-//            if (selectedIndices.contains(i)) {
-//                ((BookItem) c).setSelected(true);
-//            }
-//            i++;
-//        }
-//    }
-//
-//    private void moveSelectedTunesDown() {
-//        List<Integer> selectedIndices = new ArrayList<>();
-//        List<BookItem> items = new ArrayList<>();
-//        for (Component c : bookTunesPanel.getComponents()) {
-//            items.add(0, (BookItem) c);
-//        }
-//        for (BookItem item : items) {
-//            if (item.isSelected()) {
-//                selectedIndices.add(item.getIndex() + 1);
-//                List<Tune> subList = bookTunes.subList(item.getIndex(), item.getIndex() + 2);
-//                Collections.rotate(subList, -1);
-//            }
-//        }
-//        updateBookTunesPanel();
-//        int i = 0;
-//        for (Component c : bookTunesPanel.getComponents()) {
-//            if (selectedIndices.contains(i)) {
-//                ((BookItem) c).setSelected(true);
-//            }
-//            i++;
-//        }
-//    }
-//    private void addSelectedTunesToBook() {
-//        for (Component c : otherTunesPanel.getComponents()) {
-//            BookItem item = (BookItem) c;
-//            if (item.isSelected()) {
-//                bookTunes.add(item.getTune());
-//                otherTunes.remove(item.getTune());
-//            }
-//        }
-//        updatePanels();
-//        updateAddToBookButton();
-//    }
-//
-//    private void removeSeletedTunesFromBook() {
-//        for (Component c : bookTunesPanel.getComponents()) {
-//            BookItem item = (BookItem) c;
-//            if (item.isSelected()) {
-//                bookTunes.remove(item.getTune());
-//                otherTunes.add(item.getTune());
-//            }
-//        }
-//        updatePanels();
-//        updateRemoveFromBookButton();
-//    }
     private boolean otherTunesPanelHasSelection() {
         for (Component c : otherTunesPanel.getComponents()) {
-            BookItem item = (BookItem) c;
+            BookTuneItem item = (BookTuneItem) c;
             if (item.isSelected()) {
                 return true;
             }
@@ -588,7 +524,7 @@ public class EditBookDialog extends AmeDialog<Book> {
 
     private boolean bookTunesPanelHasSelection() {
         for (Component c : bookTunesPanel.getComponents()) {
-            BookItem item = (BookItem) c;
+            BookTuneItem item = (BookTuneItem) c;
             if (item.isSelected()) {
                 return true;
             }
@@ -598,14 +534,14 @@ public class EditBookDialog extends AmeDialog<Book> {
 
     private boolean firstItemSelected() {
         if (bookTunesPanel.getComponentCount() > 0) {
-            return ((BookItem) bookTunesPanel.getComponent(0)).isSelected();
+            return ((BookTuneItem) bookTunesPanel.getComponent(0)).isSelected();
         }
         return false;
     }
 
     private boolean lastItemSelected() {
         if (bookTunesPanel.getComponentCount() > 0) {
-            return ((BookItem) bookTunesPanel.getComponent(bookTunesPanel.getComponentCount() - 1)).isSelected();
+            return ((BookTuneItem) bookTunesPanel.getComponent(bookTunesPanel.getComponentCount() - 1)).isSelected();
         }
         return false;
     }
@@ -644,15 +580,15 @@ public class EditBookDialog extends AmeDialog<Book> {
 
     private void toggleAllSelection(JPanel panel, boolean selected) {
         for (Component c : panel.getComponents()) {
-            ((BookItem) c).setSelected(selected);
+            ((BookTuneItem) c).setSelected(selected);
         }
     }
 
-    private class BookItem extends JCheckBox {
+    private class BookTuneItem extends JCheckBox {
 
         private final Tune tune;
 
-        public BookItem(Tune tune) {
+        public BookTuneItem(Tune tune) {
             super(tune.getName());
             super.addItemListener((ItemEvent e) -> {
                 updateAddToBookButton();
@@ -687,7 +623,7 @@ public class EditBookDialog extends AmeDialog<Book> {
         @Override
         public void actionPerformed(ActionEvent e) {
             for (Component c : otherTunesPanel.getComponents()) {
-                BookItem item = (BookItem) c;
+                BookTuneItem item = (BookTuneItem) c;
                 if (item.isSelected()) {
                     bookTunes.add(item.getTune());
                     otherTunes.remove(item.getTune());
@@ -703,7 +639,7 @@ public class EditBookDialog extends AmeDialog<Book> {
         @Override
         public void actionPerformed(ActionEvent e) {
             for (Component c : bookTunesPanel.getComponents()) {
-                BookItem item = (BookItem) c;
+                BookTuneItem item = (BookTuneItem) c;
                 if (item.isSelected()) {
                     bookTunes.remove(item.getTune());
                     otherTunes.add(item.getTune());
@@ -720,7 +656,7 @@ public class EditBookDialog extends AmeDialog<Book> {
         public void actionPerformed(ActionEvent e) {
             List<Integer> selectedIndices = new ArrayList<>();
             for (Component c : bookTunesPanel.getComponents()) {
-                BookItem item = (BookItem) c;
+                BookTuneItem item = (BookTuneItem) c;
                 if (item.isSelected()) {
                     selectedIndices.add(item.getIndex() - 1);
                     List<Tune> subList = bookTunes.subList(item.getIndex() - 1, item.getIndex() + 1);
@@ -731,7 +667,7 @@ public class EditBookDialog extends AmeDialog<Book> {
             int i = 0;
             for (Component c : bookTunesPanel.getComponents()) {
                 if (selectedIndices.contains(i)) {
-                    ((BookItem) c).setSelected(true);
+                    ((BookTuneItem) c).setSelected(true);
                 }
                 i++;
             }
@@ -743,11 +679,11 @@ public class EditBookDialog extends AmeDialog<Book> {
         @Override
         public void actionPerformed(ActionEvent e) {
             List<Integer> selectedIndices = new ArrayList<>();
-            List<BookItem> items = new ArrayList<>();
+            List<BookTuneItem> items = new ArrayList<>();
             for (Component c : bookTunesPanel.getComponents()) {
-                items.add(0, (BookItem) c);
+                items.add(0, (BookTuneItem) c);
             }
-            for (BookItem item : items) {
+            for (BookTuneItem item : items) {
                 if (item.isSelected()) {
                     selectedIndices.add(item.getIndex() + 1);
                     List<Tune> subList = bookTunes.subList(item.getIndex(), item.getIndex() + 2);
@@ -758,7 +694,7 @@ public class EditBookDialog extends AmeDialog<Book> {
             int i = 0;
             for (Component c : bookTunesPanel.getComponents()) {
                 if (selectedIndices.contains(i)) {
-                    ((BookItem) c).setSelected(true);
+                    ((BookTuneItem) c).setSelected(true);
                 }
                 i++;
             }

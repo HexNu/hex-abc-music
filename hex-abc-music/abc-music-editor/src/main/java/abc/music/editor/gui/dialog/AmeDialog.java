@@ -28,12 +28,12 @@ public abstract class AmeDialog<T> extends JDialog {
         super(editor, title, true);
         this.editor = editor;
         setup();
-        super.setLocationRelativeTo(editor);
-        super.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
     }
 
     private void setup() {
         init();
+        super.setLocationRelativeTo(editor);
+        super.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         result = Result.CANCEL;
     }
 

@@ -16,6 +16,7 @@ import abc.music.editor.AmeConstants;
 import abc.music.editor.action.CreateFileAction;
 import abc.music.editor.action.CreateVoiceActon;
 import abc.music.editor.action.CreateTuneAction;
+import abc.music.editor.action.HandleTuneInBooksAction;
 import abc.music.editor.action.OpenScoreLayoutAction;
 import abc.music.editor.gui.support.PersonRoleListMouseListener;
 import abc.music.editor.gui.support.SharpFlatNaturalKeyListener;
@@ -389,6 +390,7 @@ public class TuneHeadersPanel extends AmePanel {
         svgButton = new javax.swing.JButton();
         postScriptButton = new javax.swing.JButton();
         abcButton = new javax.swing.JButton();
+        booksButton = new javax.swing.JButton();
 
         setOpaque(false);
 
@@ -628,6 +630,13 @@ public class TuneHeadersPanel extends AmePanel {
             }
         });
 
+        booksButton.setText("Books");
+        booksButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                booksButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout buttonsPanelLayout = new javax.swing.GroupLayout(buttonsPanel);
         buttonsPanel.setLayout(buttonsPanelLayout);
         buttonsPanelLayout.setHorizontalGroup(
@@ -641,13 +650,15 @@ public class TuneHeadersPanel extends AmePanel {
                 .addComponent(lyricsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(openScoreLayoutButton, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(156, 156, 156)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(booksButton, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(141, 141, 141)
                 .addComponent(svgButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(postScriptButton, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(abcButton)
-                .addContainerGap(501, Short.MAX_VALUE))
+                .addContainerGap(410, Short.MAX_VALUE))
         );
         buttonsPanelLayout.setVerticalGroup(
             buttonsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -660,7 +671,8 @@ public class TuneHeadersPanel extends AmePanel {
                     .addComponent(lyricsButton)
                     .addComponent(svgButton)
                     .addComponent(postScriptButton)
-                    .addComponent(abcButton))
+                    .addComponent(abcButton)
+                    .addComponent(booksButton))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -912,12 +924,17 @@ public class TuneHeadersPanel extends AmePanel {
         openLyricsPanel();
     }//GEN-LAST:event_lyricsButtonActionPerformed
 
+    private void booksButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_booksButtonActionPerformed
+        openBooks();
+    }//GEN-LAST:event_booksButtonActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton abcButton;
     private javax.swing.JButton addVoiceButton;
     private javax.swing.JButton applyKeyChangesButton;
     private javax.swing.JList<String> authorList;
+    private javax.swing.JButton booksButton;
     private javax.swing.JPanel buttonsPanel;
     private javax.swing.JComboBox<String> clefComboBox;
     private javax.swing.JTextArea commentsTextArea;
@@ -1082,5 +1099,9 @@ public class TuneHeadersPanel extends AmePanel {
 
     private void openLyricsPanel() {
         editor.getVoicesPanel().addLyrics(tune.getLyrics());
+    }
+
+    private void openBooks() {
+        new HandleTuneInBooksAction(editor, tune).actionPerformed(null);
     }
 }

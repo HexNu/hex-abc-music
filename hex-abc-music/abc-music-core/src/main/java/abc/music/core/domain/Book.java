@@ -55,6 +55,10 @@ public class Book {
         this.tunes.add(tune);
     }
 
+    public boolean hasTune(Tune tune) {
+        return tunes.contains(tune);
+    }
+
     public void removeTune(Tune tune) {
         for (Iterator<Tune> it = tunes.iterator(); it.hasNext();) {
             Tune t = it.next();

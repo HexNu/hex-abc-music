@@ -837,13 +837,15 @@
                   <Component id="lyricsButton" min="-2" pref="100" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="openScoreLayoutButton" min="-2" pref="100" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="156" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="booksButton" min="-2" pref="100" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="141" max="-2" attributes="0"/>
                   <Component id="svgButton" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="postScriptButton" min="-2" pref="42" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="abcButton" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="501" max="32767" attributes="0"/>
+                  <EmptySpace pref="410" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -859,6 +861,7 @@
                       <Component id="svgButton" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="postScriptButton" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="abcButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="booksButton" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
@@ -956,6 +959,14 @@
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="abcButtonActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="booksButton">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Books"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="booksButtonActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>

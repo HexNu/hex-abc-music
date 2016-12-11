@@ -1,5 +1,6 @@
 package nu.hex.abc.music.service;
 
+import abc.music.core.domain.Book;
 import abc.music.core.domain.Project;
 import abc.music.core.domain.Tune;
 import java.io.File;
@@ -109,6 +110,14 @@ public class Service {
                 }
             }
         }
+        return result;
+    }
+    
+    public List<Book> findByTune(Tune tune) {
+        List<Book> result = new ArrayList<>();
+        project.getBooks().stream().filter((book) -> (book.hasTune(tune))).forEach((book) -> {
+            result.add(book);
+        });
         return result;
     }
 
