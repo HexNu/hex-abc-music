@@ -20,8 +20,12 @@ public class Project {
     private String name;
     private String summary;
     private String introduction;
-    private Boolean printCreators;
+    private Boolean printPersons;
+    private String personsHeader;
+    private String personsText;
     private Boolean printBooks;
+    private String booksHeader;
+    private String booksText;
     private String abcVersion;
     private Owner owner = new Owner();
     private LocalDateTime lastUpdated;
@@ -54,12 +58,28 @@ public class Project {
         this.introduction = introduction;
     }
 
-    public Boolean getPrintCreators() {
-        return printCreators == null ? false : printCreators;
+    public Boolean getPrintPersons() {
+        return printPersons == null ? false : printPersons;
     }
 
-    public void setPrintCreators(Boolean printCreators) {
-        this.printCreators = printCreators;
+    public void setPrintPersons(Boolean printPersons) {
+        this.printPersons = printPersons;
+    }
+
+    public String getPersonsHeader() {
+        return personsHeader;
+    }
+
+    public void setPersonsHeader(String personsHeader) {
+        this.personsHeader = personsHeader;
+    }
+
+    public String getPersonsText() {
+        return personsText;
+    }
+
+    public void setPersonsText(String personsText) {
+        this.personsText = personsText;
     }
 
     public Boolean getPrintBooks() {
@@ -70,6 +90,22 @@ public class Project {
         this.printBooks = printBooks;
     }
 
+    public String getBooksHeader() {
+        return booksHeader;
+    }
+
+    public void setBooksHeader(String booksHeader) {
+        this.booksHeader = booksHeader;
+    }
+
+    public String getBooksText() {
+        return booksText;
+    }
+
+    public void setBooksText(String booksText) {
+        this.booksText = booksText;
+    }
+ 
     public Owner getOwner() {
         return owner;
     }

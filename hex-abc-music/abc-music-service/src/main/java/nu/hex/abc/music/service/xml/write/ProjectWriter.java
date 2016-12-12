@@ -22,8 +22,18 @@ class ProjectWriter extends XmlWriter<Project> {
         result.addAttribute("name", entity.getName());
         result.addAttribute("abc-version", entity.getAbcVersion());
         result.addAttribute("summary", entity.getSummary());
-        result.addAttribute("print-creators", entity.getPrintCreators().toString());
-        result.addAttribute("print-books", entity.getPrintBooks().toString());
+        XmlNode personsTextNode = NodeFactory.createNode("persons-text", entity.getPersonsText());
+        personsTextNode.addAttribute("print", entity.getPrintPersons().toString());
+        if (entity.getPersonsHeader() != null && !entity.getPersonsHeader().isEmpty()) {
+            personsTextNode.addAttribute("header", entity.getPersonsHeader());
+        }
+        result.addChild(personsTextNode);
+        XmlNode booksTextNode = NodeFactory.createNode("books-text", entity.getBooksText());
+        booksTextNode.addAttribute("print", entity.getPrintBooks().toString());
+        if (entity.getBooksHeader() != null && !entity.getBooksHeader().isEmpty()) {
+            booksTextNode.addAttribute("header", entity.getBooksHeader());
+        }
+        result.addChild(booksTextNode);
         if (entity.getIntroduction() != null && !entity.getIntroduction().isEmpty()) {
             result.addChild(NodeFactory.createNode("introduction", entity.getIntroduction()));
         }

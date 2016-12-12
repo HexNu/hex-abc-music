@@ -30,11 +30,23 @@ class ProjectReader implements Reader<Project> {
         if (node.hasAttribute("summary")) {
             result.setSummary(node.getAttribute("summary"));
         }
-        if (node.hasAttribute("print-creators")) {
-            result.setPrintCreators(Boolean.valueOf(node.getAttribute("print-creators")));
+        if (node.hasChildNamed("persons-text")) {
+            if (node.getChild("persons-text").hasAttribute("print")) {
+                result.setPrintPersons(Boolean.valueOf(node.getChild("persons-text").getAttribute("print")));
+            }
+            if (node.getChild("persons-text").hasAttribute("header")) {
+                result.setPersonsHeader(node.getChild("persons-text").getAttribute("header"));
+            }
+            result.setPersonsText(node.getChild("persons-text").getText());
         }
-        if (node.hasAttribute("print-books")) {
-            result.setPrintBooks(Boolean.valueOf(node.getAttribute("print-books")));
+        if (node.hasChildNamed("books-text")) {
+            if (node.getChild("books-text").hasAttribute("print")) {
+                result.setPrintBooks(Boolean.valueOf(node.getChild("books-text").getAttribute("print")));
+            }
+            if (node.getChild("books-text").hasAttribute("header")) {
+                result.setBooksHeader(node.getChild("books-text").getAttribute("header"));
+            }
+            result.setBooksText(node.getChild("books-text").getText());
         }
         if (node.hasChildNamed("introduction")) {
             result.setIntroduction(node.getChild("introduction").getText());
@@ -67,6 +79,7 @@ class ProjectReader implements Reader<Project> {
     private void addPerson(XmlNode personNode) {
         result.addPerson(new PersonReader(personNode).read());
     }
+
     private void addBook(XmlNode bookNode) {
         Book book = new BookReader(result, bookNode).read();
         result.addBook(book);

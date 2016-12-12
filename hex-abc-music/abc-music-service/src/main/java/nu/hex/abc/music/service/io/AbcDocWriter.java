@@ -4,7 +4,6 @@ import abc.music.core.domain.Tune;
 import abc.music.core.domain.Voice;
 import java.util.Arrays;
 import java.util.List;
-import nu.hex.abc.music.service.meta.MetaService;
 
 /**
  * Created 2016-nov-27
@@ -13,9 +12,6 @@ import nu.hex.abc.music.service.meta.MetaService;
  */
 class AbcDocWriter implements Writer<String> {
 
-    private static final String DEFAULT_CHARSET = "%%encoding utf-8";
-    private static final String ABC_VERSION = "%%abc-version 2.2";
-    private static final String ABC_CREATOR = "%%abc-creator hex-abc-music " + MetaService.getAppInfo().getVersion();
     private static final String NEW_LINE = "\n";
     private static final String COMMENT = "%";
     private final List<Tune> tunes;
@@ -31,9 +27,7 @@ class AbcDocWriter implements Writer<String> {
 
     @Override
     public String write() {
-        StringBuilder result = new StringBuilder(ABC_VERSION).append(NEW_LINE)
-                .append(DEFAULT_CHARSET).append(NEW_LINE)
-                .append(ABC_CREATOR).append(NEW_LINE);
+        StringBuilder result = new StringBuilder();
         tunes.forEach((tune) -> {
             result.append(NEW_LINE);
             result.append(createHead(tune));
