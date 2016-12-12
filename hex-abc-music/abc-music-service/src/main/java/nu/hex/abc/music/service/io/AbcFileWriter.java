@@ -1,9 +1,10 @@
 package nu.hex.abc.music.service.io;
 
 import abc.music.core.domain.Book;
+import abc.music.core.domain.Collection;
 import abc.music.core.domain.Person;
-import abc.music.core.domain.Project;
 import abc.music.core.domain.Tune;
+import abc.music.core.util.TextUtil;
 import java.io.File;
 import java.util.Arrays;
 import java.util.Collections;
@@ -29,46 +30,34 @@ class AbcFileWriter implements Writer<File> {
     private final List<Tune> tunes;
     private final File file;
     private String abcDoc = "";
-    private String name;
-    private String introduction;
 
     public AbcFileWriter(Tune tune, File file) {
         this(Arrays.asList(tune), file);
     }
 
     public AbcFileWriter(List<Tune> tunes, File file) {
+        createFileHeader();
         this.tunes = tunes;
         this.file = file;
     }
 
-    public AbcFileWriter(Book book, File file) {
-        this.tunes = book.getTunes();
+    public AbcFileWriter(Collection collection, File file) {
+        createFileHeader();
+        this.tunes = collection.getTunes();
         this.file = file;
-        this.name = book.getName();
-        this.introduction = book.getIntroduction();
-        if (book.getPrintPersons()) {
-            addPersonsInformation(book.getPersonsHeader(), book.getPersonsText(), book.getPersons());
-        }
-    }
-
-    public AbcFileWriter(Project project, File file) {
-        this.tunes = project.getTunes();
-        this.file = file;
-        this.name = project.getName();
-        this.introduction = project.getIntroduction();
-        if (project.getPrintPersons()) {
-            List<Person> persons = project.getPersons();
+        addHeaderAndIntroduction(collection.getName(), collection.getIntroduction());
+        if (collection.getPrintPersons()) {
+            List<Person> persons = collection.getPersons();
             Collections.sort(persons, (a, b) -> a.getFormalName().compareTo(b.getFormalName()));
-            addPersonsInformation(project.getPersonsHeader(), project.getPersonsText(), project.getPersons());
+            addPersonsInformation(collection.getPersonsHeader(), collection.getPersonsText(), persons);
         }
-        if (project.getPrintBooks()) {
-            addBooksInformation(project.getBooksHeader(), project.getBooksText(), project.getBooks());
+        if (collection.getPrintBooks()) {
+            addBooksInformation(collection.getBooksHeader(), collection.getBooksText(), collection.getBooks());
         }
     }
 
     @Override
     public File write() {
-        createFileHeader();
         abcDoc += new AbcDocWriter(tunes).write();
         return new SimpleFileWriter(file, abcDoc).write();
     }
@@ -87,9 +76,70 @@ class AbcFileWriter implements Writer<File> {
                 + NEW_LINE;
     }
 
+    private void addHeaderAndIntroduction(String header, String information) {
+        appendLine("%%topmargin 2.7cm");
+        appendLine("%%leftmargin 2.7cm");
+        appendLine("%%rightmargin 2.7cm");
+        appendLine("%%botmargin 2.7cm");
+        appendLine("%%vskip 11cm");
+        appendLine("%%textfont Times-Bold 30");
+        appendLine("%%center " + header);
+        appendLine("%%newpage");
+        appendLine("%%textfont Times-Bold 21");
+        appendLine("%%vskip 2.7cm");
+        appendLine("%%begintext");
+        appendLine("%%" + header);
+        appendLine("%%endtext");
+        appendLine("%%textfont Times-Roman 14");
+        for (String paragraph : information.split("\n\n")) {
+            appendLine("%%begintext");
+            String[] para = new TextUtil(paragraph).createLines(100).split("\n");
+            for (String line : para) {
+                appendLine("%%" + line);
+            }
+            appendLine("%%endtext");
+            appendLine("%%vskip 0.8cm");
+        }
+    }
+
     private void addPersonsInformation(String header, String text, List<Person> persons) {
+        appendLine("%%textfont Times-Bold 18");
+        appendLine("%%begintext");
+        appendLine("%%" + header);
+        appendLine("%%endtext");
+        for (String paragraph : text.split("\n\n")) {
+            appendLine("%%textfont Times-Roman 14");
+            appendLine("%%begintext");
+            String[] para = new TextUtil(paragraph).createLines(100).split("\n");
+            for (String line : para) {
+                appendLine("%%" + line);
+            }
+            appendLine("%%endtext");
+            appendLine("%%vskip 0.8cm");
+        }
+        for (Person p : persons) {
+            appendLine("%%textfont Times-Bold 14");
+            appendLine("%%begintext");
+            appendLine("%%" + p.getFirstName() + " " + p.getLastName());
+            appendLine("%%endtext");
+            for (String paragraph : p.getHistory().split("\n\n")) {
+                appendLine("%%textfont Times-Roman 14");
+                appendLine("%%begintext");
+                String[] para = new TextUtil(paragraph).createLines(100).split("\n");
+                for (String line : para) {
+                    appendLine("%%" + line);
+                }
+                appendLine("%%endtext");
+                appendLine("%%vskip 0.8cm");
+            }
+        }
     }
 
     private void addBooksInformation(String header, String text, List<Book> books) {
+        appendLine("%%vskip 1.8cm");
+    }
+
+    private void appendLine(String string) {
+        abcDoc += string + NEW_LINE;
     }
 }

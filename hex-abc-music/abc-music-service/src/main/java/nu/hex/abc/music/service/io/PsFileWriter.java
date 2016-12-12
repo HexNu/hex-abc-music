@@ -1,5 +1,6 @@
 package nu.hex.abc.music.service.io;
 
+import abc.music.core.domain.Collection;
 import abc.music.core.domain.Tune;
 import java.io.BufferedReader;
 import java.io.File;
@@ -19,6 +20,7 @@ public class PsFileWriter implements Writer<File> {
 
     private final List<Tune> tunes;
     private final File file;
+    private final Collection collection;
     private File abcFile;
 
     public PsFileWriter(Tune tune, File file) {
@@ -28,12 +30,23 @@ public class PsFileWriter implements Writer<File> {
     public PsFileWriter(List<Tune> tunes, File file) {
         this.tunes = tunes;
         this.file = file;
+        this.collection = null;
+    }
+
+    public PsFileWriter(Collection collection, File file) {
+        this.tunes = collection.getTunes();
+        this.file = file;
+        this.collection = collection;
     }
 
     @Override
     public File write() {
         try {
-            abcFile = new AbcFileWriter(tunes, new File(getAbcFile())).write();
+            if (collection == null) {
+                abcFile = new AbcFileWriter(tunes, new File(getAbcFile())).write();
+            } else {
+                abcFile = new AbcFileWriter(collection, new File(getAbcFile())).write();
+            }
             //TODO : Something about space in filenames must be handled
             String cmdString = "/usr/bin/abcm2ps " + abcFile.getAbsolutePath() + " -O " + file.getAbsolutePath();
             Logger.getLogger(SvgWriter.class.getName()).log(Level.INFO, "Running: {0}", cmdString);

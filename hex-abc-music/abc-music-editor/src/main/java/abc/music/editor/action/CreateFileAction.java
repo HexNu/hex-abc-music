@@ -41,7 +41,7 @@ public class CreateFileAction extends AmeAction<File> {
         this.tunes = tunes;
         this.mediaType = mediaType;
     }
-
+    
     public void setName(String name) {
         this.name = name;
     }

@@ -10,7 +10,7 @@ import java.util.List;
  *
  * @author hl
  */
-public class Book {
+public class Book implements Collection {
 
     private String name;
     private String shortDescription;
@@ -18,7 +18,7 @@ public class Book {
     private Boolean printPersons;
     private String personsHeader;
     private String personsText;
-    private List<Tune> tunes = new ArrayList<>();
+    private final List<Tune> tunes = new ArrayList<>();
 
     public Book() {
     }
@@ -27,6 +27,7 @@ public class Book {
         this.name = name;
     }
 
+    @Override
     public String getName() {
         return name;
     }
@@ -43,6 +44,7 @@ public class Book {
         this.shortDescription = shortDescription;
     }
 
+    @Override
     public String getIntroduction() {
         return introduction;
     }
@@ -51,6 +53,7 @@ public class Book {
         this.introduction = introduction;
     }
 
+    @Override
     public Boolean getPrintPersons() {
         return printPersons == null ? false : printPersons;
     }
@@ -59,6 +62,7 @@ public class Book {
         this.printPersons = printPersons;
     }
 
+    @Override
     public List<Person> getPersons() {
         List<Person> result = new ArrayList<>();
         getTunes().stream().forEach((tune) -> {
@@ -70,6 +74,7 @@ public class Book {
         return result;
     }
 
+    @Override
     public String getPersonsHeader() {
         return personsHeader;
     }
@@ -78,6 +83,7 @@ public class Book {
         this.personsHeader = personsHeader;
     }
 
+    @Override
     public String getPersonsText() {
         return personsText;
     }
@@ -86,6 +92,27 @@ public class Book {
         this.personsText = personsText;
     }
 
+    @Override
+    public Boolean getPrintBooks() {
+        return false;
+    }
+
+    @Override
+    public String getBooksHeader() {
+        return null;
+    }
+
+    @Override
+    public String getBooksText() {
+        return null;
+    }
+
+    @Override
+    public List<Book> getBooks() {
+        return Collections.EMPTY_LIST;
+    }
+
+    @Override
     public List<Tune> getTunes() {
         return tunes;
     }

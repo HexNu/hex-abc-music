@@ -1,9 +1,9 @@
 package abc.music.editor.gui;
 
 import abc.music.core.domain.Book;
+import abc.music.core.domain.Collection;
 import abc.music.core.domain.Person;
 import abc.music.core.domain.Project;
-import abc.music.core.domain.Tune;
 import abc.music.editor.AbcMusicEditor;
 import abc.music.editor.action.BackupProjectAction;
 import abc.music.editor.action.SaveProjectAction;
@@ -20,20 +20,19 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import abc.music.editor.action.CloseProjectAction;
 import abc.music.editor.action.CreateBookAction;
-import abc.music.editor.action.CreateFileAction;
 import abc.music.editor.action.CreatePersonAction;
 import abc.music.editor.action.CreateProjectAction;
 import abc.music.editor.action.EditBookAction;
 import abc.music.editor.action.EditPersonAction;
 import abc.music.editor.action.EditProjectExportSettingsAction;
 import abc.music.editor.action.ExitAction;
+import abc.music.editor.action.ExportCollectionAction;
 import abc.music.editor.action.ImportFromOtherProjectAction;
 import abc.music.editor.action.OpenLatestProjectAction;
 import abc.music.editor.action.OpenProjectAction;
 import abc.music.editor.action.ShowAboutAction;
 import abc.music.editor.action.ShowSettingsAction;
 import abc.music.editor.help.HelpDialog;
-import java.util.List;
 import nu.hex.mediatype.CommonMediaType;
 
 /**
@@ -157,7 +156,7 @@ public class AmeMenuBar extends JMenuBar {
         importMenu.setEnabled(false);
         fileMenu.add(importMenu);
         fileMenu.addSeparator();
-        
+
         printMenu = new AmeMenu("Print");
         // TODO: Implement print
         printMenu.setEnabled(false);
@@ -238,14 +237,14 @@ public class AmeMenuBar extends JMenuBar {
     private void populateImportExportMenu() {
         Project p = editor.getProject();
         AmeMenu exportProjectMenu = new AmeMenu("Project");
-        exportProjectMenu.add(createExportListItem(p.getTunes(), CommonMediaType.TEXT_VND_ABC, p.getName()));
-        exportProjectMenu.add(createExportListItem(p.getTunes(), CommonMediaType.APPLICATION_POSTSCRIPT, p.getName()));
+        exportProjectMenu.add(createExportItem(p, CommonMediaType.TEXT_VND_ABC));
+        exportProjectMenu.add(createExportItem(p, CommonMediaType.APPLICATION_POSTSCRIPT));
         exportMenu.add(exportProjectMenu);
         exportMenu.addSeparator();
         p.getBooks().stream().forEach((book) -> {
             AmeMenu bookMenu = new AmeMenu(book.getName());
-            bookMenu.add(createExportListItem(book.getTunes(), CommonMediaType.TEXT_VND_ABC, book.getName()));
-            bookMenu.add(createExportListItem(book.getTunes(), CommonMediaType.APPLICATION_POSTSCRIPT, book.getName()));
+            bookMenu.add(createExportItem(book, CommonMediaType.TEXT_VND_ABC));
+            bookMenu.add(createExportItem(book, CommonMediaType.APPLICATION_POSTSCRIPT));
             exportMenu.add(bookMenu);
         });
         AmeMenuItem importTunesFromProjectItem = new AmeMenuItem("Import tunes from other project...");
@@ -255,7 +254,7 @@ public class AmeMenuBar extends JMenuBar {
         importMenu.add(importTunesFromProjectItem);
     }
 
-    private AmeMenuItem createExportListItem(List<Tune> tunes, String mediaType, String name) {
+    private AmeMenuItem createExportItem(Collection collection, String mediaType) {
         String label;
         switch (mediaType) {
             case CommonMediaType.TEXT_VND_ABC:
@@ -273,9 +272,8 @@ public class AmeMenuBar extends JMenuBar {
         }
         AmeMenuItem exportListItem = new AmeMenuItem("As " + label);
         exportListItem.addActionListener((ActionEvent e) -> {
-            CreateFileAction action = new CreateFileAction(editor, tunes, mediaType);
-            action.setName(name);
-            action.actionPerformed(null);
+            ExportCollectionAction action = new ExportCollectionAction(editor, collection, mediaType);
+            action.actionPerformed(e);
         });
         return exportListItem;
     }
@@ -288,7 +286,7 @@ public class AmeMenuBar extends JMenuBar {
         });
         projectMenu.add(editProjectItem);
         projectMenu.addSeparator();
-        
+
         personsMenu = new AmeMenu("Persons");
         projectMenu.add(personsMenu);
         AmeMenuItem addPersonItem = new AmeMenuItem("Add Person");

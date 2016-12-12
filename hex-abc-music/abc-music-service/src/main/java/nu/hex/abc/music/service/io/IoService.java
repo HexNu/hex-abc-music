@@ -1,5 +1,6 @@
 package nu.hex.abc.music.service.io;
 
+import abc.music.core.domain.Collection;
 import abc.music.core.domain.Project;
 import abc.music.core.domain.Tune;
 import java.io.File;
@@ -58,4 +59,10 @@ public class IoService {
         return new PsFileWriter(tunes, file).write();
     }
 
+    public File exportCollectionAsAbc(Collection collection, File file) {
+        return new AbcFileWriter(collection, file).write();
+    }
+    public File exportCollectionAsPs(Collection collection, File file) {
+        return new PsFileWriter(collection, file).write();
+    }
 }

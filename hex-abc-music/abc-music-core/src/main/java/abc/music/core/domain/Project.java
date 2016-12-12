@@ -12,7 +12,7 @@ import java.util.Map;
  *
  * @author hl
  */
-public class Project {
+public class Project implements Collection {
 
     private final Map<Integer, Tune> tunes = new HashMap<>();
     private final Map<Integer, Person> persons = new HashMap<>();
@@ -34,6 +34,7 @@ public class Project {
         this.name = name;
     }
 
+    @Override
     public String getName() {
         return name;
     }
@@ -50,6 +51,7 @@ public class Project {
         this.summary = summary;
     }
 
+    @Override
     public String getIntroduction() {
         return introduction;
     }
@@ -58,6 +60,7 @@ public class Project {
         this.introduction = introduction;
     }
 
+    @Override
     public Boolean getPrintPersons() {
         return printPersons == null ? false : printPersons;
     }
@@ -66,6 +69,7 @@ public class Project {
         this.printPersons = printPersons;
     }
 
+    @Override
     public String getPersonsHeader() {
         return personsHeader;
     }
@@ -74,6 +78,7 @@ public class Project {
         this.personsHeader = personsHeader;
     }
 
+    @Override
     public String getPersonsText() {
         return personsText;
     }
@@ -82,6 +87,7 @@ public class Project {
         this.personsText = personsText;
     }
 
+    @Override
     public Boolean getPrintBooks() {
         return printBooks == null ? false : printBooks;
     }
@@ -90,6 +96,7 @@ public class Project {
         this.printBooks = printBooks;
     }
 
+    @Override
     public String getBooksHeader() {
         return booksHeader;
     }
@@ -98,6 +105,7 @@ public class Project {
         this.booksHeader = booksHeader;
     }
 
+    @Override
     public String getBooksText() {
         return booksText;
     }
@@ -105,7 +113,7 @@ public class Project {
     public void setBooksText(String booksText) {
         this.booksText = booksText;
     }
- 
+
     public Owner getOwner() {
         return owner;
     }
@@ -122,6 +130,7 @@ public class Project {
         this.lastUpdated = lastUpdated;
     }
 
+    @Override
     public List<Tune> getTunes() {
         return new ArrayList<>(tunes.values());
     }
@@ -156,6 +165,7 @@ public class Project {
         return ids.get(ids.size() - 1) + 1;
     }
 
+    @Override
     public List<Person> getPersons() {
         return new ArrayList<>(persons.values());
     }

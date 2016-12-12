@@ -21,12 +21,28 @@ public class TextUtil {
         }
         return -1;
     }
-    
+
+    public String createLines(int length) {
+        String result = "";
+        String line = "";
+        for (String s : str.split(" ")) {
+            line += s + " ";
+            System.out.println(line.length());
+            if (line.length() >= length) {
+                result += line + "\n";
+                line = "";
+            }
+        }
+        result += line;
+        return result;
+    }
+
     public static void main(String[] args) {
-        TextUtil textUtil = new TextUtil("E | ^G>^F G/A/B/G/ | E3 B | cd/c/ Bc/B/ | A>B c/B/c/d/ | ee dc/B/ | \n" +
-                "d2 cA | B^G ^FG/A/ | ^G3 y:: B | c>B A/B/c/d/ | e2 e2 | c>B A^G/A/ | \n" +
-                "B/c/B/^G/ EB | c>B A/B/c/e/ | Bc/d/ c>B | AB/^G/ E^G | A>B c/B/^G/B/ | A3 :|]");
-        int nextIndexOf = textUtil.nextIndexOf('\n', 100);
-        System.out.println(nextIndexOf);
+        
+        TextUtil textUtil = new TextUtil("På resande fot 649 - 650 besökte jag en rad spelfolk, kvinnor och män, och tecknade ner en mängd nya låtar. Dessa beslöt jag att samla här för att kunna dela med mig av dessa till mina spelvänner.");
+        
+        System.out.println(textUtil.createLines(100));
+//        int nextIndexOf = textUtil.nextIndexOf('\n', 100);
+//        System.out.println(nextIndexOf);
     }
 }
