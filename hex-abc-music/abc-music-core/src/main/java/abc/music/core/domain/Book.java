@@ -1,6 +1,7 @@
 package abc.music.core.domain;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -14,7 +15,9 @@ public class Book {
     private String name;
     private String shortDescription;
     private String introduction;
-    private Boolean printCreators;
+    private Boolean printPersons;
+    private String personsHeader;
+    private String personsText;
     private List<Tune> tunes = new ArrayList<>();
 
     public Book() {
@@ -48,12 +51,39 @@ public class Book {
         this.introduction = introduction;
     }
 
-    public Boolean getPrintCreators() {
-        return printCreators == null ? false : printCreators;
+    public Boolean getPrintPersons() {
+        return printPersons == null ? false : printPersons;
     }
 
-    public void setPrintCreators(Boolean printCreators) {
-        this.printCreators = printCreators;
+    public void setPrintPersons(Boolean printPersons) {
+        this.printPersons = printPersons;
+    }
+
+    public List<Person> getPersons() {
+        List<Person> result = new ArrayList<>();
+        getTunes().stream().forEach((tune) -> {
+            tune.getCreators().stream().filter((pr) -> (!result.contains(pr.getPerson()))).forEach((pr) -> {
+                result.add(pr.getPerson());
+            });
+        });
+        Collections.sort(result, (a, b) -> a.getFormalName().compareTo(b.getFormalName()));
+        return result;
+    }
+
+    public String getPersonsHeader() {
+        return personsHeader;
+    }
+
+    public void setPersonsHeader(String personsHeader) {
+        this.personsHeader = personsHeader;
+    }
+
+    public String getPersonsText() {
+        return personsText;
+    }
+
+    public void setPersonsText(String personsText) {
+        this.personsText = personsText;
     }
 
     public List<Tune> getTunes() {

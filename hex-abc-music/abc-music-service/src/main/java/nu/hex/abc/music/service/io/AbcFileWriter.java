@@ -6,6 +6,7 @@ import abc.music.core.domain.Project;
 import abc.music.core.domain.Tune;
 import java.io.File;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import nu.hex.abc.music.service.meta.MetaService;
 import nu.hex.abc.music.service.properties.PropertyService;
@@ -45,29 +46,34 @@ class AbcFileWriter implements Writer<File> {
         this.file = file;
         this.name = book.getName();
         this.introduction = book.getIntroduction();
+        if (book.getPrintPersons()) {
+            addPersonsInformation(book.getPersonsHeader(), book.getPersonsText(), book.getPersons());
+        }
     }
-    
+
     public AbcFileWriter(Project project, File file) {
         this.tunes = project.getTunes();
         this.file = file;
         this.name = project.getName();
         this.introduction = project.getIntroduction();
         if (project.getPrintPersons()) {
-            printCreators(project.getPersons());
+            List<Person> persons = project.getPersons();
+            Collections.sort(persons, (a, b) -> a.getFormalName().compareTo(b.getFormalName()));
+            addPersonsInformation(project.getPersonsHeader(), project.getPersonsText(), project.getPersons());
         }
         if (project.getPrintBooks()) {
-            printBooks(project.getBooks());
+            addBooksInformation(project.getBooksHeader(), project.getBooksText(), project.getBooks());
         }
     }
 
     @Override
     public File write() {
-        createHeader();
+        createFileHeader();
         abcDoc += new AbcDocWriter(tunes).write();
         return new SimpleFileWriter(file, abcDoc).write();
     }
 
-    private void createHeader() {
+    private void createFileHeader() {
         String abcVersion = properties.getProperty("abc-version");
         if (abcVersion == null) {
             abcVersion = DEFAULT_ABC_VERSION;
@@ -77,14 +83,13 @@ class AbcFileWriter implements Writer<File> {
                 + NEW_LINE
                 + DEFAULT_CHARSET
                 + NEW_LINE
-                + ABC_CREATOR 
+                + ABC_CREATOR
                 + NEW_LINE;
     }
 
-    private void printCreators(List<Person> persons) {
-        properties.getProperty("persons-header");
+    private void addPersonsInformation(String header, String text, List<Person> persons) {
     }
 
-    private void printBooks(List<Book> books) {
+    private void addBooksInformation(String header, String text, List<Book> books) {
     }
 }

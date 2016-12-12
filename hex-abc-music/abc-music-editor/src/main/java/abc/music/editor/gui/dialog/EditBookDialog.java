@@ -55,7 +55,9 @@ public class EditBookDialog extends AmeDialog<Book> {
                 otherTunes.add(tune);
             }
         });
-        printCreatorsCheckBox.setSelected(book.getPrintCreators());
+        printPersonsCheckBox.setSelected(book.getPrintPersons());
+        personsHeaderTextField.setText(book.getPersonsHeader());
+        personsTextArea.setText(book.getPersonsText());
         sortList(otherTunes);
         updatePanels();
     }
@@ -103,13 +105,16 @@ public class EditBookDialog extends AmeDialog<Book> {
         nameTextField = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         introductionTextField = new javax.swing.JTextArea();
-        printCreatorsCheckBox = new javax.swing.JCheckBox();
         jLabel5 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         shortDescriptionTextArea = new javax.swing.JTextArea();
-        dialogButtonsPanel = new javax.swing.JPanel();
-        doneButton = new javax.swing.JButton();
-        cancelButton = new javax.swing.JButton();
+        personsPanel = new javax.swing.JPanel();
+        printPersonsCheckBox = new javax.swing.JCheckBox();
+        jLabel6 = new javax.swing.JLabel();
+        personsHeaderTextField = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        personsTextArea = new javax.swing.JTextArea();
         listHandlingPanel = new javax.swing.JPanel();
         listsPanel = new javax.swing.JPanel();
         bookTunesScrollPane = new javax.swing.JScrollPane();
@@ -128,6 +133,9 @@ public class EditBookDialog extends AmeDialog<Book> {
         otherTunesButtonPanel = new javax.swing.JPanel();
         allOtherItemButton = new javax.swing.JButton();
         noOtherItemsButton = new javax.swing.JButton();
+        dialogButtonsPanel = new javax.swing.JPanel();
+        doneButton = new javax.swing.JButton();
+        cancelButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -140,8 +148,6 @@ public class EditBookDialog extends AmeDialog<Book> {
         introductionTextField.setRows(5);
         introductionTextField.setWrapStyleWord(true);
         jScrollPane1.setViewportView(introductionTextField);
-
-        printCreatorsCheckBox.setText("Include Persons Information on Export");
 
         jLabel5.setText("Short Description:");
         jLabel5.setToolTipText("<html>A short description of the book.<br/>\nThis text will be included in the projects export if the project has \"print books\" set to true.");
@@ -157,19 +163,17 @@ public class EditBookDialog extends AmeDialog<Book> {
             .addGroup(textButtonPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(textButtonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 652, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1)
+                    .addComponent(jScrollPane2)
                     .addGroup(textButtonPanelLayout.createSequentialGroup()
                         .addGroup(textButtonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(textButtonPanelLayout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addGap(42, 42, 42)
-                                .addComponent(nameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(printCreatorsCheckBox))
                             .addComponent(jLabel2)
-                            .addComponent(jLabel5))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane2))
+                            .addComponent(jLabel5)
+                            .addGroup(textButtonPanelLayout.createSequentialGroup()
+                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(nameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         textButtonPanelLayout.setVerticalGroup(
@@ -178,8 +182,7 @@ public class EditBookDialog extends AmeDialog<Book> {
                 .addContainerGap()
                 .addGroup(textButtonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(nameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(printCreatorsCheckBox))
+                    .addComponent(nameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -187,43 +190,52 @@ public class EditBookDialog extends AmeDialog<Book> {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 215, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
-        doneButton.setText("Done");
-        doneButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                doneButtonActionPerformed(evt);
-            }
-        });
+        printPersonsCheckBox.setText("Include Persons Information on Export");
 
-        cancelButton.setText("Cancel");
-        cancelButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cancelButtonActionPerformed(evt);
-            }
-        });
+        jLabel6.setText("Header:");
 
-        javax.swing.GroupLayout dialogButtonsPanelLayout = new javax.swing.GroupLayout(dialogButtonsPanel);
-        dialogButtonsPanel.setLayout(dialogButtonsPanelLayout);
-        dialogButtonsPanelLayout.setHorizontalGroup(
-            dialogButtonsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(dialogButtonsPanelLayout.createSequentialGroup()
+        jLabel7.setText("Text:");
+
+        personsTextArea.setColumns(20);
+        personsTextArea.setRows(5);
+        jScrollPane3.setViewportView(personsTextArea);
+
+        javax.swing.GroupLayout personsPanelLayout = new javax.swing.GroupLayout(personsPanel);
+        personsPanel.setLayout(personsPanelLayout);
+        personsPanelLayout.setHorizontalGroup(
+            personsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(personsPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(cancelButton, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(doneButton, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(personsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane3)
+                    .addGroup(personsPanelLayout.createSequentialGroup()
+                        .addGroup(personsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(printPersonsCheckBox)
+                            .addGroup(personsPanelLayout.createSequentialGroup()
+                                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(personsHeaderTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel7))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
-        dialogButtonsPanelLayout.setVerticalGroup(
-            dialogButtonsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(dialogButtonsPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(dialogButtonsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(doneButton)
-                    .addComponent(cancelButton))
-                .addContainerGap())
+        personsPanelLayout.setVerticalGroup(
+            personsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(personsPanelLayout.createSequentialGroup()
+                .addComponent(printPersonsCheckBox)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(personsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(personsHeaderTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel7)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 15, Short.MAX_VALUE))
         );
 
         listHandlingPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
@@ -376,7 +388,7 @@ public class EditBookDialog extends AmeDialog<Book> {
         otherTunesButtonPanelLayout.setHorizontalGroup(
             otherTunesButtonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(otherTunesButtonPanelLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(125, Short.MAX_VALUE)
                 .addComponent(allOtherItemButton, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(noOtherItemsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -398,23 +410,55 @@ public class EditBookDialog extends AmeDialog<Book> {
             listHandlingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(listHandlingPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(listHandlingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(listHandlingPanelLayout.createSequentialGroup()
-                        .addComponent(bookTunesButtonPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(otherTunesButtonPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(listsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(bookTunesButtonPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(otherTunesButtonPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
+            .addComponent(listsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         listHandlingPanelLayout.setVerticalGroup(
             listHandlingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(listHandlingPanelLayout.createSequentialGroup()
-                .addContainerGap()
                 .addComponent(listsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
                 .addGroup(listHandlingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(bookTunesButtonPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(otherTunesButtonPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
+        );
+
+        doneButton.setText("Done");
+        doneButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                doneButtonActionPerformed(evt);
+            }
+        });
+
+        cancelButton.setText("Cancel");
+        cancelButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancelButtonActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout dialogButtonsPanelLayout = new javax.swing.GroupLayout(dialogButtonsPanel);
+        dialogButtonsPanel.setLayout(dialogButtonsPanelLayout);
+        dialogButtonsPanelLayout.setHorizontalGroup(
+            dialogButtonsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(dialogButtonsPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(cancelButton, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(doneButton, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        dialogButtonsPanelLayout.setVerticalGroup(
+            dialogButtonsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(dialogButtonsPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(dialogButtonsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(doneButton)
+                    .addComponent(cancelButton))
                 .addContainerGap())
         );
 
@@ -425,16 +469,13 @@ public class EditBookDialog extends AmeDialog<Book> {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(textButtonPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 40, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(dialogButtonsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(listHandlingPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addContainerGap())))
+                    .addComponent(textButtonPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(dialogButtonsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(listHandlingPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(personsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -442,8 +483,10 @@ public class EditBookDialog extends AmeDialog<Book> {
                 .addContainerGap()
                 .addComponent(textButtonPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(personsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(listHandlingPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(28, 28, 28)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(dialogButtonsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -501,7 +544,9 @@ public class EditBookDialog extends AmeDialog<Book> {
         book.setName(nameTextField.getText());
         book.setShortDescription(shortDescriptionTextArea.getText());
         book.setIntroduction(introductionTextField.getText());
-        book.setPrintCreators(printCreatorsCheckBox.isSelected());
+        book.setPrintPersons(printPersonsCheckBox.isSelected());
+        book.setPersonsHeader(personsHeaderTextField.getText());
+        book.setPersonsText(personsTextArea.getText());
         book.setTunes(bookTunes);
     }
 
@@ -521,8 +566,11 @@ public class EditBookDialog extends AmeDialog<Book> {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JPanel listHandlingPanel;
     private javax.swing.JPanel listsPanel;
     private javax.swing.JButton moveDownButton;
@@ -533,7 +581,10 @@ public class EditBookDialog extends AmeDialog<Book> {
     private javax.swing.JPanel otherTunesButtonPanel;
     private javax.swing.JPanel otherTunesPanel;
     private javax.swing.JScrollPane otherTunesScrollPane;
-    private javax.swing.JCheckBox printCreatorsCheckBox;
+    private javax.swing.JTextField personsHeaderTextField;
+    private javax.swing.JPanel personsPanel;
+    private javax.swing.JTextArea personsTextArea;
+    private javax.swing.JCheckBox printPersonsCheckBox;
     private javax.swing.JButton removeFromBookButton;
     private javax.swing.JTextArea shortDescriptionTextArea;
     private javax.swing.JPanel textButtonPanel;
