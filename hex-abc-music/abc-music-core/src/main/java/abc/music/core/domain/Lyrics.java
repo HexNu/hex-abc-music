@@ -1,5 +1,6 @@
 package abc.music.core.domain;
 
+import abc.music.core.util.TextUtil;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -12,9 +13,9 @@ import java.util.TreeMap;
 public class Lyrics {
 
     private static final String NEW_LINE = "\n";
+    private static final String TEXT_INDICATOR = "TEXT:";
     private final Map<Integer, List<String>> strophes = new TreeMap<>();
     private StringBuilder abcStringBuilder;
-    private boolean firstLineRead;
     private Tune tune;
 
     public Lyrics() {
@@ -62,8 +63,22 @@ public class Lyrics {
         getStrophes().keySet().stream().forEach((stropheNumber) -> {
             abcStringBuilder.append("W: ").append(stropheNumber + 1).append(".").append(NEW_LINE);
             getStrophes().get(stropheNumber).forEach((line) -> {
-                abcStringBuilder.append("W: ");
-                abcStringBuilder.append(line).append(NEW_LINE);
+                if (line.startsWith(TEXT_INDICATOR)) {
+                    abcStringBuilder.append("%%textfont Times-Italic 14\n")
+                            .append("%%vskip 1.2cm\n")
+                            .append("%%begintext\n")
+                            .append("%%").append(NEW_LINE);
+                    String[] para = new TextUtil(line.substring(TEXT_INDICATOR.length()).trim()).createLines(75).split("\n");
+                    for (String l : para) {
+                        abcStringBuilder.append("%%").append(l).append(NEW_LINE);
+                    }
+                    abcStringBuilder.append("%%").append(NEW_LINE)
+                            .append("%%endtext\n")
+                            .append("%%vskip 1.2cm\n");
+                } else {
+                    abcStringBuilder.append("W: ");
+                    abcStringBuilder.append(line).append(NEW_LINE);
+                }
             });
             abcStringBuilder.append("%").append(NEW_LINE);
         });

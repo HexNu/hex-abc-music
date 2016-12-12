@@ -2,11 +2,7 @@ package abc.music.editor.gui;
 
 import abc.music.core.domain.Lyrics;
 import abc.music.editor.AbcMusicEditor;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
 
 /**
  *
@@ -68,7 +64,9 @@ public class LyricsPanel extends AmePanel {
         setLayout(new java.awt.BorderLayout());
 
         lyricsTextArea.setColumns(20);
+        lyricsTextArea.setLineWrap(true);
         lyricsTextArea.setRows(5);
+        lyricsTextArea.setWrapStyleWord(true);
         jScrollPane1.setViewportView(lyricsTextArea);
 
         add(jScrollPane1, java.awt.BorderLayout.CENTER);

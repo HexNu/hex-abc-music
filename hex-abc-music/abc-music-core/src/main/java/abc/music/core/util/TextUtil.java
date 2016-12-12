@@ -34,7 +34,7 @@ public class TextUtil {
                 }
             }
             if (!line.isEmpty()) {
-                result += line;
+                result += line.trim();
                 line = "";
             }
             result += "\n";
