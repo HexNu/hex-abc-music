@@ -27,22 +27,12 @@ public class TextUtil {
         String line = "";
         for (String s : str.split(" ")) {
             line += s + " ";
-            System.out.println(line.length());
             if (line.length() >= length) {
-                result += line + "\n";
+                result += line.trim() + "\n";
                 line = "";
             }
         }
-        result += line;
+        result += line.trim();
         return result;
-    }
-
-    public static void main(String[] args) {
-        
-        TextUtil textUtil = new TextUtil("På resande fot 649 - 650 besökte jag en rad spelfolk, kvinnor och män, och tecknade ner en mängd nya låtar. Dessa beslöt jag att samla här för att kunna dela med mig av dessa till mina spelvänner.");
-        
-        System.out.println(textUtil.createLines(100));
-//        int nextIndexOf = textUtil.nextIndexOf('\n', 100);
-//        System.out.println(nextIndexOf);
     }
 }
