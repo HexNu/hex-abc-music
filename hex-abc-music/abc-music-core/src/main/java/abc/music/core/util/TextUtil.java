@@ -25,12 +25,19 @@ public class TextUtil {
     public String createLines(int length) {
         String result = "";
         String line = "";
-        for (String s : str.split(" ")) {
-            line += s + " ";
-            if (line.length() >= length) {
-                result += line.trim() + "\n";
+        for (String sl : str.split("\n")) {
+            for (String s : sl.split(" ")) {
+                line += s + " ";
+                if (line.length() >= length) {
+                    result += line.trim() + "\n";
+                    line = "";
+                }
+            }
+            if (!line.isEmpty()) {
+                result += line;
                 line = "";
             }
+            result += "\n";
         }
         result += line.trim();
         return result;
