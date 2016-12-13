@@ -42,4 +42,20 @@ public class TextUtil {
         result += line.trim();
         return result;
     }
+
+    public String camelCaseToHyphens() {
+        String result = "";
+        for (String s : str.split("(?=[A-Z])")) {
+            result += "-" + s.toLowerCase();
+        }
+        return result.substring(1);
+    }
+    
+    public String hyphensToCamelCase() {
+        String result = "";
+        for (String s : str.split("-")) {
+            result += s.substring(0, 1).toUpperCase() + s.substring(1);
+        }
+        return result;
+    }
 }
