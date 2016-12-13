@@ -13,8 +13,10 @@ import java.util.List;
 public class Book implements Collection {
 
     private String name;
+    private List<String> titles = new ArrayList<>();
     private String shortDescription;
-    private String introduction;
+    private String prefaceHeader;
+    private String preface;
     private Boolean printPersons;
     private String personsHeader;
     private String personsText;
@@ -36,6 +38,25 @@ public class Book implements Collection {
         this.name = name;
     }
 
+    @Override
+    public List<String> getTitles() {
+        return titles;
+    }
+
+    @Override
+    public Boolean hasTitles() {
+        return titles != null && !titles.isEmpty();
+    }
+
+    public void setTitles(List<String> titles) {
+        this.titles.clear();
+        this.titles.addAll(titles);
+    }
+
+    public void addTitle(String title) {
+        this.titles.add(title);
+    }
+
     public String getShortDescription() {
         return shortDescription;
     }
@@ -45,12 +66,21 @@ public class Book implements Collection {
     }
 
     @Override
-    public String getIntroduction() {
-        return introduction;
+    public String getPrefaceHeader() {
+        return prefaceHeader;
     }
 
-    public void setIntroduction(String introduction) {
-        this.introduction = introduction;
+    public void setPrefaceHeader(String header) {
+        this.prefaceHeader = header;
+    }
+
+    @Override
+    public String getPreface() {
+        return preface;
+    }
+
+    public void setPreface(String preface) {
+        this.preface = preface;
     }
 
     @Override

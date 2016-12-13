@@ -25,7 +25,7 @@ public class EditBookAction extends AmeAction<Book> {
         EditBookDialog dialog = new EditBookDialog(editor, book);
         dialog.setVisible(true);
         if (dialog.getResult().equals(AmeDialog.Result.OK)) {
-            System.out.println(book.getName());
+            new SaveProjectAction(editor).actionPerformed(event);
             editor.updateMenuBar();
         }
     }

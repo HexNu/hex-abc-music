@@ -44,8 +44,13 @@ public class EditBookDialog extends AmeDialog<Book> {
         if (book.getShortDescription()!= null) {
             shortDescriptionTextArea.setText(book.getShortDescription());
         }
-        if (book.getIntroduction() != null) {
-            introductionTextField.setText(book.getIntroduction());
+        if (book.getPrefaceHeader() != null) {
+            prefaceHeaderTextField.setText(book.getPrefaceHeader());
+        } else {
+            prefaceHeaderTextField.setText(book.getName());
+        }
+        if (book.getPreface() != null) {
+            prefaceTextArea.setText(book.getPreface());
         }
         book.getTunes().forEach((tune) -> {
             bookTunes.add(tune);
@@ -104,10 +109,11 @@ public class EditBookDialog extends AmeDialog<Book> {
         jLabel2 = new javax.swing.JLabel();
         nameTextField = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        introductionTextField = new javax.swing.JTextArea();
+        prefaceTextArea = new javax.swing.JTextArea();
         jLabel5 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         shortDescriptionTextArea = new javax.swing.JTextArea();
+        prefaceHeaderTextField = new javax.swing.JTextField();
         personsPanel = new javax.swing.JPanel();
         printPersonsCheckBox = new javax.swing.JCheckBox();
         jLabel6 = new javax.swing.JLabel();
@@ -141,13 +147,13 @@ public class EditBookDialog extends AmeDialog<Book> {
 
         jLabel1.setText("Name:");
 
-        jLabel2.setText("Introduction:");
+        jLabel2.setText("Preface:");
 
-        introductionTextField.setColumns(20);
-        introductionTextField.setLineWrap(true);
-        introductionTextField.setRows(5);
-        introductionTextField.setWrapStyleWord(true);
-        jScrollPane1.setViewportView(introductionTextField);
+        prefaceTextArea.setColumns(20);
+        prefaceTextArea.setLineWrap(true);
+        prefaceTextArea.setRows(5);
+        prefaceTextArea.setWrapStyleWord(true);
+        jScrollPane1.setViewportView(prefaceTextArea);
 
         jLabel5.setText("Short Description:");
         jLabel5.setToolTipText("<html>A short description of the book.<br/>\nThis text will be included in the projects export if the project has \"print books\" set to true.");
@@ -155,6 +161,9 @@ public class EditBookDialog extends AmeDialog<Book> {
         shortDescriptionTextArea.setColumns(20);
         shortDescriptionTextArea.setRows(3);
         jScrollPane2.setViewportView(shortDescriptionTextArea);
+
+        prefaceHeaderTextField.setText("Preface");
+        prefaceHeaderTextField.setToolTipText("Header for the preface");
 
         javax.swing.GroupLayout textButtonPanelLayout = new javax.swing.GroupLayout(textButtonPanel);
         textButtonPanel.setLayout(textButtonPanelLayout);
@@ -167,13 +176,16 @@ public class EditBookDialog extends AmeDialog<Book> {
                     .addComponent(jScrollPane2)
                     .addGroup(textButtonPanelLayout.createSequentialGroup()
                         .addGroup(textButtonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
                             .addComponent(jLabel5)
                             .addGroup(textButtonPanelLayout.createSequentialGroup()
                                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(nameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                                .addComponent(nameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(textButtonPanelLayout.createSequentialGroup()
+                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(prefaceHeaderTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 270, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         textButtonPanelLayout.setVerticalGroup(
@@ -188,9 +200,11 @@ public class EditBookDialog extends AmeDialog<Book> {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel2)
+                .addGroup(textButtonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(prefaceHeaderTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 215, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 205, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -543,7 +557,8 @@ public class EditBookDialog extends AmeDialog<Book> {
     private void updateBook() {
         book.setName(nameTextField.getText());
         book.setShortDescription(shortDescriptionTextArea.getText());
-        book.setIntroduction(introductionTextField.getText());
+        book.setPrefaceHeader(prefaceHeaderTextField.getText());
+        book.setPreface(prefaceTextArea.getText());
         book.setPrintPersons(printPersonsCheckBox.isSelected());
         book.setPersonsHeader(personsHeaderTextField.getText());
         book.setPersonsText(personsTextArea.getText());
@@ -560,7 +575,6 @@ public class EditBookDialog extends AmeDialog<Book> {
     private javax.swing.JButton cancelButton;
     private javax.swing.JPanel dialogButtonsPanel;
     private javax.swing.JButton doneButton;
-    private javax.swing.JTextArea introductionTextField;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -584,6 +598,8 @@ public class EditBookDialog extends AmeDialog<Book> {
     private javax.swing.JTextField personsHeaderTextField;
     private javax.swing.JPanel personsPanel;
     private javax.swing.JTextArea personsTextArea;
+    private javax.swing.JTextField prefaceHeaderTextField;
+    private javax.swing.JTextArea prefaceTextArea;
     private javax.swing.JCheckBox printPersonsCheckBox;
     private javax.swing.JButton removeFromBookButton;
     private javax.swing.JTextArea shortDescriptionTextArea;

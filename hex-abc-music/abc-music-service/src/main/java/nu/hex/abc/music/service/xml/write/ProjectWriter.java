@@ -22,6 +22,11 @@ class ProjectWriter extends XmlWriter<Project> {
         result.addAttribute("name", entity.getName());
         result.addAttribute("abc-version", entity.getAbcVersion());
         result.addAttribute("summary", entity.getSummary());
+        XmlNode titlesNode = NodeFactory.createNode("titles");
+        entity.getTitles().stream().forEach((title) -> {
+            titlesNode.addChild(NodeFactory.createNode("title", title));
+        });
+        result.addChild(titlesNode);
         XmlNode personsTextNode = NodeFactory.createNode("persons-text", entity.getPersonsText());
         personsTextNode.addAttribute("print", entity.getPrintPersons().toString());
         if (entity.getPersonsHeader() != null && !entity.getPersonsHeader().isEmpty()) {
@@ -34,8 +39,12 @@ class ProjectWriter extends XmlWriter<Project> {
             booksTextNode.addAttribute("header", entity.getBooksHeader());
         }
         result.addChild(booksTextNode);
-        if (entity.getIntroduction() != null && !entity.getIntroduction().isEmpty()) {
-            result.addChild(NodeFactory.createNode("introduction", entity.getIntroduction()));
+        if (entity.getPreface() != null && !entity.getPreface().isEmpty()) {
+            XmlNode prefaceNode = NodeFactory.createNode("preface", entity.getPreface());
+            if (entity.getPrefaceHeader() != null) {
+                prefaceNode.addAttribute("header", entity.getPrefaceHeader());
+            }
+            result.addChild(prefaceNode);
         }
         if (entity.getOwner() != null) {
             XmlNode ownerNode = new ClassNode(Project.Owner.class).getNode();

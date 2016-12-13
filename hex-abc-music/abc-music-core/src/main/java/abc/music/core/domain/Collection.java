@@ -11,23 +11,29 @@ public interface Collection {
 
     String getName();
 
-    String getIntroduction();
+    List<String> getTitles();
+
+    Boolean hasTitles();
+    
+    String getPrefaceHeader();
+
+    String getPreface();
 
     List<Tune> getTunes();
 
     List<Person> getPersons();
-    
+
     Boolean getPrintPersons();
-    
+
     String getPersonsHeader();
-    
+
     String getPersonsText();
-    
+
     Boolean getPrintBooks();
-    
+
     String getBooksHeader();
-    
+
     String getBooksText();
-    
+
     List<Book> getBooks();
 }

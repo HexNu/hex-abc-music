@@ -30,6 +30,11 @@ class ProjectReader implements Reader<Project> {
         if (node.hasAttribute("summary")) {
             result.setSummary(node.getAttribute("summary"));
         }
+        if (node.hasChildNamed("titles") && node.getChild("titles").hasChildNamed("title")) {
+            node.getChild("titles").getChildren("title").stream().forEach((node) -> {
+                result.addTitle(node.getText());
+            });
+        }
         if (node.hasChildNamed("persons-text")) {
             if (node.getChild("persons-text").hasAttribute("print")) {
                 result.setPrintPersons(Boolean.valueOf(node.getChild("persons-text").getAttribute("print")));
@@ -49,7 +54,12 @@ class ProjectReader implements Reader<Project> {
             result.setBooksText(node.getChild("books-text").getText());
         }
         if (node.hasChildNamed("introduction")) {
-            result.setIntroduction(node.getChild("introduction").getText());
+            result.setPreface(node.getChild("introduction").getText());
+        } else if (node.hasChildNamed("preface")) {
+            if (node.getChild("preface").hasAttribute("header")) {
+                result.setPrefaceHeader(node.getChild("preface").getAttribute("header"));
+            }
+            result.setPreface(node.getChild("preface").getText());
         }
         if (node.hasChildNamed("owner")) {
             if (result.getOwner() == null) {

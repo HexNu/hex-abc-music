@@ -1,7 +1,9 @@
 package nu.hex.abc.music.service.io;
 
+import abc.music.core.domain.History;
 import abc.music.core.domain.Tune;
 import abc.music.core.domain.Voice;
+import abc.music.core.util.TextUtil;
 import java.util.Arrays;
 import java.util.List;
 
@@ -98,6 +100,18 @@ class AbcDocWriter implements Writer<String> {
         }
         if (tune.hasLyrics()) {
             result.append(tune.getLyrics().getAbcString()).append(NEW_LINE);
+        }
+        if (tune.hasHistory()) {
+            result.append("%%textfont Times-Italic 12").append(NEW_LINE)
+                    .append("%%textoption right").append(NEW_LINE)
+                    .append("%%begintext").append(NEW_LINE);
+            for (History history : tune.getHistory()) {
+                String[] para = new TextUtil(history.getContent()).createLines(100).split("\n");
+                for (String line : para) {
+                    result.append("%%" + line).append(NEW_LINE);
+                }
+            }
+            result.append("%%endtext").append(NEW_LINE);
         }
         result.append(NEW_LINE);
         return result.toString();

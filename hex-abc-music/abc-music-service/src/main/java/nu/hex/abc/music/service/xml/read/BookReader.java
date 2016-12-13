@@ -38,7 +38,12 @@ public class BookReader extends NodeReader<Book> {
             result.setShortDescription(node.getChild("short-description").getText());
         }
         if (node.hasChildNamed("introduction")) {
-            result.setIntroduction(node.getChild("introduction").getText());
+            result.setPreface(node.getChild("introduction").getText());
+        } else if (node.hasChildNamed("preface")) {
+            if (node.getChild("preface").hasAttribute("header")) {
+                result.setPrefaceHeader(node.getChild("preface").getAttribute("header"));
+            }
+            result.setPreface(node.getChild("preface").getText());
         }
         node.getChildren("tune").stream().forEach(this::addTune);
         return result;

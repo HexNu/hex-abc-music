@@ -30,11 +30,15 @@ public class BookWriter implements Writer<XmlNode> {
             personsTextNode.addAttribute("header", book.getPersonsHeader());
         }
         result.addChild(personsTextNode);
-        if (book.getShortDescription()!= null) {
+        if (book.getShortDescription() != null) {
             result.addChild(NodeFactory.createNode("short-description", book.getShortDescription()));
         }
-        if (book.getIntroduction() != null) {
-            result.addChild(NodeFactory.createNode("introduction", book.getIntroduction()));
+        if (book.getPreface() != null) {
+            XmlNode prefaceNode = NodeFactory.createNode("preface", book.getPreface());
+            if (book.getPrefaceHeader() != null) {
+                prefaceNode.addAttribute("header", book.getPrefaceHeader());
+            }
+            result.addChild(prefaceNode);
         }
         book.getTunes().stream().forEach(this::addTune);
         return result;

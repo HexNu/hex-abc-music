@@ -33,6 +33,7 @@ class AbcFileWriter implements Writer<File> {
     private final File file;
     private String abcDoc = "";
     private boolean isBook = false;
+    private boolean isCollection = false;
 
     public AbcFileWriter(Tune tune, File file) {
         this(Arrays.asList(tune), file);
@@ -49,7 +50,8 @@ class AbcFileWriter implements Writer<File> {
         this.tunes = collection.getTunes();
         this.file = file;
         isBook = collection instanceof Book;
-        addHeaderAndIntroduction(collection.getName(), collection.getIntroduction());
+        isCollection = true;
+        addHeaderAndIntroduction(collection);
         if (collection.getPrintPersons()) {
             List<Person> persons = collection.getPersons();
             Collections.sort(persons, (a, b) -> a.getFormalName().compareTo(b.getFormalName()));
@@ -66,6 +68,9 @@ class AbcFileWriter implements Writer<File> {
 
     @Override
     public File write() {
+        if (isCollection && !isBook) {
+            Collections.sort(tunes, (a,b) -> a.getName().compareTo(b.getName()));
+        }
         abcDoc += new AbcDocWriter(tunes).write();
         return new SimpleFileWriter(file, abcDoc).write();
     }
@@ -84,22 +89,33 @@ class AbcFileWriter implements Writer<File> {
                 + NEW_LINE;
     }
 
-    private void addHeaderAndIntroduction(String header, String information) {
+    private void addHeaderAndIntroduction(Collection collection) {
+        appendLine("%%writefields Q false");
         appendLine("%%topmargin 2.7cm");
         appendLine("%%leftmargin 2.7cm");
         appendLine("%%rightmargin 2.7cm");
         appendLine("%%botmargin 2.7cm");
         setSkip(7.5);
         setFont(TIMES_BOLD, 30);
-        appendCenteredLine(header);
+        appendCenteredLine(collection.getName());
         setPageBreak();
-        appendLine("%%center ");
+        if (!collection.getTitles().isEmpty()) {
+            appendCenteredLine(" ");
+            setPageBreak();
+            setSkip(7.5);
+            for (int i = 0; i < collection.getTitles().size(); i++) {
+                if (i > 0) {
+                    setFont(TIMES_ITALIC, 21);
+                }
+                appendCenteredLine(collection.getTitles().get(i));
+            }
+        }
         setPageBreak();
-        setFont(TIMES_BOLD, 21);
+        setFont(TIMES_BOLD, 18);
         setSkip(2.7);
-        appendSingleTextLine(header);
+        appendSingleTextLine(collection.getPrefaceHeader());
         setFont(TIMES_ROMAN, 14);
-        appendMultipleTextLines(information, 0.8);
+        appendMultipleTextLines(collection.getPreface(), 0.8);
     }
 
     private void addPersonsInformation(String header, String text, List<Person> persons) {

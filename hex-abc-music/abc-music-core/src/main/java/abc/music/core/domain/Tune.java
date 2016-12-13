@@ -104,7 +104,7 @@ public class Tune {
     public void addCreator(PersonRole originator) {
         this.creators.add(originator);
     }
-    
+
     public void removeCreator(PersonRole creator) {
         for (Iterator<PersonRole> it = creators.iterator(); it.hasNext();) {
             PersonRole pr = it.next();
@@ -142,6 +142,10 @@ public class Tune {
 
     public List<History> getHistory() {
         return history;
+    }
+
+    public boolean hasHistory() {
+        return history != null && !history.isEmpty();
     }
 
     public void setHistory(List<History> history) {
