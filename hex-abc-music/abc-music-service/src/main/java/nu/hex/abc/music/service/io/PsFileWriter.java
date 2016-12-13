@@ -6,6 +6,9 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
@@ -59,6 +62,15 @@ public class PsFileWriter implements Writer<File> {
                 }
             }
             process.waitFor();
+            List<String> lines = new ArrayList<>();
+            List<String> readLines = Files.readAllLines(file.toPath(), Charset.forName("UTF-8"));
+            for (String line : readLines) {
+                if (line.startsWith("%%Title:")) {
+                    line = "%%Title: " + line.substring(line.lastIndexOf("/")+1, line.lastIndexOf(".abc")).replaceAll("_", " ");
+                }
+                lines.add(line);
+            }
+            Files.write(file.toPath(), lines, Charset.forName("UTF-8"));
             return new File(file.getAbsolutePath());
         } catch (IOException | InterruptedException ex) {
             Logger.getLogger(PsFileWriter.class.getName()).log(Level.SEVERE, null, ex);
