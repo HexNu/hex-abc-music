@@ -85,6 +85,7 @@ public abstract class AmeDialog<T> extends JDialog {
 
     public void cancel() {
         abort();
+        set(null);
         result = Result.CANCEL;
         setVisible(false);
     }

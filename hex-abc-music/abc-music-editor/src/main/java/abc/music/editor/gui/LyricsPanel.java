@@ -2,6 +2,7 @@ package abc.music.editor.gui;
 
 import abc.music.core.domain.Lyrics;
 import abc.music.editor.AbcMusicEditor;
+import abc.music.editor.gui.support.LyricsEditorKeyListener;
 import java.util.Arrays;
 
 /**
@@ -22,6 +23,7 @@ public class LyricsPanel extends AmePanel {
     @Override
     protected void init() {
         initComponents();
+        lyricsTextArea.addKeyListener(new LyricsEditorKeyListener(this));
     }
 
     private void setFields() {

@@ -62,4 +62,9 @@ public enum PostScriptFont {
         }
         return DEFAULT_FONT;
     }
+
+    @Override
+    public String toString() {
+        return getName();
+    }
 }

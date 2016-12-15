@@ -1,4 +1,4 @@
-package abc.music.editor.gui.dialog.notes;
+package abc.music.editor.gui.dialog.tune;
 
 import abc.music.core.domain.Key;
 import abc.music.core.domain.Voice;
@@ -166,10 +166,4 @@ public class KeyChangeDialog extends AmeDialog<Key> {
     private javax.swing.JComboBox<String> pitchComboBox;
     private javax.swing.JComboBox<String> signatureComboBox;
     // End of variables declaration//GEN-END:variables
-
-//    private void toggleKeyEnabled() {
-//    }
-//
-//    private void toggleModifiersEnabled() {
-//    }
 }

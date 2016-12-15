@@ -5,10 +5,10 @@ import abc.music.editor.AbcMusicEditor;
 import abc.music.editor.gui.VoicePanel;
 import abc.music.editor.gui.dialog.AmeDialog;
 import abc.music.editor.gui.dialog.UndockedVoicePanelDialog;
-import abc.music.editor.gui.dialog.notes.AnnotationDialog;
-import abc.music.editor.gui.dialog.notes.KeyChangeDialog;
-import abc.music.editor.gui.dialog.notes.MeterChangeDialog;
-import abc.music.editor.gui.dialog.notes.OrnamentChooser;
+import abc.music.editor.gui.dialog.tune.AnnotationDialog;
+import abc.music.editor.gui.dialog.tune.KeyChangeDialog;
+import abc.music.editor.gui.dialog.tune.MeterChangeDialog;
+import abc.music.editor.gui.dialog.tune.OrnamentChooser;
 import java.awt.event.KeyEvent;
 import javax.swing.JTextArea;
 
@@ -30,44 +30,44 @@ public class NoteEditorKeyListener extends AmeKeyAdapter {
     }
 
     @Override
-    public void keyPressed(KeyEvent e) {
-        if (e.isControlDown()) {
-            switch (e.getKeyCode()) {
+    public void keyPressed(KeyEvent event) {
+        if (event.isControlDown()) {
+            switch (event.getKeyCode()) {
                 case KeyEvent.VK_ENTER:
-                    setString(e, SOFT_LINE_BREAK);
+                    setString(event, SOFT_LINE_BREAK);
                     break;
                 case KeyEvent.VK_5:
-                    setString(e, COMMENT);
+                    setString(event, COMMENT);
                     break;
                 case KeyEvent.VK_8:
-                    addTie(e);
+                    addTie(event);
                     break;
                 case KeyEvent.VK_D:
-                    addDecoration(e);
+                    addDecoration(event);
                     break;
                 case KeyEvent.VK_G:
-                    addChord(e);
+                    addChord(event);
                     break;
                 case KeyEvent.VK_K:
-                    changeKey(e);
+                    changeKey(event);
                     break;
                 case KeyEvent.VK_M:
-                    changeMeter(e);
+                    changeMeter(event);
                     break;
                 case KeyEvent.VK_N:
-                    addAnnotation(e);
+                    addAnnotation(event);
                     break;
                 case KeyEvent.VK_R:
-                    reverse(e);
+                    reverse(event);
                     break;
                 case KeyEvent.VK_U:
-                    detachPanel(e);
+                    detachPanel(event);
                     break;
                 case KeyEvent.VK_W:
-                    addWordLine(e);
+                    addWordLine(event);
                     break;
                 default:
-                    super.keyTyped(e);
+                    super.keyTyped(event);
                     break;
             }
         }

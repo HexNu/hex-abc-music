@@ -1,4 +1,4 @@
-package abc.music.editor.gui.dialog.notes;
+package abc.music.editor.gui.dialog.tune;
 
 import abc.music.editor.AbcMusicEditor;
 import abc.music.editor.gui.dialog.AmeDialog;

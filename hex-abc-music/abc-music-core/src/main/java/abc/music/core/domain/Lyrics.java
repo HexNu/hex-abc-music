@@ -65,17 +65,6 @@ public class Lyrics {
             getStrophes().get(stropheNumber).forEach((line) -> {
                 if (line.startsWith(TEXT_INDICATOR)) {
                     abcStringBuilder.append(createTextLine(line).get());
-//                    abcStringBuilder.append("%%textfont Times-Italic 14\n")
-//                            .append("%%vskip 1.2cm\n")
-//                            .append("%%begintext\n")
-//                            .append("%%").append(NEW_LINE);
-//                    String[] para = new TextUtil(line.substring(TEXT_INDICATOR.length()).trim()).createLines(75).split("\n");
-//                    for (String l : para) {
-//                        abcStringBuilder.append("%%").append(l).append(NEW_LINE);
-//                    }
-//                    abcStringBuilder.append("%%").append(NEW_LINE)
-//                            .append("%%endtext\n")
-//                            .append("%%vskip 1.2cm\n");
                 } else {
                     abcStringBuilder.append("W: ").append(line).append(NEW_LINE);
                 }
@@ -108,10 +97,10 @@ public class Lyrics {
     public static class TextLine {
 
         private PostScriptFont font;
-        private int fontSize;
-        private int lineLength;
-        private double upperMargin;
-        private double lowerMargin;
+        private Integer fontSize;
+        private Integer lineLength;
+        private Double upperMargin;
+        private Double lowerMargin;
         private String text;
 
         public PostScriptFont getFont() {
@@ -175,5 +164,19 @@ public class Lyrics {
                     .append("%%vskip ").append(getLowerMargin()).append("cm").append(NEW_LINE);
             return builder.toString();
         }
+
+        @Override
+        public String toString() {
+            String result = "TEXT " + font.name() + " " + fontSize + " " + lineLength + " " + upperMargin;
+            if (lowerMargin != null) {
+                result += " " + lowerMargin;
+            }
+            if (text == null) {
+                return result += ": ";
+            } else {
+                return result += ": " + text;
+            }
+        }
+
     }
 }

@@ -50,7 +50,7 @@ public class TextUtil {
         }
         return result.substring(1);
     }
-    
+
     public String hyphensToCamelCase() {
         String result = "";
         for (String s : str.split("-")) {

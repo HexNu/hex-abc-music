@@ -95,6 +95,7 @@ class AbcFileWriter implements Writer<File> {
         appendLine("%%leftmargin 2.7cm");
         appendLine("%%rightmargin 2.7cm");
         appendLine("%%botmargin 2.7cm");
+        appendLine("%%indent 0.7cm");
         setSkip(7.5);
         setFont(TIMES_BOLD, 30);
         appendCenteredLine(collection.getName());

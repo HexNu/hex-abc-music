@@ -58,6 +58,6 @@ public abstract class AmeKeyAdapter extends KeyAdapter {
     }
 
     protected void setString(KeyEvent e, String text) {
-        setString(e, text, null);
+        setString(e, text, 0);
     }
 }
