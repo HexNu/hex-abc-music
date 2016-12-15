@@ -18,6 +18,7 @@ import abc.music.editor.action.CreateVoiceActon;
 import abc.music.editor.action.CreateTuneAction;
 import abc.music.editor.action.HandleTuneInBooksAction;
 import abc.music.editor.action.OpenScoreLayoutAction;
+import abc.music.editor.action.PrintAction;
 import abc.music.editor.gui.support.PersonRoleListMouseListener;
 import abc.music.editor.gui.support.SharpFlatNaturalKeyListener;
 import abc.music.editor.gui.support.TransposeComboBoxModel;
@@ -167,6 +168,7 @@ public class TuneHeadersPanel extends AmePanel {
 
     public void setEditingEnabled(boolean enabled) {
         openScoreLayoutButton.setEnabled(enabled);
+        printButton.setEnabled(enabled);
         addVoiceButton.setEnabled(enabled);
         lyricsButton.setEnabled(enabled);
         booksButton.setEnabled(enabled);
@@ -194,6 +196,7 @@ public class TuneHeadersPanel extends AmePanel {
         octaveComboBox.setEnabled(enabled);
         abcButton.setEnabled(enabled);
         postScriptButton.setEnabled(enabled);
+        pdfButton.setEnabled(enabled);
         applyKeyChangesButton.setEnabled(enabled);
     }
 
@@ -390,10 +393,11 @@ public class TuneHeadersPanel extends AmePanel {
         openScoreLayoutButton = new javax.swing.JButton();
         newTuneButton = new javax.swing.JButton();
         lyricsButton = new javax.swing.JButton();
-        svgButton = new javax.swing.JButton();
+        pdfButton = new javax.swing.JButton();
         postScriptButton = new javax.swing.JButton();
         abcButton = new javax.swing.JButton();
         booksButton = new javax.swing.JButton();
+        printButton = new javax.swing.JButton();
 
         setOpaque(false);
 
@@ -600,14 +604,14 @@ public class TuneHeadersPanel extends AmePanel {
             }
         });
 
-        svgButton.setBackground(java.awt.Color.white);
-        svgButton.setFont(AmeConstants.TAB_LABEL_FONT);
-        svgButton.setForeground(AmeConstants.TITLE_COLOR);
-        svgButton.setText("PDF");
-        svgButton.setEnabled(false);
-        svgButton.addActionListener(new java.awt.event.ActionListener() {
+        pdfButton.setBackground(java.awt.Color.white);
+        pdfButton.setFont(AmeConstants.TAB_LABEL_FONT);
+        pdfButton.setForeground(AmeConstants.TITLE_COLOR);
+        pdfButton.setText("PDF");
+        pdfButton.setEnabled(false);
+        pdfButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                svgButtonActionPerformed(evt);
+                pdfButtonActionPerformed(evt);
             }
         });
 
@@ -640,6 +644,13 @@ public class TuneHeadersPanel extends AmePanel {
             }
         });
 
+        printButton.setText("Print");
+        printButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                printButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout buttonsPanelLayout = new javax.swing.GroupLayout(buttonsPanel);
         buttonsPanel.setLayout(buttonsPanelLayout);
         buttonsPanelLayout.setHorizontalGroup(
@@ -655,8 +666,10 @@ public class TuneHeadersPanel extends AmePanel {
                 .addComponent(openScoreLayoutButton, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(booksButton, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(141, 141, 141)
-                .addComponent(svgButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(printButton, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(35, 35, 35)
+                .addComponent(pdfButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(postScriptButton, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -672,10 +685,11 @@ public class TuneHeadersPanel extends AmePanel {
                     .addComponent(openScoreLayoutButton)
                     .addComponent(newTuneButton)
                     .addComponent(lyricsButton)
-                    .addComponent(svgButton)
+                    .addComponent(pdfButton)
                     .addComponent(postScriptButton)
                     .addComponent(abcButton)
-                    .addComponent(booksButton))
+                    .addComponent(booksButton)
+                    .addComponent(printButton))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -907,9 +921,9 @@ public class TuneHeadersPanel extends AmePanel {
         createTune();
     }//GEN-LAST:event_newTuneButtonActionPerformed
 
-    private void svgButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_svgButtonActionPerformed
-        createSvgFile();
-    }//GEN-LAST:event_svgButtonActionPerformed
+    private void pdfButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pdfButtonActionPerformed
+        createPdfFile();
+    }//GEN-LAST:event_pdfButtonActionPerformed
 
     private void abcButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_abcButtonActionPerformed
         createAbcFile();
@@ -930,6 +944,10 @@ public class TuneHeadersPanel extends AmePanel {
     private void booksButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_booksButtonActionPerformed
         openBooks();
     }//GEN-LAST:event_booksButtonActionPerformed
+
+    private void printButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_printButtonActionPerformed
+        printTune();
+    }//GEN-LAST:event_printButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -986,11 +1004,12 @@ public class TuneHeadersPanel extends AmePanel {
     private javax.swing.JComboBox<String> octaveComboBox;
     private javax.swing.JButton openScoreLayoutButton;
     private javax.swing.JTextArea originTextArea;
+    private javax.swing.JButton pdfButton;
     private javax.swing.JComboBox<String> pitchComboBox;
     private javax.swing.JButton postScriptButton;
+    private javax.swing.JButton printButton;
     private javax.swing.JTextField rythmTextField;
     private javax.swing.JComboBox<String> signatureComboBox;
-    private javax.swing.JButton svgButton;
     private javax.swing.JComboBox<String> tempoLabelComboBox;
     private javax.swing.JComboBox<String> tempoUnitComboBox;
     private javax.swing.JTextArea titlesTextArea;
@@ -1072,11 +1091,14 @@ public class TuneHeadersPanel extends AmePanel {
 
     private void createAbcFile() {
         new CreateFileAction(editor, tune, CommonMediaType.TEXT_VND_ABC).actionPerformed(null);
-
     }
 
     private void createPostScriptFile() {
         new CreateFileAction(editor, tune, CommonMediaType.APPLICATION_POSTSCRIPT).actionPerformed(null);
+    }
+
+    private void createPdfFile() {
+        new CreateFileAction(editor, tune, CommonMediaType.APPLICATION_PDF).actionPerformed(null);
     }
 
     private void handleKeyChange() {
@@ -1106,5 +1128,9 @@ public class TuneHeadersPanel extends AmePanel {
 
     private void openBooks() {
         new HandleTuneInBooksAction(editor, tune).actionPerformed(null);
+    }
+
+    private void printTune() {
+        new PrintAction(editor, tune).actionPerformed(null);
     }
 }

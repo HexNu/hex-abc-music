@@ -7,7 +7,8 @@ import java.io.FileNotFoundException;
 import nu.hex.abc.music.service.Service;
 import nu.hex.abc.music.service.exception.ProjectNotFoundException;
 import nu.hex.abc.music.service.exception.ServiceException;
-import nu.hex.abc.music.service.io.AmxFileReader;
+import nu.hex.abc.music.service.io.IoService;
+//import nu.hex.abc.music.service.io.AmxFileReader;
 import se.digitman.lightxml.DocumentToXmlNodeParser;
 import se.digitman.lightxml.XmlDocument;
 
@@ -26,7 +27,7 @@ public class ReaderService {
 
     public static Project openProject(File file) throws ServiceException {
         if (file.getAbsolutePath().endsWith("amx")) {
-            XmlDocument doc = new AmxFileReader(file).read();
+            XmlDocument doc = IoService.readProjectFile(file);
             return new ProjectReader(doc.getRoot()).read();
         } else {
             try {

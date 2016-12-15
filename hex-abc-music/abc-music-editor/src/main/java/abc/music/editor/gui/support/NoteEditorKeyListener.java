@@ -66,7 +66,12 @@ public class NoteEditorKeyListener extends AmeKeyAdapter {
                 case KeyEvent.VK_W:
                     addWordLine(event);
                     break;
+                case KeyEvent.VK_LESS:
+                    setString(event, " | ", 3);
+                case KeyEvent.VK_PERIOD:
+                    setString(event, " :: ", 4);
                 default:
+                    System.out.println(event.getKeyCode());
                     super.keyTyped(event);
                     break;
             }

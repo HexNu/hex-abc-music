@@ -30,6 +30,7 @@ import abc.music.editor.action.ExportCollectionAction;
 import abc.music.editor.action.ImportFromOtherProjectAction;
 import abc.music.editor.action.OpenLatestProjectAction;
 import abc.music.editor.action.OpenProjectAction;
+import abc.music.editor.action.PrintAction;
 import abc.music.editor.action.ShowAboutAction;
 import abc.music.editor.action.ShowSettingsAction;
 import abc.music.editor.help.HelpDialog;
@@ -158,10 +159,9 @@ public class AmeMenuBar extends JMenuBar {
         fileMenu.addSeparator();
 
         printMenu = new AmeMenu("Print");
-        // TODO: Implement print
         printMenu.setEnabled(false);
-
         fileMenu.add(printMenu);
+
         fileMenu.addSeparator();
 
         exitMenuItem.setMnemonic('q');
@@ -226,12 +226,14 @@ public class AmeMenuBar extends JMenuBar {
         exportMenu.removeAll();
         if (enable) {
             populateImportExportMenu();
+            populatePrintMenu();
         }
         projectMenu.setEnabled(enable);
         projectMenu.removeAll();
         if (enable) {
             populateProjectMenu();
         }
+        printMenu.setEnabled(enable);
     }
 
     private void populateImportExportMenu() {
@@ -239,12 +241,14 @@ public class AmeMenuBar extends JMenuBar {
         AmeMenu exportProjectMenu = new AmeMenu("Project");
         exportProjectMenu.add(createExportItem(p, CommonMediaType.TEXT_VND_ABC));
         exportProjectMenu.add(createExportItem(p, CommonMediaType.APPLICATION_POSTSCRIPT));
+        exportProjectMenu.add(createExportItem(p, CommonMediaType.APPLICATION_PDF));
         exportMenu.add(exportProjectMenu);
         exportMenu.addSeparator();
         p.getBooks().stream().forEach((book) -> {
             AmeMenu bookMenu = new AmeMenu(book.getName());
             bookMenu.add(createExportItem(book, CommonMediaType.TEXT_VND_ABC));
             bookMenu.add(createExportItem(book, CommonMediaType.APPLICATION_POSTSCRIPT));
+            bookMenu.add(createExportItem(book, CommonMediaType.APPLICATION_PDF));
             exportMenu.add(bookMenu);
         });
         AmeMenuItem importTunesFromProjectItem = new AmeMenuItem("Import tunes from other project...");
@@ -252,6 +256,16 @@ public class AmeMenuBar extends JMenuBar {
             new ImportFromOtherProjectAction(editor).actionPerformed(e);
         });
         importMenu.add(importTunesFromProjectItem);
+    }
+
+    private void populatePrintMenu() {
+        Project p = editor.getProject();
+        printMenu.add(createPrintItem(p));
+        AmeMenu printBooksMenu = new AmeMenu("Books");
+        p.getBooks().stream().forEach((book) -> {
+            printBooksMenu.add(createPrintItem(book));
+        });
+        printMenu.add(printBooksMenu);
     }
 
     private AmeMenuItem createExportItem(Collection collection, String mediaType) {
@@ -276,6 +290,15 @@ public class AmeMenuBar extends JMenuBar {
             action.actionPerformed(e);
         });
         return exportListItem;
+    }
+
+    private AmeMenuItem createPrintItem(Collection collection) {
+        AmeMenuItem printItem = new AmeMenuItem(collection.getName());
+        printItem.addActionListener((ActionEvent e) -> {
+            PrintAction action = new PrintAction(editor, collection);
+            action.actionPerformed(e);
+        });
+        return printItem;
     }
 
     private void populateProjectMenu() {

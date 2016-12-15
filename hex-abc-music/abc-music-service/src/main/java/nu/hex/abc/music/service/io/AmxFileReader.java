@@ -19,7 +19,7 @@ import se.digitman.lightxml.XmlNode;
  *
  * @author hl
  */
-public class AmxFileReader implements Reader<XmlDocument> {
+class AmxFileReader implements Reader<XmlDocument> {
 
     private final File inputFile;
 

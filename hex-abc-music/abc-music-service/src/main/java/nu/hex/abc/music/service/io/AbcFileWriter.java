@@ -69,7 +69,7 @@ class AbcFileWriter implements Writer<File> {
     @Override
     public File write() {
         if (isCollection && !isBook) {
-            Collections.sort(tunes, (a,b) -> a.getName().compareTo(b.getName()));
+            Collections.sort(tunes, (a, b) -> a.getName().compareTo(b.getName()));
         }
         abcDoc += new AbcDocWriter(tunes).write();
         return new SimpleFileWriter(file, abcDoc).write();

@@ -16,7 +16,7 @@ import nu.hex.mediatype.HexMediaType;
  *
  * @author hl
  */
-public class AmxFileWriter implements Writer<Void> {
+class AmxFileWriter implements Writer<Void> {
 
     private final String content;
     private final String name;

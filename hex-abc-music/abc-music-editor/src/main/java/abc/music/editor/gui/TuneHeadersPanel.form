@@ -839,8 +839,10 @@
                   <Component id="openScoreLayoutButton" min="-2" pref="100" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="booksButton" min="-2" pref="100" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="141" max="-2" attributes="0"/>
-                  <Component id="svgButton" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="printButton" min="-2" pref="100" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
+                  <Component id="pdfButton" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="postScriptButton" min="-2" pref="42" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
@@ -858,10 +860,11 @@
                       <Component id="openScoreLayoutButton" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="newTuneButton" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="lyricsButton" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="svgButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="pdfButton" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="postScriptButton" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="abcButton" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="booksButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="printButton" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
@@ -907,7 +910,7 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="lyricsButtonActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="svgButton">
+        <Component class="javax.swing.JButton" name="pdfButton">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" id="white" palette="1" red="ff" type="palette"/>
@@ -922,7 +925,7 @@
             <Property name="enabled" type="boolean" value="false"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="svgButtonActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="pdfButtonActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JButton" name="postScriptButton">
@@ -967,6 +970,14 @@
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="booksButtonActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="printButton">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Print"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="printButtonActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>

@@ -24,11 +24,13 @@ public class AbcMusicProperties {
     public static final String SETTINGS_FOLDER = APPLICATION_ROOT_FOLDER + "settings/";
     private static final String SETTINGS_FILE = SETTINGS_FOLDER + "settings.xml";
     private static final String DEFAULT_PROJECT_FOLDER = APPLICATION_ROOT_FOLDER + "projects/";
+    private static final String DEFAULT_PRINT_FOLDER = APPLICATION_ROOT_FOLDER + "print/";
     private static final String DEFAULT_PROJECT_SVG_FOLDER = DEFAULT_PROJECT_FOLDER + "svg/";
     private static final String DEFAULT_BACKUP_FOLDER = APPLICATION_ROOT_FOLDER + "backup/";
     private static final String PUBLIC_APPLICATION_FOLDER = System.getProperty("user.home") + "/HexAbcMusic/";
     private static final String DEFAULT_ABC_FOLDER = PUBLIC_APPLICATION_FOLDER + "ABC/";
     private static final String DEFAULT_PS_FOLDER = PUBLIC_APPLICATION_FOLDER + "PS/";
+    private static final String DEFAULT_PDF_FOLDER = PUBLIC_APPLICATION_FOLDER + "PDF/";
     private static final String DEFAULT_SVG_FOLDER = PUBLIC_APPLICATION_FOLDER + "SVG/";
     public static final String PROJECT_FOLDER = "project-folder";
     public static final String PROJECT_SVG_FOLDER = "project-svg-folder";
@@ -36,6 +38,8 @@ public class AbcMusicProperties {
     public static final String APP_FOLDER = "app-folder";
     public static final String ABC_FOLDER = "abc-folder";
     public static final String PS_FOLDER = "ps-folder";
+    public static final String PDF_FOLDER = "pdf-folder";
+    public static final String PRINT_FOLDER = "print-folder";
     public static final String SVG_FOLDER = "svg-folder";
     public static final String LATEST_SAVED_PROJECT = "latest-saved-project";
     public static final String AUTO_OPEN_LATEST_PROJECT = "auto-open-project";
@@ -59,6 +63,8 @@ public class AbcMusicProperties {
         defaultSettingsMap.put(APP_FOLDER, PUBLIC_APPLICATION_FOLDER);
         defaultSettingsMap.put(ABC_FOLDER, DEFAULT_ABC_FOLDER);
         defaultSettingsMap.put(PS_FOLDER, DEFAULT_PS_FOLDER);
+        defaultSettingsMap.put(PDF_FOLDER, DEFAULT_PDF_FOLDER);
+        defaultSettingsMap.put(PRINT_FOLDER, DEFAULT_PRINT_FOLDER);
         defaultSettingsMap.put(SVG_FOLDER, DEFAULT_SVG_FOLDER);
         try {
             new File(APPLICATION_ROOT_FOLDER).mkdirs();
@@ -66,6 +72,7 @@ public class AbcMusicProperties {
             new File(DEFAULT_PROJECT_FOLDER).mkdir();
             new File(PUBLIC_APPLICATION_FOLDER).mkdirs();
             new File(DEFAULT_PROJECT_SVG_FOLDER).mkdir();
+            new File(DEFAULT_PRINT_FOLDER).mkdirs();
             new File(DEFAULT_BACKUP_FOLDER).mkdir();
             new File(DEFAULT_ABC_FOLDER).mkdirs();
             new File(DEFAULT_PS_FOLDER).mkdirs();
@@ -152,11 +159,13 @@ public class AbcMusicProperties {
     private void createSettingsFile() {
         settingsNode = NodeFactory.createNode("settings");
         addSettingNode(DEFAULT_PROJECT_FOLDER, PROJECT_FOLDER);
+        addSettingNode(DEFAULT_PRINT_FOLDER, PRINT_FOLDER);
         addSettingNode(DEFAULT_PROJECT_SVG_FOLDER, PROJECT_SVG_FOLDER);
         addSettingNode(DEFAULT_BACKUP_FOLDER, BACKUP_FOLDER);
         addSettingNode(PUBLIC_APPLICATION_FOLDER, APP_FOLDER);
         addSettingNode(DEFAULT_ABC_FOLDER, ABC_FOLDER);
         addSettingNode(DEFAULT_PS_FOLDER, PS_FOLDER);
+        addSettingNode(DEFAULT_PDF_FOLDER, PDF_FOLDER);
         addSettingNode(DEFAULT_SVG_FOLDER, SVG_FOLDER);
         writeToSettingsFile();
     }

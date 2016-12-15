@@ -31,6 +31,8 @@ public class SaveFileChooser extends JFileChooser {
                 return new File(getDirectory(mediaType) + "/" + name + ".abc");
             case CommonMediaType.APPLICATION_POSTSCRIPT:
                 return new File(getDirectory(mediaType) + "/" + name + ".ps");
+            case CommonMediaType.APPLICATION_PDF:
+                return new File(getDirectory(mediaType) + "/" + name + ".pdf");
             case CommonMediaType.IMAGE_SVG_XML:
                 return new File(getDirectory(mediaType) + "/" + name + ".svg");
             case HexMediaType.APPLICATION_VND_HEX_AMX:
@@ -48,6 +50,8 @@ public class SaveFileChooser extends JFileChooser {
                 return Service.getAbcDirectory();
             case CommonMediaType.APPLICATION_POSTSCRIPT:
                 return Service.getPsDirectory();
+            case CommonMediaType.APPLICATION_PDF:
+                return Service.getPdfDirectory();
             case CommonMediaType.IMAGE_SVG_XML:
                 return Service.getSvgDirectory();
             default:
@@ -61,6 +65,8 @@ public class SaveFileChooser extends JFileChooser {
                 return new FileNameExtensionFilter("ABC Files", "abc");
             case CommonMediaType.APPLICATION_POSTSCRIPT:
                 return new FileNameExtensionFilter("PostScript Files", "ps");
+            case CommonMediaType.APPLICATION_PDF:
+                return new FileNameExtensionFilter("PDF Files", "pdf");
             case CommonMediaType.IMAGE_SVG_XML:
                 return new FileNameExtensionFilter("SVG Image Files", "svg");
             case HexMediaType.APPLICATION_VND_HEX_AMX:

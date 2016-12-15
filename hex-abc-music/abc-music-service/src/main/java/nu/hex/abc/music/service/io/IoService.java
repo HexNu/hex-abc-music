@@ -1,10 +1,12 @@
 package nu.hex.abc.music.service.io;
 
+import abc.music.core.ProjectCarrier;
 import abc.music.core.domain.Collection;
 import abc.music.core.domain.Project;
 import abc.music.core.domain.Tune;
 import java.io.File;
 import java.util.List;
+import nu.hex.abc.music.service.xml.read.SimpleProjectReader;
 import se.digitman.lightxml.XmlDocument;
 import se.digitman.lightxml.XmlNode;
 
@@ -15,11 +17,16 @@ import se.digitman.lightxml.XmlNode;
  */
 public class IoService {
 
-    private final Project project;
+    public IoService() {
+    }
 
-    public IoService(Project project) {
-        this.project = project;
+    public static ProjectCarrier extractTunesAndPersons(File file) {
+        XmlNode node = new AmxFileReader(file).read().getRoot();
+        return new SimpleProjectReader(node).read();
+    }
 
+    public static XmlDocument readProjectFile(File file) {
+        return new AmxFileReader(file).read();
     }
 
     public static File writeToFile(File file, String content) {
@@ -59,10 +66,27 @@ public class IoService {
         return new PsFileWriter(tunes, file).write();
     }
 
+    public File createPdfFile(Tune tune, File file) {
+        return new PdfFileWriter(tune, file).write();
+    }
+
+    public File createPdfFile(List<Tune> tunes, File file) {
+        return new PdfFileWriter(tunes, file).write();
+    }
+
     public File exportCollectionAsAbc(Collection collection, File file) {
         return new AbcFileWriter(collection, file).write();
     }
+
     public File exportCollectionAsPs(Collection collection, File file) {
         return new PsFileWriter(collection, file).write();
+    }
+
+    public File exportCollectionAsPdf(Collection collection, File file) {
+        return new PdfFileWriter(collection, file).write();
+    }
+    
+    public void printFile(File file) {
+        new PdfPrinter(file).print();
     }
 }

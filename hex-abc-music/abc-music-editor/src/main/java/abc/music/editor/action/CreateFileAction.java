@@ -22,15 +22,6 @@ public class CreateFileAction extends AmeAction<File> {
     private final String mediaType;
     private String name;
 
-//    public CreateFileAction(AbcMusicEditor editor, List<Tune> tunes) {
-//        this(editor, tunes, null);
-//    }
-
-//    public CreateFileAction(AbcMusicEditor editor, Tune tune) {
-//        this(editor, tune, null);
-//        name = tune.getName();
-//    }
-
     public CreateFileAction(AbcMusicEditor editor, Tune tune, String mediaType) {
         this(editor, Arrays.asList(tune), mediaType);
         name = tune.getName();
@@ -61,6 +52,9 @@ public class CreateFileAction extends AmeAction<File> {
                     break;
                 case CommonMediaType.APPLICATION_POSTSCRIPT:
                     setResult(getService().getIoService().createPsFile(tunes, file));
+                    break;
+                case CommonMediaType.APPLICATION_PDF:
+                    setResult(getService().getIoService().createPdfFile(tunes, file));
                     break;
                 case CommonMediaType.IMAGE_SVG_XML:
                     break;

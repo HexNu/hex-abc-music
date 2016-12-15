@@ -5,26 +5,17 @@ import abc.music.core.domain.Book;
 import abc.music.core.domain.Project;
 import abc.music.core.domain.Tune;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import nu.hex.abc.music.service.exception.NoProjectException;
-import nu.hex.abc.music.service.io.AmxFileReader;
 import nu.hex.abc.music.service.io.IoService;
 import nu.hex.abc.music.service.meta.MetaService;
 import nu.hex.abc.music.service.properties.PropertyService;
 import nu.hex.abc.music.service.util.TuneHelper;
 import nu.hex.abc.music.service.xml.read.ReaderService;
-import nu.hex.abc.music.service.xml.read.SimpleProjectReader;
 import nu.hex.abc.music.service.xml.write.WriterService;
-import se.digitman.lightxml.DocumentToXmlNodeParser;
-import se.digitman.lightxml.XmlNode;
 
 /**
  * Created 2016-nov-30
@@ -34,9 +25,6 @@ import se.digitman.lightxml.XmlNode;
 public class Service {
 
     public static final String[] SUFFIX = {"amx", "amxf"};
-//    public static final String PROJECT_PATH = AbcMusicProperties.getInstance().getProperty(AbcMusicProperties.PROJECT_FOLDER);
-//    public static final String BACKUP_PATH = AbcMusicProperties.getInstance().getProperty(AbcMusicProperties.BACKUP_FOLDER);
-//    public static final String ABC_PATH = AbcMusicProperties.getInstance().getProperty(AbcMusicProperties.ABC_FOLDER);
 
     private final Project project;
 
@@ -66,40 +54,20 @@ public class Service {
     public static File getPsDirectory() {
         return new File(PropertyService.PS_PATH);
     }
+    public static File getPdfDirectory() {
+        return new File(PropertyService.PDF_PATH);
+    }
+    public static File getPrintDirectory() {
+        return new File(PropertyService.PRINT_PATH);
+    }
 
     public static File getSvgDirectory() {
         return new File(PropertyService.SVG_PATH);
     }
 
     public static ProjectCarrier extractTunesAndPersons(File file) {
-        XmlNode node = new AmxFileReader(file).read().getRoot();
-        return new SimpleProjectReader(node).read();
+        return IoService.extractTunesAndPersons(file);
     }
-//
-//    public static Project openProject(File file) throws ServiceException {
-//        try {
-//            return new ProjectReader(new DocumentToXmlNodeParser(new FileInputStream(file)).parse()).read();
-//        } catch (FileNotFoundException ex) {
-//            throw new ProjectNotFoundException(file);
-//        }
-//    }
-//
-//    public static Project openProject(String name) {
-//        return openProject(getProjectFile(name));
-//    }
-//
-//    public Project saveProject() {
-//        project.setLastUpdated(LocalDateTime.now());
-//        File file = getProjectFile(project.getName());
-//        file.getParentFile().mkdirs();
-//        System.out.println(file.getAbsolutePath());
-//        XmlNode projectNode = new ProjectWriter(project).write();
-//        XmlDocument write = new AmxWriter(projectNode).write();
-//        new XmlFileWriter(write, file).write();
-//        AbcMusicProperties.getInstance().setProperty(AbcMusicProperties.LATEST_SAVED_PROJECT, project.getName());
-//        return project;
-//    }
-//
 
     public List<Tune> searchTunes(String searchString) {
         List<Tune> result = new ArrayList<>();
@@ -145,7 +113,7 @@ public class Service {
     }
 
     public IoService getIoService() {
-        return new IoService(project);
+        return new IoService();
     }
 
     public PropertyService getPropertyService() {

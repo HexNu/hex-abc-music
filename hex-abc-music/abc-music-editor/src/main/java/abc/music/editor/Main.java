@@ -1,8 +1,6 @@
 package abc.music.editor;
 
-import java.io.InputStream;
-import se.digitman.lightxml.DocumentToXmlNodeParser;
-import se.digitman.lightxml.XmlNode;
+import java.io.File;
 
 /**
  * Created 2016-nov-28
@@ -12,9 +10,11 @@ import se.digitman.lightxml.XmlNode;
 public class Main {
 
     public static void main(String[] args) {
-        InputStream resourceAsStream = Main.class.getResourceAsStream("/help/help.xml");
-        XmlNode helpRoot = new DocumentToXmlNodeParser(resourceAsStream).parse();
-        System.out.println(helpRoot);
+        File file = new File("/home/hl/Skrivbord");
+        System.out.println(file.getAbsolutePath());
+//        InputStream resourceAsStream = Main.class.getResourceAsStream("/help/help.xml");
+//        XmlNode helpRoot = new DocumentToXmlNodeParser(resourceAsStream).parse();
+//        System.out.println(helpRoot);
     }
 
 }

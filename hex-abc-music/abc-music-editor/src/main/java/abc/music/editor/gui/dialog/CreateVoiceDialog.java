@@ -16,6 +16,7 @@ public class CreateVoiceDialog extends AmeDialog<Voice> {
     public CreateVoiceDialog(AbcMusicEditor parent, Tune tune) {
         super(parent, "Voice Names and ID");
         this.tune = tune;
+        idTextField.setText(String.valueOf(tune.getVoices().size() + 1));
     }
 
     @Override
