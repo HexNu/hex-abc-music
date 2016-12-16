@@ -16,7 +16,7 @@ public class FormatTemplate {
     private String shortDescription;
     private final Map<Margin, Double> margins = new HashMap<>();
     private final Map<Font, FontValue> fonts = new HashMap<>();
-    private final Map<Space, Integer> spaces = new HashMap<>();
+    private final Map<Space, Double> spaces = new HashMap<>();
     private Double indent = null;
     private Double scale = null;
     private Double maxShrinking = null;
@@ -80,6 +80,14 @@ public class FormatTemplate {
         return fonts;
     }
 
+    public boolean hasFontValue(Font font) {
+        return fonts.containsKey(font);
+    }
+
+    public FontValue getFontValue(Font font) {
+        return fonts.get(font);
+    }
+
     public List<String> getDocumentFontsAsAbcStrings() {
         List<String> result = new ArrayList<>();
         fonts.keySet().stream().filter((font) -> (font.isDocumentFont())).forEach((font) -> {
@@ -115,7 +123,7 @@ public class FormatTemplate {
         return !this.fonts.isEmpty();
     }
 
-    public Map<Space, Integer> getSpaces() {
+    public Map<Space, Double> getSpaces() {
         return spaces;
     }
 
@@ -127,12 +135,20 @@ public class FormatTemplate {
         return result;
     }
 
-    public void setSpaces(Map<Space, Integer> spaces) {
+    public void setSpaces(Map<Space, Double> spaces) {
         clearSpaces();
         this.spaces.putAll(spaces);
     }
 
-    public void addSpace(Space space, Integer value) {
+    public boolean hasSpaceValue(Space space) {
+        return this.spaces.containsKey(space);
+    }
+
+    public Double getSpaceValue(Space space) {
+        return this.spaces.get(space);
+    }
+
+    public void addSpace(Space space, Double value) {
         spaces.put(space, value);
     }
 
