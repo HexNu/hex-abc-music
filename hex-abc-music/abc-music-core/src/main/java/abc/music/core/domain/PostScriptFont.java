@@ -7,6 +7,7 @@ package abc.music.core.domain;
  */
 public enum PostScriptFont {
 
+    EMPTY("NoFont-UseDefault"),
     AGB("AvantGarde-Book"),
     AGBO("AvantGarde-BookOblique"),
     AGD("AvantGarde-Demi"),
@@ -44,7 +45,7 @@ public enum PostScriptFont {
     ZD("ZapfDingbats");
     private final String name;
 
-    public static final PostScriptFont DEFAULT_FONT = TR;
+    public static final PostScriptFont DEFAULT_FONT = EMPTY;
 
     private PostScriptFont(String name) {
         this.name = name;
@@ -55,6 +56,9 @@ public enum PostScriptFont {
     }
 
     public static PostScriptFont find(String text) {
+        if (text == null || text.equalsIgnoreCase(EMPTY.getName())) {
+            return null;
+        }
         for (PostScriptFont f : values()) {
             if (f.name().equalsIgnoreCase(text) || f.getName().equalsIgnoreCase(text)) {
                 return f;

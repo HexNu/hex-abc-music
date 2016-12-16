@@ -3,9 +3,12 @@ package abc.music.editor.gui.dialog;
 import abc.music.core.domain.FormatTemplate;
 import abc.music.core.domain.PostScriptFont;
 import abc.music.editor.AbcMusicEditor;
+import abc.music.editor.action.ShowPostScriptFontsAction;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -24,6 +27,9 @@ import javax.swing.SpinnerNumberModel;
  */
 public class FormatTemplateDialog extends AmeDialog {
 
+    private FormatTemplate template;
+    private List<FontPanel> fontPanels;
+
     public FormatTemplateDialog(AbcMusicEditor editor) {
         super(editor, "Format Template Editor");
     }
@@ -35,28 +41,63 @@ public class FormatTemplateDialog extends AmeDialog {
     }
 
     public void setFormatTemplate(FormatTemplate template) {
+        this.template = template;
+        updateFields();
+    }
 
+    private void updateFields() {
+        if (template != null) {
+            templateNameTextField.setText(template.getName());
+            shortDescriptionTextArea.setText(template.getShortDescription());
+            if (template.hasIndent()) {
+                indentTextField.setText(template.getIndent().toString());
+            }
+            if (template.hasScale()) {
+                scaleTextField.setText(template.getScale().toString());
+            }
+            if (template.hasMaxSrhinking()) {
+                maxShrinkingTextField.setText(template.getMaxShrinking().toString());
+            }
+            if (template.hasStretchLastStaff()) {
+                stretchLastStaffCheckBox.setSelected(template.getStretchLastStaff().equals(Boolean.TRUE));
+            }
+            if (template.hasLandscape()) {
+                landscapeCheckBox.setSelected(template.getLandscape().equals(Boolean.TRUE));
+            }
+            if (template.hasBarsPerStaff()) {
+                barsPerStaffTextField.setText(template.getBarsPerStaff().toString());
+            }
+        }
     }
 
     private void initFields() {
         initSpacesPanel();
+        fontPanels = new ArrayList<>();
         List<FormatTemplate.Font> fonts = new ArrayList<>();
         fonts.addAll(FormatTemplate.getTitleFonts());
         fonts.addAll(FormatTemplate.getTextFonts());
-        initFontsPanel(tntFontsPanel, fonts);
-        initFontsPanel(otherFontsPanel, FormatTemplate.getOtherFonts());
+        initFontsPanel(tntFontsPanel, fonts, true);
+        initFontsPanel(otherFontsPanel, FormatTemplate.getOtherFonts(), false);
     }
 
-    private void initFontsPanel(JPanel fontsPanel, List<FormatTemplate.Font> fonts) {
+    private void initFontsPanel(JPanel fontsPanel, List<FormatTemplate.Font> fonts, boolean setAll) {
         GridLayout layout = (GridLayout) fontsPanel.getLayout();
         int cells = layout.getRows() * layout.getColumns();
         fonts.stream().forEach((font) -> {
-            fontsPanel.add(new FontPanel(font));
+            FontPanel panel = new FontPanel(font);
+            fontsPanel.add(panel);
+            fontPanels.add(panel);
         });
         int cellIndex = fontsPanel.getComponentCount();
-        while (cellIndex < cells) {
+        while (cellIndex < cells - 1) {
             fontsPanel.add(new JLabel());
             cellIndex++;
+        }
+        if (setAll) {
+            FontPanel allFontsPanel = new FontPanel(null);
+            fontsPanel.add(allFontsPanel);
+        } else {
+            fontsPanel.add(new JLabel());
         }
     }
 
@@ -102,12 +143,15 @@ public class FormatTemplateDialog extends AmeDialog {
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        stretchLastStaffComboBox = new javax.swing.JCheckBox();
+        stretchLastStaffCheckBox = new javax.swing.JCheckBox();
         jLabel10 = new javax.swing.JLabel();
         landscapeCheckBox = new javax.swing.JCheckBox();
         jLabel11 = new javax.swing.JLabel();
         barsPerStaffTextField = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
+        jLabel19 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        shortDescriptionTextArea = new javax.swing.JTextArea();
         marginAndSpacePanel = new javax.swing.JPanel();
         marginsPanel = new javax.swing.JPanel();
         topMarginTextField = new javax.swing.JTextField();
@@ -128,6 +172,7 @@ public class FormatTemplateDialog extends AmeDialog {
         jPanel3 = new javax.swing.JPanel();
         doneButton = new javax.swing.JButton();
         cancelButton = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -193,6 +238,12 @@ public class FormatTemplateDialog extends AmeDialog {
         jLabel12.setFont(new java.awt.Font("Ubuntu", 2, 12)); // NOI18N
         jLabel12.setText("(Leave empty if you want to controll this in the note body)");
 
+        jLabel19.setText("Template Description:");
+
+        shortDescriptionTextArea.setColumns(20);
+        shortDescriptionTextArea.setRows(3);
+        jScrollPane1.setViewportView(shortDescriptionTextArea);
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
@@ -200,49 +251,58 @@ public class FormatTemplateDialog extends AmeDialog {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1)
                     .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel4Layout.createSequentialGroup()
-                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                                        .addGap(18, 18, 18)
-                                        .addComponent(maxShrinkingTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(jPanel4Layout.createSequentialGroup()
-                                        .addGap(20, 20, 20)
-                                        .addComponent(indentTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(jPanel4Layout.createSequentialGroup()
-                                        .addGap(18, 18, 18)
-                                        .addComponent(scaleTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel4Layout.createSequentialGroup()
-                                        .addComponent(jLabel7)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(jLabel5))
-                                    .addComponent(jLabel3)
-                                    .addComponent(jLabel8)))
-                            .addGroup(jPanel4Layout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(landscapeCheckBox)
-                                    .addComponent(stretchLastStaffComboBox)
-                                    .addGroup(jPanel4Layout.createSequentialGroup()
-                                        .addComponent(barsPerStaffTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                                                .addGap(18, 18, 18)
+                                                .addComponent(maxShrinkingTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                                .addGap(20, 20, 20)
+                                                .addComponent(indentTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                                .addGap(18, 18, 18)
+                                                .addComponent(scaleTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jLabel12))))))
-                    .addComponent(jLabel9)
-                    .addComponent(jLabel10)
-                    .addComponent(jLabel11))
+                                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                                .addComponent(jLabel7)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addComponent(jLabel5))
+                                            .addComponent(jLabel3)
+                                            .addComponent(jLabel8)))
+                                    .addGroup(jPanel4Layout.createSequentialGroup()
+                                        .addGap(18, 18, 18)
+                                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(landscapeCheckBox)
+                                            .addComponent(stretchLastStaffCheckBox)
+                                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                                .addComponent(barsPerStaffTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(jLabel12))))))
+                            .addComponent(jLabel9)
+                            .addComponent(jLabel10)
+                            .addComponent(jLabel11)
+                            .addComponent(jLabel19))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
+                .addComponent(jLabel19)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(indentTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -261,7 +321,7 @@ public class FormatTemplateDialog extends AmeDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
-                    .addComponent(stretchLastStaffComboBox))
+                    .addComponent(stretchLastStaffCheckBox))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10)
@@ -271,7 +331,7 @@ public class FormatTemplateDialog extends AmeDialog {
                     .addComponent(jLabel11)
                     .addComponent(barsPerStaffTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel12))
-                .addContainerGap())
+                .addContainerGap(100, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout generalPanelLayout = new javax.swing.GroupLayout(generalPanel);
@@ -287,8 +347,8 @@ public class FormatTemplateDialog extends AmeDialog {
             generalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(generalPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(198, Short.MAX_VALUE))
+                .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         formatTemplateTabbedPane.addTab("General", generalPanel);
@@ -458,12 +518,21 @@ public class FormatTemplateDialog extends AmeDialog {
             }
         });
 
+        jButton1.setText("Show PS-Fonts");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(798, Short.MAX_VALUE)
+                .addContainerGap()
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 627, Short.MAX_VALUE)
                 .addComponent(cancelButton, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(doneButton, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -475,7 +544,8 @@ public class FormatTemplateDialog extends AmeDialog {
                 .addContainerGap(29, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(doneButton)
-                    .addComponent(cancelButton))
+                    .addComponent(cancelButton)
+                    .addComponent(jButton1))
                 .addContainerGap())
         );
 
@@ -492,6 +562,10 @@ public class FormatTemplateDialog extends AmeDialog {
         cancel();
     }//GEN-LAST:event_cancelButtonActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        showPsFonts();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField barsPerStaffTextField;
@@ -500,6 +574,7 @@ public class FormatTemplateDialog extends AmeDialog {
     private javax.swing.JTabbedPane formatTemplateTabbedPane;
     private javax.swing.JPanel generalPanel;
     private javax.swing.JTextField indentTextField;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -510,6 +585,7 @@ public class FormatTemplateDialog extends AmeDialog {
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -523,14 +599,16 @@ public class FormatTemplateDialog extends AmeDialog {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JCheckBox landscapeCheckBox;
     private javax.swing.JPanel marginAndSpacePanel;
     private javax.swing.JPanel marginsPanel;
     private javax.swing.JTextField maxShrinkingTextField;
     private javax.swing.JPanel otherFontsPanel;
     private javax.swing.JTextField scaleTextField;
+    private javax.swing.JTextArea shortDescriptionTextArea;
     private javax.swing.JPanel spacesPanel;
-    private javax.swing.JCheckBox stretchLastStaffComboBox;
+    private javax.swing.JCheckBox stretchLastStaffCheckBox;
     private javax.swing.JTextField templateNameTextField;
     private javax.swing.JPanel tntFontsPanel;
     private javax.swing.JTextField topMarginTextField;
@@ -539,9 +617,50 @@ public class FormatTemplateDialog extends AmeDialog {
     private javax.swing.JTextField topMarginTextField3;
     // End of variables declaration//GEN-END:variables
 
+    private void showPsFonts() {
+        new ShowPostScriptFontsAction(editor).actionPerformed(null);
+    }
+
     @Override
     protected void accept() {
+        updateTemplate();
+    }
 
+    private void updateTemplate() {
+        if (template == null) {
+            template = new FormatTemplate();
+        }
+        template.setName(templateNameTextField.getText());
+        template.setShortDescription(shortDescriptionTextArea.getText());
+        template.setIndent(getAsDouble(indentTextField));
+        template.setScale(getAsDouble(scaleTextField));
+        template.setMaxShrinking(getAsDouble(maxShrinkingTextField));
+        template.setStretchLastStaff(stretchLastStaffCheckBox.isSelected());
+        template.setLandscape(landscapeCheckBox.isSelected());
+        template.setBarsPerStaff(getAsInteger(barsPerStaffTextField));
+        set(template);
+    }
+
+    private Integer getAsInteger(JTextField field) {
+        try {
+            return Integer.valueOf(field.getText().replaceAll("\\D", ""));
+        } catch (NumberFormatException e) {
+            return null;
+        }
+    }
+
+    private Double getAsDouble(JTextField field) {
+        try {
+            return Double.valueOf(field.getText().replaceAll(",", "."));
+        } catch (NumberFormatException e) {
+            return null;
+        }
+    }
+
+    private void setAllFonts(PostScriptFont psFont) {
+        fontPanels.stream().forEach((p) -> {
+            p.setPsFont(psFont);
+        });
     }
 
     private class SpacePanel extends JPanel {
@@ -589,41 +708,72 @@ public class FormatTemplateDialog extends AmeDialog {
 
     private class FontPanel extends JPanel {
 
-        private final JSpinner sizeSpinner;
+        private JSpinner sizeSpinner;
         private final JComboBox postScriptFontComboBox;
         private final Dimension labelDimension = new Dimension(170, 27);
         private final Dimension sizeDimension = new Dimension(72, 27);
-        private final PostScriptFont DEFAULT_FONT = PostScriptFont.TR;
         private final int DEFAULT_SIZE = 14;
 
         public FontPanel(FormatTemplate.Font font) {
             super(new BorderLayout());
-            JLabel label = new JLabel(font.getName() + ":");
+            JLabel label;
+            if (font != null) {
+                label = new JLabel(font.getName() + ":");
+            } else {
+                label = new JLabel("Select for All Fonts:");
+            }
             label.setSize(labelDimension);
             label.setPreferredSize(labelDimension);
             label.setMinimumSize(labelDimension);
             label.setMaximumSize(labelDimension);
             super.add(label, BorderLayout.WEST);
             postScriptFontComboBox = new JComboBox(new DefaultComboBoxModel(PostScriptFont.values()));
-            postScriptFontComboBox.setSelectedItem(DEFAULT_FONT);
+            postScriptFontComboBox.setSelectedItem(PostScriptFont.DEFAULT_FONT);
+            if (font == null) {
+                postScriptFontComboBox.addItemListener((ItemEvent e) -> {
+                    if (e.getSource() instanceof JComboBox) {
+                        JComboBox box = (JComboBox) e.getSource();
+                        PostScriptFont allFont = (PostScriptFont) box.getSelectedItem();
+                        setAllFonts(allFont);
+                    }
+                });
+            }
             super.add(postScriptFontComboBox, BorderLayout.CENTER);
             SpinnerNumberModel model = new SpinnerNumberModel(DEFAULT_SIZE, 4, 72, 1);
-            sizeSpinner = new JSpinner(model);
-            sizeSpinner.setSize(sizeDimension);
-            sizeSpinner.setPreferredSize(sizeDimension);
-            sizeSpinner.setMinimumSize(sizeDimension);
-            sizeSpinner.setMaximumSize(sizeDimension);
-            super.add(sizeSpinner, BorderLayout.EAST);
+            if (font == null) {
+                JLabel sizePlaceHolderLabel = new JLabel();
+                sizePlaceHolderLabel.setSize(sizeDimension);
+                sizePlaceHolderLabel.setPreferredSize(sizeDimension);
+                sizePlaceHolderLabel.setMinimumSize(sizeDimension);
+                sizePlaceHolderLabel.setMaximumSize(sizeDimension);
+                super.add(sizePlaceHolderLabel, BorderLayout.EAST);
+            } else {
+                sizeSpinner = new JSpinner(model);
+                sizeSpinner.setSize(sizeDimension);
+                sizeSpinner.setPreferredSize(sizeDimension);
+                sizeSpinner.setMinimumSize(sizeDimension);
+                sizeSpinner.setMaximumSize(sizeDimension);
+                super.add(sizeSpinner, BorderLayout.EAST);
+            }
+        }
+
+        public void setPsFont(PostScriptFont psFont) {
+            postScriptFontComboBox.setSelectedItem(psFont);
         }
 
         public void setFontValue(FormatTemplate.FontValue value) {
             postScriptFontComboBox.setSelectedItem(value.getPsFont());
-            sizeSpinner.setValue(value.getSize());
+            if (sizeSpinner != null) {
+                sizeSpinner.setValue(value.getSize());
+            }
         }
 
         public FormatTemplate.FontValue getFontValue() {
             PostScriptFont psFont = (PostScriptFont) postScriptFontComboBox.getSelectedItem();
-            Integer size = (Integer) sizeSpinner.getValue();
+            Integer size = DEFAULT_SIZE;
+            if (sizeSpinner != null) {
+                size = (Integer) sizeSpinner.getValue();
+            }
             return new FormatTemplate.FontValue(psFont, size);
         }
     }

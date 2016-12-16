@@ -12,13 +12,11 @@ import java.util.Map;
  */
 public class FormatTemplate {
 
+    private String name;
+    private String shortDescription;
     private final Map<Margin, Double> margins = new HashMap<>();
     private final Map<Font, FontValue> fonts = new HashMap<>();
     private final Map<Space, Integer> spaces = new HashMap<>();
-//    private static final List<Font> titleFonts = new ArrayList<>();
-//    private static final List<Font> textFonts = new ArrayList<>();
-//    private static final List<Font> otherFonts = new ArrayList<>();
-
     private Double indent = null;
     private Double scale = null;
     private Double maxShrinking = null;
@@ -26,24 +24,29 @@ public class FormatTemplate {
     private Boolean landscape = false;
     private Integer barsPerStaff = null;
 
-//    static {
-//        titleFonts.add(Font.TITLE);
-//        titleFonts.add(Font.SUBTITLE);
-//        titleFonts.add(Font.COLLECTION_NAME);
-//        titleFonts.add(Font.COLLECTION_TITLE);
-//        titleFonts.add(Font.COLLECTION_SUBTITLE);
-//        titleFonts.add(Font.COLLECTION_PREFACE_HEADER);
-//        titleFonts.add(Font.COLLECTION_BOOK_HEADER);
-//        titleFonts.add(Font.COLLECTION_PERSON_HEADER);
-//        textFonts.add(Font.VOCAL);
-//        textFonts.add(Font.WORDS);
-//        textFonts.add(Font.TEXT);
-//        textFonts.add(Font.TUNE_COMMENT);
-//        textFonts.add(Font.TUNE_HISTORY);
-//        textFonts.add(Font.COLLECTION_PREFACE_TEXT);
-//        textFonts.add(Font.COLLECTION_BOOK_TEXT);
-//        textFonts.add(Font.COLLECTION_PERSON_TEXT);
-//    }
+    public FormatTemplate() {
+    }
+
+    public FormatTemplate(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getShortDescription() {
+        return shortDescription;
+    }
+
+    public void setShortDescription(String shortDescription) {
+        this.shortDescription = shortDescription;
+    }
+
     public Map<Margin, Double> getMargins() {
         return margins;
     }

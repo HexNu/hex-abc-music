@@ -1,6 +1,5 @@
 package abc.music.editor.help;
 
-import abc.music.editor.action.OpenTuneAction;
 import abc.music.editor.gui.support.ListItemMouseListener;
 import javax.swing.JLabel;
 import javax.swing.border.EmptyBorder;
