@@ -26,9 +26,6 @@ class KeyReader extends NodeReader<Key> {
         if (node.hasAttribute("signature")) {
             result.setSignature(Key.Signature.find(node.getAttribute("signature")));
         }
-        if (node.hasChildNamed("modifier")) {
-            result.setModifier(new ModifierReader(node.getChild("modifier")).read());
-        }
         return result;
     }
 

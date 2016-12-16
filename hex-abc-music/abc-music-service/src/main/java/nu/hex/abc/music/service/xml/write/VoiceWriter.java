@@ -24,6 +24,7 @@ class VoiceWriter extends XmlWriter<Voice> {
         result.addAttribute("use-voice-modifier", entity.getUseVoiceModifiers().toString());
         result.addAttribute("stem", entity.getStem().getName());
         result.addChild(new KeyWriter(entity.getKey()).write());
+        result.addChild(new ModifierWriter(entity.getModifier()).write());
         result.addChild(NodeFactory.createNode("body", entity.getNotes()));
         return result;
     }

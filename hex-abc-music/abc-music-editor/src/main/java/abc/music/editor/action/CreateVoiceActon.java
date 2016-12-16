@@ -33,9 +33,9 @@ public class CreateVoiceActon extends AmeAction<Voice> {
                 voice.getKey().setMode(tune.getKey().getMode());
                 voice.getKey().setPitch(tune.getKey().getPitch());
                 voice.getKey().setSignature(tune.getKey().getSignature());
-                voice.getKey().getModifier().setClef(tune.getKey().getModifier().getClef());
-                voice.getKey().getModifier().setOctave(tune.getKey().getModifier().getOctave());
-                voice.getKey().getModifier().setTranspose(tune.getKey().getModifier().getTranspose());
+                voice.getModifier().setClef(tune.getModifier().getClef());
+                voice.getModifier().setOctave(tune.getModifier().getOctave());
+                voice.getModifier().setTranspose(tune.getModifier().getTranspose());
             }
             tune.addVoice(get());
         }

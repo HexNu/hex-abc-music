@@ -12,7 +12,7 @@ public class Key extends Field {
     private Pitch pitch = Pitch.DEFAULT_PITCH;
     private Signature signature = Signature.DEFAULT_SIGNATURE;
     private Mode mode = Mode.DEFAULT_MODE;
-    private Modifier modifier = new Modifier();
+//    private Modifier modifier = new Modifier();
 
     public Key() {
         super('K');
@@ -41,22 +41,22 @@ public class Key extends Field {
     public void setMode(Mode mode) {
         this.mode = mode;
     }
-
-    public Modifier getModifier() {
-        return modifier;
-    }
-
-    public void setModifier(Modifier modifier) {
-        this.modifier = modifier;
-    }
-
-    public boolean hasModifier() {
-        return modifier != null && !modifier.isEmpty();
-    }
-
+//
+//    public Modifier getModifier() {
+//        return modifier;
+//    }
+//
+//    public void setModifier(Modifier modifier) {
+//        this.modifier = modifier;
+//    }
+//
+//    public boolean hasModifier() {
+//        return modifier != null && !modifier.isEmpty();
+//    }
+//
     @Override
     public boolean isEmpty() {
-        return getPitch() == null && (modifier == null || modifier.isEmpty());
+        return getPitch() == null;// && (modifier == null || modifier.isEmpty());
     }
 
     @Override
@@ -66,7 +66,7 @@ public class Key extends Field {
 
     @Override
     public String getContent() {
-        return toString() + getModifier();
+        return toString();// + getModifier();
     }
 
     public static Pitch getPitchFromString(String keyString) {
@@ -83,7 +83,7 @@ public class Key extends Field {
         hash = 59 * hash + Objects.hashCode(this.pitch);
         hash = 59 * hash + Objects.hashCode(this.signature);
         hash = 59 * hash + Objects.hashCode(this.mode);
-        hash = 59 * hash + Objects.hashCode(this.modifier);
+//        hash = 59 * hash + Objects.hashCode(this.modifier);
         return hash;
     }
 
@@ -108,9 +108,9 @@ public class Key extends Field {
         if (this.mode != other.mode) {
             return false;
         }
-        if (!Objects.equals(this.modifier, other.modifier)) {
-            return false;
-        }
+//        if (!Objects.equals(this.modifier, other.modifier)) {
+//            return false;
+//        }
         return true;
     }
 
@@ -242,14 +242,5 @@ public class Key extends Field {
                     return name().toLowerCase().substring(0, 3);
             }
         }
-    }
-
-    public static void main(String[] args) {
-        Key key = new Key();
-        key.setPitch(Pitch.D);
-        key.setMode(Mode.MINOR);
-        key.getModifier().setClef(Modifier.Clef.TENOR);
-        key.getModifier().setTranspose(-8);
-        System.out.println(key.getContent());
     }
 }

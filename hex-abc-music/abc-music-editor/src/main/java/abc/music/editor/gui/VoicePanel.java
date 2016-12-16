@@ -63,7 +63,7 @@ public class VoicePanel extends AmePanel {
             pitchComboBox.setSelectedItem(voice.getKey().getPitch());
             signatureComboBox.setSelectedItem(voice.getKey().getSignature());
             modeComboBox.setSelectedItem(voice.getKey().getMode());
-            Modifier modifier = voice.getKey().getModifier();
+            Modifier modifier = voice.getModifier();
             clefComboBox.setSelectedItem(modifier.getClef());
             octaveComboBox.setSelectedItem(modifier.getOctave());
             transposeComboBox.setSelectedItem(TransposeMap.getItem(modifier.getTranspose()));
@@ -105,20 +105,20 @@ public class VoicePanel extends AmePanel {
         }
         if (useModifiersCheckBox.isSelected()) {
             if (clefComboBox.getSelectedItem() != null) {
-                voice.getKey().getModifier().setClef((Modifier.Clef) clefComboBox.getSelectedItem());
+                voice.getModifier().setClef((Modifier.Clef) clefComboBox.getSelectedItem());
             }
             if (octaveComboBox.getSelectedItem() != null) {
-                voice.getKey().getModifier().setOctave((Modifier.OctaveClef) octaveComboBox.getSelectedItem());
+                voice.getModifier().setOctave((Modifier.OctaveClef) octaveComboBox.getSelectedItem());
             }
             if (transposeComboBox.getSelectedItem() != null) {
-                voice.getKey().getModifier().setTranspose(((TransposeMap.Item) transposeComboBox.getSelectedItem()).getInterval());
+                voice.getModifier().setTranspose(((TransposeMap.Item) transposeComboBox.getSelectedItem()).getInterval());
             }
             voice.setUseVoiceModifiers(true);
         } else {
-            Modifier modifier = voice.getTune().getKey().getModifier();
-            voice.getKey().getModifier().setClef(modifier.getClef());
-            voice.getKey().getModifier().setOctave(modifier.getOctave());
-            voice.getKey().getModifier().setTranspose(modifier.getTranspose());
+            Modifier modifier = voice.getTune().getModifier();
+            voice.getModifier().setClef(modifier.getClef());
+            voice.getModifier().setOctave(modifier.getOctave());
+            voice.getModifier().setTranspose(modifier.getTranspose());
             voice.setUseVoiceModifiers(false);
         }
         voice.setNotes(bodyEditorTextArea.getText());

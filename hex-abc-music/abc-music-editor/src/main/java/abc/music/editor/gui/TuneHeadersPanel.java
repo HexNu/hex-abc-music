@@ -124,9 +124,9 @@ public class TuneHeadersPanel extends AmePanel {
         pitchComboBox.setSelectedItem(tune.getKey().getPitch());
         signatureComboBox.setSelectedItem(tune.getKey().getSignature());
         modeComboBox.setSelectedItem(tune.getKey().getMode());
-        clefComboBox.setSelectedItem(tune.getKey().getModifier().getClef());
-        transposeComboBox.setSelectedItem(TransposeMap.getItem(tune.getKey().getModifier().getTranspose()));
-        octaveComboBox.setSelectedItem(tune.getKey().getModifier().getOctave());
+        clefComboBox.setSelectedItem(tune.getModifier().getClef());
+        transposeComboBox.setSelectedItem(TransposeMap.getItem(tune.getModifier().getTranspose()));
+        octaveComboBox.setSelectedItem(tune.getModifier().getOctave());
         if (tune.getVoices() != null && !tune.getVoices().isEmpty()) {
             editor.getVoicesPanel().setVoices(tune.getVoices());
         }
@@ -259,13 +259,13 @@ public class TuneHeadersPanel extends AmePanel {
                 tune.getKey().setSignature((Key.Signature) signatureComboBox.getSelectedItem());
             }
             if (clefComboBox.getSelectedItem() != null) {
-                tune.getKey().getModifier().setClef((Modifier.Clef) clefComboBox.getSelectedItem());
+                tune.getModifier().setClef((Modifier.Clef) clefComboBox.getSelectedItem());
             }
             if (octaveComboBox.getSelectedItem() != null) {
-                tune.getKey().getModifier().setOctave((Modifier.OctaveClef) octaveComboBox.getSelectedItem());
+                tune.getModifier().setOctave((Modifier.OctaveClef) octaveComboBox.getSelectedItem());
             }
             if (transposeComboBox.getSelectedItem() != null) {
-                tune.getKey().getModifier().setTranspose(((TransposeMap.Item) transposeComboBox.getSelectedItem()).getInterval());
+                tune.getModifier().setTranspose(((TransposeMap.Item) transposeComboBox.getSelectedItem()).getInterval());
             }
             if (meterNumeratorSpinner.getValue() != null) {
                 tune.getMeter().setNumerator((Integer) meterNumeratorSpinner.getValue());

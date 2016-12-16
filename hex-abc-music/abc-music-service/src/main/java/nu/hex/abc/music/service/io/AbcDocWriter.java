@@ -73,8 +73,8 @@ class AbcDocWriter implements Writer<String> {
         }
         if (tune.hasKey()) {
             result.append(tune.getKey().get());
-            if (tune.getVoices().size() <= 1 && tune.getKey().hasModifier()) {
-                result.append(tune.getKey().getModifier().get());
+            if (tune.getVoices().size() <= 1 && tune.hasModifier()) {
+                result.append(tune.getModifier().get());
             }
             result.append(NEW_LINE);
         }

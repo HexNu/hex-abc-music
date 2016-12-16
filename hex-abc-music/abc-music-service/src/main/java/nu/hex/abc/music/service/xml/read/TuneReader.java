@@ -82,6 +82,9 @@ class TuneReader extends NodeReader<Tune> {
         if (node.hasChildNamed("key")) {
             result.setKey(new KeyReader(node.getChild("key")).read());
         }
+        if (node.hasChildNamed("modifier")) {
+            result.setModifier(new ModifierReader(node.getChild("modifier")).read());
+        }
         if (node.hasChildNamed("voices") && node.getChild("voices").hasChildNamed("voice")) {
             node.getChild("voices").getChildren("voice").stream().forEach((v) -> {
                 result.addVoice(new VoiceReader(v).read());

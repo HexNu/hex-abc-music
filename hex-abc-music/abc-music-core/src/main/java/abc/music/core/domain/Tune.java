@@ -26,6 +26,7 @@ public class Tune {
     private Meter meter = new Meter();
     private TimeValue timeValue = TimeValue.DEFAULT_TIME_VALUE;
     private Key key = new Key();
+    private Modifier modifier = new Modifier();
     private final Map<String, Voice> voices = new HashMap<>();
     private Lyrics lyrics = new Lyrics();
     private String scoreLayout;
@@ -224,6 +225,18 @@ public class Tune {
 
     public void setTimeValue(TimeValue timeValue) {
         this.timeValue = timeValue;
+    }
+
+    public Modifier getModifier() {
+        return modifier;
+    }
+
+    public void setModifier(Modifier modifier) {
+        this.modifier = modifier;
+    }
+
+    public boolean hasModifier() {
+        return modifier != null && !modifier.isEmpty();
     }
 
     public Key getKey() {

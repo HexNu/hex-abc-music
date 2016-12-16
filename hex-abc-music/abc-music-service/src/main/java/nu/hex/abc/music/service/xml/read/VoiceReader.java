@@ -36,6 +36,9 @@ class VoiceReader extends NodeReader<Voice> {
         if (node.hasChildNamed("key")) {
             result.setKey(new KeyReader(node.getChild("key")).read());
         }
+        if (node.hasChildNamed("modifier")) {
+            result.setModifier(new ModifierReader(node.getChild("modifier")).read());
+        }
         if (node.hasChildNamed("body")) {
             result.setNotes(node.getChild("body").getText());
         }

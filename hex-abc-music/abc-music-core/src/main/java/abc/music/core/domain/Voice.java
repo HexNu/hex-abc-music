@@ -14,6 +14,7 @@ public class Voice extends Field {
     private Stem stem = Stem.DEFAULT_STEM;
     private Key key = new Key();
     private Boolean useVoiceKey = false;
+    private Modifier modifier = new Modifier();
     private Boolean useVoiceModifiers = false;
     private String notes;
 
@@ -91,6 +92,18 @@ public class Voice extends Field {
         this.useVoiceKey = useVoiceKey;
     }
 
+    public Modifier getModifier() {
+        return modifier;
+    }
+
+    public void setModifier(Modifier modifier) {
+        this.modifier = modifier;
+    }
+
+    public boolean hasModifier() {
+        return modifier != null && !modifier.isEmpty();
+    }
+
     public Boolean getUseVoiceModifiers() {
         return useVoiceModifiers;
     }
@@ -117,8 +130,8 @@ public class Voice extends Field {
         if (getShortName() != null) {
             result += " snm=\"" + getShortName() + "\"";
         }
-        if (hasKey() && getKey().hasModifier()) {
-            result += getKey().getModifier().get();
+        if (hasModifier()) {
+            result += getModifier().get();
         }
         if (hasKey() && !tune.getKey().get().equals(key.get())) {
             result += "\n[" + getKey().get() + "]";
