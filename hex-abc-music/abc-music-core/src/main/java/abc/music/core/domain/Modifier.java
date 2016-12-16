@@ -59,13 +59,7 @@ public class Modifier {
     public String get() {
         String result = "";
         if (getClef() != null) {
-            if (getClef().equals(Clef.DEFAULT_CLEF)) {
-                if (getOctave() != null && !getOctave().equals(OctaveClef.DEFAULT_OCTAVE)) {
-                    result += " clef=" + getClef();
-                }
-            } else {
-                result += " clef=" + getClef();
-            }
+            result += " clef=" + getClef();
         }
         if (getOctave() != null && !getOctave().equals(OctaveClef.DEFAULT_OCTAVE)) {
             result += getOctave();
@@ -145,7 +139,7 @@ public class Modifier {
                     return TREBLE;
                 }
                 for (Clef clef : values()) {
-                    if (text.equalsIgnoreCase(clef.name()) || text.equalsIgnoreCase(clef.getSpecifier())) {
+                    if (text.equalsIgnoreCase(clef.name()) || text.equalsIgnoreCase(clef.toString())) {
                         return clef;
                     }
                 }
@@ -208,5 +202,11 @@ public class Modifier {
         public String toString() {
             return getValue();
         }
+    }
+
+    public static void main(String[] args) {
+        String text = "C";
+        System.out.println(text.matches("[GFC][1-5]"));
+
     }
 }

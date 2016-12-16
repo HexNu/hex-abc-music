@@ -273,6 +273,10 @@ public class Tune {
         return scoreLayout;
     }
 
+    public boolean hasScoreLayout() {
+        return scoreLayout != null && !scoreLayout.isEmpty();
+    }
+
     public void setScoreLayout(String scoreLayout) {
         this.scoreLayout = scoreLayout;
     }

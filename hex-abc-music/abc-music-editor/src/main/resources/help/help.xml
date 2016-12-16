@@ -123,5 +123,8 @@
                 </html>
             </content>            
         </item>
+        <item label="In the lyrics editor">
+            <!-- TODO: Write about free text line... -->
+        </item>
     </item-group>
 </help>

@@ -21,6 +21,13 @@ public class ScoreLayoutDialog extends AmeDialog<Tune> {
     public ScoreLayoutDialog(AbcMusicEditor parent, Tune tune) {
         super(parent, "Edit Score Layout");
         this.tune = tune;
+        setupField(tune);
+    }
+
+    private void setupField(Tune tune1) {
+        if (tune != null && tune.hasScoreLayout()) {
+            scoreTextField.setText(tune1.getScoreLayout());
+        }
     }
 
     @Override
@@ -30,8 +37,6 @@ public class ScoreLayoutDialog extends AmeDialog<Tune> {
         super.setSize(dimension);
         super.setPreferredSize(dimension);
         Dimension editorDimension = new Dimension(700, 300);
-        scoreLayoutEditorPane.setSize(editorDimension);
-        scoreLayoutEditorPane.setPreferredSize(editorDimension);
     }
 
     /**
@@ -43,17 +48,41 @@ public class ScoreLayoutDialog extends AmeDialog<Tune> {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane1 = new javax.swing.JScrollPane();
-        scoreLayoutEditorPane = new javax.swing.JEditorPane();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        scoreTextField = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
         okButton = new javax.swing.JButton();
         cancelButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jScrollPane1.setViewportView(scoreLayoutEditorPane);
+        jLabel1.setText("Score setup:");
 
-        getContentPane().add(jScrollPane1, java.awt.BorderLayout.CENTER);
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(0, 417, Short.MAX_VALUE))
+                    .addComponent(scoreTextField))
+                .addContainerGap())
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(scoreTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(48, Short.MAX_VALUE))
+        );
+
+        getContentPane().add(jPanel2, java.awt.BorderLayout.CENTER);
 
         okButton.setText("Ok");
         okButton.addActionListener(new java.awt.event.ActionListener() {
@@ -74,7 +103,7 @@ public class ScoreLayoutDialog extends AmeDialog<Tune> {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(182, Short.MAX_VALUE)
+                .addContainerGap(310, Short.MAX_VALUE)
                 .addComponent(cancelButton, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(okButton, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -105,19 +134,16 @@ public class ScoreLayoutDialog extends AmeDialog<Tune> {
 
     @Override
     protected void accept() {
-
-    }
-
-    @Override
-    protected void abort() {
-
+        tune.setScoreLayout(scoreTextField.getText());
+        set(tune);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton cancelButton;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JButton okButton;
-    private javax.swing.JEditorPane scoreLayoutEditorPane;
+    private javax.swing.JTextField scoreTextField;
     // End of variables declaration//GEN-END:variables
 }

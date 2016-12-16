@@ -68,6 +68,9 @@ class AbcDocWriter implements Writer<String> {
         if (tune.hasTimeValue()) {
             result.append(tune.getTimeValueField()).append(NEW_LINE);
         }
+        if (tune.hasScoreLayout()) {
+            result.append("%%staves ").append(tune.getScoreLayout()).append(NEW_LINE);
+        }
         if (tune.hasKey()) {
             result.append(tune.getKey().get());
             if (tune.getVoices().size() <= 1 && tune.getKey().hasModifier()) {
