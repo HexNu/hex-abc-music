@@ -1,6 +1,7 @@
 package nu.hex.abc.music.service.xml.read;
 
 import abc.music.core.domain.Book;
+import abc.music.core.domain.FormatTemplate;
 import abc.music.core.domain.Project;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -79,6 +80,9 @@ class ProjectReader implements Reader<Project> {
         if (node.hasChildNamed("books") && node.getChild("books").hasChildNamed("book")) {
             node.getChild("books").getChildren("book").stream().forEach(this::addBook);
         }
+        if (node.hasChildNamed("formats") && node.getChild("formats").hasChildNamed("template")) {
+            node.getChild("formats").getChildren("template").stream().forEach(this::addFormat);
+        }
         return result;
     }
 
@@ -95,6 +99,14 @@ class ProjectReader implements Reader<Project> {
         result.addBook(book);
         if (book.getName() == null || book.getName().isEmpty()) {
             book.setName("No name");
+        }
+    }
+    
+    private void addFormat(XmlNode formatNode) {
+        FormatTemplate template = new FormatTemplateReader(formatNode).read();
+        result.addFormatTemplate(template);
+        if (template.getName() == null || template.getName().isEmpty()) {
+            template.setName("No name");
         }
     }
 }

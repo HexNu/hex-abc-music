@@ -338,6 +338,16 @@ public class AmeMenuBar extends JMenuBar {
             new EditFormatTemplateAction(editor).actionPerformed(e);
         });
         formatTemplatesMenu.add(newFormatTemplateItem);
+        formatTemplatesMenu.addSeparator();
+        p.getFormatTemplates().keySet().stream().map((key) -> {
+            AmeMenuItem templateItem = new AmeMenuItem(key);
+            templateItem.addActionListener((ActionEvent e) -> {
+                new EditFormatTemplateAction(editor, p.getFormatTemplate(key)).actionPerformed(e);
+            });
+            return templateItem;
+        }).forEach((templateItem) -> {
+            formatTemplatesMenu.add(templateItem);
+        });
         projectMenu.add(formatTemplatesMenu);
     }
 

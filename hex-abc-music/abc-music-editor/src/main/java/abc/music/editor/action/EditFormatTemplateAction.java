@@ -2,6 +2,7 @@ package abc.music.editor.action;
 
 import abc.music.core.domain.FormatTemplate;
 import abc.music.editor.AbcMusicEditor;
+import abc.music.editor.gui.dialog.AmeDialog;
 import abc.music.editor.gui.dialog.FormatTemplateDialog;
 import java.awt.event.ActionEvent;
 
@@ -10,7 +11,7 @@ import java.awt.event.ActionEvent;
  *
  * @author hl
  */
-public class EditFormatTemplateAction extends AmeAction<FormatTemplate>{
+public class EditFormatTemplateAction extends AmeAction<FormatTemplate> {
 
     private final FormatTemplate template;
 
@@ -26,7 +27,14 @@ public class EditFormatTemplateAction extends AmeAction<FormatTemplate>{
     @Override
     protected void performAction(ActionEvent event) {
         FormatTemplateDialog dialog = new FormatTemplateDialog(editor);
+        if (template != null) {
+            dialog.setFormatTemplate(template);
+        }
         dialog.setVisible(true);
+        if (dialog.getResult().equals(AmeDialog.Result.OK) && dialog.get() != null) {
+            editor.getProject().addFormatTemplate(dialog.get());
+            getService().getWriterService().saveProject();
+        }
     }
 
 }

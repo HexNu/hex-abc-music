@@ -253,7 +253,7 @@ public class Project implements Collection {
         return templates;
     }
 
-    public FormatTemplate getTemplate(String name) {
+    public FormatTemplate getFormatTemplate(String name) {
         return templates.get(name);
     }
 

@@ -50,7 +50,7 @@ public class FormatTemplate {
     public Map<Margin, Double> getMargins() {
         return margins;
     }
-    
+
     public Double getMargin(Margin margin) {
         return margins.get(margin);
     }
@@ -67,7 +67,7 @@ public class FormatTemplate {
         clearMargins();
         this.margins.putAll(margins);
     }
-    
+
     public void setMargin(Margin margin, Double value) {
         this.margins.put(margin, value);
     }
@@ -122,6 +122,7 @@ public class FormatTemplate {
     public void setFont(Font font, FontValue value) {
         fonts.put(font, value);
     }
+
     public void addFont(Font font, FontValue value) {
         setFont(font, value);
     }
@@ -156,6 +157,10 @@ public class FormatTemplate {
         this.spaces.putAll(spaces);
     }
 
+    public boolean hasSpaceValues() {
+        return !spaces.isEmpty();
+    }
+
     public boolean hasSpaceValue(Space space) {
         return this.spaces.containsKey(space);
     }
@@ -163,7 +168,7 @@ public class FormatTemplate {
     public Double getSpaceValue(Space space) {
         return this.spaces.get(space);
     }
-    
+
     public void setSpace(Space space, Double value) {
         spaces.put(space, value);
     }
@@ -416,6 +421,20 @@ public class FormatTemplate {
             return name().substring(0, 1) + name().replaceAll("_", " ").substring(1).toLowerCase();
         }
 
+        public static Font find(String text) {
+            if (text == null) {
+                return null;
+            }
+            for (Font f : values()) {
+                if (text.toUpperCase().equals(f.name())
+                        || text.equalsIgnoreCase(f.getLabel())
+                        || text.equalsIgnoreCase(f.getName())) {
+                    return f;
+                }
+            }
+            return null;
+        }
+
         @Override
         public String toString() {
             return getName();
@@ -480,6 +499,16 @@ public class FormatTemplate {
 
         public String getName() {
             return name().substring(0, 1) + name().substring(1).toLowerCase().replaceAll("_", " ");
+        }
+
+        public static Space find(String text) {
+            for (Space s : values()) {
+                if (text.equalsIgnoreCase(s.getLabel()) || text.equalsIgnoreCase(s.name())
+                        || text.replaceAll("-", "_").equalsIgnoreCase(s.getName())) {
+                    return s;
+                }
+            }
+            return null;
         }
 
         @Override

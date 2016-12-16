@@ -69,6 +69,13 @@ class ProjectWriter extends XmlWriter<Project> {
         entity.getBooks().stream().forEach((book) -> {
             booksNode.addChild(new BookWriter(book).write());
         });
+        if (!entity.getFormatTemplates().isEmpty()) {
+            XmlNode formatsNode = NodeFactory.createNode("formats");
+            result.addChild(formatsNode);
+            entity.getFormatTemplates().keySet().stream().forEach((key) -> {
+                formatsNode.addChild(new FormatTemplateWriter(entity.getFormatTemplate(key)).write());
+            });
+        }
         return result;
     }
 }

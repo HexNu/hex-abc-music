@@ -24,7 +24,7 @@ import javax.swing.SpinnerNumberModel;
  *
  * @author hl
  */
-public class FormatTemplateDialog extends AmeDialog {
+public class FormatTemplateDialog extends AmeDialog<FormatTemplate> {
 
     private FormatTemplate template;
     private List<FontPanel> fontPanels;
@@ -84,10 +84,14 @@ public class FormatTemplateDialog extends AmeDialog {
                 }
             }
             for (SpacePanel p : spacePanels) {
-                p.setValue(template.getSpaceValue(p.getSpace()).toString());
+                if (template.hasSpaceValue(p.getSpace())) {
+                    p.setValue(template.getSpaceValue(p.getSpace()).toString());
+                }
             }
             for (FontPanel p : fontPanels) {
-                p.setFontValue(template.getFontValue(p.getAmeFont()));
+                if (template.hasFontValue(p.getAmeFont())) {
+                    p.setFontValue(template.getFontValue(p.getAmeFont()));
+                }
             }
         }
     }
