@@ -15,6 +15,7 @@ public class Book implements Collection {
     private String name;
     private List<String> titles = new ArrayList<>();
     private String shortDescription;
+    private String preferredTemplate;
     private String prefaceHeader;
     private String preface;
     private Boolean printPersons;
@@ -63,6 +64,16 @@ public class Book implements Collection {
 
     public void setShortDescription(String shortDescription) {
         this.shortDescription = shortDescription;
+    }
+
+    @Override
+    public String getPreferredTemplate() {
+        return preferredTemplate;
+    }
+
+    @Override
+    public void setPreferredTemplate(String preferredTemplate) {
+        this.preferredTemplate = preferredTemplate;
     }
 
     @Override

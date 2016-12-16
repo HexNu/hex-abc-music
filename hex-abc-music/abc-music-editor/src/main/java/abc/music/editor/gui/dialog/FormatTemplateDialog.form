@@ -398,7 +398,7 @@
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="0" attributes="0">
                                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                      <Component id="topMarginTextField3" max="32767" attributes="0"/>
+                                      <Component id="leftMarginTextField" max="32767" attributes="0"/>
                                       <Component id="jLabel16" pref="61" max="32767" attributes="0"/>
                                   </Group>
                                   <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
@@ -407,7 +407,7 @@
                                   <Component id="jLabel18" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                      <Component id="topMarginTextField1" max="32767" attributes="0"/>
+                                      <Component id="rightMarginTextField" max="32767" attributes="0"/>
                                       <Component id="jLabel14" pref="61" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
@@ -416,7 +416,7 @@
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Component id="topMarginTextField" alignment="0" min="-2" pref="61" max="-2" attributes="0"/>
                                       <Component id="jLabel15" alignment="0" min="-2" pref="61" max="-2" attributes="0"/>
-                                      <Component id="topMarginTextField2" alignment="0" min="-2" pref="61" max="-2" attributes="0"/>
+                                      <Component id="bottomMarginTextField" alignment="0" min="-2" pref="61" max="-2" attributes="0"/>
                                       <Component id="jLabel13" alignment="0" min="-2" pref="61" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
@@ -439,15 +439,15 @@
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="topMarginTextField1" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="topMarginTextField3" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="rightMarginTextField" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="leftMarginTextField" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel17" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel18" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace type="separate" pref="48" max="32767" attributes="0"/>
                           <Component id="jLabel15" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="topMarginTextField2" min="-2" max="-2" attributes="0"/>
+                          <Component id="bottomMarginTextField" min="-2" max="-2" attributes="0"/>
                           <EmptySpace pref="18" max="32767" attributes="0"/>
                       </Group>
                   </Group>
@@ -459,17 +459,17 @@
                     <Property name="horizontalAlignment" type="int" value="11"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JTextField" name="topMarginTextField1">
+                <Component class="javax.swing.JTextField" name="rightMarginTextField">
                   <Properties>
                     <Property name="horizontalAlignment" type="int" value="11"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JTextField" name="topMarginTextField2">
+                <Component class="javax.swing.JTextField" name="bottomMarginTextField">
                   <Properties>
                     <Property name="horizontalAlignment" type="int" value="11"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JTextField" name="topMarginTextField3">
+                <Component class="javax.swing.JTextField" name="leftMarginTextField">
                   <Properties>
                     <Property name="horizontalAlignment" type="int" value="11"/>
                   </Properties>

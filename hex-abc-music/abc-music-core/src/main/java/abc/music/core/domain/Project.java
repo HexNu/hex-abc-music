@@ -16,6 +16,8 @@ public class Project implements Collection {
 
     private final Map<Integer, Tune> tunes = new HashMap<>();
     private final Map<Integer, Person> persons = new HashMap<>();
+    private final Map<String, FormatTemplate> templates = new HashMap<>();
+    private String preferredTemplate;
     private List<Book> books = new ArrayList<>();
     private String name;
     private List<String> titles = new ArrayList<>();
@@ -237,6 +239,38 @@ public class Project implements Collection {
         return ids.get(ids.size() - 1) + 1;
     }
 
+    @Override
+    public String getPreferredTemplate() {
+        return preferredTemplate;
+    }
+
+    @Override
+    public void setPreferredTemplate(String preferredTemplate) {
+        this.preferredTemplate = preferredTemplate;
+    }
+
+    public Map<String, FormatTemplate> getFormatTemplates() {
+        return templates;
+    }
+
+    public FormatTemplate getTemplate(String name) {
+        return templates.get(name);
+    }
+
+    public void clearFormatTemplates() {
+        templates.clear();
+    }
+
+    public void setFormatTemplates(Map<String, FormatTemplate> templates) {
+        clearFormatTemplates();
+        this.templates.putAll(templates);
+    }
+
+    public void addFormatTemplate(FormatTemplate template) {
+        templates.put(template.getName(), template);
+    }
+
+    @Override
     public List<Book> getBooks() {
         return books;
     }

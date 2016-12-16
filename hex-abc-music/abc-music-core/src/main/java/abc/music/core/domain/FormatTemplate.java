@@ -50,6 +50,10 @@ public class FormatTemplate {
     public Map<Margin, Double> getMargins() {
         return margins;
     }
+    
+    public Double getMargin(Margin margin) {
+        return margins.get(margin);
+    }
 
     public List<String> getMarginsAsAbcStrings() {
         List<String> result = new ArrayList<>();
@@ -63,9 +67,13 @@ public class FormatTemplate {
         clearMargins();
         this.margins.putAll(margins);
     }
+    
+    public void setMargin(Margin margin, Double value) {
+        this.margins.put(margin, value);
+    }
 
     public void addMargin(Margin margin, Double value) {
-        this.margins.put(margin, value);
+        setMargin(margin, value);
     }
 
     public void clearMargins() {
@@ -111,16 +119,24 @@ public class FormatTemplate {
         this.fonts.putAll(fonts);
     }
 
+    public void setFont(Font font, FontValue value) {
+        fonts.put(font, value);
+    }
     public void addFont(Font font, FontValue value) {
-        this.fonts.put(font, value);
+        setFont(font, value);
+    }
+
+    public void removeFont(Font font) {
+        fonts.put(font, null);
+        fonts.remove(font);
     }
 
     public void clearFonts() {
-        this.fonts.clear();
+        fonts.clear();
     }
 
     public boolean hasFonts() {
-        return !this.fonts.isEmpty();
+        return !fonts.isEmpty();
     }
 
     public Map<Space, Double> getSpaces() {
@@ -147,9 +163,13 @@ public class FormatTemplate {
     public Double getSpaceValue(Space space) {
         return this.spaces.get(space);
     }
+    
+    public void setSpace(Space space, Double value) {
+        spaces.put(space, value);
+    }
 
     public void addSpace(Space space, Double value) {
-        spaces.put(space, value);
+        setSpace(space, value);
     }
 
     public void clearSpaces() {

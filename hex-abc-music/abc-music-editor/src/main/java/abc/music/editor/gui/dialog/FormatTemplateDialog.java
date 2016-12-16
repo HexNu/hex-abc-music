@@ -8,7 +8,6 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -29,6 +28,7 @@ public class FormatTemplateDialog extends AmeDialog {
 
     private FormatTemplate template;
     private List<FontPanel> fontPanels;
+    private List<SpacePanel> spacePanels;
 
     public FormatTemplateDialog(AbcMusicEditor editor) {
         super(editor, "Format Template Editor");
@@ -67,10 +67,33 @@ public class FormatTemplateDialog extends AmeDialog {
             if (template.hasBarsPerStaff()) {
                 barsPerStaffTextField.setText(template.getBarsPerStaff().toString());
             }
+            for (FormatTemplate.Margin m : template.getMargins().keySet()) {
+                switch (m) {
+                    case TOP:
+                        topMarginTextField.setText(template.getMargin(m).toString());
+                        break;
+                    case RIGHT:
+                        rightMarginTextField.setText(template.getMargin(m).toString());
+                        break;
+                    case BOTTOM:
+                        bottomMarginTextField.setText(template.getMargin(m).toString());
+                        break;
+                    case LEFT:
+                        leftMarginTextField.setText(template.getMargin(m).toString());
+                        break;
+                }
+            }
+            for (SpacePanel p : spacePanels) {
+                p.setValue(template.getSpaceValue(p.getSpace()).toString());
+            }
+            for (FontPanel p : fontPanels) {
+                p.setFontValue(template.getFontValue(p.getAmeFont()));
+            }
         }
     }
 
     private void initFields() {
+        spacePanels = new ArrayList<>();
         initSpacesPanel();
         fontPanels = new ArrayList<>();
         List<FormatTemplate.Font> fonts = new ArrayList<>();
@@ -105,7 +128,9 @@ public class FormatTemplateDialog extends AmeDialog {
         GridLayout layout = (GridLayout) spacesPanel.getLayout();
         int cells = layout.getRows() * layout.getColumns();
         for (FormatTemplate.Space space : FormatTemplate.Space.values()) {
-            spacesPanel.add(new SpacePanel(space));
+            SpacePanel panel = new SpacePanel(space);
+            spacesPanel.add(panel);
+            spacePanels.add(panel);
         }
         int cellIndex = spacesPanel.getComponentCount();
         while (cellIndex < cells) {
@@ -155,9 +180,9 @@ public class FormatTemplateDialog extends AmeDialog {
         marginAndSpacePanel = new javax.swing.JPanel();
         marginsPanel = new javax.swing.JPanel();
         topMarginTextField = new javax.swing.JTextField();
-        topMarginTextField1 = new javax.swing.JTextField();
-        topMarginTextField2 = new javax.swing.JTextField();
-        topMarginTextField3 = new javax.swing.JTextField();
+        rightMarginTextField = new javax.swing.JTextField();
+        bottomMarginTextField = new javax.swing.JTextField();
+        leftMarginTextField = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
@@ -357,11 +382,11 @@ public class FormatTemplateDialog extends AmeDialog {
 
         topMarginTextField.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
 
-        topMarginTextField1.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
+        rightMarginTextField.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
 
-        topMarginTextField2.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
+        bottomMarginTextField.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
 
-        topMarginTextField3.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
+        leftMarginTextField.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
 
         jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel13.setText("Top");
@@ -389,7 +414,7 @@ public class FormatTemplateDialog extends AmeDialog {
                 .addGroup(marginsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(marginsPanelLayout.createSequentialGroup()
                         .addGroup(marginsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(topMarginTextField3)
+                            .addComponent(leftMarginTextField)
                             .addComponent(jLabel16, javax.swing.GroupLayout.DEFAULT_SIZE, 61, Short.MAX_VALUE))
                         .addGap(27, 27, 27)
                         .addComponent(jLabel17)
@@ -397,14 +422,14 @@ public class FormatTemplateDialog extends AmeDialog {
                         .addComponent(jLabel18)
                         .addGap(27, 27, 27)
                         .addGroup(marginsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(topMarginTextField1)
+                            .addComponent(rightMarginTextField)
                             .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, 61, Short.MAX_VALUE)))
                     .addGroup(marginsPanelLayout.createSequentialGroup()
                         .addGap(97, 97, 97)
                         .addGroup(marginsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(topMarginTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(topMarginTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(bottomMarginTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -421,14 +446,14 @@ public class FormatTemplateDialog extends AmeDialog {
                     .addComponent(jLabel16))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(marginsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(topMarginTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(topMarginTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(rightMarginTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(leftMarginTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel17)
                     .addComponent(jLabel18))
                 .addGap(18, 48, Short.MAX_VALUE)
                 .addComponent(jLabel15)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(topMarginTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(bottomMarginTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(18, Short.MAX_VALUE))
         );
 
@@ -569,6 +594,7 @@ public class FormatTemplateDialog extends AmeDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField barsPerStaffTextField;
+    private javax.swing.JTextField bottomMarginTextField;
     private javax.swing.JButton cancelButton;
     private javax.swing.JButton doneButton;
     private javax.swing.JTabbedPane formatTemplateTabbedPane;
@@ -601,10 +627,12 @@ public class FormatTemplateDialog extends AmeDialog {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JCheckBox landscapeCheckBox;
+    private javax.swing.JTextField leftMarginTextField;
     private javax.swing.JPanel marginAndSpacePanel;
     private javax.swing.JPanel marginsPanel;
     private javax.swing.JTextField maxShrinkingTextField;
     private javax.swing.JPanel otherFontsPanel;
+    private javax.swing.JTextField rightMarginTextField;
     private javax.swing.JTextField scaleTextField;
     private javax.swing.JTextArea shortDescriptionTextArea;
     private javax.swing.JPanel spacesPanel;
@@ -612,9 +640,6 @@ public class FormatTemplateDialog extends AmeDialog {
     private javax.swing.JTextField templateNameTextField;
     private javax.swing.JPanel tntFontsPanel;
     private javax.swing.JTextField topMarginTextField;
-    private javax.swing.JTextField topMarginTextField1;
-    private javax.swing.JTextField topMarginTextField2;
-    private javax.swing.JTextField topMarginTextField3;
     // End of variables declaration//GEN-END:variables
 
     private void showPsFonts() {
@@ -638,6 +663,16 @@ public class FormatTemplateDialog extends AmeDialog {
         template.setStretchLastStaff(stretchLastStaffCheckBox.isSelected());
         template.setLandscape(landscapeCheckBox.isSelected());
         template.setBarsPerStaff(getAsInteger(barsPerStaffTextField));
+        template.setMargin(FormatTemplate.Margin.TOP, getAsDouble(topMarginTextField));
+        template.setMargin(FormatTemplate.Margin.RIGHT, getAsDouble(rightMarginTextField));
+        template.setMargin(FormatTemplate.Margin.BOTTOM, getAsDouble(bottomMarginTextField));
+        template.setMargin(FormatTemplate.Margin.LEFT, getAsDouble(leftMarginTextField));
+        for (SpacePanel sp : spacePanels) {
+            template.setSpace(sp.getSpace(), sp.getValue());
+        }
+        for (FontPanel fp : fontPanels) {
+            template.setFont(fp.getAmeFont(), fp.getFontValue());
+        }
         set(template);
     }
 
@@ -666,11 +701,13 @@ public class FormatTemplateDialog extends AmeDialog {
     private class SpacePanel extends JPanel {
 
         private final JTextField field;
+        private final FormatTemplate.Space space;
         private final Dimension dimension = new Dimension(42, 27);
 
         public SpacePanel(FormatTemplate.Space space) {
             super(new BorderLayout());
             super.add(new JLabel(space.getName() + ":"), BorderLayout.CENTER);
+            this.space = space;
             field = new JTextField();
             field.setSize(dimension);
             field.setPreferredSize(dimension);
@@ -678,6 +715,10 @@ public class FormatTemplateDialog extends AmeDialog {
             field.setMaximumSize(dimension);
             field.setHorizontalAlignment(JTextField.TRAILING);
             super.add(field, BorderLayout.EAST);
+        }
+
+        public FormatTemplate.Space getSpace() {
+            return space;
         }
 
         public void setValue(String value) {
@@ -708,17 +749,19 @@ public class FormatTemplateDialog extends AmeDialog {
 
     private class FontPanel extends JPanel {
 
-        private JSpinner sizeSpinner;
+        private final FormatTemplate.Font ameFont;
         private final JComboBox postScriptFontComboBox;
         private final Dimension labelDimension = new Dimension(170, 27);
         private final Dimension sizeDimension = new Dimension(72, 27);
         private final int DEFAULT_SIZE = 14;
+        private JSpinner sizeSpinner;
 
         public FontPanel(FormatTemplate.Font font) {
             super(new BorderLayout());
+            this.ameFont = font;
             JLabel label;
-            if (font != null) {
-                label = new JLabel(font.getName() + ":");
+            if (ameFont != null) {
+                label = new JLabel(ameFont.getName() + ":");
             } else {
                 label = new JLabel("Select for All Fonts:");
             }
@@ -729,7 +772,7 @@ public class FormatTemplateDialog extends AmeDialog {
             super.add(label, BorderLayout.WEST);
             postScriptFontComboBox = new JComboBox(new DefaultComboBoxModel(PostScriptFont.values()));
             postScriptFontComboBox.setSelectedItem(PostScriptFont.DEFAULT_FONT);
-            if (font == null) {
+            if (ameFont == null) {
                 postScriptFontComboBox.addItemListener((ItemEvent e) -> {
                     if (e.getSource() instanceof JComboBox) {
                         JComboBox box = (JComboBox) e.getSource();
@@ -740,7 +783,7 @@ public class FormatTemplateDialog extends AmeDialog {
             }
             super.add(postScriptFontComboBox, BorderLayout.CENTER);
             SpinnerNumberModel model = new SpinnerNumberModel(DEFAULT_SIZE, 4, 72, 1);
-            if (font == null) {
+            if (ameFont == null) {
                 JLabel sizePlaceHolderLabel = new JLabel();
                 sizePlaceHolderLabel.setSize(sizeDimension);
                 sizePlaceHolderLabel.setPreferredSize(sizeDimension);
@@ -757,6 +800,10 @@ public class FormatTemplateDialog extends AmeDialog {
             }
         }
 
+        public FormatTemplate.Font getAmeFont() {
+            return ameFont;
+        }
+
         public void setPsFont(PostScriptFont psFont) {
             postScriptFontComboBox.setSelectedItem(psFont);
         }
@@ -770,6 +817,9 @@ public class FormatTemplateDialog extends AmeDialog {
 
         public FormatTemplate.FontValue getFontValue() {
             PostScriptFont psFont = (PostScriptFont) postScriptFontComboBox.getSelectedItem();
+            if (psFont.equals(PostScriptFont.EMPTY)) {
+                return null;
+            }
             Integer size = DEFAULT_SIZE;
             if (sizeSpinner != null) {
                 size = (Integer) sizeSpinner.getValue();

@@ -14,7 +14,7 @@ public interface Collection {
     List<String> getTitles();
 
     Boolean hasTitles();
-    
+
     String getPrefaceHeader();
 
     String getPreface();
@@ -36,4 +36,8 @@ public interface Collection {
     String getBooksText();
 
     List<Book> getBooks();
+
+    String getPreferredTemplate();
+
+    void setPreferredTemplate(String name);
 }
