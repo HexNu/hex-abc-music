@@ -26,6 +26,7 @@ public class BookWriter implements Writer<XmlNode> {
         result.addAttribute("name", book.getName());
         XmlNode personsTextNode = NodeFactory.createNode("persons-text", book.getPersonsText());
         personsTextNode.addAttribute("print", book.getPrintPersons().toString());
+        result.addAttribute("preferred-template", book.getPreferredTemplate());
         if (book.getPersonsHeader() != null && !book.getPersonsHeader().isEmpty()) {
             personsTextNode.addAttribute("header", book.getPersonsHeader());
         }

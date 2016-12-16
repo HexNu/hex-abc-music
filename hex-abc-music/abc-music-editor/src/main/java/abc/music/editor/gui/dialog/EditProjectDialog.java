@@ -2,7 +2,10 @@ package abc.music.editor.gui.dialog;
 
 import abc.music.core.domain.Project;
 import abc.music.editor.AbcMusicEditor;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import javax.swing.DefaultComboBoxModel;
 
 /**
  *
@@ -37,6 +40,10 @@ public class EditProjectDialog extends AmeDialog<Project> {
         printBooksInformationCheckBox.setSelected(p.getPrintBooks());
         booksHeaderTextField.setText(p.getBooksHeader());
         booksTextArea.setText(p.getBooksText());
+        formatTemplateComboBox.setModel(new DefaultComboBoxModel(p.getFormatTemplates().keySet().toArray()));
+        if (p.getPreferredTemplate() != null && !p.getPreferredTemplate().isEmpty()) {
+            formatTemplateComboBox.setSelectedItem(p.getPreferredTemplate());
+        }
     }
 
     /**
@@ -73,6 +80,9 @@ public class EditProjectDialog extends AmeDialog<Project> {
         titlesTextArea = new javax.swing.JTextArea();
         prefaceHeaderTextField = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
+        jPanel3 = new javax.swing.JPanel();
+        formatTemplateComboBox = new javax.swing.JComboBox<>();
+        jLabel8 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -249,6 +259,33 @@ public class EditProjectDialog extends AmeDialog<Project> {
         jLabel7.setFont(new java.awt.Font("Ubuntu", 3, 15)); // NOI18N
         jLabel7.setText("  For abc printing/export");
 
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Format Template"));
+
+        formatTemplateComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        jLabel8.setText("Template:");
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(formatTemplateComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(186, Short.MAX_VALUE))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(formatTemplateComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel8))
+                .addContainerGap(19, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -260,13 +297,14 @@ public class EditProjectDialog extends AmeDialog<Project> {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addComponent(cancelButton, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(doneButton, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addComponent(personsPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel7))
+                    .addComponent(jLabel7)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -277,10 +315,12 @@ public class EditProjectDialog extends AmeDialog<Project> {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel7)
                         .addGap(18, 18, 18)
-                        .addComponent(personsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(personsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(47, 47, 47)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(doneButton)
                             .addComponent(cancelButton)))
@@ -304,6 +344,7 @@ public class EditProjectDialog extends AmeDialog<Project> {
     private javax.swing.JTextArea booksTextArea;
     private javax.swing.JButton cancelButton;
     private javax.swing.JButton doneButton;
+    private javax.swing.JComboBox<String> formatTemplateComboBox;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -311,8 +352,10 @@ public class EditProjectDialog extends AmeDialog<Project> {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
@@ -339,6 +382,7 @@ public class EditProjectDialog extends AmeDialog<Project> {
         p.setPrintBooks(printBooksInformationCheckBox.isSelected());
         p.setBooksHeader(booksHeaderTextField.getText());
         p.setBooksText(booksTextArea.getText());
+        p.setPreferredTemplate(formatTemplateComboBox.getSelectedItem().toString());
         set(p);
     }
 }

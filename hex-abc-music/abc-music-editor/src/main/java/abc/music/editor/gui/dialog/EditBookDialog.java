@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import javax.swing.AbstractAction;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JCheckBox;
 import javax.swing.JPanel;
 
@@ -41,7 +42,7 @@ public class EditBookDialog extends AmeDialog<Book> {
         if (book.getName() != null) {
             nameTextField.setText(book.getName());
         }
-        if (book.getShortDescription()!= null) {
+        if (book.getShortDescription() != null) {
             shortDescriptionTextArea.setText(book.getShortDescription());
         }
         if (book.getPrefaceHeader() != null) {
@@ -64,6 +65,11 @@ public class EditBookDialog extends AmeDialog<Book> {
         personsHeaderTextField.setText(book.getPersonsHeader());
         personsTextArea.setText(book.getPersonsText());
         sortList(otherTunes);
+        formatTemplateComboBox.setModel(new DefaultComboBoxModel(editor.getProject().getFormatTemplates().keySet().toArray()));
+        if (book.getPreferredTemplate() != null && !book.getPreferredTemplate().isEmpty()) {
+            formatTemplateComboBox.setSelectedItem(book.getPreferredTemplate());
+        }
+
         updatePanels();
     }
 
@@ -142,8 +148,13 @@ public class EditBookDialog extends AmeDialog<Book> {
         dialogButtonsPanel = new javax.swing.JPanel();
         doneButton = new javax.swing.JButton();
         cancelButton = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel8 = new javax.swing.JLabel();
+        formatTemplateComboBox = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+
+        textButtonPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
         jLabel1.setText("Name:");
 
@@ -185,7 +196,7 @@ public class EditBookDialog extends AmeDialog<Book> {
                                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(prefaceHeaderTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 270, Short.MAX_VALUE)))
+                        .addGap(0, 263, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         textButtonPanelLayout.setVerticalGroup(
@@ -204,9 +215,11 @@ public class EditBookDialog extends AmeDialog<Book> {
                     .addComponent(jLabel2)
                     .addComponent(prefaceHeaderTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 205, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 128, Short.MAX_VALUE)
                 .addContainerGap())
         );
+
+        personsPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
         printPersonsCheckBox.setText("Include Persons Information on Export");
 
@@ -234,7 +247,7 @@ public class EditBookDialog extends AmeDialog<Book> {
                                 .addGap(18, 18, 18)
                                 .addComponent(personsHeaderTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jLabel7))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 263, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         personsPanelLayout.setVerticalGroup(
@@ -402,7 +415,7 @@ public class EditBookDialog extends AmeDialog<Book> {
         otherTunesButtonPanelLayout.setHorizontalGroup(
             otherTunesButtonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(otherTunesButtonPanelLayout.createSequentialGroup()
-                .addContainerGap(125, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(allOtherItemButton, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(noOtherItemsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -476,6 +489,33 @@ public class EditBookDialog extends AmeDialog<Book> {
                 .addContainerGap())
         );
 
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+
+        jLabel8.setText("Format template:");
+
+        formatTemplateComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(formatTemplateComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(15, 15, 15)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8)
+                    .addComponent(formatTemplateComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(18, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -487,8 +527,9 @@ public class EditBookDialog extends AmeDialog<Book> {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(dialogButtonsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(listHandlingPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(personsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(listHandlingPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(personsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -496,7 +537,9 @@ public class EditBookDialog extends AmeDialog<Book> {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(textButtonPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(personsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(listHandlingPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -563,6 +606,7 @@ public class EditBookDialog extends AmeDialog<Book> {
         book.setPersonsHeader(personsHeaderTextField.getText());
         book.setPersonsText(personsTextArea.getText());
         book.setTunes(bookTunes);
+        book.setPreferredTemplate(formatTemplateComboBox.getSelectedItem().toString());
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -575,6 +619,7 @@ public class EditBookDialog extends AmeDialog<Book> {
     private javax.swing.JButton cancelButton;
     private javax.swing.JPanel dialogButtonsPanel;
     private javax.swing.JButton doneButton;
+    private javax.swing.JComboBox<String> formatTemplateComboBox;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -582,6 +627,8 @@ public class EditBookDialog extends AmeDialog<Book> {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;

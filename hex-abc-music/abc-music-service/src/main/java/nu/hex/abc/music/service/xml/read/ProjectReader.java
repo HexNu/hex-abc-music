@@ -28,6 +28,9 @@ class ProjectReader implements Reader<Project> {
         if (node.hasAttribute("abc-version")) {
             result.setAbcVersion(node.getAttribute("abc-version"));
         }
+        if (node.hasAttribute("preferred-template")) {
+            result.setPreferredTemplate(node.getAttribute("preferred-template"));
+        }
         if (node.hasAttribute("summary")) {
             result.setSummary(node.getAttribute("summary"));
         }

@@ -91,6 +91,9 @@ public class FormatTemplateDialog extends AmeDialog<FormatTemplate> {
             for (FontPanel p : fontPanels) {
                 if (template.hasFontValue(p.getAmeFont())) {
                     p.setFontValue(template.getFontValue(p.getAmeFont()));
+                } else {
+                    FormatTemplate.FontValue value = new FormatTemplate.FontValue(PostScriptFont.EMPTY, 14);
+                    p.setFontValue(value);
                 }
             }
         }
@@ -774,10 +777,10 @@ public class FormatTemplateDialog extends AmeDialog<FormatTemplate> {
             label.setMinimumSize(labelDimension);
             label.setMaximumSize(labelDimension);
             super.add(label, BorderLayout.WEST);
-            postScriptFontComboBox = new JComboBox(new DefaultComboBoxModel(PostScriptFont.values()));
-            postScriptFontComboBox.setSelectedItem(PostScriptFont.DEFAULT_FONT);
+            this.postScriptFontComboBox = new JComboBox(new DefaultComboBoxModel(PostScriptFont.values()));
+            this.postScriptFontComboBox.setSelectedItem(PostScriptFont.DEFAULT_FONT);
             if (ameFont == null) {
-                postScriptFontComboBox.addItemListener((ItemEvent e) -> {
+                this.postScriptFontComboBox.addItemListener((ItemEvent e) -> {
                     if (e.getSource() instanceof JComboBox) {
                         JComboBox box = (JComboBox) e.getSource();
                         PostScriptFont allFont = (PostScriptFont) box.getSelectedItem();
@@ -785,7 +788,7 @@ public class FormatTemplateDialog extends AmeDialog<FormatTemplate> {
                     }
                 });
             }
-            super.add(postScriptFontComboBox, BorderLayout.CENTER);
+            super.add(this.postScriptFontComboBox, BorderLayout.CENTER);
             SpinnerNumberModel model = new SpinnerNumberModel(DEFAULT_SIZE, 4, 72, 1);
             if (ameFont == null) {
                 JLabel sizePlaceHolderLabel = new JLabel();
@@ -795,12 +798,12 @@ public class FormatTemplateDialog extends AmeDialog<FormatTemplate> {
                 sizePlaceHolderLabel.setMaximumSize(sizeDimension);
                 super.add(sizePlaceHolderLabel, BorderLayout.EAST);
             } else {
-                sizeSpinner = new JSpinner(model);
-                sizeSpinner.setSize(sizeDimension);
-                sizeSpinner.setPreferredSize(sizeDimension);
-                sizeSpinner.setMinimumSize(sizeDimension);
-                sizeSpinner.setMaximumSize(sizeDimension);
-                super.add(sizeSpinner, BorderLayout.EAST);
+                this.sizeSpinner = new JSpinner(model);
+                this.sizeSpinner.setSize(sizeDimension);
+                this.sizeSpinner.setPreferredSize(sizeDimension);
+                this.sizeSpinner.setMinimumSize(sizeDimension);
+                this.sizeSpinner.setMaximumSize(sizeDimension);
+                super.add(this.sizeSpinner, BorderLayout.EAST);
             }
         }
 
@@ -809,13 +812,17 @@ public class FormatTemplateDialog extends AmeDialog<FormatTemplate> {
         }
 
         public void setPsFont(PostScriptFont psFont) {
-            postScriptFontComboBox.setSelectedItem(psFont);
+            this.postScriptFontComboBox.setSelectedItem(psFont);
         }
 
         public void setFontValue(FormatTemplate.FontValue value) {
-            postScriptFontComboBox.setSelectedItem(value.getPsFont());
-            if (sizeSpinner != null) {
-                sizeSpinner.setValue(value.getSize());
+            if (value != null) {
+                if (value.getPsFont() != null) {
+                    this.postScriptFontComboBox.setSelectedItem(value.getPsFont());
+                }
+                if (this.sizeSpinner != null && value.getSize() != null) {
+                    this.sizeSpinner.setValue(value.getSize());
+                }
             }
         }
 
@@ -825,8 +832,8 @@ public class FormatTemplateDialog extends AmeDialog<FormatTemplate> {
                 return null;
             }
             Integer size = DEFAULT_SIZE;
-            if (sizeSpinner != null) {
-                size = (Integer) sizeSpinner.getValue();
+            if (this.sizeSpinner != null) {
+                size = (Integer) this.sizeSpinner.getValue();
             }
             return new FormatTemplate.FontValue(psFont, size);
         }
