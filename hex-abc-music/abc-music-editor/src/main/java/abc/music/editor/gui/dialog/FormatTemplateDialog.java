@@ -14,7 +14,9 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JSpinner;
 import javax.swing.JTextField;
+import javax.swing.SpinnerNumberModel;
 
 /**
  *
@@ -31,9 +33,9 @@ public class FormatTemplateDialog extends AmeDialog {
         initComponents();
         initFields();
     }
-    
+
     public void setFormatTemplate(FormatTemplate template) {
-        
+
     }
 
     private void initFields() {
@@ -140,7 +142,7 @@ public class FormatTemplateDialog extends AmeDialog {
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
                 .addComponent(templateNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(591, Short.MAX_VALUE))
+                .addContainerGap(655, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -279,7 +281,7 @@ public class FormatTemplateDialog extends AmeDialog {
             .addGroup(generalPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(278, Short.MAX_VALUE))
+                .addContainerGap(342, Short.MAX_VALUE))
         );
         generalPanelLayout.setVerticalGroup(
             generalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -381,7 +383,7 @@ public class FormatTemplateDialog extends AmeDialog {
                 .addContainerGap()
                 .addComponent(marginsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(spacesPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 594, Short.MAX_VALUE)
+                .addComponent(spacesPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 658, Short.MAX_VALUE)
                 .addContainerGap())
         );
         marginAndSpacePanelLayout.setVerticalGroup(
@@ -405,7 +407,7 @@ public class FormatTemplateDialog extends AmeDialog {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(tntFontsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 900, Short.MAX_VALUE)
+                .addComponent(tntFontsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 964, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -427,7 +429,7 @@ public class FormatTemplateDialog extends AmeDialog {
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(otherFontsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 900, Short.MAX_VALUE)
+                .addComponent(otherFontsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 964, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel5Layout.setVerticalGroup(
@@ -461,7 +463,7 @@ public class FormatTemplateDialog extends AmeDialog {
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(734, Short.MAX_VALUE)
+                .addContainerGap(798, Short.MAX_VALUE)
                 .addComponent(cancelButton, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(doneButton, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -587,11 +589,12 @@ public class FormatTemplateDialog extends AmeDialog {
 
     private class FontPanel extends JPanel {
 
-        private final JTextField field;
+        private final JSpinner sizeSpinner;
         private final JComboBox postScriptFontComboBox;
         private final Dimension labelDimension = new Dimension(170, 27);
-        private final Dimension sizeDimension = new Dimension(42, 27);
-        private final PostScriptFont DEFAULT_FONT = PostScriptFont.TR; 
+        private final Dimension sizeDimension = new Dimension(72, 27);
+        private final PostScriptFont DEFAULT_FONT = PostScriptFont.TR;
+        private final int DEFAULT_SIZE = 14;
 
         public FontPanel(FormatTemplate.Font font) {
             super(new BorderLayout());
@@ -604,23 +607,23 @@ public class FormatTemplateDialog extends AmeDialog {
             postScriptFontComboBox = new JComboBox(new DefaultComboBoxModel(PostScriptFont.values()));
             postScriptFontComboBox.setSelectedItem(DEFAULT_FONT);
             super.add(postScriptFontComboBox, BorderLayout.CENTER);
-            field = new JTextField();
-            field.setSize(sizeDimension);
-            field.setPreferredSize(sizeDimension);
-            field.setMinimumSize(sizeDimension);
-            field.setMaximumSize(sizeDimension);
-            field.setHorizontalAlignment(JTextField.TRAILING);
-            super.add(field, BorderLayout.EAST);
+            SpinnerNumberModel model = new SpinnerNumberModel(DEFAULT_SIZE, 4, 72, 1);
+            sizeSpinner = new JSpinner(model);
+            sizeSpinner.setSize(sizeDimension);
+            sizeSpinner.setPreferredSize(sizeDimension);
+            sizeSpinner.setMinimumSize(sizeDimension);
+            sizeSpinner.setMaximumSize(sizeDimension);
+            super.add(sizeSpinner, BorderLayout.EAST);
         }
 
         public void setFontValue(FormatTemplate.FontValue value) {
             postScriptFontComboBox.setSelectedItem(value.getPsFont());
-            field.setText(value.getSize().toString());
+            sizeSpinner.setValue(value.getSize());
         }
 
         public FormatTemplate.FontValue getFontValue() {
             PostScriptFont psFont = (PostScriptFont) postScriptFontComboBox.getSelectedItem();
-            Integer size = Integer.valueOf(field.getText());
+            Integer size = (Integer) sizeSpinner.getValue();
             return new FormatTemplate.FontValue(psFont, size);
         }
     }
