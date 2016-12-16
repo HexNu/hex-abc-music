@@ -162,7 +162,7 @@ public class FormatTemplate {
     }
 
     public boolean hasSpaceValue(Space space) {
-        return this.spaces.containsKey(space);
+        return spaces.containsKey(space) && spaces.get(space) != null;
     }
 
     public Double getSpaceValue(Space space) {
@@ -426,7 +426,7 @@ public class FormatTemplate {
                 return null;
             }
             for (Font f : values()) {
-                if (text.toUpperCase().equals(f.name())
+                if (text.toUpperCase().replaceAll("-", "_").equals(f.name())
                         || text.equalsIgnoreCase(f.getLabel())
                         || text.equalsIgnoreCase(f.getName())) {
                     return f;

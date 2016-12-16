@@ -60,7 +60,7 @@ public enum PostScriptFont {
             return null;
         }
         for (PostScriptFont f : values()) {
-            if (f.name().equalsIgnoreCase(text) || f.getName().equalsIgnoreCase(text)) {
+            if (f.name().equalsIgnoreCase(text.replaceAll("-", "_")) || f.getName().equalsIgnoreCase(text)) {
                 return f;
             }
         }
