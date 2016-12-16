@@ -23,6 +23,7 @@ import abc.music.editor.action.CreateBookAction;
 import abc.music.editor.action.CreatePersonAction;
 import abc.music.editor.action.CreateProjectAction;
 import abc.music.editor.action.EditBookAction;
+import abc.music.editor.action.EditFormatTemplateAction;
 import abc.music.editor.action.EditPersonAction;
 import abc.music.editor.action.EditProjectExportSettingsAction;
 import abc.music.editor.action.ExitAction;
@@ -54,6 +55,7 @@ public class AmeMenuBar extends JMenuBar {
     private AmeMenu printMenu;
     private AmeMenu personsMenu;
     private AmeMenu booksMenu;
+    private AmeMenu formatTemplatesMenu;
     private AmeMenu helpMenu = new AmeMenu();
     private AmeMenuItem openMenuItem = new AmeMenuItem();
     private AmeMenuItem openLatestMenuItem = new AmeMenuItem();
@@ -329,6 +331,14 @@ public class AmeMenuBar extends JMenuBar {
         booksMenu.add(addBookItem);
         booksMenu.addSeparator();
         p.getBooks().stream().forEach(this::addBookItem);
+        projectMenu.addSeparator();
+        formatTemplatesMenu = new AmeMenu("Format Templates");
+        AmeMenuItem newFormatTemplateItem = new AmeMenuItem("New Format Template");
+        newFormatTemplateItem.addActionListener((ActionEvent e) -> {
+            new EditFormatTemplateAction(editor).actionPerformed(e);
+        });
+        formatTemplatesMenu.add(newFormatTemplateItem);
+        projectMenu.add(formatTemplatesMenu);
     }
 
     private void addPersonItem(Person person) {
