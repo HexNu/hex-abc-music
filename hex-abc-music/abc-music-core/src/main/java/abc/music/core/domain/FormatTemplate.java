@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Created 2016-dec-16
@@ -105,7 +107,7 @@ public class FormatTemplate {
 
     public List<String> getDocumentFontsAsAbcStrings() {
         List<String> result = new ArrayList<>();
-        fonts.keySet().stream().filter((font) -> (font.isDocumentFont())).forEach((font) -> {
+        fonts.keySet().stream().filter((font) -> (!font.isGeneralTextFont())).forEach((font) -> {
             result.add(getFontAsAbcString(font));
         });
         return result;
@@ -162,7 +164,13 @@ public class FormatTemplate {
     public List<String> getSpacesAsAbcStrings() {
         List<String> result = new ArrayList<>();
         spaces.keySet().stream().forEach((space) -> {
-            result.add("%%" + space.getLabel() + " " + spaces.get(space).toString() + "cm");
+            if (space != null && space.getLabel() != null && !space.getLabel().isEmpty() && spaces.containsKey(space)) {
+                try {
+                    result.add("%%" + space.getLabel() + " " + spaces.get(space).toString() + "cm");
+                } catch (NullPointerException e) {
+                    Logger.getLogger(FormatTemplate.class.getName()).log(Level.INFO, "Space {0} is not set", space.name());
+                }
+            }
         });
         return result;
     }
@@ -222,7 +230,7 @@ public class FormatTemplate {
     public void setLineLength(Integer lineLength) {
         this.lineLength = lineLength;
     }
-    
+
     public boolean hasLineLength() {
         return lineLength != null;
     }
@@ -325,7 +333,7 @@ public class FormatTemplate {
     public String getHeaderLeft() {
         return headerLeft;
     }
-    
+
     public boolean hasHeaderLeft() {
         return headerLeft != null;
     }
@@ -337,7 +345,7 @@ public class FormatTemplate {
     public String getHeaderCenter() {
         return headerCenter;
     }
-    
+
     public boolean hasHeaderCenter() {
         return headerCenter != null;
     }
@@ -349,7 +357,7 @@ public class FormatTemplate {
     public String getHeaderRight() {
         return headerRight;
     }
-    
+
     public boolean hasHeaderRight() {
         return headerRight != null;
     }
@@ -361,7 +369,7 @@ public class FormatTemplate {
     public String getFooterLeft() {
         return footerLeft;
     }
-    
+
     public boolean hasFooterLeft() {
         return footerLeft != null;
     }
@@ -373,7 +381,7 @@ public class FormatTemplate {
     public String getFooterCenter() {
         return footerCenter;
     }
-    
+
     public boolean hasFooterCenter() {
         return footerCenter != null;
     }
@@ -385,7 +393,7 @@ public class FormatTemplate {
     public String getFooterRight() {
         return footerRight;
     }
-    
+
     public boolean hasFooterRight() {
         return footerRight != null;
     }
@@ -506,12 +514,12 @@ public class FormatTemplate {
             this.isBoxed = isBoxed;
         }
 
-        public Boolean isDocumentFont() {
-            return !name().contains("_");
-        }
-
         public Boolean isBoxed() {
             return isBoxed;
+        }
+
+        public Boolean isGeneralTextFont() {
+            return label.startsWith("text");
         }
 
         public String getLabel() {
@@ -575,7 +583,7 @@ public class FormatTemplate {
         MUSIC("musicspace"),
         PARTS("partsspace"),
         VOCAL("vocalspace"),
-        WORDS("wordspace"),
+        WORDS("wordsspace"),
         SYSTEM("staffsep"),
         SYSSTEMSTAFF("sysstaffsep"),
         TEXT("textspace"),

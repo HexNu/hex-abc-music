@@ -104,11 +104,14 @@ class AbcFileWriter implements Writer<File> {
 
     private void addHeaderAndIntroduction(Collection collection) {
         listDeclaredFonts();
+        listAbcFonts();
         appendLine("%%writefields Q false");
         setMargins();
+        setSpaces();
         if (template.hasIndent()) {
             appendLine(template.getIndentAsAbcString());
         }
+        appendLine(template.getScaleAsAbcString());
         setSkip(7.5);
         if (template.getFonts().containsKey(FormatTemplate.Font.COLLECTION_NAME)) {
             appendLine(template.getFontAsAbcString(FormatTemplate.Font.COLLECTION_NAME));
@@ -204,11 +207,19 @@ class AbcFileWriter implements Writer<File> {
             appendLine("%%leftmargin " + template.getMargin(FormatTemplate.Margin.LEFT) + "cm");
         }
     }
+    
+    private void setSpaces() {
+        template.getSpacesAsAbcStrings().stream().filter((s) -> (s != null && !s.isEmpty())).forEach(this::appendLine);
+    }
 
     private void listDeclaredFonts() {
-        for (String f : template.getDeclaredFonts()) {
+        template.getDeclaredFonts().stream().forEach((f) -> {
             appendLine("%%textfont " + f);
-        }
+        });
+    }
+
+    private void listAbcFonts() {
+        template.getDocumentFontsAsAbcStrings().stream().forEach(this::appendLine);
     }
 
     private void addPersonsInformation(String header, String text, List<Person> persons) {
