@@ -31,6 +31,7 @@ public class HelpDialog extends JDialog {
         setupMenu();
 
         super.setLocationRelativeTo(parent);
+        contentScrollPane.getVerticalScrollBar().setUnitIncrement(15);
     }
 
     @Override
@@ -82,7 +83,7 @@ public class HelpDialog extends JDialog {
         menuPanel = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         headerLabel = new javax.swing.JLabel();
-        jScrollPane3 = new javax.swing.JScrollPane();
+        contentScrollPane = new javax.swing.JScrollPane();
         jPanel1 = new javax.swing.JPanel();
         contentLabel = new javax.swing.JLabel();
 
@@ -104,8 +105,8 @@ public class HelpDialog extends JDialog {
         headerLabel.setText("Hex ABC Music Editor");
         jPanel2.add(headerLabel, java.awt.BorderLayout.PAGE_START);
 
-        jScrollPane3.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        jScrollPane3.setOpaque(false);
+        contentScrollPane.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        contentScrollPane.setOpaque(false);
 
         jPanel1.setBackground(AmeConstants.HELP_DIALOG_BACKGOUND_COLOR);
         jPanel1.setBorder(javax.swing.BorderFactory.createEmptyBorder(18, 18, 18, 18));
@@ -115,9 +116,9 @@ public class HelpDialog extends JDialog {
         contentLabel.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
         jPanel1.add(contentLabel);
 
-        jScrollPane3.setViewportView(jPanel1);
+        contentScrollPane.setViewportView(jPanel1);
 
-        jPanel2.add(jScrollPane3, java.awt.BorderLayout.CENTER);
+        jPanel2.add(contentScrollPane, java.awt.BorderLayout.CENTER);
 
         jSplitPane1.setRightComponent(jPanel2);
 
@@ -129,11 +130,11 @@ public class HelpDialog extends JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel contentLabel;
+    private javax.swing.JScrollPane contentScrollPane;
     private javax.swing.JLabel headerLabel;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSplitPane jSplitPane1;
     private javax.swing.JPanel menuPanel;
     // End of variables declaration//GEN-END:variables

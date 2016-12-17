@@ -25,6 +25,9 @@ public class BookReader extends NodeReader<Book> {
         if (node.hasAttribute("name")) {
             result.setName(node.getAttribute("name"));
         }
+        if (node.hasAttribute("copyright")) {
+            result.setCopyright(node.getAttribute("copyright"));
+        }
         if (node.hasAttribute("preferred-template")) {
             result.setPreferredTemplate(node.getAttribute("preferred-template"));
         }

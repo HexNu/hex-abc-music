@@ -33,7 +33,7 @@ public class EditFormatTemplateAction extends AmeAction<FormatTemplate> {
         dialog.setVisible(true);
         if (dialog.getResult().equals(AmeDialog.Result.OK) && dialog.get() != null) {
             editor.getProject().addFormatTemplate(dialog.get());
-            getService().getWriterService().saveProject();
+            new SaveProjectAction(editor).actionPerformed(event);
         }
     }
 

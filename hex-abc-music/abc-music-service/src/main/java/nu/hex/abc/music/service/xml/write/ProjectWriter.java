@@ -22,7 +22,12 @@ class ProjectWriter extends XmlWriter<Project> {
         result.addAttribute("name", entity.getName());
         result.addAttribute("abc-version", entity.getAbcVersion());
         result.addAttribute("summary", entity.getSummary());
-        result.addAttribute("preferred-template", entity.getPreferredTemplate());
+        if (entity.hasPreferredTemplate()) {
+            result.addAttribute("preferred-template", entity.getPreferredTemplate());
+        }
+        if (entity.hasCopyright()) {
+            result.addAttribute("copyright", entity.getCopyright());
+        }
         XmlNode titlesNode = NodeFactory.createNode("titles");
         entity.getTitles().stream().forEach((title) -> {
             titlesNode.addChild(NodeFactory.createNode("title", title));

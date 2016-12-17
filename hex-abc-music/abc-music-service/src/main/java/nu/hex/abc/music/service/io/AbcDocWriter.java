@@ -18,13 +18,24 @@ class AbcDocWriter implements Writer<String> {
     private static final String COMMENT = "%";
     private final List<Tune> tunes;
     private int voiceIndex = 0;
+    private final Integer textLineLength;
+    private static final int DEFAULT_TEXT_LINE_LENGTH = 100;
 
     public AbcDocWriter(Tune tune) {
         this(Arrays.asList(tune));
     }
 
+    public AbcDocWriter(Tune tune, Integer textLineLength) {
+        this(Arrays.asList(tune), textLineLength);
+    }
+
     public AbcDocWriter(List<Tune> tunes) {
+        this(tunes, DEFAULT_TEXT_LINE_LENGTH);
+    }
+
+    public AbcDocWriter(List<Tune> tunes, Integer textLineLength) {
         this.tunes = tunes;
+        this.textLineLength = textLineLength;
     }
 
     @Override
@@ -109,7 +120,7 @@ class AbcDocWriter implements Writer<String> {
                     .append("%%textoption right").append(NEW_LINE)
                     .append("%%begintext").append(NEW_LINE);
             for (History history : tune.getHistory()) {
-                String[] para = new TextUtil(history.getContent()).createLines(100).split("\n");
+                String[] para = new TextUtil(history.getContent()).createLines(textLineLength).split("\n");
                 for (String line : para) {
                     result.append("%%" + line).append(NEW_LINE);
                 }

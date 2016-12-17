@@ -22,6 +22,7 @@ public class Project implements Collection {
     private String name;
     private List<String> titles = new ArrayList<>();
     private String summary;
+    private String copyright;
     private String prefaceHeader;
     private String preface;
     private Boolean printPersons;
@@ -48,13 +49,24 @@ public class Project implements Collection {
     }
 
     @Override
+    public Project getProject() {
+        return this;
+    }
+
+    @Override
     public List<String> getTitles() {
         return titles;
     }
 
     @Override
     public Boolean hasTitles() {
-        return titles != null && !titles.isEmpty();
+        if (titles == null || titles.isEmpty()) {
+            return false;
+        }
+        if (titles.stream().anyMatch((title) -> (title != null && !title.isEmpty()))) {
+            return true;
+        }
+        return false;
     }
 
     public void setTitles(List<String> titles) {
@@ -75,6 +87,19 @@ public class Project implements Collection {
     }
 
     @Override
+    public String getCopyright() {
+        return copyright;
+    }
+
+    public boolean hasCopyright() {
+        return copyright != null && !copyright.isEmpty();
+    }
+
+    public void setCopyright(String copyright) {
+        this.copyright = copyright;
+    }
+
+    @Override
     public String getPrefaceHeader() {
         return prefaceHeader;
     }
@@ -88,13 +113,22 @@ public class Project implements Collection {
         return preface;
     }
 
+    @Override
+    public Boolean hasPreface() {
+        return preface != null && !preface.isEmpty();
+    }
+
     public void setPreface(String preface) {
         this.preface = preface;
     }
 
     @Override
     public Boolean getPrintPersons() {
-        return printPersons == null ? false : printPersons;
+        return printPersons == null
+                ? false
+                : getPersons().isEmpty()
+                        ? false
+                        : printPersons;
     }
 
     public void setPrintPersons(Boolean printPersons) {
@@ -121,7 +155,11 @@ public class Project implements Collection {
 
     @Override
     public Boolean getPrintBooks() {
-        return printBooks == null ? false : printBooks;
+        return printBooks == null
+                ? false
+                : getBooks().isEmpty()
+                        ? false
+                        : printBooks;
     }
 
     public void setPrintBooks(Boolean printBooks) {
@@ -244,6 +282,10 @@ public class Project implements Collection {
         return preferredTemplate;
     }
 
+    public boolean hasPreferredTemplate() {
+        return preferredTemplate != null && !preferredTemplate.isEmpty();
+    }
+
     @Override
     public void setPreferredTemplate(String preferredTemplate) {
         this.preferredTemplate = preferredTemplate;
@@ -277,10 +319,11 @@ public class Project implements Collection {
 
     public void setBooks(List<Book> books) {
         this.books.clear();
-        this.books.addAll(books);
+        books.stream().forEach(this::addBook);
     }
 
     public void addBook(Book book) {
+        book.setProject(this);
         this.books.add(book);
     }
 

@@ -11,6 +11,8 @@ public interface Collection {
 
     String getName();
 
+    Project getProject();
+
     List<String> getTitles();
 
     Boolean hasTitles();
@@ -18,6 +20,8 @@ public interface Collection {
     String getPrefaceHeader();
 
     String getPreface();
+    
+    Boolean hasPreface();
 
     List<Tune> getTunes();
 
@@ -40,4 +44,6 @@ public interface Collection {
     String getPreferredTemplate();
 
     void setPreferredTemplate(String name);
+
+    String getCopyright();
 }

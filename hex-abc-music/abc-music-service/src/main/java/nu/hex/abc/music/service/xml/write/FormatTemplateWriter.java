@@ -36,12 +36,37 @@ public class FormatTemplateWriter implements Writer<XmlNode> {
         if (template.hasBarsPerStaff()) {
             result.addAttribute("bars-per-staff", template.getBarsPerStaff());
         }
+        if (template.hasLineLength()) {
+            result.addAttribute("line-length", template.getLineLength());
+        }
         if (template.hasStretchLastStaff()) {
             result.addAttribute("stretch-last-staff", template.getStretchLastStaff().toString());
         }
         if (template.hasLandscape()) {
             result.addAttribute("landscape", template.getLandscape().toString());
         }
+        XmlNode pageHeaders = NodeFactory.createNode("page-headers");
+        result.addChild(pageHeaders);
+        if (template.hasHeaderLeft()) {
+            pageHeaders.addAttribute("left", template.getHeaderLeft());
+        }
+        if (template.hasHeaderCenter()) {
+            pageHeaders.addAttribute("center", template.getHeaderCenter());
+        }
+        if (template.hasHeaderRight()) {
+            pageHeaders.addAttribute("right", template.getHeaderRight());
+        }
+        XmlNode pageFooters = NodeFactory.createNode("page-footers");
+        if (template.hasFooterLeft()) {
+            pageFooters.addAttribute("left", template.getFooterLeft());
+        }
+        if (template.hasFooterCenter()) {
+            pageFooters.addAttribute("center", template.getFooterCenter());
+        }
+        if (template.hasFooterRight()) {
+            pageFooters.addAttribute("right", template.getFooterRight());
+        }
+        result.addChild(pageFooters);
         if (template.hasMargins()) {
             template.getMargins().keySet().stream().forEach((margin) -> {
                 createMarginNode(margin, template.getMargin(margin));

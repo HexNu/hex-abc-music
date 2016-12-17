@@ -38,11 +38,38 @@ public class FormatTemplateReader implements Reader<FormatTemplate> {
         if (node.hasAttribute("bars-per-staff")) {
             result.setBarsPerStaff(Integer.valueOf(node.getAttribute("bars-per-staff")));
         }
+        if (node.hasAttribute("line-length")) {
+            result.setLineLength(Integer.valueOf(node.getAttribute("line-length")));
+        }
         if (node.hasAttribute("stretch-last")) {
             result.setStretchLastStaff(Boolean.valueOf(node.getAttribute("stretch-last")));
         }
         if (node.hasAttribute("landscape")) {
             result.setLandscape(Boolean.valueOf(node.getAttribute("landscape")));
+        }
+        if (node.hasChildNamed("page-headers")) {
+            XmlNode headers = node.getChild("page-headers");
+            if (headers.hasAttribute("left")) {
+                result.setHeaderLeft(headers.getAttribute("left"));
+            }
+            if (headers.hasAttribute("center")) {
+                result.setHeaderCenter(headers.getAttribute("center"));
+            }
+            if (headers.hasAttribute("right")) {
+                result.setHeaderRight(headers.getAttribute("right"));
+            }
+        }
+        if (node.hasChildNamed("page-footers")) {
+            XmlNode footers = node.getChild("page-footers");
+            if (footers.hasAttribute("left")) {
+                result.setFooterLeft(footers.getAttribute("left"));
+            }
+            if (footers.hasAttribute("center")) {
+                result.setFooterCenter(footers.getAttribute("center"));
+            }
+            if (footers.hasAttribute("right")) {
+                result.setFooterRight(footers.getAttribute("right"));
+            }
         }
         if (node.hasChildNamed("margins") && node.getChild("margins").hasChildNamed("margin")) {
             node.getChild("margins").getChildren("margin").stream().forEach((m) -> {

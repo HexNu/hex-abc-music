@@ -13,8 +13,10 @@ import java.util.List;
 public class Book implements Collection {
 
     private String name;
+    private Project project;
     private List<String> titles = new ArrayList<>();
     private String shortDescription;
+    private String copyright;
     private String preferredTemplate;
     private String prefaceHeader;
     private String preface;
@@ -40,13 +42,41 @@ public class Book implements Collection {
     }
 
     @Override
+    public Project getProject() {
+        return project;
+    }
+
+    public void setProject(Project project) {
+        this.project = project;
+    }
+
+    @Override
+    public String getCopyright() {
+        return copyright;
+    }
+
+    public boolean hasCopyright() {
+        return copyright != null && !copyright.isEmpty();
+    }
+
+    public void setCopyright(String copyright) {
+        this.copyright = copyright;
+    }
+
+    @Override
     public List<String> getTitles() {
         return titles;
     }
 
     @Override
     public Boolean hasTitles() {
-        return titles != null && !titles.isEmpty();
+        if (titles == null || titles.isEmpty()) {
+            return false;
+        }
+        if (titles.stream().anyMatch((title) -> (title != null && !title.isEmpty()))) {
+            return true;
+        }
+        return false;
     }
 
     public void setTitles(List<String> titles) {
@@ -71,6 +101,10 @@ public class Book implements Collection {
         return preferredTemplate;
     }
 
+    public boolean hasPreferredTemplate() {
+        return preferredTemplate != null && !preferredTemplate.isEmpty();
+    }
+
     @Override
     public void setPreferredTemplate(String preferredTemplate) {
         this.preferredTemplate = preferredTemplate;
@@ -88,6 +122,11 @@ public class Book implements Collection {
     @Override
     public String getPreface() {
         return preface;
+    }
+
+    @Override
+    public Boolean hasPreface() {
+        return preface != null && !preface.isEmpty();
     }
 
     public void setPreface(String preface) {

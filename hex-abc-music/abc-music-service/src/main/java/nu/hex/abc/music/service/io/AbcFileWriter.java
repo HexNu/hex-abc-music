@@ -2,6 +2,7 @@ package nu.hex.abc.music.service.io;
 
 import abc.music.core.domain.Book;
 import abc.music.core.domain.Collection;
+import abc.music.core.domain.FormatTemplate;
 import abc.music.core.domain.Person;
 import abc.music.core.domain.Tune;
 import abc.music.core.util.TextUtil;
@@ -25,15 +26,15 @@ class AbcFileWriter implements Writer<File> {
     private static final String DEFAULT_ABC_VERSION = "2.1";
     private static final String ABC_CREATOR = "%%abc-creator hex-abc-music " + MetaService.getAppInfo().getVersion();
     private static final String NEW_LINE = "\n";
-    private static final String TIMES_ROMAN = "Times-Roman",
-            TIMES_BOLD = "Times-Bold",
-            TIMES_ITALIC = "Times-Italic";
     private final PropertyService properties = new PropertyService();
     private final List<Tune> tunes;
     private final File file;
     private String abcDoc = "";
     private boolean isBook = false;
     private boolean isCollection = false;
+    private FormatTemplate template;
+    private Integer lineLength = 100;
+    private String copyright = "";
 
     public AbcFileWriter(Tune tune, File file) {
         this(Arrays.asList(tune), file);
@@ -47,11 +48,19 @@ class AbcFileWriter implements Writer<File> {
 
     public AbcFileWriter(Collection collection, File file) {
         createFileHeader();
-        this.tunes = collection.getTunes();
+        tunes = collection.getTunes();
+        copyright = collection.getCopyright();
         this.file = file;
+        template = collection.getProject().getFormatTemplate(collection.getPreferredTemplate());
+        if (template.hasLineLength()) {
+            lineLength = template.getLineLength();
+        }
         isBook = collection instanceof Book;
         isCollection = true;
         addHeaderAndIntroduction(collection);
+        if (!collection.hasPreface()) {
+            setHeadersAndFooters();
+        }
         if (collection.getPrintPersons()) {
             List<Person> persons = collection.getPersons();
             Collections.sort(persons, (a, b) -> a.getFormalName().compareTo(b.getFormalName()));
@@ -71,7 +80,11 @@ class AbcFileWriter implements Writer<File> {
         if (isCollection && !isBook) {
             Collections.sort(tunes, (a, b) -> a.getName().compareTo(b.getName()));
         }
-        abcDoc += new AbcDocWriter(tunes).write();
+        if (isCollection) {
+            abcDoc += new AbcDocWriter(tunes, lineLength).write();
+        } else {
+            abcDoc += new AbcDocWriter(tunes).write();
+        }
         return new SimpleFileWriter(file, abcDoc).write();
     }
 
@@ -90,57 +103,136 @@ class AbcFileWriter implements Writer<File> {
     }
 
     private void addHeaderAndIntroduction(Collection collection) {
+        listDeclaredFonts();
         appendLine("%%writefields Q false");
-        appendLine("%%topmargin 2.7cm");
-        appendLine("%%leftmargin 2.7cm");
-        appendLine("%%rightmargin 2.7cm");
-        appendLine("%%botmargin 2.7cm");
-        appendLine("%%indent 0.7cm");
+        setMargins();
+        if (template.hasIndent()) {
+            appendLine(template.getIndentAsAbcString());
+        }
         setSkip(7.5);
-        setFont(TIMES_BOLD, 30);
+        if (template.getFonts().containsKey(FormatTemplate.Font.COLLECTION_NAME)) {
+            appendLine(template.getFontAsAbcString(FormatTemplate.Font.COLLECTION_NAME));
+        }
         appendCenteredLine(collection.getName());
-        setPageBreak();
-        if (!collection.getTitles().isEmpty()) {
+        if (collection.hasTitles()) {
+            setPageBreak();
             appendCenteredLine(" ");
             setPageBreak();
             setSkip(7.5);
             for (int i = 0; i < collection.getTitles().size(); i++) {
                 if (i > 0) {
-                    setFont(TIMES_ITALIC, 21);
+                    appendLine(template.getFontAsAbcString(FormatTemplate.Font.COLLECTION_SUBTITLE));
+                } else {
+                    appendLine(template.getFontAsAbcString(FormatTemplate.Font.COLLECTION_TITLE));
                 }
                 appendCenteredLine(collection.getTitles().get(i));
             }
         }
-        setPageBreak();
-        setFont(TIMES_BOLD, 18);
-        setSkip(2.7);
-        appendSingleTextLine(collection.getPrefaceHeader());
-        setFont(TIMES_ROMAN, 14);
-        appendMultipleTextLines(collection.getPreface(), 0.8);
+        if (collection.hasPreface()) {
+            setPageBreak();
+            appendLine(template.getFontAsAbcString(FormatTemplate.Font.COLLECTION_PREFACE_HEADER));
+            setHeadersAndFooters();
+            setSkip(2.7);
+            appendSingleTextLine(collection.getPrefaceHeader());
+            appendLine(template.getFontAsAbcString(FormatTemplate.Font.COLLECTION_PREFACE_TEXT));
+            appendMultipleTextLines(collection.getPreface(), 0.8);
+        }
+    }
+
+    private void setHeadersAndFooters() {
+        appendLine(template.getFontAsAbcString(FormatTemplate.Font.PAGE_HEADER));
+        appendLine(template.getFontAsAbcString(FormatTemplate.Font.PAGE_FOOTER));
+        String header = "%%header \"";
+        if (template.hasHeaderLeft()) {
+            header = addField(header, template.getHeaderLeft());
+        }
+        header += "\t";
+        if (template.hasHeaderCenter()) {
+            header = addField(header, template.getHeaderCenter());
+        }
+        header += "\t";
+        if (template.hasHeaderRight()) {
+            header = addField(header, template.getHeaderRight());
+        }
+        header += "\"";
+        if (!header.equals("%%header \"\t\t\"")) {
+            appendLine(header);
+        }
+        String footer = "%%footer \"";
+        if (template.hasFooterLeft()) {
+            footer = addField(footer, template.getFooterLeft());
+        }
+        footer += "\t";
+        if (template.hasFooterCenter()) {
+            footer = addField(footer, template.getFooterCenter());
+        }
+        footer += "\t";
+        if (template.hasFooterRight()) {
+            footer = addField(footer, template.getFooterRight());
+        }
+        footer += "\"";
+        if (!footer.equals("%%footer \"\t\t\"")) {
+            appendLine(footer);
+        }
+    }
+
+    private String addField(String text, String input) {
+        if (input == null || input.isEmpty()) {
+            return text;
+        }
+        if (input.equals("©")) {
+            if (copyright != null) {
+                text += copyright;
+            }
+        } else {
+            text += input;
+        }
+        return text;
+    }
+
+    private void setMargins() {
+        if (template.getMargin(FormatTemplate.Margin.TOP) != null) {
+            appendLine("%%topmargin " + template.getMargin(FormatTemplate.Margin.TOP) + "cm");
+        }
+        if (template.getMargin(FormatTemplate.Margin.RIGHT) != null) {
+            appendLine("%%rightmargin " + template.getMargin(FormatTemplate.Margin.RIGHT) + "cm");
+        }
+        if (template.getMargin(FormatTemplate.Margin.BOTTOM) != null) {
+            appendLine("%%botmargin " + template.getMargin(FormatTemplate.Margin.BOTTOM) + "cm");
+        }
+        if (template.getMargin(FormatTemplate.Margin.LEFT) != null) {
+            appendLine("%%leftmargin " + template.getMargin(FormatTemplate.Margin.LEFT) + "cm");
+        }
+    }
+
+    private void listDeclaredFonts() {
+        for (String f : template.getDeclaredFonts()) {
+            appendLine("%%textfont " + f);
+        }
     }
 
     private void addPersonsInformation(String header, String text, List<Person> persons) {
-        setFont(TIMES_BOLD, 18);
+        appendLine(template.getFontAsAbcString(FormatTemplate.Font.COLLECTION_PREFACE_HEADER));
         appendSingleTextLine(header);
-        setFont(TIMES_ITALIC, 14);
+        appendLine(template.getFontAsAbcString(FormatTemplate.Font.COLLECTION_PREFACE_TEXT));
         appendMultipleTextLines(text, 0.8);
         for (Person p : persons) {
-            setFont(TIMES_BOLD, 14);
+            appendLine(template.getFontAsAbcString(FormatTemplate.Font.COLLECTION_PERSON_HEADER));
             appendSingleTextLine(p.getFirstName() + " " + p.getLastName());
-            setFont(TIMES_ROMAN, 14);
+            appendLine(template.getFontAsAbcString(FormatTemplate.Font.COLLECTION_PERSON_TEXT));
             appendMultipleTextLines(p.getHistory(), 0.8);
         }
     }
 
     private void addBooksInformation(String header, String text, List<Book> books) {
-        setFont(TIMES_BOLD, 18);
+        appendLine(template.getFontAsAbcString(FormatTemplate.Font.COLLECTION_PREFACE_HEADER));
         appendSingleTextLine(header);
-        setFont(TIMES_ITALIC, 14);
+        appendLine(template.getFontAsAbcString(FormatTemplate.Font.COLLECTION_PREFACE_TEXT));
         appendMultipleTextLines(text, 0.8);
         for (Book b : books) {
-            setFont(TIMES_BOLD, 14);
+            appendLine(template.getFontAsAbcString(FormatTemplate.Font.COLLECTION_BOOK_HEADER));
             appendSingleTextLine(b.getName());
-            setFont(TIMES_ROMAN, 14);
+            appendLine(template.getFontAsAbcString(FormatTemplate.Font.COLLECTION_BOOK_TEXT));
             if (!isBook) {
                 List<String> titles = new ArrayList<>();
                 for (Tune t : b.getTunes()) {
@@ -165,7 +257,7 @@ class AbcFileWriter implements Writer<File> {
         if (hasContent(text)) {
             for (String paragraph : text.split("\n\n")) {
                 appendLine("%%begintext");
-                String[] para = new TextUtil(paragraph).createLines(100).split("\n");
+                String[] para = new TextUtil(paragraph).createLines(lineLength).split("\n");
                 for (String line : para) {
                     appendLine("%%" + line);
                 }
@@ -184,7 +276,7 @@ class AbcFileWriter implements Writer<File> {
                 }
                 isFirst = false;
                 appendLine("%%begintext");
-                String[] para = new TextUtil(paragraph).createLines(100).split("\n");
+                String[] para = new TextUtil(paragraph).createLines(lineLength).split("\n");
                 for (String line : para) {
                     appendLine("%%" + line);
                 }
@@ -211,10 +303,6 @@ class AbcFileWriter implements Writer<File> {
 
     private void appendLine(String string) {
         abcDoc += string + NEW_LINE;
-    }
-
-    private void setFont(String fontName, int size) {
-        appendLine("%%textfont " + fontName + " " + size);
     }
 
     private void setSkip(Double value) {

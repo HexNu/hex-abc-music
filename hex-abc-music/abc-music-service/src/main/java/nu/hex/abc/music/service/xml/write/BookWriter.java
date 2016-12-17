@@ -26,13 +26,18 @@ public class BookWriter implements Writer<XmlNode> {
         result.addAttribute("name", book.getName());
         XmlNode personsTextNode = NodeFactory.createNode("persons-text", book.getPersonsText());
         personsTextNode.addAttribute("print", book.getPrintPersons().toString());
-        result.addAttribute("preferred-template", book.getPreferredTemplate());
+        if (book.hasPreferredTemplate()) {
+            result.addAttribute("preferred-template", book.getPreferredTemplate());
+        }
         if (book.getPersonsHeader() != null && !book.getPersonsHeader().isEmpty()) {
             personsTextNode.addAttribute("header", book.getPersonsHeader());
         }
         result.addChild(personsTextNode);
         if (book.getShortDescription() != null) {
             result.addChild(NodeFactory.createNode("short-description", book.getShortDescription()));
+        }
+        if (book.getCopyright() != null && !book.getCopyright().isEmpty()) {
+            result.addAttribute("copyright", book.getCopyright());
         }
         if (book.getPreface() != null) {
             XmlNode prefaceNode = NodeFactory.createNode("preface", book.getPreface());

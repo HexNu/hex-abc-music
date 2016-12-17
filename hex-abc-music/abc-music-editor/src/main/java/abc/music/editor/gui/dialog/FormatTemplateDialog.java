@@ -64,8 +64,29 @@ public class FormatTemplateDialog extends AmeDialog<FormatTemplate> {
             if (template.hasLandscape()) {
                 landscapeCheckBox.setSelected(template.getLandscape().equals(Boolean.TRUE));
             }
+            if (template.hasHeaderLeft()) {
+                headerLeftTextField.setText(template.getHeaderLeft());
+            }
+            if (template.hasHeaderCenter()) {
+                headerCenterTextField.setText(template.getHeaderCenter());
+            }
+            if (template.hasHeaderRight()) {
+                headerRightTextField.setText(template.getHeaderRight());
+            }
+            if (template.hasFooterLeft()) {
+                footerLeftTextField.setText(template.getFooterLeft());
+            }
+            if (template.hasFooterCenter()) {
+                footerCenterTextField.setText(template.getFooterCenter());
+            }
+            if (template.hasFooterRight()) {
+                footerRightTextField.setText(template.getFooterRight());
+            }
             if (template.hasBarsPerStaff()) {
                 barsPerStaffTextField.setText(template.getBarsPerStaff().toString());
+            }
+            if (template.hasLineLength()) {
+                lineLengthTextField.setText(template.getLineLength().toString());
             }
             for (FormatTemplate.Margin m : template.getMargins().keySet()) {
                 switch (m) {
@@ -184,6 +205,24 @@ public class FormatTemplateDialog extends AmeDialog<FormatTemplate> {
         jLabel19 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         shortDescriptionTextArea = new javax.swing.JTextArea();
+        jLabel20 = new javax.swing.JLabel();
+        lineLengthTextField = new javax.swing.JTextField();
+        jLabel21 = new javax.swing.JLabel();
+        jPanel6 = new javax.swing.JPanel();
+        jLabel22 = new javax.swing.JLabel();
+        jLabel23 = new javax.swing.JLabel();
+        headerLeftTextField = new javax.swing.JTextField();
+        jLabel24 = new javax.swing.JLabel();
+        headerCenterTextField = new javax.swing.JTextField();
+        jLabel25 = new javax.swing.JLabel();
+        headerRightTextField = new javax.swing.JTextField();
+        jLabel26 = new javax.swing.JLabel();
+        jLabel27 = new javax.swing.JLabel();
+        footerLeftTextField = new javax.swing.JTextField();
+        jLabel28 = new javax.swing.JLabel();
+        footerCenterTextField = new javax.swing.JTextField();
+        jLabel29 = new javax.swing.JLabel();
+        footerRightTextField = new javax.swing.JTextField();
         marginAndSpacePanel = new javax.swing.JPanel();
         marginsPanel = new javax.swing.JPanel();
         topMarginTextField = new javax.swing.JTextField();
@@ -219,7 +258,7 @@ public class FormatTemplateDialog extends AmeDialog<FormatTemplate> {
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
                 .addComponent(templateNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(655, Short.MAX_VALUE))
+                .addContainerGap(666, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -268,13 +307,20 @@ public class FormatTemplateDialog extends AmeDialog<FormatTemplate> {
         barsPerStaffTextField.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
 
         jLabel12.setFont(new java.awt.Font("Ubuntu", 2, 12)); // NOI18N
-        jLabel12.setText("(Leave empty if you want to controll this in the note body)");
+        jLabel12.setText("(Leave empty if you want to controll this in the notes)");
 
         jLabel19.setText("Template Description:");
 
         shortDescriptionTextArea.setColumns(20);
         shortDescriptionTextArea.setRows(3);
         jScrollPane1.setViewportView(shortDescriptionTextArea);
+
+        jLabel20.setText("Line length:");
+
+        lineLengthTextField.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
+
+        jLabel21.setFont(new java.awt.Font("Ubuntu", 2, 12)); // NOI18N
+        jLabel21.setText("(approximate number of letters per free text line.)");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -286,11 +332,16 @@ public class FormatTemplateDialog extends AmeDialog<FormatTemplate> {
                     .addComponent(jScrollPane1)
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel19)
                             .addGroup(jPanel4Layout.createSequentialGroup()
                                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabel20, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE)
                                     .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel4Layout.createSequentialGroup()
                                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -319,11 +370,12 @@ public class FormatTemplateDialog extends AmeDialog<FormatTemplate> {
                                             .addGroup(jPanel4Layout.createSequentialGroup()
                                                 .addComponent(barsPerStaffTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(jLabel12))))))
-                            .addComponent(jLabel9)
-                            .addComponent(jLabel10)
-                            .addComponent(jLabel11)
-                            .addComponent(jLabel19))
+                                                .addComponent(jLabel12))))
+                                    .addGroup(jPanel4Layout.createSequentialGroup()
+                                        .addGap(18, 18, 18)
+                                        .addComponent(lineLengthTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jLabel21)))))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -363,7 +415,97 @@ public class FormatTemplateDialog extends AmeDialog<FormatTemplate> {
                     .addComponent(jLabel11)
                     .addComponent(barsPerStaffTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel12))
-                .addContainerGap(100, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel20)
+                    .addComponent(lineLengthTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel21))
+                .addContainerGap(67, Short.MAX_VALUE))
+        );
+
+        jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder("Page"));
+
+        jLabel22.setText("Header");
+
+        jLabel23.setText("Left:");
+
+        jLabel24.setText("Center:");
+
+        jLabel25.setText("Right:");
+
+        jLabel26.setText("Footer");
+
+        jLabel27.setText("Left:");
+
+        jLabel28.setText("Center:");
+
+        jLabel29.setText("Right:");
+
+        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+        jPanel6.setLayout(jPanel6Layout);
+        jPanel6Layout.setHorizontalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(jLabel23, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel24, javax.swing.GroupLayout.DEFAULT_SIZE, 65, Short.MAX_VALUE))
+                            .addComponent(jLabel25))
+                        .addGap(5, 5, 5)
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(headerLeftTextField)
+                            .addComponent(headerCenterTextField)
+                            .addComponent(headerRightTextField)))
+                    .addComponent(jLabel22)
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(jLabel27, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel28, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel29))
+                        .addGap(5, 5, 5)
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(footerLeftTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 248, Short.MAX_VALUE)
+                            .addComponent(footerCenterTextField)
+                            .addComponent(footerRightTextField)))
+                    .addComponent(jLabel26))
+                .addContainerGap())
+        );
+        jPanel6Layout.setVerticalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel22)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(headerLeftTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel23))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel24)
+                    .addComponent(headerCenterTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel25)
+                    .addComponent(headerRightTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(21, 21, 21)
+                .addComponent(jLabel26)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(footerLeftTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel27))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel28)
+                    .addComponent(footerCenterTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel29)
+                    .addComponent(footerRightTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout generalPanelLayout = new javax.swing.GroupLayout(generalPanel);
@@ -373,13 +515,17 @@ public class FormatTemplateDialog extends AmeDialog<FormatTemplate> {
             .addGroup(generalPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(342, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         generalPanelLayout.setVerticalGroup(
             generalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(generalPanelLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, generalPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(generalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -475,7 +621,7 @@ public class FormatTemplateDialog extends AmeDialog<FormatTemplate> {
                 .addContainerGap()
                 .addComponent(marginsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(spacesPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 658, Short.MAX_VALUE)
+                .addComponent(spacesPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 669, Short.MAX_VALUE)
                 .addContainerGap())
         );
         marginAndSpacePanelLayout.setVerticalGroup(
@@ -499,7 +645,7 @@ public class FormatTemplateDialog extends AmeDialog<FormatTemplate> {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(tntFontsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 964, Short.MAX_VALUE)
+                .addComponent(tntFontsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 975, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -521,7 +667,7 @@ public class FormatTemplateDialog extends AmeDialog<FormatTemplate> {
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(otherFontsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 964, Short.MAX_VALUE)
+                .addComponent(otherFontsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 975, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel5Layout.setVerticalGroup(
@@ -564,7 +710,7 @@ public class FormatTemplateDialog extends AmeDialog<FormatTemplate> {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 627, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 638, Short.MAX_VALUE)
                 .addComponent(cancelButton, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(doneButton, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -604,8 +750,14 @@ public class FormatTemplateDialog extends AmeDialog<FormatTemplate> {
     private javax.swing.JTextField bottomMarginTextField;
     private javax.swing.JButton cancelButton;
     private javax.swing.JButton doneButton;
+    private javax.swing.JTextField footerCenterTextField;
+    private javax.swing.JTextField footerLeftTextField;
+    private javax.swing.JTextField footerRightTextField;
     private javax.swing.JTabbedPane formatTemplateTabbedPane;
     private javax.swing.JPanel generalPanel;
+    private javax.swing.JTextField headerCenterTextField;
+    private javax.swing.JTextField headerLeftTextField;
+    private javax.swing.JTextField headerRightTextField;
     private javax.swing.JTextField indentTextField;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
@@ -620,6 +772,16 @@ public class FormatTemplateDialog extends AmeDialog<FormatTemplate> {
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel22;
+    private javax.swing.JLabel jLabel23;
+    private javax.swing.JLabel jLabel24;
+    private javax.swing.JLabel jLabel25;
+    private javax.swing.JLabel jLabel26;
+    private javax.swing.JLabel jLabel27;
+    private javax.swing.JLabel jLabel28;
+    private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -632,9 +794,11 @@ public class FormatTemplateDialog extends AmeDialog<FormatTemplate> {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JCheckBox landscapeCheckBox;
     private javax.swing.JTextField leftMarginTextField;
+    private javax.swing.JTextField lineLengthTextField;
     private javax.swing.JPanel marginAndSpacePanel;
     private javax.swing.JPanel marginsPanel;
     private javax.swing.JTextField maxShrinkingTextField;
@@ -669,7 +833,14 @@ public class FormatTemplateDialog extends AmeDialog<FormatTemplate> {
         template.setMaxShrinking(getAsDouble(maxShrinkingTextField));
         template.setStretchLastStaff(stretchLastStaffCheckBox.isSelected());
         template.setLandscape(landscapeCheckBox.isSelected());
+        template.setHeaderLeft(headerLeftTextField.getText());
+        template.setHeaderCenter(headerCenterTextField.getText());
+        template.setHeaderRight(headerRightTextField.getText());
+        template.setFooterLeft(footerLeftTextField.getText());
+        template.setFooterCenter(footerCenterTextField.getText());
+        template.setFooterRight(footerRightTextField.getText());
         template.setBarsPerStaff(getAsInteger(barsPerStaffTextField));
+        template.setLineLength(getAsInteger(lineLengthTextField));
         template.setMargin(FormatTemplate.Margin.TOP, getAsDouble(topMarginTextField));
         template.setMargin(FormatTemplate.Margin.RIGHT, getAsDouble(rightMarginTextField));
         template.setMargin(FormatTemplate.Margin.BOTTOM, getAsDouble(bottomMarginTextField));

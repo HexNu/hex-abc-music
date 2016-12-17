@@ -23,6 +23,13 @@ public class FormatTemplate {
     private Boolean stretchLastStaff = false;
     private Boolean landscape = false;
     private Integer barsPerStaff = null;
+    private Integer lineLength = 100;
+    private String headerLeft;
+    private String headerCenter;
+    private String headerRight;
+    private String footerLeft;
+    private String footerCenter;
+    private String footerRight;
 
     public FormatTemplate() {
     }
@@ -140,6 +147,14 @@ public class FormatTemplate {
         return !fonts.isEmpty();
     }
 
+    public List<String> getDeclaredFonts() {
+        List<String> declaredFonts = new ArrayList<>();
+        fonts.values().stream().filter((value) -> (!declaredFonts.contains(value.getPsFont().getName()))).forEach((value) -> {
+            declaredFonts.add(value.getPsFont().getName());
+        });
+        return declaredFonts;
+    }
+
     public Map<Space, Double> getSpaces() {
         return spaces;
     }
@@ -198,6 +213,18 @@ public class FormatTemplate {
 
     public boolean hasBarsPerStaff() {
         return barsPerStaff != null;
+    }
+
+    public Integer getLineLength() {
+        return lineLength;
+    }
+
+    public void setLineLength(Integer lineLength) {
+        this.lineLength = lineLength;
+    }
+    
+    public boolean hasLineLength() {
+        return lineLength != null;
     }
 
     public Double getIndent() {
@@ -295,6 +322,78 @@ public class FormatTemplate {
         return landscape != null;
     }
 
+    public String getHeaderLeft() {
+        return headerLeft;
+    }
+    
+    public boolean hasHeaderLeft() {
+        return headerLeft != null;
+    }
+
+    public void setHeaderLeft(String headerLeft) {
+        this.headerLeft = headerLeft;
+    }
+
+    public String getHeaderCenter() {
+        return headerCenter;
+    }
+    
+    public boolean hasHeaderCenter() {
+        return headerCenter != null;
+    }
+
+    public void setHeaderCenter(String headerCenter) {
+        this.headerCenter = headerCenter;
+    }
+
+    public String getHeaderRight() {
+        return headerRight;
+    }
+    
+    public boolean hasHeaderRight() {
+        return headerRight != null;
+    }
+
+    public void setHeaderRight(String headerRight) {
+        this.headerRight = headerRight;
+    }
+
+    public String getFooterLeft() {
+        return footerLeft;
+    }
+    
+    public boolean hasFooterLeft() {
+        return footerLeft != null;
+    }
+
+    public void setFooterLeft(String footerLeft) {
+        this.footerLeft = footerLeft;
+    }
+
+    public String getFooterCenter() {
+        return footerCenter;
+    }
+    
+    public boolean hasFooterCenter() {
+        return footerCenter != null;
+    }
+
+    public void setFooterCenter(String footerCenter) {
+        this.footerCenter = footerCenter;
+    }
+
+    public String getFooterRight() {
+        return footerRight;
+    }
+    
+    public boolean hasFooterRight() {
+        return footerRight != null;
+    }
+
+    public void setFooterRight(String footerRight) {
+        this.footerRight = footerRight;
+    }
+
     public static class FontValue {
 
         private PostScriptFont psFont;
@@ -378,6 +477,8 @@ public class FormatTemplate {
         BARNUMBER("barnumberfont", true),
         BARLABEL("barlabelfont"),
         INDEX("indexfont"),
+        PAGE_HEADER("headerfont"),
+        PAGE_FOOTER("footerfont"),
         PRESET_1("setfont-1"),
         PRESET_2("setfont-2"),
         PRESET_3("setfont-3"),

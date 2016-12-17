@@ -123,8 +123,270 @@
                 </html>
             </content>            
         </item>
-<!--        <item label="In the lyrics editor">
+        <!--        <item label="In the lyrics editor">
              TODO: Write about free text line... 
         </item>-->
+    </item-group>
+    <item-group label="Page Layout" summary="About page layout: margins, headers &amp; footers &amp; al.">
+        <item label="Header &amp; Footer">
+            <content>
+                <html>
+                    <h3>header <var>text</var></h3>
+                    <h3>footer <var>text</var></h3>
+
+                    <table border="1">
+                        <tr align="center">
+                            <td width="25%">Default</td>
+                            <td width="25%">Command line</td>
+                            <td width="25%">Scope</td>
+                            <td width="25%">Available in</td>
+                        </tr>
+                        <tr align="center">
+                            <td>none</td>
+                            <td>none</td>
+                            <td>page</td>
+                            <td>abcm2ps only</td>
+                        </tr>
+                    </table>
+                    <p>
+                        Specify the text to be printed at the top or bottom of each page.<br/>
+                    </p>
+                    <p>
+                        There may be one or two lines in the header and footer commands.<br/>
+                        To specify 2 lines, put the 2 characters "\n" (not a real 'newline')<br/>
+                        as a separator in the command.
+                    </p>
+                    <p>
+                        In each line, 3 areas may be defined: left, center and<br/>
+                        right. These areas are separated by tabulations (real TABs,<br/>
+                        not "\t") and may be empty (if the left area is empty,<br/>
+                        double quote the string - see <code>sample3.abc</code> for example).<br/>
+                    </p>
+                    <p>
+                        The prefix '$' introduces variable substitution:
+                        <ul>
+                            <li>'$d' is the date and time of the last modification<br/>
+                                of the current ABC input file</li>
+                            <li>'$D' is the current date and time -<br/>
+                                see <code>%%dateformat</code>
+                            </li>
+                            <li>'$F' is the current input file name</li>
+                            <li>'$Ix' is any header information type ('x' is a<br/>
+                                letter range 'A' to 'Z')</li>
+                            <li>'$P' is the current page number</li>
+                            <li>'$P0' and '$P1' are also the page number, but apply<br/>
+                                only to the even ('0') or odd ('1') page numbers,</li>
+                            <li>'$T' is the current tune title</li>
+                            <li>'$V' is "abcm2ps-" followed by the program version</li>
+                        </ul>
+                        For example, the command line option '-N3' is the same as:<br/>
+                        <pre>	%%header "$P0		$P1"</pre>
+                        <br/>
+                        (there are 2 TABs between $P0 and $P1).
+                    </p>
+                    <p>
+                        If the header or footer text begins with '-' (hyphen/minus),<br/>
+                        it is not printed on the first page.
+                    </p>
+                </html>
+            </content>
+        </item>
+        <item label="Date format">
+            <content>
+                <html>
+                    <h3>dateformat <var>text</var></h3>
+                    <table border="1">
+                        <tr align="center">
+                            <td width="25%">Default</td>
+                            <td width="25%">Command line</td>
+                            <td width="25%">Scope</td>
+                            <td width="25%">Available in</td>
+                        </tr>
+                        <tr align="center">
+                            <td>"%b %e, %Y %H:%M"</td>
+                            <td>none</td>
+                            <td>page</td>
+                            <td>abcm2ps only</td>
+                        </tr>
+                    </table>
+                    <p>
+                        Define the format of the date and time used for <br/>
+                        <code>$D</code> in <code>%%header</code> and <code>%%footer</code>.
+                    </p>
+                    <p>
+                        The possible values of this parameter are described in <br/>
+                        the manual pages of date(1) and strftime(3).
+                    </p>
+                    <p>
+                        Note: the '%'s must be escaped as '\%' if <var>text</var> is <br/>
+                        not enclosed in double quotes (otherwise it is taken as the <br/>
+                        start of a comment).
+                    </p>
+                    <h4>Format chars:</h4>
+                    <table>
+                        <tr>
+                            <td>%%</td>
+                            <td>PERCENT</td>
+                        </tr>
+                        <tr>
+                            <td>%a</td>
+                            <td>day of the week abbr</td>
+                        </tr>
+                        <tr>
+                            <td>%A</td>
+                            <td>day of the week</td>
+                        </tr>
+                        <tr>
+                            <td>%b</td>
+                            <td>month abbr</td>
+                        </tr>
+                        <tr>
+                            <td>%B</td>
+                            <td>month</td>
+                        </tr>
+                        <tr>
+                            <td>%c</td>
+                            <td>MM/DD/YY HH:MM:SS</td>
+                        </tr>
+                        <tr>
+                            <td>%C</td>
+                            <td>ctime format: Sat Nov 19 21:05:57 1994</td>
+                        </tr>
+                        <tr>
+                            <td>%d</td>
+                            <td>numeric day of the month, with leading zeros (eg 01..31)</td>
+                        </tr>
+                        <tr>
+                            <td>%e</td>
+                            <td>like %d, but a leading zero is replaced by a space (eg  1..32)</td>
+                        </tr>
+                        <tr>
+                            <td>%D</td>
+                            <td>MM/DD/YY</td>
+                        </tr>
+                        <tr>
+                            <td>%G</td>
+                            <td>GPS week number (weeks since January 6, 1980)</td>
+                        </tr>
+                        <tr>
+                            <td>%h</td>
+                            <td>month abbr</td>
+                        </tr>
+                        <tr>
+                            <td>%H</td>
+                            <td>hour, 24 hour clock, leading 0's)</td>
+                        </tr>
+                        <tr>
+                            <td>%I</td>
+                            <td>hour, 12 hour clock, leading 0's)</td>
+                        </tr>
+                        <tr>
+                            <td>%j</td>
+                            <td>day of the year</td>
+                        </tr>
+                        <tr>
+                            <td>%k</td>
+                            <td>hour</td>
+                        </tr>
+                        <tr>
+                            <td>%l</td>
+                            <td>hour, 12 hour clock</td>
+                        </tr>
+                        <tr>
+                            <td>%L</td>
+                            <td>month number, starting with 1</td>
+                        </tr>
+                        <tr>
+                            <td>%m</td>
+                            <td>month number, starting with 01</td>
+                        </tr>
+                        <tr>
+                            <td>%M</td>
+                            <td>minute, leading 0's</td>
+                        </tr>
+                        <tr>
+                            <td>%n</td>
+                            <td>NEWLINE</td>
+                        </tr>
+                        <tr>
+                            <td>%o</td>
+                            <td>ornate day of month -- "1st", "2nd", "25th", etc.</td>
+                        </tr>
+                        <tr>
+                            <td>%p</td>
+                            <td>AM or PM </td>
+                        </tr>
+                        <tr>
+                            <td>%P</td>
+                            <td>am or pm (Yes %p and %P are backwards :)</td>
+                        </tr>
+                        <tr>
+                            <td>%q</td>
+                            <td>Quarter number, starting with 1</td>
+                        </tr>
+                        <tr>
+                            <td>%r</td>
+                            <td>time format: 09:05:57 PM</td>
+                        </tr>
+                        <tr>
+                            <td>%R</td>
+                            <td>time format: 21:05</td>
+                        </tr>
+                        <tr>
+                            <td>%s</td>
+                            <td>seconds since the Epoch, UCT</td>
+                        </tr>
+                        <tr>
+                            <td>%S</td>
+                            <td>seconds, leading 0's</td>
+                        </tr>
+                        <tr>
+                            <td>%t</td>
+                            <td>TAB</td>
+                        </tr>
+                        <tr>
+                            <td>%T</td>
+                            <td>time format: 21:05:57</td>
+                        </tr>
+                        <tr>
+                            <td>%U</td>
+                            <td>week number, Sunday as first day of week</td>
+                        </tr>
+                        <tr>
+                            <td>%w</td>
+                            <td>day of the week, numerically, Sunday == 0</td>
+                        </tr>
+                        <tr>
+                            <td>%W</td>
+                            <td>week number, Monday as first day of week</td>
+                        </tr>
+                        <tr>
+                            <td>%x</td>
+                            <td>date format: 11/19/94</td>
+                        </tr>
+                        <tr>
+                            <td>%X</td>
+                            <td>time format: 21:05:57</td>
+                        </tr>
+                        <tr>
+                            <td>%y</td>
+                            <td>year (2 digits)</td>
+                        </tr>
+                        <tr>
+                            <td>%Y</td>
+                            <td>year (4 digits)</td>
+                        </tr>
+                        <tr>
+                            <td>%Z</td>
+                            <td>timezone in ascii. eg: PST</td>
+                        </tr>
+                        <tr>
+                            <td>%z</td>
+                            <td>timezone in format -/+0000</td>
+                        </tr>
+                    </table>
+                </html>
+            </content>
+        </item>
     </item-group>
 </help>
