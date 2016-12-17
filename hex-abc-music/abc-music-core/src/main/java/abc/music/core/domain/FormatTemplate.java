@@ -67,7 +67,9 @@ public class FormatTemplate {
     public List<String> getMarginsAsAbcStrings() {
         List<String> result = new ArrayList<>();
         margins.keySet().stream().forEach((margin) -> {
-            result.add("%%" + margin.getLabel() + " " + margins.get(margin).toString() + "cm");
+            if (margins.containsKey(margin) && margins.get(margin) != null) {
+                result.add("%%" + margin.getLabel() + " " + margins.get(margin).toString() + "cm");
+            }
         });
         return result;
     }

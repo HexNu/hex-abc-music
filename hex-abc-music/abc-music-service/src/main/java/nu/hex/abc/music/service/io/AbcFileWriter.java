@@ -26,6 +26,7 @@ class AbcFileWriter implements Writer<File> {
     private static final String DEFAULT_ABC_VERSION = "2.1";
     private static final String ABC_CREATOR = "%%abc-creator hex-abc-music " + MetaService.getAppInfo().getVersion();
     private static final String NEW_LINE = "\n";
+    private static final String TAB = "\t";
     private final PropertyService properties = new PropertyService();
     private final List<Tune> tunes;
     private final File file;
@@ -111,35 +112,49 @@ class AbcFileWriter implements Writer<File> {
         if (template.hasIndent()) {
             appendLine(template.getIndentAsAbcString());
         }
-        appendLine(template.getScaleAsAbcString());
+        if (template.hasScale()) {
+            appendLine(template.getScaleAsAbcString());
+        }
         setSkip(7.5);
         if (template.getFonts().containsKey(FormatTemplate.Font.COLLECTION_NAME)) {
             appendLine(template.getFontAsAbcString(FormatTemplate.Font.COLLECTION_NAME));
         }
-        appendCenteredLine(collection.getName());
+        addFrontPage(collection);
         if (collection.hasTitles()) {
-            setPageBreak();
-            appendCenteredLine(" ");
-            setPageBreak();
-            setSkip(7.5);
-            for (int i = 0; i < collection.getTitles().size(); i++) {
-                if (i > 0) {
-                    appendLine(template.getFontAsAbcString(FormatTemplate.Font.COLLECTION_SUBTITLE));
-                } else {
-                    appendLine(template.getFontAsAbcString(FormatTemplate.Font.COLLECTION_TITLE));
-                }
-                appendCenteredLine(collection.getTitles().get(i));
-            }
+            addTitlePage(collection);
         }
         if (collection.hasPreface()) {
-            setPageBreak();
-            appendLine(template.getFontAsAbcString(FormatTemplate.Font.COLLECTION_PREFACE_HEADER));
-            setHeadersAndFooters();
-            setSkip(2.7);
-            appendSingleTextLine(collection.getPrefaceHeader());
-            appendLine(template.getFontAsAbcString(FormatTemplate.Font.COLLECTION_PREFACE_TEXT));
-            appendMultipleTextLines(collection.getPreface(), 0.8);
+            addPreface(collection);
         }
+    }
+
+    private void addFrontPage(Collection collection) {
+        appendCenteredLine(collection.getName());
+    }
+
+    private void addTitlePage(Collection collection) {
+        setPageBreak();
+        appendCenteredLine(" ");
+        setPageBreak();
+        setSkip(7.5);
+        for (int i = 0; i < collection.getTitles().size(); i++) {
+            if (i > 0) {
+                appendLine(template.getFontAsAbcString(FormatTemplate.Font.COLLECTION_SUBTITLE));
+            } else {
+                appendLine(template.getFontAsAbcString(FormatTemplate.Font.COLLECTION_TITLE));
+            }
+            appendCenteredLine(collection.getTitles().get(i));
+        }
+    }
+
+    private void addPreface(Collection collection) {
+        setPageBreak();
+        appendLine(template.getFontAsAbcString(FormatTemplate.Font.COLLECTION_PREFACE_HEADER));
+        setHeadersAndFooters();
+        setSkip(2.7);
+        appendSingleTextLine(collection.getPrefaceHeader());
+        appendLine(template.getFontAsAbcString(FormatTemplate.Font.COLLECTION_PREFACE_TEXT));
+        appendMultipleTextLines(collection.getPreface(), 0.8);
     }
 
     private void setHeadersAndFooters() {
@@ -149,11 +164,11 @@ class AbcFileWriter implements Writer<File> {
         if (template.hasHeaderLeft()) {
             header = addField(header, template.getHeaderLeft());
         }
-        header += "\t";
+        header += TAB;
         if (template.hasHeaderCenter()) {
             header = addField(header, template.getHeaderCenter());
         }
-        header += "\t";
+        header += TAB;
         if (template.hasHeaderRight()) {
             header = addField(header, template.getHeaderRight());
         }
@@ -165,11 +180,11 @@ class AbcFileWriter implements Writer<File> {
         if (template.hasFooterLeft()) {
             footer = addField(footer, template.getFooterLeft());
         }
-        footer += "\t";
+        footer += TAB;
         if (template.hasFooterCenter()) {
             footer = addField(footer, template.getFooterCenter());
         }
-        footer += "\t";
+        footer += TAB;
         if (template.hasFooterRight()) {
             footer = addField(footer, template.getFooterRight());
         }
@@ -194,20 +209,9 @@ class AbcFileWriter implements Writer<File> {
     }
 
     private void setMargins() {
-        if (template.getMargin(FormatTemplate.Margin.TOP) != null) {
-            appendLine("%%topmargin " + template.getMargin(FormatTemplate.Margin.TOP) + "cm");
-        }
-        if (template.getMargin(FormatTemplate.Margin.RIGHT) != null) {
-            appendLine("%%rightmargin " + template.getMargin(FormatTemplate.Margin.RIGHT) + "cm");
-        }
-        if (template.getMargin(FormatTemplate.Margin.BOTTOM) != null) {
-            appendLine("%%botmargin " + template.getMargin(FormatTemplate.Margin.BOTTOM) + "cm");
-        }
-        if (template.getMargin(FormatTemplate.Margin.LEFT) != null) {
-            appendLine("%%leftmargin " + template.getMargin(FormatTemplate.Margin.LEFT) + "cm");
-        }
+        template.getMarginsAsAbcStrings().stream().forEach(this::appendLine);
     }
-    
+
     private void setSpaces() {
         template.getSpacesAsAbcStrings().stream().filter((s) -> (s != null && !s.isEmpty())).forEach(this::appendLine);
     }
@@ -227,12 +231,14 @@ class AbcFileWriter implements Writer<File> {
         appendSingleTextLine(header);
         appendLine(template.getFontAsAbcString(FormatTemplate.Font.COLLECTION_PREFACE_TEXT));
         appendMultipleTextLines(text, 0.8);
-        for (Person p : persons) {
-            appendLine(template.getFontAsAbcString(FormatTemplate.Font.COLLECTION_PERSON_HEADER));
-            appendSingleTextLine(p.getFirstName() + " " + p.getLastName());
-            appendLine(template.getFontAsAbcString(FormatTemplate.Font.COLLECTION_PERSON_TEXT));
-            appendMultipleTextLines(p.getHistory(), 0.8);
-        }
+        persons.stream().forEach(this::addPersonInfo);
+    }
+
+    private void addPersonInfo(Person p) {
+        appendLine(template.getFontAsAbcString(FormatTemplate.Font.COLLECTION_PERSON_HEADER));
+        appendSingleTextLine(p.getFirstName() + " " + p.getLastName());
+        appendLine(template.getFontAsAbcString(FormatTemplate.Font.COLLECTION_PERSON_TEXT));
+        appendMultipleTextLines(p.getHistory(), 0.8);
     }
 
     private void addBooksInformation(String header, String text, List<Book> books) {
@@ -240,19 +246,21 @@ class AbcFileWriter implements Writer<File> {
         appendSingleTextLine(header);
         appendLine(template.getFontAsAbcString(FormatTemplate.Font.COLLECTION_PREFACE_TEXT));
         appendMultipleTextLines(text, 0.8);
-        for (Book b : books) {
-            appendLine(template.getFontAsAbcString(FormatTemplate.Font.COLLECTION_BOOK_HEADER));
-            appendSingleTextLine(b.getName());
-            appendLine(template.getFontAsAbcString(FormatTemplate.Font.COLLECTION_BOOK_TEXT));
-            if (!isBook) {
-                List<String> titles = new ArrayList<>();
-                for (Tune t : b.getTunes()) {
-                    titles.add(t.getName());
-                }
-                appendMultipleTextLines(b.getShortDescription(), titles, 0.8);
-            } else {
-                appendMultipleTextLines(b.getShortDescription(), 0.8);
-            }
+        books.stream().forEach(this::addBookInfo);
+    }
+
+    private void addBookInfo(Book b) {
+        appendLine(template.getFontAsAbcString(FormatTemplate.Font.COLLECTION_BOOK_HEADER));
+        appendSingleTextLine(b.getName());
+        appendLine(template.getFontAsAbcString(FormatTemplate.Font.COLLECTION_BOOK_TEXT));
+        if (!isBook) {
+            List<String> titles = new ArrayList<>();
+            b.getTunes().stream().forEach((t) -> {
+                titles.add(t.getName());
+            });
+            appendMultipleTextLines(b.getShortDescription(), titles, 0.8);
+        } else {
+            appendMultipleTextLines(b.getShortDescription(), 0.8);
         }
     }
 
@@ -266,9 +274,9 @@ class AbcFileWriter implements Writer<File> {
 
     private void appendMultipleTextLines(String text, double verticalSkip) {
         if (hasContent(text)) {
-            for (String paragraph : text.split("\n\n")) {
+            for (String paragraph : text.split(NEW_LINE + NEW_LINE)) {
                 appendLine("%%begintext");
-                String[] para = new TextUtil(paragraph).createLines(lineLength).split("\n");
+                String[] para = new TextUtil(paragraph).createLines(lineLength).split(NEW_LINE);
                 for (String line : para) {
                     appendLine("%%" + line);
                 }
@@ -281,13 +289,13 @@ class AbcFileWriter implements Writer<File> {
     private void appendMultipleTextLines(String text, List<String> list, double verticalSkip) {
         boolean isFirst = true;
         if (hasContent(text)) {
-            for (String paragraph : text.split("\n\n")) {
+            for (String paragraph : text.split(NEW_LINE + NEW_LINE)) {
                 if (!isFirst) {
                     setSkip(verticalSkip);
                 }
                 isFirst = false;
                 appendLine("%%begintext");
-                String[] para = new TextUtil(paragraph).createLines(lineLength).split("\n");
+                String[] para = new TextUtil(paragraph).createLines(lineLength).split(NEW_LINE);
                 for (String line : para) {
                     appendLine("%%" + line);
                 }
