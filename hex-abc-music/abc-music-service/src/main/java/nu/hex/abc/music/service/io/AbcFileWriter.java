@@ -66,12 +66,10 @@ class AbcFileWriter implements Writer<File> {
             List<Person> persons = collection.getPersons();
             Collections.sort(persons, (a, b) -> a.getFormalName().compareTo(b.getFormalName()));
             setPageBreak();
-            setSkip(2.7);
             addPersonsInformation(collection.getPersonsHeader(), collection.getPersonsText(), persons);
         }
         if (collection.getPrintBooks()) {
             setPageBreak();
-            setSkip(2.7);
             addBooksInformation(collection.getBooksHeader(), collection.getBooksText(), collection.getBooks());
         }
     }
@@ -115,7 +113,8 @@ class AbcFileWriter implements Writer<File> {
         if (template.hasScale()) {
             appendLine(template.getScaleAsAbcString());
         }
-        setSkip(7.5);
+        appendLine("% --- DOCUMENT START ---");
+        setSkip(template.getSpaceValue(FormatTemplate.Space.COLLECTION_NAME));
         if (template.getFonts().containsKey(FormatTemplate.Font.COLLECTION_NAME)) {
             appendLine(template.getFontAsAbcString(FormatTemplate.Font.COLLECTION_NAME));
         }
@@ -136,9 +135,12 @@ class AbcFileWriter implements Writer<File> {
         setPageBreak();
         appendCenteredLine(" ");
         setPageBreak();
-        setSkip(7.5);
+        setSkip(template.getSpaceValue(FormatTemplate.Space.COLLECTION_TITLE));
         for (int i = 0; i < collection.getTitles().size(); i++) {
             if (i > 0) {
+                if (i == 1) {
+                    setSkip(template.getSpaceValue(FormatTemplate.Space.COLLECTION_SUBTITLE));
+                }
                 appendLine(template.getFontAsAbcString(FormatTemplate.Font.COLLECTION_SUBTITLE));
             } else {
                 appendLine(template.getFontAsAbcString(FormatTemplate.Font.COLLECTION_TITLE));
@@ -151,15 +153,13 @@ class AbcFileWriter implements Writer<File> {
         setPageBreak();
         appendLine(template.getFontAsAbcString(FormatTemplate.Font.COLLECTION_PREFACE_HEADER));
         setHeadersAndFooters();
-        setSkip(2.7);
+        setSkip(template.getSpaceValue(FormatTemplate.Space.COLLECTION_PREFACE_HEADER));
         appendSingleTextLine(collection.getPrefaceHeader());
         appendLine(template.getFontAsAbcString(FormatTemplate.Font.COLLECTION_PREFACE_TEXT));
-        appendMultipleTextLines(collection.getPreface(), 0.8);
+        appendMultipleTextLines(collection.getPreface(), template.getSpaceValue(FormatTemplate.Space.COLLECTION_PREFACE_TEXT));
     }
 
     private void setHeadersAndFooters() {
-        appendLine(template.getFontAsAbcString(FormatTemplate.Font.PAGE_HEADER));
-        appendLine(template.getFontAsAbcString(FormatTemplate.Font.PAGE_FOOTER));
         String header = "%%header \"";
         if (template.hasHeaderLeft()) {
             header = addField(header, template.getHeaderLeft());
@@ -173,7 +173,8 @@ class AbcFileWriter implements Writer<File> {
             header = addField(header, template.getHeaderRight());
         }
         header += "\"";
-        if (!header.equals("%%header \"\t\t\"")) {
+        if (!headerIsEmpty(header)) {
+            appendLine(template.getFontAsAbcString(FormatTemplate.Font.PAGE_HEADER));
             appendLine(header);
         }
         String footer = "%%footer \"";
@@ -189,9 +190,18 @@ class AbcFileWriter implements Writer<File> {
             footer = addField(footer, template.getFooterRight());
         }
         footer += "\"";
-        if (!footer.equals("%%footer \"\t\t\"")) {
+        if (!footerIsEmpty(footer)) {
+            appendLine(template.getFontAsAbcString(FormatTemplate.Font.PAGE_FOOTER));
             appendLine(footer);
         }
+    }
+
+    private static boolean headerIsEmpty(String header) {
+        return header.equals("%%header \"\t\t\"");
+    }
+
+    private static boolean footerIsEmpty(String footer) {
+        return footer.equals("%%footer \"\t\t\"");
     }
 
     private String addField(String text, String input) {
@@ -227,10 +237,11 @@ class AbcFileWriter implements Writer<File> {
     }
 
     private void addPersonsInformation(String header, String text, List<Person> persons) {
+        setSkip(template.getSpaceValue(FormatTemplate.Space.COLLECTION_PERSON_HEADER));
         appendLine(template.getFontAsAbcString(FormatTemplate.Font.COLLECTION_PREFACE_HEADER));
         appendSingleTextLine(header);
         appendLine(template.getFontAsAbcString(FormatTemplate.Font.COLLECTION_PREFACE_TEXT));
-        appendMultipleTextLines(text, 0.8);
+        appendMultipleTextLines(text, template.getSpaceValue(FormatTemplate.Space.COLLECTION_PERSON_TEXT));
         persons.stream().forEach(this::addPersonInfo);
     }
 
@@ -238,14 +249,15 @@ class AbcFileWriter implements Writer<File> {
         appendLine(template.getFontAsAbcString(FormatTemplate.Font.COLLECTION_PERSON_HEADER));
         appendSingleTextLine(p.getFirstName() + " " + p.getLastName());
         appendLine(template.getFontAsAbcString(FormatTemplate.Font.COLLECTION_PERSON_TEXT));
-        appendMultipleTextLines(p.getHistory(), 0.8);
+        appendMultipleTextLines(p.getHistory(), template.getSpaceValue(FormatTemplate.Space.COLLECTION_PERSON_TEXT));
     }
 
     private void addBooksInformation(String header, String text, List<Book> books) {
+        setSkip(template.getSpaceValue(FormatTemplate.Space.COLLECTION_BOOK_HEADER));
         appendLine(template.getFontAsAbcString(FormatTemplate.Font.COLLECTION_PREFACE_HEADER));
         appendSingleTextLine(header);
         appendLine(template.getFontAsAbcString(FormatTemplate.Font.COLLECTION_PREFACE_TEXT));
-        appendMultipleTextLines(text, 0.8);
+        appendMultipleTextLines(text, template.getSpaceValue(FormatTemplate.Space.COLLECTION_BOOK_TEXT));
         books.stream().forEach(this::addBookInfo);
     }
 
@@ -258,9 +270,9 @@ class AbcFileWriter implements Writer<File> {
             b.getTunes().stream().forEach((t) -> {
                 titles.add(t.getName());
             });
-            appendMultipleTextLines(b.getShortDescription(), titles, 0.8);
+            appendMultipleTextLines(b.getShortDescription(), titles, template.getSpaceValue(FormatTemplate.Space.COLLECTION_BOOK_TEXT));
         } else {
-            appendMultipleTextLines(b.getShortDescription(), 0.8);
+            appendMultipleTextLines(b.getShortDescription(), template.getSpaceValue(FormatTemplate.Space.COLLECTION_BOOK_TEXT));
         }
     }
 

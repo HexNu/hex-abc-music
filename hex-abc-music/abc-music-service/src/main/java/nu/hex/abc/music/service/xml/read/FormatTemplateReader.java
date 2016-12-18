@@ -80,11 +80,14 @@ public class FormatTemplateReader implements Reader<FormatTemplate> {
         if (node.hasChildNamed("spaces") && node.getChild("spaces").hasChildNamed("space")) {
             node.getChild("spaces").getChildren("space").stream().forEach((s) -> {
                 FormatTemplate.Space space = FormatTemplate.Space.find(s.getAttribute("name"));
+                if (space == null) {
+                    Logger.getLogger(FormatTemplateReader.class.getName()).log(Level.WARNING, "Could not find Space: {0}", s.getAttribute("name"));
+                }
                 if (space != null && s.hasAttribute("value")) {
                     try {
                         result.addSpace(space, Double.valueOf(s.getAttribute("value")));
                     } catch (NumberFormatException e) {
-                        Logger.getLogger(FormatTemplateReader.class.getName()).log(Level.WARNING, "Could not read value", e);
+                        Logger.getLogger(FormatTemplateReader.class.getName()).log(Level.WARNING, "Could not read value for {0}", space);
                     }
                 }
             });

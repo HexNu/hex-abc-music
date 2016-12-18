@@ -166,7 +166,7 @@ public class FormatTemplate {
     public List<String> getSpacesAsAbcStrings() {
         List<String> result = new ArrayList<>();
         spaces.keySet().stream().forEach((space) -> {
-            if (space != null && space.getLabel() != null && !space.getLabel().isEmpty() && spaces.containsKey(space)) {
+            if (space != null && space.isHeader() && space.getLabel() != null && !space.getLabel().isEmpty() && spaces.containsKey(space)) {
                 try {
                     result.add("%%" + space.getLabel() + " " + spaces.get(space).toString() + "cm");
                 } catch (NullPointerException e) {
@@ -615,11 +615,15 @@ public class FormatTemplate {
         public static Space find(String text) {
             for (Space s : values()) {
                 if (text.equalsIgnoreCase(s.getLabel()) || text.equalsIgnoreCase(s.name())
-                        || text.replaceAll("-", "_").equalsIgnoreCase(s.getName())) {
+                        || text.replaceAll("-", "_").equalsIgnoreCase(s.name())) {
                     return s;
                 }
             }
             return null;
+        }
+        
+        public boolean isHeader() {
+            return !label.equals("vsep");
         }
 
         @Override
