@@ -1,5 +1,6 @@
 package abc.music.core.domain;
 
+import abc.music.core.util.KeyList;
 import java.util.Objects;
 
 /**
@@ -10,9 +11,8 @@ import java.util.Objects;
 public class Key extends Field {
 
     private Pitch pitch = Pitch.DEFAULT_PITCH;
-    private Signature signature = Signature.DEFAULT_SIGNATURE;
+    private Accidental accidental = Accidental.DEFAULT_ACCIDENTAL;
     private Mode mode = Mode.DEFAULT_MODE;
-//    private Modifier modifier = new Modifier();
 
     public Key() {
         super('K');
@@ -26,12 +26,12 @@ public class Key extends Field {
         this.pitch = pitch;
     }
 
-    public Signature getSignature() {
-        return signature;
+    public Accidental getAccidental() {
+        return accidental;
     }
 
-    public void setSignature(Signature signature) {
-        this.signature = signature;
+    public void setAccidental(Accidental accidental) {
+        this.accidental = accidental;
     }
 
     public Mode getMode() {
@@ -41,49 +41,48 @@ public class Key extends Field {
     public void setMode(Mode mode) {
         this.mode = mode;
     }
-//
-//    public Modifier getModifier() {
-//        return modifier;
-//    }
-//
-//    public void setModifier(Modifier modifier) {
-//        this.modifier = modifier;
-//    }
-//
-//    public boolean hasModifier() {
-//        return modifier != null && !modifier.isEmpty();
-//    }
-//
+
     @Override
     public boolean isEmpty() {
-        return getPitch() == null;// && (modifier == null || modifier.isEmpty());
+        return getPitch() == null;
     }
 
     @Override
     public String get() {
-        return getCode() + ": " + getPitch() + getSignature() + getMode();
+        return getCode() + ": " + getPitch() + getAccidental() + getMode();
     }
 
     @Override
     public String getContent() {
-        return toString();// + getModifier();
+        return toString();
+    }
+
+    public static Key valueOf(String key) {
+        Key result = new Key();
+        result.setPitch(getPitchFromString(key));
+        result.setAccidental(getAccidentalFromString(key));
+        result.setMode(getModeFromString(key));
+        return result;
     }
 
     public static Pitch getPitchFromString(String keyString) {
         return Pitch.find(keyString.substring(0, 1));
     }
 
-    public static Signature getSignatureFromString(String keyString) {
-        return Signature.find(keyString.replaceAll("[A-H]", ""));
+    public static Accidental getAccidentalFromString(String keyString) {
+        return Accidental.find(keyString.replaceAll("[A-Zac-z]", ""));
+    }
+
+    public static Mode getModeFromString(String keyString) {
+        return Mode.find(keyString.substring(1).replaceAll("[b#]", ""));
     }
 
     @Override
     public int hashCode() {
         int hash = 3;
         hash = 59 * hash + Objects.hashCode(this.pitch);
-        hash = 59 * hash + Objects.hashCode(this.signature);
+        hash = 59 * hash + Objects.hashCode(this.accidental);
         hash = 59 * hash + Objects.hashCode(this.mode);
-//        hash = 59 * hash + Objects.hashCode(this.modifier);
         return hash;
     }
 
@@ -102,15 +101,12 @@ public class Key extends Field {
         if (this.pitch != other.pitch) {
             return false;
         }
-        if (this.signature != other.signature) {
+        if (this.accidental != other.accidental) {
             return false;
         }
         if (this.mode != other.mode) {
             return false;
         }
-//        if (!Objects.equals(this.modifier, other.modifier)) {
-//            return false;
-//        }
         return true;
     }
 
@@ -140,21 +136,21 @@ public class Key extends Field {
         }
     }
 
-    public enum Signature {
+    public enum Accidental {
         SHARP("#", "♯"),
         NATURAL("", ""),
         FLAT("b", "♭");
-        public static final Signature DEFAULT_SIGNATURE = NATURAL;
+        public static final Accidental DEFAULT_ACCIDENTAL = NATURAL;
         private final String sign;
         private final String symbol;
 
-        private Signature(String sign, String symbol) {
+        private Accidental(String sign, String symbol) {
             this.sign = sign;
             this.symbol = symbol;
         }
 
         /**
-         * The sign representing the signature in abc-files.
+         * The sign representing the accidental in abc-files.
          * <br>
          * #, b or empty string
          *
@@ -165,7 +161,7 @@ public class Key extends Field {
         }
 
         /**
-         * The utf-symbol for the signature.
+         * The utf-symbol for the accidental.
          * <br>
          * ♯, ♭ or empty string.
          *
@@ -179,9 +175,9 @@ public class Key extends Field {
             return name().substring(0, 1) + name().substring(1).toLowerCase();
         }
 
-        public static Signature find(String text) {
+        public static Accidental find(String text) {
             if (text != null) {
-                for (Signature signature : values()) {
+                for (Accidental signature : values()) {
                     if (text.toUpperCase().equals(signature.name())
                             || text.equalsIgnoreCase(signature.getSign())
                             || text.equals(signature.getSymbol())) {
@@ -189,7 +185,7 @@ public class Key extends Field {
                     }
                 }
             }
-            return DEFAULT_SIGNATURE;
+            return DEFAULT_ACCIDENTAL;
         }
 
         @Override
@@ -242,5 +238,12 @@ public class Key extends Field {
                     return name().toLowerCase().substring(0, 3);
             }
         }
+    }
+    
+    public static void main(String[] args) {
+        String[] modi = KeyList.getModi().toArray(new String[KeyList.getModi().size()]);
+        new KeyList(modi).getSelectedModi().stream().forEach((k) -> {
+            System.out.println(Key.valueOf(k.toString()).get());
+        });
     }
 }

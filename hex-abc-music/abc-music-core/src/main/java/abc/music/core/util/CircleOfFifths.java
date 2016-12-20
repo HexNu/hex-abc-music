@@ -31,7 +31,7 @@ public class CircleOfFifths {
         return b - a;
     }
 
-    public static Integer getSteps(Key.Pitch oldPitch, Key.Signature oldSignature, Key.Pitch newPitch, Key.Signature newSignature) {
+    public static Integer getSteps(Key.Pitch oldPitch, Key.Accidental oldSignature, Key.Pitch newPitch, Key.Accidental newSignature) {
         return getSteps(oldPitch.getName() + oldSignature.getSign(), newPitch.getName() + newSignature.getSign());
     }
 
@@ -58,7 +58,7 @@ public class CircleOfFifths {
 //        return result;
 //    }
 
-    public static String getNew(Key.Pitch oldPitch, Key.Signature oldSignature, int steps) {
+    public static String getNew(Key.Pitch oldPitch, Key.Accidental oldSignature, int steps) {
         return getNew(oldPitch.getName() + oldSignature.getSign(), steps);
     }
 

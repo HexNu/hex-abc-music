@@ -24,13 +24,13 @@ public class KeyChangeDialog extends AmeDialog<Key> {
     protected void init() {
         initComponents();
         pitchComboBox.setModel(new DefaultComboBoxModel(Key.Pitch.values()));
-        signatureComboBox.setModel(new DefaultComboBoxModel(Key.Signature.values()));
+        signatureComboBox.setModel(new DefaultComboBoxModel(Key.Accidental.values()));
         modeComboBox.setModel(new DefaultComboBoxModel(Key.Mode.values()));
     }
 
     private void setValues() {
         pitchComboBox.setSelectedItem(voice.getKey().getPitch());
-        signatureComboBox.setSelectedItem(voice.getKey().getSignature());
+        signatureComboBox.setSelectedItem(voice.getKey().getAccidental());
         modeComboBox.setSelectedItem(voice.getKey().getMode());
     }
 
@@ -151,7 +151,7 @@ public class KeyChangeDialog extends AmeDialog<Key> {
             key.setPitch((Key.Pitch) pitchComboBox.getSelectedItem());
         }
         if (signatureComboBox.getSelectedItem() != null) {
-            key.setSignature((Key.Signature) signatureComboBox.getSelectedItem());
+            key.setAccidental((Key.Accidental) signatureComboBox.getSelectedItem());
         }
         set(key);
     }

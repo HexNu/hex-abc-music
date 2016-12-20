@@ -52,7 +52,7 @@ public class VoicePanel extends AmePanel {
             useKeyCheckBox.setSelected(voice.getUseVoiceKey());
             useModifiersCheckBox.setSelected(voice.getUseVoiceModifiers());
             pitchComboBox.setModel(new DefaultComboBoxModel(Key.Pitch.values()));
-            signatureComboBox.setModel(new DefaultComboBoxModel(Key.Signature.values()));
+            signatureComboBox.setModel(new DefaultComboBoxModel(Key.Accidental.values()));
             modeComboBox.setModel(new DefaultComboBoxModel(Key.Mode.values()));
             clefComboBox.setModel(new DefaultComboBoxModel(Modifier.Clef.values()));
             octaveComboBox.setModel(new DefaultComboBoxModel(Modifier.OctaveClef.values()));
@@ -61,7 +61,7 @@ public class VoicePanel extends AmePanel {
                 bodyEditorTextArea.setText(voice.getNotes());
             }
             pitchComboBox.setSelectedItem(voice.getKey().getPitch());
-            signatureComboBox.setSelectedItem(voice.getKey().getSignature());
+            signatureComboBox.setSelectedItem(voice.getKey().getAccidental());
             modeComboBox.setSelectedItem(voice.getKey().getMode());
             Modifier modifier = voice.getModifier();
             clefComboBox.setSelectedItem(modifier.getClef());
@@ -93,14 +93,14 @@ public class VoicePanel extends AmePanel {
                 voice.getKey().setPitch((Key.Pitch) pitchComboBox.getSelectedItem());
             }
             if (signatureComboBox.getSelectedItem() != null) {
-                voice.getKey().setSignature((Key.Signature) signatureComboBox.getSelectedItem());
+                voice.getKey().setAccidental((Key.Accidental) signatureComboBox.getSelectedItem());
             }
             voice.setUseVoiceKey(true);
         } else {
             Key key = voice.getTune().getKey();
             voice.getKey().setMode(key.getMode());
             voice.getKey().setPitch(key.getPitch());
-            voice.getKey().setSignature(key.getSignature());
+            voice.getKey().setAccidental(key.getAccidental());
             voice.setUseVoiceKey(false);
         }
         if (useModifiersCheckBox.isSelected()) {

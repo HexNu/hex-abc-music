@@ -18,7 +18,7 @@ class KeyWriter extends XmlWriter<Key> {
     public XmlNode write() {
         result.addAttribute("pitch", entity.getPitch().getName());
         result.addAttribute("mode", entity.getMode().getName());
-        result.addAttribute("signature", entity.getSignature().getSymbol());
+        result.addAttribute("accidental", entity.getAccidental().getSymbol());
         return result;
     }
 

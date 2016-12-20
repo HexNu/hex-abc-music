@@ -72,7 +72,7 @@ public class TuneHeadersPanel extends AmePanel {
         Dimension keyFieldsDimension = new Dimension(60, 27);
         pitchComboBox.setSize(keyFieldsDimension);
         pitchComboBox.setPreferredSize(keyFieldsDimension);
-        signatureComboBox.setModel(new DefaultComboBoxModel(Key.Signature.values()));
+        signatureComboBox.setModel(new DefaultComboBoxModel(Key.Accidental.values()));
         signatureComboBox.setSize(keyFieldsDimension);
         signatureComboBox.setPreferredSize(keyFieldsDimension);
         modeComboBox.setModel(new DefaultComboBoxModel(Key.Mode.values()));
@@ -122,7 +122,7 @@ public class TuneHeadersPanel extends AmePanel {
         useSymbolCheckBox.setSelected(tune.getMeter().useSymbol());
         updateLists();
         pitchComboBox.setSelectedItem(tune.getKey().getPitch());
-        signatureComboBox.setSelectedItem(tune.getKey().getSignature());
+        signatureComboBox.setSelectedItem(tune.getKey().getAccidental());
         modeComboBox.setSelectedItem(tune.getKey().getMode());
         clefComboBox.setSelectedItem(tune.getModifier().getClef());
         transposeComboBox.setSelectedItem(TransposeMap.getItem(tune.getModifier().getTranspose()));
@@ -156,7 +156,7 @@ public class TuneHeadersPanel extends AmePanel {
         traditionalList.addMouseListener(new PersonRoleListMouseListener(this, traditionalList, Person.Role.TRAD, tune));
         transcriberList.addMouseListener(new PersonRoleListMouseListener(this, transcriberList, Person.Role.TRANSCRIBER, tune));
         pitchComboBox.setSelectedItem(Key.Pitch.DEFAULT_PITCH);
-        signatureComboBox.setSelectedItem(Key.Signature.DEFAULT_SIGNATURE);
+        signatureComboBox.setSelectedItem(Key.Accidental.DEFAULT_ACCIDENTAL);
         modeComboBox.setSelectedItem(Key.Mode.DEFAULT_MODE);
         clefComboBox.setSelectedItem(Modifier.Clef.DEFAULT_CLEF);
         transposeComboBox.setSelectedItem(TransposeMap.getDefaultItem());
@@ -256,7 +256,7 @@ public class TuneHeadersPanel extends AmePanel {
                 tune.getKey().setPitch((Key.Pitch) pitchComboBox.getSelectedItem());
             }
             if (signatureComboBox.getSelectedItem() != null) {
-                tune.getKey().setSignature((Key.Signature) signatureComboBox.getSelectedItem());
+                tune.getKey().setAccidental((Key.Accidental) signatureComboBox.getSelectedItem());
             }
             if (clefComboBox.getSelectedItem() != null) {
                 tune.getModifier().setClef((Modifier.Clef) clefComboBox.getSelectedItem());
@@ -1106,16 +1106,16 @@ public class TuneHeadersPanel extends AmePanel {
             Key.Pitch oldPitch = tune.getKey().getPitch();
             Key.Pitch newPitch = (Key.Pitch) pitchComboBox.getSelectedItem();
             tune.getKey().setPitch(newPitch);
-            Key.Signature oldSignature = tune.getKey().getSignature();
-            Key.Signature newSignature = (Key.Signature) signatureComboBox.getSelectedItem();
-            tune.getKey().setSignature(newSignature);
+            Key.Accidental oldSignature = tune.getKey().getAccidental();
+            Key.Accidental newSignature = (Key.Accidental) signatureComboBox.getSelectedItem();
+            tune.getKey().setAccidental(newSignature);
             Key.Mode mode = (Key.Mode) modeComboBox.getSelectedItem();
             tune.getKey().setMode(mode);
             Integer steps = CircleOfFifths.getSteps(oldPitch, oldSignature, newPitch, newSignature);
             tune.getVoices().stream().forEach((voice) -> {
-                String newKeyString = CircleOfFifths.getNew(voice.getKey().getPitch(), voice.getKey().getSignature(), steps);
+                String newKeyString = CircleOfFifths.getNew(voice.getKey().getPitch(), voice.getKey().getAccidental(), steps);
                 voice.getKey().setPitch(Key.getPitchFromString(newKeyString));
-                voice.getKey().setSignature(Key.getSignatureFromString(newKeyString));
+                voice.getKey().setAccidental(Key.getAccidentalFromString(newKeyString));
                 voice.getKey().setMode(mode);
             });
             getEditor().getVoicesPanel().updateVoicePanels();

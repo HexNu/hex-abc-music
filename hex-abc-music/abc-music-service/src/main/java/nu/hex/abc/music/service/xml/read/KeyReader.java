@@ -24,7 +24,11 @@ class KeyReader extends NodeReader<Key> {
             result.setMode(Key.Mode.find(node.getAttribute("mode")));
         }
         if (node.hasAttribute("signature")) {
-            result.setSignature(Key.Signature.find(node.getAttribute("signature")));
+            // Legacy
+            result.setAccidental(Key.Accidental.find(node.getAttribute("signature")));
+        }
+        if (node.hasAttribute("accidental")) {
+            result.setAccidental(Key.Accidental.find(node.getAttribute("accidental")));
         }
         return result;
     }

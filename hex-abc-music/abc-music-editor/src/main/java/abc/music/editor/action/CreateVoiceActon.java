@@ -32,7 +32,7 @@ public class CreateVoiceActon extends AmeAction<Voice> {
                 voice.setVoiceId(String.valueOf(tune.getVoices().size() + 1));
                 voice.getKey().setMode(tune.getKey().getMode());
                 voice.getKey().setPitch(tune.getKey().getPitch());
-                voice.getKey().setSignature(tune.getKey().getSignature());
+                voice.getKey().setAccidental(tune.getKey().getAccidental());
                 voice.getModifier().setClef(tune.getModifier().getClef());
                 voice.getModifier().setOctave(tune.getModifier().getOctave());
                 voice.getModifier().setTranspose(tune.getModifier().getTranspose());
