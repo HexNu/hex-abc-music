@@ -526,6 +526,14 @@ public class SettingsDialog extends AmeDialog<Void> {
         }
 
         @Override
+        public String getColumnName(int column) {
+            if (column < columnNames.length) {
+                return columnNames[column];
+            }
+            return null;
+        }
+
+        @Override
         public Object getValueAt(int row, int col) {
             return data[row][col];
         }
