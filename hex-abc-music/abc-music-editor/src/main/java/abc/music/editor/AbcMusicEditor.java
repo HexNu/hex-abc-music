@@ -32,6 +32,7 @@ import abc.music.editor.action.SetEditingEnabledAction;
 import abc.music.editor.gui.LatestTunesPane;
 import abc.music.editor.gui.LinksPanel;
 import abc.music.editor.gui.BooksPanel;
+import abc.music.editor.gui.MidiPlayerPanel;
 import abc.music.editor.gui.TuneHeadersPanel;
 import abc.music.editor.gui.TuneSearchPanel;
 import abc.music.editor.gui.VoicesPanel;
@@ -52,12 +53,14 @@ public class AbcMusicEditor extends JFrame {
     private final JPanel leftPanel = new JPanel();
     private final JPanel linksPanel = new JPanel();
     private final JPanel booksPanel = new JPanel();
+    private final JPanel playerPanel = new JPanel();
     private final JPanel recentTunesPanel = new JPanel();
     private final JPanel rightPanel = new JPanel();
     private final JPanel searchPanel = new JPanel();
     private final JPanel topPanel = new JPanel();
     private LinksPanel linkListPanel;
     private BooksPanel bookListPanel;
+    private MidiPlayerPanel midiPlayerPanel;
     private TuneHeadersPanel headersPanel;
     private VoicesPanel voicesPanel;
     private AmeMenuBar menuBar;
@@ -122,6 +125,15 @@ public class AbcMusicEditor extends JFrame {
         bookListPanel = new BooksPanel(this);
         booksPanel.add(bookListPanel, BorderLayout.CENTER);
         rightPanel.add(booksPanel);
+        
+        playerPanel.setBorder(getTitleBorder("Midi Player"));
+        playerPanel.setLayout(new BorderLayout());
+        playerPanel.setPreferredSize(sidePanelDimension);
+        playerPanel.setOpaque(false);
+        midiPlayerPanel = new MidiPlayerPanel(this);
+        playerPanel.add(midiPlayerPanel, BorderLayout.CENTER);
+        rightPanel.add(playerPanel);
+        
 
         add(rightPanel, BorderLayout.EAST);
     }

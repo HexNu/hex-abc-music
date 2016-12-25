@@ -89,19 +89,21 @@ public class FormatTemplateDialog extends AmeDialog<FormatTemplate> {
                 lineLengthTextField.setText(template.getLineLength().toString());
             }
             for (FormatTemplate.Margin m : template.getMargins().keySet()) {
-                switch (m) {
-                    case TOP:
-                        topMarginTextField.setText(template.getMargin(m).toString());
-                        break;
-                    case RIGHT:
-                        rightMarginTextField.setText(template.getMargin(m).toString());
-                        break;
-                    case BOTTOM:
-                        bottomMarginTextField.setText(template.getMargin(m).toString());
-                        break;
-                    case LEFT:
-                        leftMarginTextField.setText(template.getMargin(m).toString());
-                        break;
+                if (template.getMargin(m) != null) {
+                    switch (m) {
+                        case TOP:
+                            topMarginTextField.setText(template.getMargin(m).toString());
+                            break;
+                        case RIGHT:
+                            rightMarginTextField.setText(template.getMargin(m).toString());
+                            break;
+                        case BOTTOM:
+                            bottomMarginTextField.setText(template.getMargin(m).toString());
+                            break;
+                        case LEFT:
+                            leftMarginTextField.setText(template.getMargin(m).toString());
+                            break;
+                    }
                 }
             }
             for (SpacePanel p : spacePanels) {

@@ -39,6 +39,8 @@ public class SaveFileChooser extends JFileChooser {
                 return new File(getDirectory(mediaType) + "/" + name + ".amx");
             case HexMediaType.APPLICATION_VND_HEX_AMXF_XML:
                 return new File(getDirectory(mediaType) + "/" + name + ".amxf");
+            case CommonMediaType.AUDIO_MIDI:
+                return new File(getDirectory(mediaType) + "/" + name + ".mid");
             default:
                 return new File(getDirectory(mediaType) + "/" + name);
         }
@@ -54,6 +56,8 @@ public class SaveFileChooser extends JFileChooser {
                 return Service.getPdfDirectory();
             case CommonMediaType.IMAGE_SVG_XML:
                 return Service.getSvgDirectory();
+            case CommonMediaType.AUDIO_MIDI:
+                return Service.getMidiDirectory();
             default:
                 return Service.getAppDirectory();
         }
@@ -69,6 +73,8 @@ public class SaveFileChooser extends JFileChooser {
                 return new FileNameExtensionFilter("PDF Files", "pdf");
             case CommonMediaType.IMAGE_SVG_XML:
                 return new FileNameExtensionFilter("SVG Image Files", "svg");
+            case CommonMediaType.AUDIO_MIDI:
+                return new FileNameExtensionFilter("MIDI Sound Files", "mid", "midi");
             case HexMediaType.APPLICATION_VND_HEX_AMX:
                 return new FileNameExtensionFilter("Hex ABC Editor Files", "amx");
             case HexMediaType.APPLICATION_VND_HEX_AMXF_XML:

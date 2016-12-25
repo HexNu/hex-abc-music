@@ -64,6 +64,9 @@ public class Service {
     public static File getSvgDirectory() {
         return new File(PropertyService.SVG_PATH);
     }
+    public static File getMidiDirectory() {
+        return new File(PropertyService.MIDI_PATH);
+    }
 
     public static ProjectCarrier extractTunesAndPersons(File file) {
         return IoService.extractTunesAndPersons(file);

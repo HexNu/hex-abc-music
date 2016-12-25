@@ -1,6 +1,7 @@
 package abc.music.core.domain;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -252,7 +253,12 @@ public class Tune {
     }
 
     public List<Voice> getVoices() {
-        return new ArrayList<>(voices.values());
+        List<Voice> result = new ArrayList<>(voices.values());
+        try {
+            Collections.sort(result, (a, b) -> Integer.valueOf(a.getVoiceId()).compareTo(Integer.valueOf(b.getVoiceId())));
+        } catch (NumberFormatException e) {
+        }
+        return result;
     }
 
     public boolean hasVoiceWithId(String id) {

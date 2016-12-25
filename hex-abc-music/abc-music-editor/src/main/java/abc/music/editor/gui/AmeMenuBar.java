@@ -244,6 +244,7 @@ public class AmeMenuBar extends JMenuBar {
         exportProjectMenu.add(createExportItem(p, CommonMediaType.TEXT_VND_ABC));
         exportProjectMenu.add(createExportItem(p, CommonMediaType.APPLICATION_POSTSCRIPT));
         exportProjectMenu.add(createExportItem(p, CommonMediaType.APPLICATION_PDF));
+        exportProjectMenu.add(createExportItem(p, CommonMediaType.AUDIO_MIDI));
         exportMenu.add(exportProjectMenu);
         exportMenu.addSeparator();
         p.getBooks().stream().forEach((book) -> {
@@ -251,6 +252,7 @@ public class AmeMenuBar extends JMenuBar {
             bookMenu.add(createExportItem(book, CommonMediaType.TEXT_VND_ABC));
             bookMenu.add(createExportItem(book, CommonMediaType.APPLICATION_POSTSCRIPT));
             bookMenu.add(createExportItem(book, CommonMediaType.APPLICATION_PDF));
+            bookMenu.add(createExportItem(book, CommonMediaType.AUDIO_MIDI));
             exportMenu.add(bookMenu);
         });
         AmeMenuItem importTunesFromProjectItem = new AmeMenuItem("Import tunes from other project...");
@@ -281,6 +283,9 @@ public class AmeMenuBar extends JMenuBar {
                 break;
             case CommonMediaType.APPLICATION_PDF:
                 label = "PDF";
+                break;
+            case CommonMediaType.AUDIO_MIDI:
+                label = "MIDI";
                 break;
             default:
                 label = "TXT";

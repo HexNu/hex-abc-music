@@ -12,7 +12,7 @@ import java.util.List;
  *
  * @author hl
  */
-public class TunesFromOtherProjectChooser extends ProjectFileChooser {
+public class TunesFromOtherProjectChooser extends ImportFileChooser {
 
     private final TuneSelectorPanel panel;
     private final AbcMusicEditor editor;

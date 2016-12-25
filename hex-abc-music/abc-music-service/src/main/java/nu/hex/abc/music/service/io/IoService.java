@@ -2,7 +2,6 @@ package nu.hex.abc.music.service.io;
 
 import abc.music.core.ProjectCarrier;
 import abc.music.core.domain.Collection;
-import abc.music.core.domain.Project;
 import abc.music.core.domain.Tune;
 import java.io.File;
 import java.util.List;
@@ -74,6 +73,14 @@ public class IoService {
         return new PdfFileWriter(tunes, file).write();
     }
 
+    public File createMidiFile(Tune tune, File file) {
+        return new MidiFileWriter(tune, file).write();
+    }
+
+    public File createMidiFile(List<Tune> tunes, File file) {
+        return new MidiFileWriter(tunes, file).write();
+    }
+
     public File exportCollectionAsAbc(Collection collection, File file) {
         return new AbcFileWriter(collection, file).write();
     }
@@ -85,7 +92,11 @@ public class IoService {
     public File exportCollectionAsPdf(Collection collection, File file) {
         return new PdfFileWriter(collection, file).write();
     }
-    
+
+    public File exportCollectionAsMidi(Collection collection, File file) {
+        return new MidiFileWriter(collection, file).write();
+    }
+
     public void printFile(File file) {
         new PdfPrinter(file).print();
     }

@@ -24,6 +24,7 @@ import abc.music.editor.gui.support.SharpFlatNaturalKeyListener;
 import abc.music.editor.gui.support.TransposeComboBoxModel;
 import abc.music.editor.gui.support.TransposeMap;
 import java.awt.Dimension;
+import java.io.File;
 import java.util.Collections;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
@@ -398,6 +399,8 @@ public class TuneHeadersPanel extends AmePanel {
         abcButton = new javax.swing.JButton();
         booksButton = new javax.swing.JButton();
         printButton = new javax.swing.JButton();
+        midiButton = new javax.swing.JButton();
+        playMidiButton = new javax.swing.JButton();
 
         setOpaque(false);
 
@@ -651,6 +654,22 @@ public class TuneHeadersPanel extends AmePanel {
             }
         });
 
+        midiButton.setText("MIDI");
+        midiButton.setEnabled(false);
+        midiButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                midiButtonActionPerformed(evt);
+            }
+        });
+
+        playMidiButton.setText("PLAY");
+        playMidiButton.setEnabled(false);
+        playMidiButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                playMidiButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout buttonsPanelLayout = new javax.swing.GroupLayout(buttonsPanel);
         buttonsPanel.setLayout(buttonsPanelLayout);
         buttonsPanelLayout.setHorizontalGroup(
@@ -674,7 +693,11 @@ public class TuneHeadersPanel extends AmePanel {
                 .addComponent(postScriptButton, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(abcButton)
-                .addContainerGap(410, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(midiButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(playMidiButton)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         buttonsPanelLayout.setVerticalGroup(
             buttonsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -689,7 +712,9 @@ public class TuneHeadersPanel extends AmePanel {
                     .addComponent(postScriptButton)
                     .addComponent(abcButton)
                     .addComponent(booksButton)
-                    .addComponent(printButton))
+                    .addComponent(printButton)
+                    .addComponent(midiButton)
+                    .addComponent(playMidiButton))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -949,6 +974,14 @@ public class TuneHeadersPanel extends AmePanel {
         printTune();
     }//GEN-LAST:event_printButtonActionPerformed
 
+    private void midiButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_midiButtonActionPerformed
+        createMidiFile();
+    }//GEN-LAST:event_midiButtonActionPerformed
+
+    private void playMidiButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_playMidiButtonActionPerformed
+        playMidiFile();
+    }//GEN-LAST:event_playMidiButtonActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton abcButton;
@@ -999,6 +1032,7 @@ public class TuneHeadersPanel extends AmePanel {
     private javax.swing.JButton lyricsButton;
     private javax.swing.JSpinner meterDenominatorSpinner;
     private javax.swing.JSpinner meterNumeratorSpinner;
+    private javax.swing.JButton midiButton;
     private javax.swing.JComboBox<String> modeComboBox;
     private javax.swing.JButton newTuneButton;
     private javax.swing.JComboBox<String> octaveComboBox;
@@ -1006,6 +1040,7 @@ public class TuneHeadersPanel extends AmePanel {
     private javax.swing.JTextArea originTextArea;
     private javax.swing.JButton pdfButton;
     private javax.swing.JComboBox<String> pitchComboBox;
+    private javax.swing.JButton playMidiButton;
     private javax.swing.JButton postScriptButton;
     private javax.swing.JButton printButton;
     private javax.swing.JTextField rythmTextField;
@@ -1099,6 +1134,16 @@ public class TuneHeadersPanel extends AmePanel {
 
     private void createPdfFile() {
         new CreateFileAction(editor, tune, CommonMediaType.APPLICATION_PDF).actionPerformed(null);
+    }
+
+    private void createMidiFile() {
+        new CreateFileAction(editor, tune, CommonMediaType.AUDIO_MIDI).actionPerformed(null);
+    }
+
+    private void playMidiFile() {
+        CreateFileAction action = new CreateFileAction(editor, tune, CommonMediaType.AUDIO_MIDI);
+        action.actionPerformed(null);
+        File midiFile = action.get();
     }
 
     private void handleKeyChange() {

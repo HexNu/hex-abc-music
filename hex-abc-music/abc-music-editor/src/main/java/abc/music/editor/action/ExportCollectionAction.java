@@ -45,6 +45,9 @@ public class ExportCollectionAction extends AmeAction<File> {
                 case CommonMediaType.APPLICATION_PDF:
                     setResult(getService().getIoService().exportCollectionAsPdf(collection, file));
                     break;
+                case CommonMediaType.AUDIO_MIDI:
+                    setResult(getService().getIoService().exportCollectionAsMidi(collection, file));
+                    break;
                 case CommonMediaType.IMAGE_SVG_XML:
                     break;
                 case HexMediaType.APPLICATION_VND_HEX_AMX:

@@ -32,6 +32,7 @@ public class AbcMusicProperties {
     private static final String DEFAULT_PS_FOLDER = PUBLIC_APPLICATION_FOLDER + "PS/";
     private static final String DEFAULT_PDF_FOLDER = PUBLIC_APPLICATION_FOLDER + "PDF/";
     private static final String DEFAULT_SVG_FOLDER = PUBLIC_APPLICATION_FOLDER + "SVG/";
+    private static final String DEFAULT_MIDI_FOLDER = PUBLIC_APPLICATION_FOLDER + "MIDI/";
     public static final String PROJECT_FOLDER = "project-folder";
     public static final String PROJECT_SVG_FOLDER = "project-svg-folder";
     public static final String BACKUP_FOLDER = "backup-folder";
@@ -41,6 +42,7 @@ public class AbcMusicProperties {
     public static final String PDF_FOLDER = "pdf-folder";
     public static final String PRINT_FOLDER = "print-folder";
     public static final String SVG_FOLDER = "svg-folder";
+    public static final String MIDI_FOLDER = "midi-folder";
     public static final String LATEST_SAVED_PROJECT = "latest-saved-project";
     public static final String AUTO_OPEN_LATEST_PROJECT = "auto-open-project";
     private final Map<String, String> defaultSettingsMap = new HashMap<>();
@@ -66,6 +68,7 @@ public class AbcMusicProperties {
         defaultSettingsMap.put(PDF_FOLDER, DEFAULT_PDF_FOLDER);
         defaultSettingsMap.put(PRINT_FOLDER, DEFAULT_PRINT_FOLDER);
         defaultSettingsMap.put(SVG_FOLDER, DEFAULT_SVG_FOLDER);
+        defaultSettingsMap.put(MIDI_FOLDER, DEFAULT_MIDI_FOLDER);
         try {
             new File(APPLICATION_ROOT_FOLDER).mkdirs();
             new File(SETTINGS_FOLDER).mkdir();
@@ -77,6 +80,7 @@ public class AbcMusicProperties {
             new File(DEFAULT_ABC_FOLDER).mkdirs();
             new File(DEFAULT_PS_FOLDER).mkdirs();
             new File(DEFAULT_SVG_FOLDER).mkdirs();
+            new File(DEFAULT_MIDI_FOLDER).mkdirs();
             settingsFile = new File(SETTINGS_FILE);
             if (!settingsFile.exists()) {
                 createSettingsFile();
@@ -167,6 +171,7 @@ public class AbcMusicProperties {
         addSettingNode(DEFAULT_PS_FOLDER, PS_FOLDER);
         addSettingNode(DEFAULT_PDF_FOLDER, PDF_FOLDER);
         addSettingNode(DEFAULT_SVG_FOLDER, SVG_FOLDER);
+        addSettingNode(DEFAULT_MIDI_FOLDER, MIDI_FOLDER);
         writeToSettingsFile();
     }
 }

@@ -847,7 +847,11 @@
                   <Component id="postScriptButton" min="-2" pref="42" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="abcButton" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="410" max="32767" attributes="0"/>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <Component id="midiButton" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <Component id="playMidiButton" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -865,6 +869,8 @@
                       <Component id="abcButton" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="booksButton" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="printButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="midiButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="playMidiButton" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
@@ -978,6 +984,24 @@
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="printButtonActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="midiButton">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="MIDI"/>
+            <Property name="enabled" type="boolean" value="false"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="midiButtonActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="playMidiButton">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="PLAY"/>
+            <Property name="enabled" type="boolean" value="false"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="playMidiButtonActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>

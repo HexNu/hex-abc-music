@@ -62,6 +62,9 @@ public class CreateFileAction extends AmeAction<File> {
                     break;
                 case HexMediaType.APPLICATION_VND_HEX_AMXF_XML:
                     break;
+                case CommonMediaType.AUDIO_MIDI:
+                    setResult(getService().getIoService().createMidiFile(tunes, file));
+                    break;
                 default:
                     break;
 

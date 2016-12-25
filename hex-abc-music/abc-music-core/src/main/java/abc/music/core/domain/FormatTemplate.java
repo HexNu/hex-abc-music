@@ -153,9 +153,13 @@ public class FormatTemplate {
 
     public List<String> getDeclaredFonts() {
         List<String> declaredFonts = new ArrayList<>();
-        fonts.values().stream().filter((value) -> (!declaredFonts.contains(value.getPsFont().getName()))).forEach((value) -> {
-            declaredFonts.add(value.getPsFont().getName());
-        });
+        try {
+            fonts.values().stream().filter((value) -> (!declaredFonts.contains(value.getPsFont().getName()))).forEach((value) -> {
+                declaredFonts.add(value.getPsFont().getName());
+            });
+        } catch (NullPointerException e) {
+            // Do nothing
+        }
         return declaredFonts;
     }
 
@@ -621,7 +625,7 @@ public class FormatTemplate {
             }
             return null;
         }
-        
+
         public boolean isHeader() {
             return !label.equals("vsep");
         }
