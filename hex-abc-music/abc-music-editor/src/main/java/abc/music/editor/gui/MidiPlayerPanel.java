@@ -45,7 +45,7 @@ public class MidiPlayerPanel extends AmeSidePanel {
         try {
             Tune tune = editor.getTuneEditor().getTune();
             Service service = new Service(editor.getProject());
-            tempFile = new File(service.getPropertyService().getProperty(AbcMusicProperties.MIDI_FOLDER) + "/temp-" + tune.getName() + ".mid");
+            tempFile = new File(service.getPropertyService().getProperty(AbcMusicProperties.MIDI_FOLDER) + "/temp-" + tune.getName().replaceAll("\\s", "_") + ".mid");
             midiFile = service.getIoService().createMidiFile(editor.getTuneEditor().getTune(), tempFile);
             midiSource = new FileInputStream(midiFile);
             sequencer.setSequence(midiSource);
@@ -78,8 +78,9 @@ public class MidiPlayerPanel extends AmeSidePanel {
     private void initComponents() {
 
         playButton = new javax.swing.JButton();
-        pauseButton = new javax.swing.JButton();
-        stopButton = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        metronomeButton = new javax.swing.JButton();
 
         setOpaque(false);
 
@@ -91,44 +92,42 @@ public class MidiPlayerPanel extends AmeSidePanel {
             }
         });
 
-        pauseButton.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
-        pauseButton.setText("||");
-        pauseButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                pauseButtonActionPerformed(evt);
-            }
-        });
+        jLabel1.setText("Play Tune:");
 
-        stopButton.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
-        stopButton.setText("·");
-        stopButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                stopButtonActionPerformed(evt);
-            }
-        });
+        jLabel2.setText("Metronome:");
+
+        metronomeButton.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
+        metronomeButton.setText(">");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(48, Short.MAX_VALUE)
-                .addComponent(stopButton, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(pauseButton, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(playButton, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 136, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(metronomeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(playButton, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(258, Short.MAX_VALUE)
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(playButton)
-                    .addComponent(pauseButton)
-                    .addComponent(stopButton))
-                .addContainerGap())
+                    .addComponent(jLabel2)
+                    .addComponent(metronomeButton))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(playButton))
+                .addContainerGap(210, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -137,18 +136,11 @@ public class MidiPlayerPanel extends AmeSidePanel {
         sequencer.start();
     }//GEN-LAST:event_playButtonActionPerformed
 
-    private void pauseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pauseButtonActionPerformed
-        sequencer.stop();
-    }//GEN-LAST:event_pauseButtonActionPerformed
-
-    private void stopButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stopButtonActionPerformed
-        sequencer.stop();
-    }//GEN-LAST:event_stopButtonActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton pauseButton;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JButton metronomeButton;
     private javax.swing.JButton playButton;
-    private javax.swing.JButton stopButton;
     // End of variables declaration//GEN-END:variables
 }

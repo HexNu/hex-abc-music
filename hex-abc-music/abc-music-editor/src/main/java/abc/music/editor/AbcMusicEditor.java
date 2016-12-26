@@ -126,7 +126,7 @@ public class AbcMusicEditor extends JFrame {
         booksPanel.add(bookListPanel, BorderLayout.CENTER);
         rightPanel.add(booksPanel);
         
-        playerPanel.setBorder(getTitleBorder("Midi Player"));
+        playerPanel.setBorder(getTitleBorder("Sound"));
         playerPanel.setLayout(new BorderLayout());
         playerPanel.setPreferredSize(sidePanelDimension);
         playerPanel.setOpaque(false);
