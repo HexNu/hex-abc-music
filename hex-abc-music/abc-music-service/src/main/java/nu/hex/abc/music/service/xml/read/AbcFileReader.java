@@ -192,9 +192,9 @@ public class AbcFileReader implements Reader<ProjectCarrier> {
         File abcFile = new File("/home/hl/Skrivbord/Erborigien_649_-_650.abc");
         ProjectCarrier pc = new AbcFileReader(abcFile).read();
         List<Tune> tunes = pc.tunes;
-        for (Person p : pc.persons) {
-            System.out.println(p.getFormalName());
-        }
+//        for (Person p : pc.persons) {
+//            System.out.println(p.getFormalName());
+//        }
         for (Tune t : tunes) {
             for (String title : t.getTitleFields()) {
                 System.out.println(title);

@@ -62,6 +62,7 @@
           <Font name="Ubuntu" size="15" style="1"/>
         </Property>
         <Property name="text" type="java.lang.String" value="&gt;"/>
+        <Property name="enabled" type="boolean" value="false"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="playButtonActionPerformed"/>
@@ -83,7 +84,11 @@
           <Font name="Ubuntu" size="15" style="1"/>
         </Property>
         <Property name="text" type="java.lang.String" value="&gt;"/>
+        <Property name="enabled" type="boolean" value="false"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="metronomeButtonActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<midi-channels>
+    <channel-group name="Piano">
+        <channel program="1" name="Acoustic Grand Piano"/>
+        <channel program="2" name="Bright Acoustic Piano"/>
+        <channel program="3" name="Electric Grand Piano"/>
+        <channel program="4" name="Honky-tonk Piano"/>
+        <channel program="5" name="Electric Piano 1"/>
+        <channel program="6" name="Electric Piano 2"/>
+        <channel program="7" name="Harpsichord"/>
+        <channel program="8" name="Clavi"/>
+    </channel-group>
+    <channel-group name="Chromatic Percussion">
+        <channel program="9" name="Celesta"/>
+        <channel program="10" name="Glockenspiel"/>
+        <channel program="11" name="Music Box"/>
+        <channel program="12" name="Vibraphone"/>
+        <channel program="13" name="Marimba"/>
+        <channel program="14" name="Xylophone"/>
+        <channel program="15" name="Tubular Bells"/>
+        <channel program="16" name="Dulcimer"/>
+    </channel-group>
+    <channel-group name="Organ">
+        <channel program="17" name="Drawbar Organ"/>
+        <channel program="18" name="Percussive Organ"/>
+        <channel program="19" name="Rock Organ"/>
+        <channel program="20" name="Church Organ"/>
+        <channel program="21" name="Reed Organ"/>
+        <channel program="22" name="Accordion"/>
+        <channel program="23" name="Harmonica"/>
+        <channel program="24" name="Tango Accordion"/>
+    </channel-group>
+    <channel-group name="Guitar">
+        <channel program="25" name="Acoustic Guitar (nylon)"/>
+        <channel program="26" name="Acoustic Guitar (steel)"/>
+        <channel program="27" name="Electric Guitar (jazz)"/>
+        <channel program="28" name="Electric Guitar (clean)"/>
+        <channel program="29" name="Electric Guitar (muted)"/>
+        <channel program="30" name="Overdriven Guitar"/>
+        <channel program="31" name="Distortion Guitar"/>
+        <channel program="32" name="Guitar harmonics"/>
+    </channel-group>
+    <channel-group name="Bass">
+        <channel program="33" name="Acoustic Bass"/>
+        <channel program="34" name="Electric Bass (finger)"/>
+        <channel program="35" name="Electric Bass (pick)"/>
+        <channel program="36" name="Fretless Bass"/>
+        <channel program="37" name="Slap Bass 1"/>
+        <channel program="38" name="Slap Bass 2"/>
+        <channel program="39" name="Synth Bass 1"/>
+        <channel program="40" name="Synth Bass 2"/>
+    </channel-group>
+    <channel-group name="Strings">
+        <channel program="41" name="Violin"/>
+        <channel program="42" name="Viola"/>
+        <channel program="43" name="Cello"/>
+        <channel program="44" name="Contrabass"/>
+        <channel program="45" name="Tremolo Strings"/>
+        <channel program="46" name="Pizzicato Strings"/>
+        <channel program="47" name="Orchestral Harp"/>
+        <channel program="48" name="Timpani"/>
+    </channel-group>
+    <channel-group name="Ensemble">
+        <channel program="49" name="String Ensemble 1"/>
+        <channel program="50" name="String Ensemble 2"/>
+        <channel program="51" name="SynthStrings 1"/>
+        <channel program="52" name="SynthStrings 2"/>
+        <channel program="53" name="Choir Aahs"/>
+        <channel program="54" name="Voice Oohs"/>
+        <channel program="55" name="Synth Voice"/>
+        <channel program="56" name="Orchestra Hit"/>
+    </channel-group>
+    <channel-group name="Brass">
+        <channel program="57" name="Trumpet"/>
+        <channel program="58" name="Trombone"/>
+        <channel program="59" name="Tuba"/>
+        <channel program="60" name="Muted Trumpet"/>
+        <channel program="61" name="French Horn"/>
+        <channel program="62" name="Brass Section"/>
+        <channel program="63" name="SynthBrass 1"/>
+        <channel program="64" name="SynthBrass 2"/>
+    </channel-group>
+    <channel-group name="Reed">
+        <channel program="65" name="Soprano Sax"/>
+        <channel program="66" name="Alto Sax"/>
+        <channel program="67" name="Tenor Sax"/>
+        <channel program="68" name="Baritone Sax"/>
+        <channel program="69" name="Oboe"/>
+        <channel program="70" name="English Horn"/>
+        <channel program="71" name="Bassoon"/>
+        <channel program="72" name="Clarinet"/>
+    </channel-group>
+    <channel-group name="Pipe">
+        <channel program="73" name="Piccolo"/>
+        <channel program="74" name="Flute"/>
+        <channel program="75" name="Recorder"/>
+        <channel program="76" name="Pan Flute"/>
+        <channel program="77" name="Blown Bottle"/>
+        <channel program="78" name="Shakuhachi"/>
+        <channel program="79" name="Whistle"/>
+        <channel program="80" name="Ocarina"/>
+    </channel-group>
+    <channel-group name="Synth Lead">
+        <channel program="81" name="Lead 1 (square)"/>
+        <channel program="82" name="Lead 2 (sawtooth)"/>
+        <channel program="83" name="Lead 3 (calliope)"/>
+        <channel program="84" name="Lead 4 (chiff)"/>
+        <channel program="85" name="Lead 5 (charang)"/>
+        <channel program="86" name="Lead 6 (voice)"/>
+        <channel program="87" name="Lead 7 (fifths)"/>
+        <channel program="88" name="Lead 8 (bass + lead)"/>
+    </channel-group>
+    <channel-group name="Synth Pad">
+        <channel program="89" name="Pad 1 (new age)"/>
+        <channel program="90" name="Pad 2 (warm)"/>
+        <channel program="91" name="Pad 3 (polysynth)"/>
+        <channel program="92" name="Pad 4 (choir)"/>
+        <channel program="93" name="Pad 5 (bowed)"/>
+        <channel program="94" name="Pad 6 (metallic)"/>
+        <channel program="95" name="Pad 7 (halo)"/>
+        <channel program="96" name="Pad 8 (sweep)"/>
+    </channel-group>
+    <channel-group name="Synth Effects">
+        <channel program="97" name="FX 1 (rain)"/>
+        <channel program="98" name="FX 2 (soundtrack)"/>
+        <channel program="99" name="FX 3 (crystal)"/>
+        <channel program="100" name="FX 4 (atmosphere)"/>
+        <channel program="101" name="FX 5 (brightness)"/>
+        <channel program="102" name="FX 6 (goblins)"/>
+        <channel program="103" name="FX 7 (echoes)"/>
+        <channel program="104" name="FX 8 (sci-fi)"/>
+    </channel-group>
+    <channel-group name="Ethnic">
+        <channel program="105" name="Sitar"/>
+        <channel program="106" name="Banjo"/>
+        <channel program="107" name="Shamisen"/>
+        <channel program="108" name="Koto"/>
+        <channel program="109" name="Kalimba"/>
+        <channel program="110" name="Bag pipe"/>
+        <channel program="111" name="Fiddle"/>
+        <channel program="112" name="Shanai"/>
+    </channel-group>
+    <channel-group name="Percussive">
+        <channel program="113" name="Tinkle Bell"/>
+        <channel program="114" name="Agogo"/>
+        <channel program="115" name="Steel Drums"/>
+        <channel program="116" name="Woodblock"/>
+        <channel program="117" name="Taiko Drum"/>
+        <channel program="118" name="Melodic Tom"/>
+        <channel program="119" name="Synth Drum"/>
+        <channel program="120" name="Reverse Cymbal"/>
+    </channel-group>
+    <channel-group name="Sound Effects">
+        <channel program="121" name="Guitar Fret Noise"/>
+        <channel program="122" name="Breath Noise"/>
+        <channel program="123" name="Seashore"/>
+        <channel program="124" name="Bird Tweet"/>
+        <channel program="125" name="Telephone Ring"/>
+        <channel program="126" name="Helicopter"/>
+        <channel program="127" name="Applause"/>
+        <channel program="128" name="Gunshot"/>        
+    </channel-group>
+</midi-channels>

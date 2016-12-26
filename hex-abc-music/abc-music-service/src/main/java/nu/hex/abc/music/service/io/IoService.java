@@ -76,6 +76,10 @@ public class IoService {
     public File createMidiFile(Tune tune, File file) {
         return new MidiFileWriter(tune, file).write();
     }
+    
+    public File createMidiFile(File file) {
+        return new MidiFileWriter(file).write();
+    }
 
     public File createMidiFile(List<Tune> tunes, File file) {
         return new MidiFileWriter(tunes, file).write();

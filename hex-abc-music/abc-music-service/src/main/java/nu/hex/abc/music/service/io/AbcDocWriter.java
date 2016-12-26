@@ -96,6 +96,15 @@ class AbcDocWriter implements Writer<String> {
         StringBuilder result = new StringBuilder("");
         if (tune.getVoices().size() == 1) {
             Voice voice = tune.getVoices().get(0);
+            if (voice.hasMidiChannel()) {
+                result.append("%%MIDI program ")
+                        .append(voice.getVoiceId())
+                        .append(" ")
+                        .append(voice.getMidiChannel().getProgram())
+                        .append(" % ")
+                        .append(voice.getMidiChannel().getName())
+                        .append("\n");
+            }
             result.append(voice.getNotes()).append(NEW_LINE);
         } else if (tune.getVoices().size() > 1) {
             result.append(COMMENT).append(" Begin Score").append(NEW_LINE);
@@ -122,7 +131,7 @@ class AbcDocWriter implements Writer<String> {
             for (History history : tune.getHistory()) {
                 String[] para = new TextUtil(history.getContent()).createLines(textLineLength).split("\n");
                 for (String line : para) {
-                    result.append("%%" + line).append(NEW_LINE);
+                    result.append("%%").append(line).append(NEW_LINE);
                 }
             }
             result.append("%%endtext").append(NEW_LINE);

@@ -23,6 +23,13 @@ class MidiFileWriter implements Writer<File> {
     private final File file;
     private File abcFile;
 
+    public MidiFileWriter(File file) {
+        this.file = file;
+        this.abcFile = file;
+        this.tunes = null;
+        this.collection = null;
+    }
+
     public MidiFileWriter(Tune tune, File file) {
         this(Arrays.asList(tune), file);
     }
@@ -43,8 +50,11 @@ class MidiFileWriter implements Writer<File> {
     public File write() {
         try {
             if (collection == null) {
-                abcFile = new AbcFileWriter(tunes, new File(getAbcFile())).write();
-            } else {
+                if (abcFile == null) {
+                    abcFile = new AbcFileWriter(tunes, new File(getAbcFile())).write();
+                }
+            }
+            if (abcFile == null) {
                 abcFile = new AbcFileWriter(collection, new File(getAbcFile())).write();
             }
             String cmdString = "/usr/bin/abc2midi " + abcFile.getAbsolutePath();
@@ -73,7 +83,7 @@ class MidiFileWriter implements Writer<File> {
     }
 
     private String getMidiFile() {
-        if (!tunes.isEmpty() && tunes.size() == 1) {
+        if (tunes != null && !tunes.isEmpty() && tunes.size() == 1) {
             return file.getAbsolutePath().substring(0, file.getAbsolutePath().lastIndexOf(".")) + tunes.get(0).getId() + ".mid";
         }
         return file.getAbsolutePath().substring(0, file.getAbsolutePath().lastIndexOf(".")) + "1.mid";

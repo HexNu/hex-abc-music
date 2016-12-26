@@ -199,6 +199,7 @@ public class TuneHeadersPanel extends AmePanel {
         postScriptButton.setEnabled(enabled);
         pdfButton.setEnabled(enabled);
         applyKeyChangesButton.setEnabled(enabled);
+        editor.enableMidiPlayer(enabled);
     }
 
     public void updateLists() {

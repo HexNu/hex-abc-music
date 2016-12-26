@@ -137,6 +137,10 @@ public class AbcMusicEditor extends JFrame {
 
         add(rightPanel, BorderLayout.EAST);
     }
+    
+    public void enableMidiPlayer(boolean enabled) {
+        midiPlayerPanel.enablePlayer(enabled);
+    }
 
     private void createLeftPanel() {
         leftPanel.setLayout(new GridLayout(2, 1, 6, 12));

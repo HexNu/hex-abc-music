@@ -17,6 +17,7 @@ public class Voice extends Field {
     private Modifier modifier = new Modifier();
     private Boolean useVoiceModifiers = false;
     private String notes;
+    private MidiChannels.Channel midiChannel;
 
     public Voice() {
         super('V');
@@ -120,6 +121,18 @@ public class Voice extends Field {
         this.notes = notes;
     }
 
+    public MidiChannels.Channel getMidiChannel() {
+        return midiChannel;
+    }
+
+    public boolean hasMidiChannel() {
+        return midiChannel != null;
+    }
+
+    public void setMidiChannel(MidiChannels.Channel midiChannel) {
+        this.midiChannel = midiChannel;
+    }
+
     @Override
     public String get() {
         String result = "";
@@ -135,6 +148,9 @@ public class Voice extends Field {
         }
         if (hasKey() && !tune.getKey().get().equals(key.get())) {
             result += "\n[" + getKey().get() + "]";
+        }
+        if (hasMidiChannel()) {
+            result += "\n%%MIDI program " + getVoiceId() + " " + getMidiChannel().getProgram() + " % " + getMidiChannel().getName();
         }
         return result;
     }
