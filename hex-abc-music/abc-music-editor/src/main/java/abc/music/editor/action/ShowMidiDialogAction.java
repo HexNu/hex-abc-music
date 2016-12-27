@@ -1,7 +1,7 @@
 package abc.music.editor.action;
 
 import abc.music.editor.AbcMusicEditor;
-import abc.music.core.domain.MidiChannels;
+import abc.music.core.domain.VoiceMidiChannel;
 import abc.music.editor.gui.dialog.AmeDialog;
 import abc.music.editor.gui.dialog.MidiChannelDialog;
 import java.awt.event.ActionEvent;
@@ -11,11 +11,11 @@ import java.awt.event.ActionEvent;
  *
  * @author hl
  */
-public class ShowMidiDialogAction extends AmeAction<MidiChannels.Channel> {
+public class ShowMidiDialogAction extends AmeAction<VoiceMidiChannel> {
 
-    private final MidiChannels.Channel channel;
+    private final VoiceMidiChannel channel;
 
-    public ShowMidiDialogAction(AbcMusicEditor editor, MidiChannels.Channel channel) {
+    public ShowMidiDialogAction(AbcMusicEditor editor, VoiceMidiChannel channel) {
         super(editor);
         this.channel = channel;
     }

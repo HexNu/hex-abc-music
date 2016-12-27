@@ -98,11 +98,11 @@ class AbcDocWriter implements Writer<String> {
             Voice voice = tune.getVoices().get(0);
             if (voice.hasMidiChannel()) {
                 result.append("%%MIDI program ")
-                        .append(voice.getVoiceId())
+                        .append(voice.getMidiChannel().getIndex())
                         .append(" ")
-                        .append(voice.getMidiChannel().getProgram())
+                        .append(voice.getMidiChannel().getChannel().getProgram())
                         .append(" % ")
-                        .append(voice.getMidiChannel().getName())
+                        .append(voice.getMidiChannel().getChannel().getName())
                         .append("\n");
             }
             result.append(voice.getNotes()).append(NEW_LINE);

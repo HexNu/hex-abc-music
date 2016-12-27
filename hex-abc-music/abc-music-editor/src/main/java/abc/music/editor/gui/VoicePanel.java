@@ -4,6 +4,7 @@ import abc.music.core.domain.Key;
 import abc.music.core.domain.MidiChannels;
 import abc.music.core.domain.Modifier;
 import abc.music.core.domain.Voice;
+import abc.music.core.domain.VoiceMidiChannel;
 import abc.music.editor.AbcMusicEditor;
 import abc.music.editor.AmeConstants;
 import abc.music.editor.action.ShowMidiDialogAction;
@@ -459,7 +460,7 @@ public class VoicePanel extends AmePanel {
     }
 
     private void showMidiChannelDialog(ActionEvent evt) {
-        MidiChannels.Channel midiChannel = voice.getMidiChannel();
+        VoiceMidiChannel midiChannel = voice.getMidiChannel();
         ShowMidiDialogAction action = new ShowMidiDialogAction(editor, midiChannel);
         action.actionPerformed(evt);
         if (action.get() != null) {

@@ -2,6 +2,7 @@ package nu.hex.abc.music.service.xml.read;
 
 import abc.music.core.domain.MidiChannels;
 import abc.music.core.domain.Voice;
+import abc.music.core.domain.VoiceMidiChannel;
 import se.digitman.lightxml.XmlNode;
 
 /**
@@ -43,8 +44,11 @@ class VoiceReader extends NodeReader<Voice> {
         if (node.hasChildNamed("body")) {
             result.setNotes(node.getChild("body").getText());
         }
-        if (node.hasAttribute("midi-channel")) {
-            result.setMidiChannel(new MidiChannels().getChannel(Integer.valueOf(node.getAttribute("midi-channel"))));
+        if (node.hasChildNamed("midi-channel")) {
+            VoiceMidiChannel midiChannel = new VoiceMidiChannel();
+            midiChannel.setIndex(Integer.valueOf(node.getChild("midi-channel").getAttribute("index")));
+            midiChannel.setChannel(new MidiChannels().getChannel(Integer.valueOf(node.getChild("midi-channel").getAttribute("program"))));
+            result.setMidiChannel(midiChannel);
         }
         return result;
     }

@@ -27,7 +27,10 @@ class VoiceWriter extends XmlWriter<Voice> {
         result.addChild(new ModifierWriter(entity.getModifier()).write());
         result.addChild(NodeFactory.createNode("body", entity.getNotes()));
         if (entity.getMidiChannel() != null) {
-            result.addAttribute("midi-channel", entity.getMidiChannel().getProgram());
+            XmlNode midiChannelNode = NodeFactory.createNode("midi-channel");
+            midiChannelNode.addAttribute("index", entity.getMidiChannel().getIndex());
+            midiChannelNode.addAttribute("program", entity.getMidiChannel().getChannel().getProgram());
+            result.addChild(midiChannelNode);
         }
         return result;
     }

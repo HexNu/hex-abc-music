@@ -3,17 +3,18 @@ package abc.music.editor.gui.dialog;
 import abc.music.editor.AbcMusicEditor;
 import javax.swing.DefaultComboBoxModel;
 import abc.music.core.domain.MidiChannels;
+import abc.music.core.domain.VoiceMidiChannel;
 
 /**
  *
  * @author hl
  */
-public class MidiChannelDialog extends AmeDialog<MidiChannels.Channel> {
+public class MidiChannelDialog extends AmeDialog<VoiceMidiChannel> {
 
     private MidiChannels channels;
-    private final MidiChannels.Channel channel;
+    private final VoiceMidiChannel channel;
 
-    public MidiChannelDialog(AbcMusicEditor editor, MidiChannels.Channel channel) {
+    public MidiChannelDialog(AbcMusicEditor editor, VoiceMidiChannel channel) {
         super(editor, "MIDI Channel");
         this.channel = channel;
         setupFields();
@@ -29,7 +30,8 @@ public class MidiChannelDialog extends AmeDialog<MidiChannels.Channel> {
 
     private void setupFields() {
         if (channel != null) {
-            groupComboBox.setSelectedItem(channel.getGroup());
+            groupComboBox.setSelectedItem(channel.getChannel().getGroup());
+            indexSpinner.setValue(channel.getIndex());
         } else {
             MidiChannels.ChannelGroup group = channels.getGroup("Piano");
             groupComboBox.setSelectedItem(group);
@@ -51,6 +53,8 @@ public class MidiChannelDialog extends AmeDialog<MidiChannels.Channel> {
         channelComboBox = new javax.swing.JComboBox<>();
         doneButton = new javax.swing.JButton();
         cancelButton = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        indexSpinner = new javax.swing.JSpinner();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -78,6 +82,10 @@ public class MidiChannelDialog extends AmeDialog<MidiChannels.Channel> {
             }
         });
 
+        jLabel3.setText("Index:");
+
+        indexSpinner.setModel(new javax.swing.SpinnerNumberModel(1, 1, 16, 1));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -86,18 +94,22 @@ public class MidiChannelDialog extends AmeDialog<MidiChannels.Channel> {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(groupComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(channelComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(0, 170, Short.MAX_VALUE)
                         .addComponent(cancelButton, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(doneButton, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(doneButton, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(groupComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(channelComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(indexSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE)))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -111,7 +123,11 @@ public class MidiChannelDialog extends AmeDialog<MidiChannels.Channel> {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(channelComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 73, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(indexSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(doneButton)
                     .addComponent(cancelButton))
@@ -135,7 +151,10 @@ public class MidiChannelDialog extends AmeDialog<MidiChannels.Channel> {
 
     @Override
     protected void accept() {
-        set((MidiChannels.Channel) channelComboBox.getSelectedItem());
+        VoiceMidiChannel voiceMidiChannel = new VoiceMidiChannel();
+        voiceMidiChannel.setChannel((MidiChannels.Channel) channelComboBox.getSelectedItem());
+        voiceMidiChannel.setIndex((Integer) indexSpinner.getValue());
+        set(voiceMidiChannel);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -143,16 +162,25 @@ public class MidiChannelDialog extends AmeDialog<MidiChannels.Channel> {
     private javax.swing.JComboBox<String> channelComboBox;
     private javax.swing.JButton doneButton;
     private javax.swing.JComboBox<String> groupComboBox;
+    private javax.swing.JSpinner indexSpinner;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     // End of variables declaration//GEN-END:variables
 
     private void updateChannels() {
         MidiChannels.ChannelGroup group = (MidiChannels.ChannelGroup) groupComboBox.getSelectedItem();
         DefaultComboBoxModel channelModel = new DefaultComboBoxModel(group.getChannels().toArray());
         channelComboBox.setModel(channelModel);
-        if (channel != null && channel.getGroup().equals(group)) {
-            channelComboBox.setSelectedItem(channel);
+        if (channel != null) {
+            if (channel.getIndex() != null) {
+                indexSpinner.setValue(channel.getIndex());
+            }
+            if (channel.getChannel() != null) {
+                if (channel.getChannel().getGroup().equals(group)) {
+                    channelComboBox.setSelectedItem(channel.getChannel());
+                }
+            }
         }
     }
 }
