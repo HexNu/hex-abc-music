@@ -28,9 +28,13 @@ class TuneWriter extends XmlWriter<Tune> {
         result.addAttribute("time-value", entity.getTimeValue().toString());
         XmlNode titlesNode = NodeFactory.createNode("titles");
         result.addChild(titlesNode);
-        entity.getTitles().stream().forEach((title) -> {
-            titlesNode.addChild(NodeFactory.createNode("title", title));
-        });
+        if (entity.getTitles().isEmpty()) {
+            titlesNode.addChild(NodeFactory.createNode("title", "No title"));
+        } else {
+            entity.getTitles().stream().forEach((title) -> {
+                titlesNode.addChild(NodeFactory.createNode("title", title));
+            });
+        }
         XmlNode creatorsNode = NodeFactory.createNode("creators");
         result.addChild(creatorsNode);
         if (!entity.getCreators().isEmpty()) {
