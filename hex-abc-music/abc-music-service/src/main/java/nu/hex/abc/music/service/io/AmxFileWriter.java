@@ -37,14 +37,14 @@ class AmxFileWriter implements Writer<Void> {
             writer = new OutputStreamWriter(zipOutputStream = new ZipOutputStream(new FileOutputStream(resultFile)), StandardCharsets.UTF_8);
             addZipEntry(zipOutputStream, "mimetype", HexMediaType.APPLICATION_VND_HEX_AMX);
             addZipEntry(zipOutputStream, name, content);
-
         } catch (IOException ex) {
             Logger.getLogger(AmxFileWriter.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             if (writer != null) {
                 try {
                     writer.close();
-                } catch (IOException e) {
+                } catch (IOException ex) {
+                    Logger.getLogger(AmxFileWriter.class.getName()).log(Level.SEVERE, "Unable to close OutputStreamWriter", ex);
                 }
             }
         }
