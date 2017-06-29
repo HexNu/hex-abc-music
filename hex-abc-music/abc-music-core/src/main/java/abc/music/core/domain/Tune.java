@@ -300,6 +300,16 @@ public class Tune {
         this.scoreLayout = scoreLayout;
     }
 
+    public String getStart() {
+        String result = "X: " + id + "\n";
+//        result += "T: " + getName() + "\n";
+        result += getMeter().get() + "\n";
+        result += "L: " + getTimeValue().toString() + "\n";
+        result += getKey().get() + "\n";
+        result += getVoices().get(0).getStartOfNotes();
+        return result;
+    }
+
     public enum TimeValue {
 
         HALF("2"),
