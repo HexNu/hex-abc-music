@@ -43,7 +43,7 @@ public class Person {
     }
 
     public String getFirstName() {
-        return firstName;
+        return firstName == null ? "" : firstName;
     }
 
     public void setFirstName(String firstName) {
@@ -51,7 +51,7 @@ public class Person {
     }
 
     public String getLastName() {
-        return lastName;
+        return lastName == null ? "" : lastName;
     }
 
     public void setLastName(String lastName) {
@@ -60,13 +60,13 @@ public class Person {
 
     public String getName() {
         String result = "";
-        if (getFirstName() != null) {
+        if (!getFirstName().isEmpty()) {
             result += getFirstName();
-            if (getLastName() != null) {
+            if (!getLastName().isEmpty()) {
                 result += " ";
             }
         }
-        if (getLastName() != null) {
+        if (!getLastName().isEmpty()) {
             result += getLastName();
         }
         return result.isEmpty() ? null : result;
@@ -74,13 +74,13 @@ public class Person {
 
     public String getFormalName() {
         String result = "";
-        if (getLastName() != null) {
+        if (!getLastName().isEmpty()) {
             result += getLastName();
-            if (getFirstName() != null) {
+            if (!getFirstName().isEmpty()) {
                 result += ", ";
             }
         }
-        if (getFirstName() != null) {
+        if (!getFirstName().isEmpty()) {
             result += getFirstName();
         }
         return result;
