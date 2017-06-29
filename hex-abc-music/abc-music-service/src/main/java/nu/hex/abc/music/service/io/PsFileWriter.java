@@ -52,13 +52,13 @@ class PsFileWriter implements Writer<File> {
             }
             //TODO : Something about space in filenames must be handled
             String cmdString = "/usr/bin/abcm2ps " + abcFile.getAbsolutePath() + " -O " + file.getAbsolutePath();
-            Logger.getLogger(SvgWriter.class.getName()).log(Level.INFO, "Running: {0}", cmdString);
+            Logger.getLogger(PsFileWriter.class.getName()).log(Level.INFO, "Running: {0}", cmdString);
             Process process = Runtime.getRuntime().exec(cmdString);
             try (BufferedReader reader = new BufferedReader(
                     new InputStreamReader(process.getErrorStream()))) {
                 String line;
                 while ((line = reader.readLine()) != null) {
-                    Logger.getLogger(SvgWriter.class.getName()).log(Level.WARNING, line);
+                    Logger.getLogger(PsFileWriter.class.getName()).log(Level.WARNING, line);
                 }
             }
             process.waitFor();
