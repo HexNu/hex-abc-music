@@ -315,10 +315,10 @@ public class AbcMusicEditor extends JFrame {
         }
         EventQueue.invokeLater(() -> {
             AbcMusicEditor abcMusicEditor = new AbcMusicEditor();
-            abcMusicEditor.setVisible(true);
             OpenLatestProjectAction action = new OpenLatestProjectAction(abcMusicEditor);
             action.actionPerformed(null);
             abcMusicEditor.setProject(action.get());
+            abcMusicEditor.setVisible(true);
         });
     }
 }
