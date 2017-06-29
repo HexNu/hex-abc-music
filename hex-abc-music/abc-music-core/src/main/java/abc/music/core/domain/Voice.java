@@ -121,6 +121,14 @@ public class Voice extends Field {
         this.notes = notes;
     }
 
+    public String getStartOfNotes() {
+        String result = notes.substring(0, notes.indexOf("\n"));
+//        result = new TextUtil(result).removeTextBetweenChars('"', '!');
+//        int index = new TextUtil(result).nextIndexOf('|', 20);
+//        return result.substring(0, index + 1);
+        return result;
+    }
+
     public VoiceMidiChannel getMidiChannel() {
         return midiChannel;
     }
