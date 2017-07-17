@@ -35,6 +35,10 @@ public class IoService {
     public File createXmlFile(File file, XmlDocument doc) {
         return new XmlFileWriter(doc, file).write();
     }
+    
+    public File createMusicXmlFile(Tune tune, File file) {
+        return new MusicXmlFileWriter(tune, file).write();
+    }
 
     public File createAmxFile(File file, XmlDocument doc) {
         new AmxFileWriter(doc.toString(), "project.xml", file).write();

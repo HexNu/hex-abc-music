@@ -19,6 +19,7 @@ import abc.music.editor.action.CreateTuneAction;
 import abc.music.editor.action.HandleTuneInBooksAction;
 import abc.music.editor.action.OpenScoreLayoutAction;
 import abc.music.editor.action.PrintAction;
+import abc.music.editor.gui.dialog.StartDialog;
 import abc.music.editor.gui.support.PersonRoleListMouseListener;
 import abc.music.editor.gui.support.SharpFlatNaturalKeyListener;
 import abc.music.editor.gui.support.TransposeComboBoxModel;
@@ -402,6 +403,7 @@ public class TuneHeadersPanel extends AmePanel {
         printButton = new javax.swing.JButton();
         midiButton = new javax.swing.JButton();
         playMidiButton = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         setOpaque(false);
 
@@ -671,6 +673,13 @@ public class TuneHeadersPanel extends AmePanel {
             }
         });
 
+        jButton1.setText("Start");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout buttonsPanelLayout = new javax.swing.GroupLayout(buttonsPanel);
         buttonsPanel.setLayout(buttonsPanelLayout);
         buttonsPanelLayout.setHorizontalGroup(
@@ -698,6 +707,8 @@ public class TuneHeadersPanel extends AmePanel {
                 .addComponent(midiButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(playMidiButton)
+                .addGap(18, 18, 18)
+                .addComponent(jButton1)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         buttonsPanelLayout.setVerticalGroup(
@@ -715,7 +726,8 @@ public class TuneHeadersPanel extends AmePanel {
                     .addComponent(booksButton)
                     .addComponent(printButton)
                     .addComponent(midiButton)
-                    .addComponent(playMidiButton))
+                    .addComponent(playMidiButton)
+                    .addComponent(jButton1))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -983,6 +995,12 @@ public class TuneHeadersPanel extends AmePanel {
         playMidiFile();
     }//GEN-LAST:event_playMidiButtonActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        if (tune != null) {
+            new StartDialog(editor, tune).setVisible(true);
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton abcButton;
@@ -997,6 +1015,7 @@ public class TuneHeadersPanel extends AmePanel {
     private javax.swing.JTextArea copyrightTextArea;
     private javax.swing.JComboBox<String> defaultTimeValueComboBox;
     private javax.swing.JTextArea historyTextArea;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

@@ -7,23 +7,23 @@ import java.awt.Component;
 import java.awt.event.KeyEvent;
 
 public class TuneSearchPanel extends AmeSidePanel {
-    
+
     public TuneSearchPanel(AbcMusicEditor editor) {
         super(editor);
     }
-    
+
     @Override
     protected void init() {
         initComponents();
         searchTextField.setEnabled(editor.getProject() != null);
     }
-    
+
     private void clearSearchList() {
         resultPanel.removeAll();
         resultPanel.revalidate();
         resultPanel.repaint();
     }
-    
+
     public void checkSearchEnabled() {
         searchTextField.setEnabled(editor.getProject() != null);
         if (editor.getProject() == null) {
@@ -31,7 +31,7 @@ public class TuneSearchPanel extends AmeSidePanel {
             searchTextField.setText("");
         }
     }
-    
+
     public void add(Tune tune) {
         if (tune.getTitles() != null && !tune.getTitles().isEmpty()) {
             TuneItem item = new TuneItem(editor, tune);
@@ -83,7 +83,7 @@ public class TuneSearchPanel extends AmeSidePanel {
     private void searchTextFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_searchTextFieldKeyPressed
         searchTunes(evt);
     }//GEN-LAST:event_searchTextFieldKeyPressed
-    
+
     private void searchTunes(KeyEvent evt) {
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             clearSearchList();
