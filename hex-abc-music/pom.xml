@@ -12,7 +12,8 @@
         <module>abc-music-core</module>
         <module>abc-music-service</module>
         <module>abc-music-editor</module>
-    </modules>
+    <module>HexAbcMusicApp</module>
+  </modules>
     <build>
         <resources>
             <resource>
