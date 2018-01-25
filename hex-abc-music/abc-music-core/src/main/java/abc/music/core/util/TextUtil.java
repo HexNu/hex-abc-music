@@ -67,8 +67,12 @@ public class TextUtil {
         return result;
     }
 
-    public String capitalizeFirst() {
+    public String upperCaseFirst() {
         return str.substring(0, 1).toUpperCase() + str.substring(1).toLowerCase();
+    }
+    
+    public String lowerCaseFirst() {
+        return str.substring(0, 1).toLowerCase() + str.substring(1);
     }
 
     public static void main(String[] args) {

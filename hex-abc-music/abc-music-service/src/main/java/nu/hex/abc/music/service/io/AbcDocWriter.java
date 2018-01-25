@@ -128,12 +128,11 @@ class AbcDocWriter implements Writer<String> {
             result.append("%%textfont Times-Italic 12").append(NEW_LINE)
                     .append("%%textoption right").append(NEW_LINE)
                     .append("%%begintext").append(NEW_LINE);
-            for (History history : tune.getHistory()) {
-                String[] para = new TextUtil(history.getContent()).createLines(textLineLength).split("\n");
+            tune.getHistory().stream().map((history) -> new TextUtil(history.getContent()).createLines(textLineLength).split("\n")).forEachOrdered((para) -> {
                 for (String line : para) {
                     result.append("%%").append(line).append(NEW_LINE);
                 }
-            }
+            });
             result.append("%%endtext").append(NEW_LINE);
         }
         result.append(NEW_LINE);

@@ -14,7 +14,7 @@ public class Book implements Collection {
 
     private String name;
     private Project project;
-    private List<String> titles = new ArrayList<>();
+    private final List<String> titles = new ArrayList<>();
     private String shortDescription;
     private String copyright;
     private String preferredTemplate;
@@ -70,13 +70,7 @@ public class Book implements Collection {
 
     @Override
     public Boolean hasTitles() {
-        if (titles == null || titles.isEmpty()) {
-            return false;
-        }
-        if (titles.stream().anyMatch((title) -> (title != null && !title.isEmpty()))) {
-            return true;
-        }
-        return false;
+        return !titles.isEmpty();
     }
 
     public void setTitles(List<String> titles) {

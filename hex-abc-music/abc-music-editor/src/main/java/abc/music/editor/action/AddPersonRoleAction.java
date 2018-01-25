@@ -2,7 +2,6 @@ package abc.music.editor.action;
 
 import abc.music.core.domain.Person;
 import abc.music.core.domain.PersonRole;
-import abc.music.core.domain.Tune;
 import java.awt.event.ActionEvent;
 import java.util.List;
 import abc.music.editor.AbcMusicEditor;

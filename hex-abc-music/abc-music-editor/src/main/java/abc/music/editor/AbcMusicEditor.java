@@ -125,7 +125,7 @@ public class AbcMusicEditor extends JFrame {
         bookListPanel = new BooksPanel(this);
         booksPanel.add(bookListPanel, BorderLayout.CENTER);
         rightPanel.add(booksPanel);
-        
+
         playerPanel.setBorder(getTitleBorder("Sound"));
         playerPanel.setLayout(new BorderLayout());
         playerPanel.setPreferredSize(sidePanelDimension);
@@ -133,11 +133,10 @@ public class AbcMusicEditor extends JFrame {
         midiPlayerPanel = new MidiPlayerPanel(this);
         playerPanel.add(midiPlayerPanel, BorderLayout.CENTER);
         rightPanel.add(playerPanel);
-        
 
         add(rightPanel, BorderLayout.EAST);
     }
-    
+
     public void enableMidiPlayer(boolean enabled) {
         midiPlayerPanel.enablePlayer(enabled);
     }

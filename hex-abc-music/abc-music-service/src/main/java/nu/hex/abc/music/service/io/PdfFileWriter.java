@@ -50,13 +50,13 @@ class PdfFileWriter implements Writer<File> {
             //TODO : Something about space in filenames must be handled
             String cmdString = "/usr/bin/ps2pdf " + psFile.getAbsolutePath() + " " + file.getAbsolutePath();
             System.out.println(cmdString);
-            Logger.getLogger(SvgWriter.class.getName()).log(Level.INFO, "Running: {0}", cmdString);
+            Logger.getLogger(PdfFileWriter.class.getName()).log(Level.INFO, "Running: {0}", cmdString);
             Process process = Runtime.getRuntime().exec(cmdString);
             try (BufferedReader reader = new BufferedReader(
                     new InputStreamReader(process.getErrorStream()))) {
                 String line;
                 while ((line = reader.readLine()) != null) {
-                    Logger.getLogger(SvgWriter.class.getName()).log(Level.WARNING, line);
+                    Logger.getLogger(PdfFileWriter.class.getName()).log(Level.WARNING, line);
                 }
             }
             process.waitFor();

@@ -1,7 +1,5 @@
 package abc.music.core;
 
-import abc.music.core.util.Keys;
-
 /**
  * Created 2016-nov-30
  *
@@ -9,13 +7,40 @@ import abc.music.core.util.Keys;
  */
 public class Main {
 
-    public static void main(String[] args) {
-        for (Keys key : Keys.values()) {
-            if (key.getMode().equals("maj") || key.getMode().equals("min") || key.getMode().equals("dor")) {
-                System.out.println(key);
-            }
+    public String invert(String input) {
+        String result = "";
+        for (String s : input.split("")) {
+            result = s + result;
         }
+        return result;
+    }
 
+    public static void main(String[] args) {
+
+        String alphabet = "abcdefghijklmnopqrstuvwxyzåäö";
+        String input = "Den här meningen ska vara inverterad";
+        String result = new Main().invert(input);
+        System.out.println(result);
+//        String consonants = "bcdfghjklmnpqrstvwxz";
+//        String vowels = "aeiouyåäö";
+//        for (String s : alphabet.split("")) {
+//            System.out.println(s);
+//        }
+//        for (String s : alphabet.split("[" + vowels + "]")) {
+//            if (!s.isEmpty()) {
+//                System.out.println(s);
+//            }
+//        }
+//        for (String s : alphabet.split("[" + consonants + "]")) {
+//            if (!s.isEmpty()) {
+//                System.out.println(s);
+//            }
+//        }
+//        for (Keys key : Keys.values()) {
+//            if (key.getMode().equals("maj") || key.getMode().equals("min") || key.getMode().equals("dor")) {
+//                System.out.println(key);
+//            }
+//        }
 //        String keys = "C#;A#m;G#Mix;D#Dor;E#Phr;F#Lyd;B#Loc\n"
 //                + "F#;D#m;C#Mix;G#Dor;A#Phr;BLyd;E#Loc\n"
 //                + "B;G#m;F#Mix;C#Dor;D#Phr;ELyd;A#Loc\n"
