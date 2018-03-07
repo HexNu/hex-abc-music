@@ -7,7 +7,7 @@ package nu.hex.abc.music.service.properties;
  */
 public class PropertyService {
 
-    private static final AbcMusicProperties PROPERTIES = new AbcMusicProperties();
+    private static final AbcMusicProperties PROPERTIES = AbcMusicProperties.getInstance();
     public static final String PROJECT_PATH = PROPERTIES.getProperty(AbcMusicProperties.PROJECT_FOLDER);
     public static final String BACKUP_PATH = PROPERTIES.getProperty(AbcMusicProperties.BACKUP_FOLDER);
     public static final String APP_PATH = PROPERTIES.getProperty(AbcMusicProperties.APP_FOLDER);

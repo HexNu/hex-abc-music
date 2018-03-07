@@ -48,16 +48,19 @@ public class AbcMusicProperties {
     private final Map<String, String> defaultSettingsMap = new HashMap<>();
     private File settingsFile;
     private XmlNode settingsNode;
-    private static final AbcMusicProperties properties = new AbcMusicProperties();
+    private static final AbcMusicProperties instance = new AbcMusicProperties();
 
-     AbcMusicProperties() {
+    private AbcMusicProperties() {
         init();
+    }
+
+    public static AbcMusicProperties getInstance() {
+        return instance;
     }
 
 //    static AbcMusicProperties getInstance() {
 //        return properties;
 //    }
-
     private void init() {
         defaultSettingsMap.put(PROJECT_FOLDER, DEFAULT_PROJECT_FOLDER);
         defaultSettingsMap.put(PROJECT_SVG_FOLDER, DEFAULT_PROJECT_SVG_FOLDER);

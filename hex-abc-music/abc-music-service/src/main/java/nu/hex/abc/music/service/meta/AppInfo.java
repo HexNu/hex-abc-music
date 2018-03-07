@@ -14,10 +14,14 @@ import se.digitman.lightxml.XmlNode;
 public class AppInfo {
 
     private final XmlNode infoNode;
-
-     AppInfo() {
+    private final static AppInfo instance = new AppInfo();
+    private AppInfo() {
         InputStream infoStream = AppInfo.class.getResourceAsStream("/app-info.xml");
         infoNode = new DocumentToXmlNodeParser(infoStream).parse();
+    }
+    
+    public static AppInfo getInstance() {
+        return instance;
     }
 
     public String getName() {

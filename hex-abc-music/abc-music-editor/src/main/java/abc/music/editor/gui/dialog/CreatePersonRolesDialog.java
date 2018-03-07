@@ -6,12 +6,12 @@ import abc.music.core.domain.Project;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JCheckBox;
 import abc.music.editor.AbcMusicEditor;
 import abc.music.editor.action.CreatePersonAction;
+import java.util.stream.Stream;
 
 /**
  *
@@ -41,7 +41,7 @@ public class CreatePersonRolesDialog extends AmeDialog<List<PersonRole>> {
 
     private void setFields() {
         updatePersonsComboBox();
-        Arrays.asList(Person.Role.values()).stream().forEach(this::addCheckBox);
+        Stream.of(Person.Role.values()).forEach(this::addCheckBox);
     }
 
     private void updatePersonsComboBox() {

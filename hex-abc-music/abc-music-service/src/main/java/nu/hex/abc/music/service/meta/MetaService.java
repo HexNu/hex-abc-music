@@ -9,7 +9,6 @@ import abc.music.core.domain.Project;
  */
 public class MetaService {
 
-    private static final AppInfo appInfo = new AppInfo();
     private final Project project;
 
     public MetaService(Project project) {
@@ -17,6 +16,6 @@ public class MetaService {
     }
 
     public static AppInfo getAppInfo() {
-        return appInfo;
+        return AppInfo.getInstance();
     }
 }

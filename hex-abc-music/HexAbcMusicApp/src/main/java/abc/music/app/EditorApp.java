@@ -1,5 +1,6 @@
 package abc.music.app;
 
+import abc.music.core.domain.Project;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.MenuBar;
@@ -16,6 +17,7 @@ public class EditorApp extends Application {
 
     private static final String APP_LABEL = "Hex ABC Music Notes Editor";
     private Service service;
+    private Project project;
     private Stage stage;
     private MenuBar menuBar;
     private BorderPane root;
@@ -29,6 +31,14 @@ public class EditorApp extends Application {
     private void initUI() {
         setupScene(stage);
         stage.show();
+    }
+
+    public Service getService() {
+        return service;
+    }
+
+    public Project getProject() {
+        return project;
     }
 
     private void setupScene(Stage currentStage) {
